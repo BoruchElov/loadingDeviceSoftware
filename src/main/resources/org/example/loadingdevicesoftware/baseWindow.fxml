@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.ApplicationController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#bcc0c3" height="298.0" layoutX="192.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="203.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#6d6e6f" height="39.0" layoutX="-10.0" layoutY="259.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="203.0" />
+      <Button fx:id="applyScenarioButton" layoutX="14.0" layoutY="266.0" mnemonicParsing="false" text="Применить" />
+      <Button fx:id="openConnectionSettingsButton" layoutX="107.0" layoutY="266.0" mnemonicParsing="false" text="Настройки" />
+      <ComboBox fx:id="scenariosComboBox" layoutX="21.0" layoutY="124.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
