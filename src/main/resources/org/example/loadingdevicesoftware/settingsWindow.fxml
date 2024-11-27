@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="471.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.SettingsScreenController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6093c3" height="471.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1066.0" />
+      <ToolBar layoutY="431.0" prefHeight="40.0" prefWidth="1066.0">
+        <items>
+          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Сохранить все" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Очистить все" />
+            <Button fx:id="choiceOfWorkingDirectory" mnemonicParsing="false" onAction="#chooseWorkingDirectory" prefHeight="25.0" prefWidth="198.0" text="Выбрать рабочую директорию" />
+            <TextField fx:id="directoryField" prefHeight="25.0" prefWidth="385.0" />
+            <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="25.0" prefWidth="90.0" text="В меню" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="141.0" text="К текущему сценарию" />
+        </items>
+      </ToolBar>
+      <GridPane prefHeight="431.0" prefWidth="1066.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="30.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="29.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="154.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="173.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="109.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="30.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="158.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="181.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="111.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Очистить" GridPane.columnIndex="4">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Сохранить" GridPane.columnIndex="4">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Сохранить" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Очистить" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Очистить" GridPane.columnIndex="8">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Очистить" GridPane.columnIndex="8" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Очистить" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Очистить" GridPane.columnIndex="8" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Сохранить" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Сохранить" GridPane.columnIndex="8">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Сохранить" GridPane.columnIndex="8" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Сохранить" GridPane.columnIndex="8" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </Button>
+            <ProgressIndicator progress="0.0" GridPane.columnIndex="1" />
+            <ProgressIndicator progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ProgressIndicator progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ProgressIndicator progress="0.0" GridPane.columnIndex="5" />
+            <ProgressIndicator progress="0.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <ProgressIndicator progress="0.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <ImageView fx:id="image1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@../../../../../../../../../../../Downloads/icons8-dynamo-96.png" />
+               </image></ImageView>
+            <ImageView fx:id="image2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../../../../../../../../../Downloads/icons8-dynamo-96.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../../../../../../../../../../../Downloads/icons8-dynamo-96.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="image4" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6">
+               <image>
+                  <Image url="@../../../../../../../../../../../Downloads/icons8-dynamo-96.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="image5" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../../../../../../../../../Downloads/icons8-dynamo-96.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="image6" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../../../../../../../../../../../Downloads/icons8-dynamo-96.png" />
+               </image>
+            </ImageView>
+            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7" GridPane.rowIndex="2">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7" GridPane.rowIndex="1">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="-20.0" />
+               </GridPane.margin>
+            </ComboBox>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
