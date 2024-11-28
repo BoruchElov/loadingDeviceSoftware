@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="471.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.SettingsScreenController">
+<AnchorPane prefHeight="471.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.SettingsScreenController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6093c3" height="471.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1066.0" />
       <ToolBar layoutY="431.0" prefHeight="40.0" prefWidth="1066.0">
         <items>
-          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Сохранить все" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Очистить все" />
+          <Button fx:id="saveAll" mnemonicParsing="false" onAction="#saveAddressPhaseSettings" prefHeight="25.0" prefWidth="109.0" text="Сохранить все" />
+            <Button fx:id="clearAll" mnemonicParsing="false" onAction="#clearAddressPhaseSettings" prefHeight="25.0" prefWidth="109.0" text="Очистить все" />
             <Button fx:id="choiceOfWorkingDirectory" mnemonicParsing="false" onAction="#chooseWorkingDirectory" prefHeight="25.0" prefWidth="198.0" text="Выбрать рабочую директорию" />
             <TextField fx:id="directoryField" prefHeight="25.0" prefWidth="385.0" />
             <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="25.0" prefWidth="90.0" text="В меню" />
@@ -140,12 +140,12 @@
                   <Image url="@../../../../../../../../../../../Downloads/icons8-dynamo-96.png" />
                </image>
             </ImageView>
-            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3">
+            <ComboBox fx:id="addressComboBox1" prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3">
                <GridPane.margin>
                   <Insets top="-20.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3">
+            <ComboBox fx:id="phaseComboBox1" prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -153,12 +153,12 @@
                   <Insets top="40.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7">
+            <ComboBox fx:id="addressComboBox4" prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7">
                <GridPane.margin>
                   <Insets top="-20.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7">
+            <ComboBox fx:id="phaseComboBox4" prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -166,7 +166,7 @@
                   <Insets top="40.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <ComboBox fx:id="phaseComboBox2" prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -174,7 +174,7 @@
                   <Insets top="40.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <ComboBox fx:id="phaseComboBox3" prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -182,7 +182,7 @@
                   <Insets top="40.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7" GridPane.rowIndex="2">
+            <ComboBox fx:id="phaseComboBox6" prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7" GridPane.rowIndex="2">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -190,7 +190,7 @@
                   <Insets top="40.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7" GridPane.rowIndex="1">
+            <ComboBox fx:id="phaseComboBox5" prefWidth="150.0" promptText="Выберите фазу" GridPane.columnIndex="7" GridPane.rowIndex="1">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -198,22 +198,22 @@
                   <Insets top="40.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <ComboBox fx:id="addressComboBox2" prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets top="-20.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <ComboBox fx:id="addressComboBox3" prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets top="-20.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7" GridPane.rowIndex="1">
+            <ComboBox fx:id="addressComboBox5" prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets top="-20.0" />
                </GridPane.margin>
             </ComboBox>
-            <ComboBox prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7" GridPane.rowIndex="2">
+            <ComboBox fx:id="addressComboBox6" prefWidth="150.0" promptText="Выберите адрес" GridPane.columnIndex="7" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets top="-20.0" />
                </GridPane.margin>

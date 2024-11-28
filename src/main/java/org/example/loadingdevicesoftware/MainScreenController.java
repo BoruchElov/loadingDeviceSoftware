@@ -42,7 +42,6 @@ public class MainScreenController {
 
         SettingsScreenController settingsController = loader.getController();
 
-        //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
         stageForSettings = (Stage)((Node)event.getSource()).getScene().getWindow();
         sceneForSettings = new Scene(rootForSettings);
         stageForSettings.setScene(sceneForSettings);

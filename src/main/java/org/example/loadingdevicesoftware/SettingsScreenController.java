@@ -42,6 +42,11 @@ public class SettingsScreenController {
 
     Image inverterImage = new Image(Objects.requireNonNull(getClass().getResource("/images/icons8-dynamo-96.png")).toExternalForm());
 
+    //Massive for storing addresses values
+    private String[] actualValuesOfAddresses = new String[6];
+    private String[] actualValuesOfPhases = new String[6];
+    private String[] baseListOfAddreses = {"MAC1", "MAC2", "MAC3", "MAC4", "MAC5", "MAC6"};
+    private String[] baseListOfPhases = {"Фаза А1", "Фаза В1", "Фаза С1", "Фаза А2", "Фаза В2", "Фаза С2"};
     String[] Text = new String[2];
 
     @FXML
@@ -50,6 +55,39 @@ public class SettingsScreenController {
     private Button backToMenuButton;
     @FXML
     private Button choiceOfWorkingDirectory;
+    
+    //Declaration of addresses ComboBoxes
+    @FXML
+    private ComboBox<String> addressComboBox1;
+    @FXML
+    private ComboBox<String> addressComboBox2;
+    @FXML
+    private ComboBox<String> addressComboBox3;
+    @FXML
+    private ComboBox<String> addressComboBox4;
+    @FXML
+    private ComboBox<String> addressComboBox5;
+    @FXML
+    private ComboBox<String> addressComboBox6;
+    //Declaration of phases ComboBoxes
+    @FXML
+    private ComboBox<String> phaseComboBox1;
+    @FXML
+    private ComboBox<String> phaseComboBox2;
+    @FXML
+    private ComboBox<String> phaseComboBox3;
+    @FXML
+    private ComboBox<String> phaseComboBox4;
+    @FXML
+    private ComboBox<String> phaseComboBox5;
+    @FXML
+    private ComboBox<String> phaseComboBox6;
+
+    //Declaration of buttons for saving and deleting settings for all ComboBoxes
+    @FXML
+    private Button saveAll;
+    @FXML
+    private Button clearAll;
 
     private static final String CONFIG_FILE = "directory.config";
     private String settingsFilePath; // Путь к файлу настроек в рабочей директории
@@ -58,14 +96,6 @@ public class SettingsScreenController {
 
     @FXML
     public void initialize() {
-
-        image1.setImage(inverterImage);
-        image2.setImage(inverterImage);
-        image3.setImage(inverterImage);
-        image4.setImage(inverterImage);
-        image5.setImage(inverterImage);
-        image6.setImage(inverterImage);
-
         // Проверяем или создаем путь к файлу directory.config
         File configFile = new File(CONFIG_FILE);
 
@@ -85,6 +115,49 @@ public class SettingsScreenController {
         for (int i = 0; i < PAIR_COUNT; i++) {
             System.out.println("Address: " + loadedSettings[0][i] + ", Phase: " + loadedSettings[1][i]);
         }
+
+        updateActualAddressPhase();
+        directoryField.setText(workingDirectory);
+
+        //Adding possible configurations to ComboBoxes
+        addressComboBox1.getItems().addAll(baseListOfAddreses);
+        addressComboBox2.getItems().addAll(baseListOfAddreses);
+        addressComboBox3.getItems().addAll(baseListOfAddreses);
+        addressComboBox4.getItems().addAll(baseListOfAddreses);
+        addressComboBox5.getItems().addAll(baseListOfAddreses);
+        addressComboBox6.getItems().addAll(baseListOfAddreses);
+
+        phaseComboBox1.getItems().addAll(baseListOfPhases);
+        phaseComboBox2.getItems().addAll(baseListOfPhases);
+        phaseComboBox3.getItems().addAll(baseListOfPhases);
+        phaseComboBox4.getItems().addAll(baseListOfPhases);
+        phaseComboBox5.getItems().addAll(baseListOfPhases);
+        phaseComboBox6.getItems().addAll(baseListOfPhases);
+
+        //Setting values of saved parameters
+        addressComboBox1.setValue(actualValuesOfAddresses[0]);
+        addressComboBox2.setValue(actualValuesOfAddresses[1]);
+        addressComboBox3.setValue(actualValuesOfAddresses[2]);
+        addressComboBox4.setValue(actualValuesOfAddresses[3]);
+        addressComboBox5.setValue(actualValuesOfAddresses[4]);
+        addressComboBox6.setValue(actualValuesOfAddresses[5]);
+
+        phaseComboBox1.setValue(actualValuesOfPhases[0]);
+        phaseComboBox2.setValue(actualValuesOfPhases[1]);
+        phaseComboBox3.setValue(actualValuesOfPhases[2]);
+        phaseComboBox4.setValue(actualValuesOfPhases[3]);
+        phaseComboBox5.setValue(actualValuesOfPhases[4]);
+        phaseComboBox6.setValue(actualValuesOfPhases[5]);
+
+
+        image1.setImage(inverterImage);
+        image2.setImage(inverterImage);
+        image3.setImage(inverterImage);
+        image4.setImage(inverterImage);
+        image5.setImage(inverterImage);
+        image6.setImage(inverterImage);
+
+
     }
 
 
@@ -115,11 +188,59 @@ public class SettingsScreenController {
     // Метод для сохранения адресов и фаз
     @FXML
     public void saveAddressPhaseSettings() {
-        String[] addresses = {"addr1", "addr2", "addr3", "addr4", "addr5", "addr6"}; // Пример данных
-        String[] phases = {"phase1", "phase2", "phase3", "phase4", "phase5", "phase6"}; // Пример данных
+        
+        String[] addresses = {addressComboBox1.getValue(), addressComboBox2.getValue(), addressComboBox3.getValue(),
+                addressComboBox4.getValue(), addressComboBox5.getValue(), addressComboBox6.getValue()}; 
+        String[] phases = {phaseComboBox1.getValue(), phaseComboBox2.getValue(), phaseComboBox3.getValue(),
+                phaseComboBox4.getValue(), phaseComboBox5.getValue(), phaseComboBox6.getValue()}; // Пример данных
 
         SettingsManager.saveAddressPhaseSettings(settingsFilePath, addresses, phases);
+
+        addressComboBox1.setValue(addresses[0]);
+        addressComboBox2.setValue(addresses[1]);
+        addressComboBox3.setValue(addresses[2]);
+        addressComboBox4.setValue(addresses[3]);
+        addressComboBox5.setValue(addresses[4]);
+        addressComboBox6.setValue(addresses[5]);
+
+        phaseComboBox1.setValue(phases[0]);
+        phaseComboBox2.setValue(phases[1]);
+        phaseComboBox3.setValue(phases[2]);
+        phaseComboBox4.setValue(phases[3]);
+        phaseComboBox5.setValue(phases[4]);
+        phaseComboBox6.setValue(phases[5]);
     }
+    
+    @FXML
+    public void clearAddressPhaseSettings() {
+        String[] addresses = {"Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано"};
+        String[] phases = {"Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано"};
+
+        SettingsManager.saveAddressPhaseSettings(settingsFilePath, addresses, phases);
+        
+        addressComboBox1.setValue(addresses[0]);
+        addressComboBox2.setValue(addresses[1]);
+        addressComboBox3.setValue(addresses[2]);
+        addressComboBox4.setValue(addresses[3]);
+        addressComboBox5.setValue(addresses[4]);
+        addressComboBox6.setValue(addresses[5]);
+
+        phaseComboBox1.setValue(phases[0]);
+        phaseComboBox2.setValue(phases[1]);
+        phaseComboBox3.setValue(phases[2]);
+        phaseComboBox4.setValue(phases[3]);
+        phaseComboBox5.setValue(phases[4]);
+        phaseComboBox6.setValue(phases[5]);
+    }
+    
+    @FXML
+    public void updateActualAddressPhase() {
+        for(int i = 0; i < 6; i++) {
+            actualValuesOfAddresses[i] = SettingsManager.loadAddressPhaseSettings(settingsFilePath, 6)[0][i];
+            actualValuesOfPhases[i] = SettingsManager.loadAddressPhaseSettings(settingsFilePath, 6)[1][i];
+        }
+    }
+    
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("baseWindow.fxml"));
