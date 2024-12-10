@@ -40,7 +40,8 @@ public class SettingsScreenController {
     @FXML
     ImageView image6;
 
-    Image inverterImage = new Image(Objects.requireNonNull(getClass().getResource("/images/icons8-dynamo-96.png")).toExternalForm());
+    Image inverterImage = new Image(Objects.requireNonNull(getClass().
+            getResource("/images/icons8-dynamo-96.png")).toExternalForm());
 
     //Massive for storing addresses values
     private String[] actualValuesOfAddresses = new String[6];

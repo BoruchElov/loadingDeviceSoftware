@@ -1,37 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.DifProtectionScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="677.0" prefWidth="1107.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.DifProtectionScreenController">
    <children>
-      <ImageView fx:id="Image1" fitHeight="296.0" fitWidth="600.0" layoutX="8.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@../../../images/imageDifProtection.png" />
+      <ImageView fx:id="backgroundImageView" fitHeight="677.0" fitWidth="1107.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/RS_I/RS_main.png" />
+         </image>
       </ImageView>
-      <Button layoutX="548.0" layoutY="362.0" mnemonicParsing="false" text="старт" />
-      <Button fx:id="backToMenuButton1" layoutX="8.0" layoutY="362.0" mnemonicParsing="false" onAction="#goToMainScreen" text="В меню" />
-      <ToolBar layoutX="183.0" layoutY="166.0" prefHeight="38.0" prefWidth="87.0">
-         <ImageView fitHeight="53.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../images/Polygon1.png" />
-         </ImageView>
-         <ChoiceBox prefHeight="25.0" prefWidth="14.0" />
-      </ToolBar>
-      <ToolBar layoutX="344.0" layoutY="165.0" prefHeight="48.0" prefWidth="87.0">
-         <ImageView fitHeight="33.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../images/Star1.png" />
-         </ImageView>
-         <ChoiceBox prefHeight="25.0" prefWidth="14.0" />
-      </ToolBar>
-      <TextArea layoutX="30.0" layoutY="116.0" minHeight="0.0" prefHeight="26.0" prefWidth="65.0" snapToPixel="false" AnchorPane.bottomAnchor="258.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="513.0" AnchorPane.topAnchor="116.0" />
-      <TextArea layoutX="31.0" layoutY="162.0" minHeight="0.0" prefHeight="26.0" prefWidth="65.0" snapToPixel="false" />
-      <TextArea layoutX="33.0" layoutY="209.0" minHeight="0.0" prefHeight="26.0" prefWidth="65.0" snapToPixel="false" />
-      <TextArea layoutX="522.0" layoutY="116.0" minHeight="0.0" prefHeight="26.0" prefWidth="65.0" snapToPixel="false" />
-      <TextArea layoutX="523.0" layoutY="162.0" minHeight="0.0" prefHeight="26.0" prefWidth="65.0" snapToPixel="false" />
-      <TextArea layoutX="525.0" layoutY="209.0" minHeight="0.0" prefHeight="26.0" prefWidth="65.0" snapToPixel="false" />
+      <Text fill="#09244d" layoutX="210.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Обмотка 1" textAlignment="CENTER" wrappingWidth="133.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text fill="#09244d" layoutX="368.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Обмотка 2" textAlignment="CENTER" wrappingWidth="133.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="872.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Расположение короткого замыкания" textAlignment="CENTER" wrappingWidth="225.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="867.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Повреждённые фазы" textAlignment="CENTER" wrappingWidth="225.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="866.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Питающая обмотка" textAlignment="CENTER" wrappingWidth="225.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <Button fx:id="windingOneButton" layoutX="907.0" layoutY="409.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="62.0" text="I">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="windingTwoButton" layoutX="990.0" layoutY="409.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="62.0" text="II">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="windingOneConnection" layoutX="241.0" layoutY="271.0" mnemonicParsing="false" onAction="#setPictureForWindingOne" prefHeight="40.0" prefWidth="49.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <graphic>
+            <ImageView fx:id="windingOneView" fitHeight="59.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/Polygon1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="windingTwoConnection" layoutX="399.0" layoutY="271.0" mnemonicParsing="false" onAction="#setPictureForWindingTwo" prefHeight="40.0" prefWidth="49.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <graphic>
+            <ImageView fx:id="windingTwoView" fitHeight="59.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/Star1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="toMenuButton" layoutX="29.0" layoutY="612.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="50.0" prefWidth="126.0" text="В меню">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="startButton" layoutX="951.0" layoutY="612.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="126.0" text="Запуск">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <ToggleButton fx:id="shortCircuitLocationButton" layoutX="902.0" layoutY="205.0" mnemonicParsing="false" onAction="#setProperPicture" prefHeight="40.0" prefWidth="165.0" text="Внешнее КЗ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton fx:id="phaseAButton" layoutX="876.0" layoutY="303.0" mnemonicParsing="false" onAction="#setProperPicture" prefHeight="53.0" prefWidth="62.0" text="A">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton fx:id="phaseBButton" layoutX="948.0" layoutY="303.0" mnemonicParsing="false" onAction="#setProperPicture" prefHeight="53.0" prefWidth="62.0" text="B">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton fx:id="phaseCButton" layoutX="1021.0" layoutY="303.0" mnemonicParsing="false" onAction="#setProperPicture" prefHeight="53.0" prefWidth="62.0" text="C">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </ToggleButton>
    </children>
 </AnchorPane>
