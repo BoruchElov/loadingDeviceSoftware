@@ -38,7 +38,7 @@ public class MainScreenController {
     ImageView comTradeButtonBackground;
 
     Image backImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/mainScreen(noIcon).png")).toExternalForm());
+            getResource("/screen/главное меню/Главная страница(без кнопок).png")).toExternalForm());
     Image settingsButtonImage = new Image(Objects.requireNonNull(getClass().
             getResource("/images/icon/Настройка.png")).toExternalForm());
     Image handControlButtonImage = new Image(Objects.requireNonNull(getClass().
