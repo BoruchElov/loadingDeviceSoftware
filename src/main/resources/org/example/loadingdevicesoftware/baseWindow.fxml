@@ -7,20 +7,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.MainScreenController">
    <children>
       <ImageView fx:id="backgroungImage" fitHeight="676.0" fitWidth="1106.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/mainScreen(noIcon).png" />
          </image>
       </ImageView>
-      <Button fx:id="settingsButton" layoutX="65.0" layoutY="259.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="156.0" prefWidth="164.0">
+      <Button fx:id="settingsButton" contentDisplay="BOTTOM" layoutX="65.0" layoutY="259.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="156.0" prefWidth="164.0" textAlignment="CENTER" textOverrun="CLIP">
+         <font>
+            <Font name="MyriadCAD" size="23.0" />
+         </font>
          <graphic>
-            <ImageView fx:id="setingsButtonBackground" fitHeight="148.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/icon/Настройка.png" />
-               </image>
-            </ImageView>
+
+            <Text fill="#09244d" strokeType="OUTSIDE" strokeWidth="0.0" text="Настройка соединения" textAlignment="CENTER" wrappingWidth="144.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
          </graphic>
       </Button>
       <Button fx:id="handControlButton" layoutX="267.0" layoutY="259.0" mnemonicParsing="false" onAction="#testClick" prefHeight="156.0" prefWidth="164.0">
@@ -32,6 +36,11 @@
             </ImageView>
          </graphic>
       </Button>
+      <Text fill="#09244d" layoutX="266.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ручное управление" textAlignment="CENTER" wrappingWidth="164.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
       <Button fx:id="testOfSwitcherButton" layoutX="472.0" layoutY="259.0" mnemonicParsing="false" onAction="#testClick" prefHeight="156.0" prefWidth="164.0">
          <graphic>
             <ImageView fx:id="testOfSwitcherButtonBackground" fitHeight="150.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
@@ -60,16 +69,6 @@
          </graphic>
       </Button>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fill="#09244d" layoutX="56.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Настройка соединения" textAlignment="CENTER" wrappingWidth="181.0">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Text>
-      <Text fill="#09244d" layoutX="266.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ручное управление" textAlignment="CENTER" wrappingWidth="164.0">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Text>
       <Text fill="#09244d" layoutX="463.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Проверка выключателя" textAlignment="CENTER" wrappingWidth="181.0">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -85,5 +84,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
+      <ImageView fx:id="setingsButtonBackground" fitHeight="62.0" fitWidth="239.0" layoutX="147.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/icon/Настройка.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
