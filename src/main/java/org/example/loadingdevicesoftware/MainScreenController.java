@@ -9,6 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,26 +33,34 @@ public class MainScreenController {
     @FXML
     ImageView setingsButtonBackground;
     @FXML
-    ImageView handControlButtonBackground;
+    ImageView testOfHandControlButtonBackground;
     @FXML
     ImageView testOfSwitcherButtonBackground;
     @FXML
-    ImageView difProtectionButtonBackground;
+    ImageView testOfDifProtectionButtonBackground;
     @FXML
     ImageView comTradeButtonBackground;
+    @FXML
+    ImageView testOfStageProtectionButtonBackground;
+    @FXML
+    ImageView eventLoggerButtonBackground;
+    @FXML
+    ImageView testOfMeasurementTransformerButtonBackground;
+
 
     Image backImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/главное меню/Главная страница(без кнопок).png")).toExternalForm());
     Image settingsButtonImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/icon/Настройка.png")).toExternalForm());
-    Image handControlButtonImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/icon/РучнойРежим.png")).toExternalForm());
+            getResource("/screen/главное меню/иконки/1.png")).toExternalForm());
     Image testOfSwitcherButtonImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/icon/проверкаВыключателя.png")).toExternalForm());
+            getResource("/screen/главное меню/иконки/2.png")).toExternalForm());
+    Image handControlButtonImage = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/главное меню/иконки/8.png")).toExternalForm());
     Image difProtectionButtonImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/icon/ДифЗащита3.png")).toExternalForm());
+            getResource("/screen/главное меню/иконки/6.png")).toExternalForm());
     Image comTradeButtonImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/icon/КомТрейд.png")).toExternalForm());
+            getResource("/screen/главное меню/иконки/5.png")).toExternalForm());
+
 
     @FXML
     private Button settingsButton;
@@ -57,36 +69,64 @@ public class MainScreenController {
     @FXML
     private Button testOfSwitcherButton;
     @FXML
-    private Button difProtectionButton;
+    private Button testOfDifProtectionButton;
     @FXML
     private Button comTradeButton;
+    @FXML
+    private Button testOfStageProtectionButton;
+    @FXML
+    private Button eventLoggerButton;
+    @FXML
+    private Button testOfMeasurementTransformerButton;
+
 
     @FXML
     public void initialize() {
+        //Установка картинки на фон
         backgroungImage.setImage(backImage);
+        //__________________________________________________________________________//
+
+        //Настройка кнопки "Настройка"
+        //Загрузка картинки, установка её ширины и высоты
         setingsButtonBackground.setImage(settingsButtonImage);
-        settingsButton.setStyle("-fx-background-color: #79859C; " + // Голубой фон
-                "-fx-border-color: #0A1733; " + // Тёмно-синяя граница
-                "-fx-border-width: 4px; " + // Ширина границы
+        setingsButtonBackground.setFitWidth(223);
+        setingsButtonBackground.setFitHeight(200);
+        //Настройка отображения кнопки
+        settingsButton.setStyle("-fx-background-color: #D1EDFA; " + // Голубой фон
+                "-fx-border-color: #404041; " + // Тёмно-синяя граница
+                "-fx-border-width: 1px; " + // Ширина границы
                 "-fx-background-radius: 15px; " + // Закругление фона
                 "-fx-border-radius: 15px; " + // Закругление границы
-                "-fx-text-fill: white;"); // Цвет текста
-        handControlButtonBackground.setImage(handControlButtonImage);
+                "-fx-text-fill: white;" +   // Цвет текста
+                "-fx-padding: 0;"); //Величина отступа
+        //__________________________________________________________________________//
+
+        //Настройка кнопки "Проверка автоматического выключателя
+        //Загрузка картинки, настройка её ширины и высоты
+        testOfSwitcherButtonBackground.setImage(testOfSwitcherButtonImage);
+        testOfSwitcherButtonBackground.setFitWidth(223);
+        testOfSwitcherButtonBackground.setFitHeight(200);
+        testOfSwitcherButton.setStyle("-fx-background-color: #D1EDFA; " + // Голубой фон
+                "-fx-border-color: #404041; " + // Тёмно-синяя граница
+                "-fx-border-width: 1px; " + // Ширина границы
+                "-fx-background-radius: 15px; " + // Закругление фона
+                "-fx-border-radius: 15px; " + // Закругление границы
+                "-fx-text-fill: white;" +   // Цвет текста
+                "-fx-padding: 0;"); //Величина отступа
+        //__________________________________________________________________________//
+
+
+        /*testOfHandControlButtonBackground.setImage(handControlButtonImage);
         handControlButton.setStyle("-fx-background-color: #79859C; " + // Голубой фон
                 "-fx-border-color: #0A1733; " + // Тёмно-синяя граница
                 "-fx-border-width: 4px; " + // Ширина границы
                 "-fx-background-radius: 15px; " + // Закругление фона
                 "-fx-border-radius: 15px; " + // Закругление границы
                 "-fx-text-fill: white;"); // Цвет текста
-        testOfSwitcherButtonBackground.setImage(testOfSwitcherButtonImage);
-        testOfSwitcherButton.setStyle("-fx-background-color: #79859C; " + // Голубой фон
-                "-fx-border-color: #0A1733; " + // Тёмно-синяя граница
-                "-fx-border-width: 4px; " + // Ширина границы
-                "-fx-background-radius: 15px; " + // Закругление фона
-                "-fx-border-radius: 15px; " + // Закругление границы
-                "-fx-text-fill: white;"); // Цвет текста
-        difProtectionButtonBackground.setImage(difProtectionButtonImage);
-        difProtectionButton.setStyle("-fx-background-color: #79859C; " + // Голубой фон
+        //__________________________________________________________________________//
+
+        testOfDifProtectionButtonBackground.setImage(difProtectionButtonImage);
+        testOfDifProtectionButton.setStyle("-fx-background-color: #79859C; " + // Голубой фон
                 "-fx-border-color: #0A1733; " + // Тёмно-синяя граница
                 "-fx-border-width: 4px; " + // Ширина границы
                 "-fx-background-radius: 15px; " + // Закругление фона
@@ -98,7 +138,7 @@ public class MainScreenController {
                 "-fx-border-width: 4px; " + // Ширина границы
                 "-fx-background-radius: 15px; " + // Закругление фона
                 "-fx-border-radius: 15px; " + // Закругление границы
-                "-fx-text-fill: white;"); // Цвет текста
+                "-fx-text-fill: white;"); // Цвет текста*/
     }
 
 

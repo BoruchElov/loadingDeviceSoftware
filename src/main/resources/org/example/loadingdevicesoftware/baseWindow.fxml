@@ -4,60 +4,42 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.MainScreenController">
    <children>
       <ImageView fx:id="backgroungImage" fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../screen/главное%20меню/Главная%20страница(без%20кнопок).png" />
          </image>
       </ImageView>
-      <Button fx:id="settingsButton" layoutX="88.0" layoutY="215.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="199.0" prefWidth="223.0">
+      <Button fx:id="settingsButton" contentDisplay="CENTER" layoutX="88.0" layoutY="215.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="199.0" prefWidth="223.0">
          <graphic>
-            <ImageView fx:id="setingsButtonBackground" fitHeight="180.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="setingsButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../images/icon/Настройка.png" />
+                  <Image url="@../../../screen/главное%20меню/иконки/1.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="handControlButton" layoutX="947.0" layoutY="475.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
+      <Text fill="WHITE" layoutX="152.0" layoutY="379.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="НАСТРОЙКА">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font></Text>
+      <Button fx:id="testOfSwitcherButton" contentDisplay="CENTER" layoutX="370.0" layoutY="215.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
          <graphic>
-            <ImageView fx:id="handControlButtonBackground" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="testOfSwitcherButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../images/icon/РучнойРежим.png" />
+                  <Image url="@../../../screen/главное%20меню/иконки/2.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="testOfSwitcherButton" layoutX="370.0" layoutY="215.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
-         <graphic>
-            <ImageView fx:id="testOfSwitcherButtonBackground" fitHeight="150.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/icon/проверкаВыключателя.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="difProtectionButton" layoutX="661.0" layoutY="213.0" mnemonicParsing="false" onAction="#goToDifProtection" prefHeight="199.0" prefWidth="223.0">
-         <graphic>
-            <ImageView fx:id="difProtectionButtonBackground" fitHeight="150.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/icon/ДифЗащита2.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="comTradeButton" layoutX="88.0" layoutY="475.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
-         <graphic>
-            <ImageView fx:id="comTradeButtonBackground" fitHeight="150.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/icon/КомТрейд.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fill="WHITE" layoutX="400.0" layoutY="358.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА АВТОМАТИЧЕСКОГО ВЫКЛЮЧАТЕЛЯ" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
