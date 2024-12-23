@@ -4,17 +4,20 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.MainScreenController">
    <children>
       <ImageView fx:id="backgroungImage" fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../screen/главное%20меню/Главная%20страница(без%20кнопок).png" />
          </image>
       </ImageView>
-      <Button fx:id="settingsButton" contentDisplay="CENTER" layoutX="88.0" layoutY="215.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="199.0" prefWidth="223.0">
+      <Button fx:id="settingsButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="88.0" layoutY="216.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="199.0" prefWidth="223.0">
          <graphic>
             <ImageView fx:id="setingsButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -27,7 +30,7 @@
          <font>
             <Font name="MyriadPro-Regular" size="18.0" />
          </font></Text>
-      <Button fx:id="testOfSwitcherButton" contentDisplay="CENTER" layoutX="370.0" layoutY="215.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
+      <Button fx:id="testOfSwitcherButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="370.0" layoutY="216.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
          <graphic>
             <ImageView fx:id="testOfSwitcherButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,5 +44,190 @@
             <Font name="MyriadPro-Regular" size="18.0" />
          </font>
       </Text>
+      <Button fx:id="testOfStageProtectionButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="661.0" layoutY="214.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
+         <graphic>
+            <ImageView fx:id="testOfStageProtectionButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/главное%20меню/иконки/3.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="WHITE" layoutX="691.0" layoutY="355.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА СТУПЕНЧАТОЙ ЗАЩИТЫ" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="eventLoggerButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="949.0" layoutY="214.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
+         <graphic>
+            <ImageView fx:id="eventLoggerButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/главное%20меню/иконки/3.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="WHITE" layoutX="979.0" layoutY="379.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ЖУРНАЛ СОБЫТИЙ" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="handControlButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="948.0" layoutY="475.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
+         <graphic>
+            <ImageView fx:id="testOfHandControlButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/главное%20меню/иконки/8.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="WHITE" layoutX="978.0" layoutY="640.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="РУЧНОЙ ВВОД" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="testOfMeasurementTransformerButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="662.0" layoutY="475.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
+         <graphic>
+            <ImageView fx:id="testOfMeasurementTransformerButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/главное%20меню/иконки/7.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="WHITE" layoutX="683.0" layoutY="620.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА ИЗМЕРИТЕЛЬНОГО ТРАНСФОРМАТОРА" textAlignment="CENTER" wrappingWidth="182.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="testOfDifProtectionButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="371.0" layoutY="475.0" mnemonicParsing="false" onAction="#goToDifProtection" prefHeight="199.0" prefWidth="223.0">
+         <graphic>
+            <ImageView fx:id="testOfDifProtectionButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/главное%20меню/иконки/6.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="WHITE" layoutX="391.0" layoutY="616.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА ДИФФЕРЕНЦИАЛЬНОЙ ЗАЩИТЫ" textAlignment="CENTER" wrappingWidth="182.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="comTradeButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="88.0" layoutY="475.0" mnemonicParsing="false" onAction="#testClick" prefHeight="199.0" prefWidth="223.0">
+         <graphic>
+            <ImageView fx:id="comTradeButtonBackground" fitHeight="169.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/главное%20меню/иконки/5.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="WHITE" layoutX="117.0" layoutY="640.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="COMTRADE" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="dateTimeText" fill="WHITE" layoutX="539.0" layoutY="764.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="23/12/2024   22:42" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="24.0" />
+         </font>
+      </Text>
+      <GridPane layoutX="43.0" layoutY="18.0" prefHeight="82.0" prefWidth="164.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="40.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="124.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР А1" wrappingWidth="121.75800323486328" GridPane.columnIndex="1">
+               <font>
+                  <Font name="MyriadPro-Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР А2" wrappingWidth="119.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="MyriadPro-Regular" size="18.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="inverterA1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="inverterA2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <GridPane layoutX="241.0" layoutY="18.0" prefHeight="82.0" prefWidth="164.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="40.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="124.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР В1" wrappingWidth="121.75800323486328" GridPane.columnIndex="1">
+               <font>
+                  <Font name="MyriadPro-Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР В2" wrappingWidth="119.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="MyriadPro-Regular" size="18.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="inverterB1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="inverterB2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <GridPane layoutX="439.0" layoutY="18.0" prefHeight="82.0" prefWidth="164.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="40.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="124.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР С1" wrappingWidth="121.75800323486328" GridPane.columnIndex="1">
+               <font>
+                  <Font name="MyriadPro-Regular" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР С2" wrappingWidth="119.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="MyriadPro-Regular" size="18.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="inverterC1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="inverterC2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
