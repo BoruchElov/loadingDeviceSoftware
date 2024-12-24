@@ -38,35 +38,35 @@ public class MainScreenController {
     private Parent rootForDifProtection;
 
     @FXML
-    ImageView backgroungImage;
+    private ImageView backgroungImage;
     @FXML
-    ImageView setingsButtonBackground;
+    private ImageView setingsButtonBackground;
     @FXML
-    ImageView testOfHandControlButtonBackground;
+    private ImageView testOfHandControlButtonBackground;
     @FXML
-    ImageView testOfSwitcherButtonBackground;
+    private ImageView testOfSwitcherButtonBackground;
     @FXML
-    ImageView testOfDifProtectionButtonBackground;
+    private ImageView testOfDifProtectionButtonBackground;
     @FXML
-    ImageView comTradeButtonBackground;
+    private ImageView comTradeButtonBackground;
     @FXML
-    ImageView testOfStageProtectionButtonBackground;
+    private ImageView testOfStageProtectionButtonBackground;
     @FXML
-    ImageView eventLoggerButtonBackground;
+    private ImageView eventLoggerButtonBackground;
     @FXML
-    ImageView testOfMeasurementTransformerButtonBackground;
+    private ImageView testOfMeasurementTransformerButtonBackground;
     @FXML
-    ImageView inverterA1Status;
+    private ImageView inverterA1Status;
     @FXML
-    ImageView inverterA2Status;
+    private ImageView inverterA2Status;
     @FXML
-    ImageView inverterB1Status;
+    private ImageView inverterB1Status;
     @FXML
-    ImageView inverterB2Status;
+    private ImageView inverterB2Status;
     @FXML
-    ImageView inverterC1Status;
+    private ImageView inverterC1Status;
     @FXML
-    ImageView inverterC2Status;
+    private ImageView inverterC2Status;
 
 
     Image backImage = new Image(Objects.requireNonNull(getClass().
@@ -110,6 +110,7 @@ public class MainScreenController {
     @FXML
     private Button testOfMeasurementTransformerButton;
 
+    //Объявление текстового поля для вывода даты-времени
     @FXML
     private Text dateTimeText;
 
@@ -233,9 +234,10 @@ public class MainScreenController {
 
             // Обновляем текстовое поле в JavaFX Application Thread
             Platform.runLater(() -> dateTimeText.setText(formattedDateTime));
+            Platform.runLater(() -> System.out.println(1));
         };
         // Запуск задачи с интервалом в 1 минуту
-        scheduler.scheduleAtFixedRate(updateDateTimeTask, 0, 1, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(updateDateTimeTask, 0, 1, TimeUnit.SECONDS);
     }
 
     //Метод для остановки обновления строки даты-времени
