@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,9 +28,10 @@ import java.util.concurrent.TimeUnit;
 
 public class DifProtectionScreenController {
 
-    private boolean shortCircuitButtonStatus = false;
     private boolean windingOneStatus = false;
     private boolean windingTwoStatus = false;
+    private boolean contactOneStatus = false;
+    private boolean contactTwoStatus = false;
 
     private Stage stageForMainScreen;
     private Scene sceneForMainScreen;
@@ -37,6 +39,10 @@ public class DifProtectionScreenController {
 
     @FXML
     private ToggleButton shortCircuitLocationButton;
+    @FXML
+    private Button contactOneButton;
+    @FXML
+    private Button contactTwoButton;
     @FXML
     private ToggleButton phaseAButton;
     @FXML
@@ -75,6 +81,27 @@ public class DifProtectionScreenController {
     private ImageView inverterC1Status;
     @FXML
     private ImageView inverterC2Status;
+    @FXML
+    private ImageView contactOneView;
+    @FXML
+    private ImageView contactTwoView;
+
+    //Объявление текстового поля для задания названия объекта
+    @FXML
+    private TextField objectNameTextField;
+    //Объявление текстовых полей для задания токов фаз
+    @FXML
+    private TextField phaseA1TextField;
+    @FXML
+    private TextField phaseA2TextField;
+    @FXML
+    private TextField phaseB1TextField;
+    @FXML
+    private TextField phaseB2TextField;
+    @FXML
+    private TextField phaseC1TextField;
+    @FXML
+    private TextField phaseC2TextField;
 
     //Объявление текстового поля для вывода даты-времени
     @FXML
@@ -91,6 +118,12 @@ public class DifProtectionScreenController {
             getResource("/images/Polygon1.png")).toExternalForm());
     Image starConnection = new Image(Objects.requireNonNull(getClass().
             getResource("/images/Star1.png")).toExternalForm());
+
+    //Объекты картинок контактов
+    Image normallyClosedContact = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/дифзащита/icon_for_DZ/иконкаНормЗамкКонт.png")).toExternalForm());
+    Image normallyOpenedContact = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png")).toExternalForm());
     
     //Объекты фоновых картинок
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
@@ -176,6 +209,14 @@ public class DifProtectionScreenController {
 
     @FXML
     public void initialize() {
+        //Настройка стилей текстовых полей для ввода
+        setupObjectNameField(objectNameTextField, "Введите название объекта");
+        setupObjectNameField(phaseA1TextField, "Ток А1, А");
+        setupObjectNameField(phaseA2TextField, "Ток А2, А");
+        setupObjectNameField(phaseB1TextField, "Ток В1, А");
+        setupObjectNameField(phaseB2TextField, "Ток В2, А");
+        setupObjectNameField(phaseC1TextField, "Ток С1, А");
+        setupObjectNameField(phaseC2TextField, "Ток С2, А");
         //Задание изображения для статуса инвертора
         inverterA1Status.setImage(statusConnected);
         inverterA2Status.setImage(statusConnected);
@@ -208,21 +249,12 @@ public class DifProtectionScreenController {
         setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
         //Настройка кнопки "Пуск"
         setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
-
-        windingOneConnection.setStyle("-fx-background-color: #79859C; " + // Голубой фон
-                "-fx-border-color: #0A1733; " + // Тёмно-синяя граница
-                "-fx-border-width: 4px; " + // Ширина границы
-                "-fx-background-radius: 15px; " + // Закругление фона
-                "-fx-border-radius: 15px; " + // Закругление границы
-                "-fx-text-fill: white;"); // Цвет текста
-        windingOneView.setImage(deltaConnection);
-        windingTwoConnection.setStyle("-fx-background-color: #79859C; " + // Голубой фон
-                "-fx-border-color: #0A1733; " + // Тёмно-синяя граница
-                "-fx-border-width: 4px; " + // Ширина границы
-                "-fx-background-radius: 15px; " + // Закругление фона
-                "-fx-border-radius: 15px; " + // Закругление границы
-                "-fx-text-fill: white;"); // Цвет текста
-        windingTwoView.setImage(deltaConnection);
+        //Настройка кнопок для выбора схемы соединения обмоток трансформатора
+        setupConnectionSchemesButtons(windingOneConnection, windingOneView, 55, 55);
+        setupConnectionSchemesButtons(windingTwoConnection, windingTwoView, 55, 55);
+        //Настройка кнопок для задания положения контактов
+        setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
+        setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
     }
 
     @FXML
@@ -241,6 +273,7 @@ public class DifProtectionScreenController {
     }
     @FXML
     public void setPictureForWindingOne() {
+        windingOneView.setVisible(true);
         if(windingOneStatus) {
             windingOneView.setImage(starConnection);
             windingOneStatus = false;
@@ -251,12 +284,35 @@ public class DifProtectionScreenController {
     }
     @FXML
     public void setPictureForWindingTwo() {
+        windingTwoView.setVisible(true);
         if(windingTwoStatus) {
             windingTwoView.setImage(starConnection);
             windingTwoStatus = false;
         } else {
             windingTwoView.setImage(deltaConnection);
             windingTwoStatus = true;
+        }
+    }
+    @FXML
+    public void setPictureForContactOne() {
+        contactOneView.setVisible(true);
+        if(contactOneStatus) {
+            contactOneView.setImage(normallyClosedContact);
+            contactOneStatus = false;
+        } else {
+            contactOneView.setImage(normallyOpenedContact);
+            contactOneStatus = true;
+        }
+    }
+    @FXML
+    public void setPictureForContactTwo() {
+        contactTwoView.setVisible(true);
+        if(contactTwoStatus) {
+            contactTwoView.setImage(normallyClosedContact);
+            contactTwoStatus = false;
+        } else {
+            contactTwoView.setImage(normallyOpenedContact);
+            contactTwoStatus = true;
         }
     }
 
@@ -307,6 +363,45 @@ public class DifProtectionScreenController {
                 "-fx-padding: 0; " +              // Убираем отступы
                 "-fx-background-insets: 0; " +    // Убираем стандартные отступы JavaFX
                 "-fx-border-insets: 0; ");
+    }
+
+    //Метод для настройки параметров текстового поля с названием объекта
+    public void setupObjectNameField(TextField textField, String prompt) {
+        //Настройка стиля текстового поля
+        textField.setStyle("-fx-background-color: #CFECF8; " + // Голубой фон
+                "-fx-border-color: #221E1F; " + // Чёрная граница
+                "-fx-border-width: 3px; " +        // Ширина границы
+                "-fx-background-radius: 17px; " + // Закругление фона
+                "-fx-border-radius: 15px; " +     // Закругление границы (совпадает с фоном)
+                "-fx-text-fill: black; " +        // Цвет текста
+                "-fx-font-size: 20px; " +         // Размер текста
+                "-fx-font-family: 'Myriad Pro'; " +    // Шрифт текста
+                "-fx-padding: 0; " +              // Убираем отступы
+                "-fx-background-insets: 0; " +    // Убираем стандартные отступы JavaFX
+                "-fx-border-insets: 0; ");
+        //Задание текста по умолчанию
+        textField.setPromptText(prompt);
+        //Выравнивание по центру
+        textField.setAlignment(javafx.geometry.Pos.CENTER);
+        //Код для отключения мигания каретки при вводе
+        textField.setOnAction(event -> {
+            textField.getParent().requestFocus();
+        });
+    }
+    //Метод для настройки кнопок соединения обмоток
+    public void setupConnectionSchemesButtons(Button button, ImageView imageView, double width, double height) {
+        button.setStyle("-fx-background-color: #CFECF8; " + // Голубой фон
+                "-fx-border-color: #221E1F; " + // Тёмно-синяя граница
+                "-fx-border-width: 3px; " + // Ширина границы
+                "-fx-background-radius: 17px; " + // Закругление фона
+                "-fx-border-radius: 15px; " + // Закругление границы
+                "-fx-text-fill: white;" +
+                "-fx-padding: 0; " +              // Убираем отступы
+                "-fx-background-insets: 0; " +    // Убираем стандартные отступы JavaFX
+                "-fx-border-insets: 0; "); // Цвет текста
+        imageView.setVisible(false);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
     }
 
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
