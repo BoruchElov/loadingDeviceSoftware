@@ -37,6 +37,10 @@ public class DifProtectionScreenController {
     private Scene sceneForMainScreen;
     private Parent rootForMainScreen;
 
+    private Stage stageForStartScreen;
+    private Scene sceneForStartScreen;
+    private Parent rootForStartScreen;
+
     @FXML
     private ToggleButton shortCircuitLocationButton;
     @FXML
@@ -259,6 +263,7 @@ public class DifProtectionScreenController {
 
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
+        stopUpdatingDateAndTime();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("baseWindow.fxml"));
         rootForMainScreen = loader.load();
 
@@ -269,7 +274,20 @@ public class DifProtectionScreenController {
         sceneForMainScreen = new Scene(rootForMainScreen);
         stageForMainScreen.setScene(sceneForMainScreen);
         stageForMainScreen.show();
+    }
+    @FXML
+    public void goToStartScreen (ActionEvent event) throws IOException {
         stopUpdatingDateAndTime();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DifProtectionStart.fxml"));
+        rootForStartScreen = loader.load();
+
+        DifProtectionSecondScreenController StartController = loader.getController();
+
+        //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
+        stageForStartScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
+        sceneForStartScreen = new Scene(rootForStartScreen);
+        stageForStartScreen.setScene(sceneForStartScreen);
+        stageForStartScreen.show();
     }
     @FXML
     public void setPictureForWindingOne() {
