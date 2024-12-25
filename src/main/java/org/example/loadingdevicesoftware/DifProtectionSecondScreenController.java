@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -328,5 +329,50 @@ public class DifProtectionSecondScreenController {
     //Метод, срабатывающий при нажатии галочки пятого статуса
     public void statusSixTrue() {
         startButton.setDisable(false);
+    }
+    /**
+     * Показывает всплывающее окно с заданным текстом и заголовком.
+     *
+     * @param alertType Тип окна (например, INFORMATION, WARNING, ERROR)
+     * @param title     Заголовок окна
+     * @param message   Текст сообщения
+     */
+    public static void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);          // Устанавливаем заголовок
+        alert.setHeaderText(null);      // Убираем стандартный заголовок
+        alert.setContentText(message);  // Устанавливаем текст сообщения
+
+        alert.showAndWait(); // Показываем окно и ждем его закрытия
+    }
+    //метод для вызова всплывающего окна
+    public void errorMethod1() {
+        showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
+                "Отсутствуют параметры формы");
+    }
+    //метод для вызова всплывающего окна
+    public void errorMethod2() {
+        showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
+                "Настроено недостаточное количество инверторов");
+    }
+    //метод для вызова всплывающего окна
+    public void errorMethod3() {
+        showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
+                "Включено недостаточное количество инверторов");
+    }
+    //метод для вызова всплывающего окна
+    public void errorMethod4() {
+        showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
+                "Ошибка синхронизации");
+    }
+    //метод для вызова всплывающего окна
+    public void errorMethod5() {
+        showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
+                "Ошибка проверки галетного переключателя");
+    }
+    //метод для вызова всплывающего окна
+    public void errorMethod6() {
+        showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
+                "Ошибка проверки сопротивления");
     }
 }

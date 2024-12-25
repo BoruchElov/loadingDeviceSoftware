@@ -110,17 +110,17 @@
                </font>
             </Text>
             <Button fx:id="status1True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusOneTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" />
-            <Button fx:id="status1False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" />
+            <Button fx:id="status1False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod1" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" />
             <Button fx:id="status2True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusTwoTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="status2False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Button fx:id="status2False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod2" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Button fx:id="status3True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusThreeTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button fx:id="status3False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Button fx:id="status3False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod3" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Button fx:id="status4True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusFourTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Button fx:id="status4False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Button fx:id="status4False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod4" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Button fx:id="status5True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusFiveTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button fx:id="status5False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Button fx:id="status5False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod5" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Button fx:id="status6True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusSixTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Button fx:id="status6False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Button fx:id="status6False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod6" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             <ImageView fx:id="status1FalseImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
             <ImageView fx:id="status1TrueImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
             <ImageView fx:id="status2TrueImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
