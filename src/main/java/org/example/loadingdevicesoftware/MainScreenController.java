@@ -234,7 +234,7 @@ public class MainScreenController {
 
             // Обновляем текстовое поле в JavaFX Application Thread
             Platform.runLater(() -> dateTimeText.setText(formattedDateTime));
-            Platform.runLater(() -> System.out.println(1));
+            //Platform.runLater(() -> System.out.println(1));
         };
         // Запуск задачи с интервалом в 1 минуту
         scheduler.scheduleAtFixedRate(updateDateTimeTask, 0, 1, TimeUnit.SECONDS);
