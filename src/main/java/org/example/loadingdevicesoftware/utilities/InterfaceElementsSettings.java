@@ -33,7 +33,8 @@ public class InterfaceElementsSettings {
     public InterfaceElementsSettings() {}
 
     public void buttonSettings(colours colourOfBackground, colours colourOfBorder) {
-
+        int min = 7;
+        System.out.printf("S = ", min);
     }
 
 }
