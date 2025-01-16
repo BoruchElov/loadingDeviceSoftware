@@ -175,7 +175,7 @@ public class DifProtectionScreenController {
     Image SRABI = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/дифзащита/SR_I/SR_AB_I.png")).toExternalForm());
     Image SRABCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_ABC_I.jpg")).toExternalForm());
+            getResource("/screen/дифзащита/SR_I/SR_ABC_I.png")).toExternalForm());
     Image SRACI = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/дифзащита/SR_I/SR_AC_I.png")).toExternalForm());
     Image SRBI = new Image(Objects.requireNonNull(getClass().
