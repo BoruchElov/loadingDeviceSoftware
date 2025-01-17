@@ -12,8 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -23,14 +21,12 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class DifProtectionSecondScreenController {
+public class _7_DifProtectionSecondScreenController {
 
     private Stage stageForMainScreen;
     private Scene sceneForMainScreen;
@@ -133,14 +129,14 @@ public class DifProtectionSecondScreenController {
     private ImageView backgroundImageView;
     //Объекты картинок для кнопок и статусов инверторов
     private Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/Кнопка(черная).png")).toExternalForm());
+            getResource("/screen/7.дифзащита/Кнопка(черная).png")).toExternalForm());
     private Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
     private Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
     //Объект картинки для фона
     private Image background = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/диф_защита_2форма(без кнопок).png")).toExternalForm());
+            getResource("/screen/7.дифзащита/диф_защита_2форма(без кнопок).png")).toExternalForm());
 
 
     @FXML
@@ -228,10 +224,10 @@ public class DifProtectionSecondScreenController {
         //Вызов метода для остановки выполнения задачи по обновлению даты и времени
         stopUpdatingDateAndTime();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("baseWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("0.baseWindow.fxml"));
         rootForMainScreen = loader.load();
 
-        MainScreenController mainController = loader.getController();
+        _0_MainScreenController mainController = loader.getController();
 
         stageForMainScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
         sceneForMainScreen = new Scene(rootForMainScreen);
@@ -244,10 +240,10 @@ public class DifProtectionSecondScreenController {
         //Вызов метода для остановки выполнения задачи по обновлению даты и времени
         stopUpdatingDateAndTime();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DifProtection.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("7.DifProtection.fxml"));
         rootForDifProtection = loader.load();
 
-        DifProtectionScreenController DifProtectionController = loader.getController();
+        _7_DifProtectionScreenController DifProtectionController = loader.getController();
 
         stageForDifProtection = (Stage)((Node)event.getSource()).getScene().getWindow();
         sceneForDifProtection = new Scene(rootForDifProtection, 1280, 800);

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class SettingsScreenController {
+public class _1_SettingsScreenController {
 
     private Stage stageForMainScreen;
     private Scene sceneForMainScreen;
@@ -102,17 +102,17 @@ public class SettingsScreenController {
 
         // Если файл отсутствует, создаём его с значением по умолчанию
         if (!configFile.exists()) {
-            SettingsManager.saveWorkingDirectory(CONFIG_FILE, System.getProperty("user.home"));
+            _1_SettingsManager.saveWorkingDirectory(CONFIG_FILE, System.getProperty("user.home"));
         }
 
         // Загружаем рабочую директорию
-        workingDirectory = SettingsManager.loadWorkingDirectory(CONFIG_FILE);
+        workingDirectory = _1_SettingsManager.loadWorkingDirectory(CONFIG_FILE);
 
         // Установка пути к файлу настроек
         settingsFilePath = workingDirectory + File.separator + "settings.properties";
 
         // Пример загрузки настроек
-        String[][] loadedSettings = SettingsManager.loadAddressPhaseSettings(settingsFilePath, PAIR_COUNT);
+        String[][] loadedSettings = _1_SettingsManager.loadAddressPhaseSettings(settingsFilePath, PAIR_COUNT);
         for (int i = 0; i < PAIR_COUNT; i++) {
             System.out.println("Address: " + loadedSettings[0][i] + ", Phase: " + loadedSettings[1][i]);
         }
@@ -179,7 +179,7 @@ public class SettingsScreenController {
             directoryField.setText(selectedPath);
 
             // Сохраняем путь рабочей директории
-            SettingsManager.saveWorkingDirectory(CONFIG_FILE, selectedPath);
+            _1_SettingsManager.saveWorkingDirectory(CONFIG_FILE, selectedPath);
 
             // Обновляем путь к файлу настроек
             settingsFilePath = selectedPath + File.separator + "settings.properties";
@@ -195,7 +195,7 @@ public class SettingsScreenController {
         String[] phases = {phaseComboBox1.getValue(), phaseComboBox2.getValue(), phaseComboBox3.getValue(),
                 phaseComboBox4.getValue(), phaseComboBox5.getValue(), phaseComboBox6.getValue()}; // Пример данных
 
-        SettingsManager.saveAddressPhaseSettings(settingsFilePath, addresses, phases);
+        _1_SettingsManager.saveAddressPhaseSettings(settingsFilePath, addresses, phases);
 
         addressComboBox1.setValue(addresses[0]);
         addressComboBox2.setValue(addresses[1]);
@@ -217,7 +217,7 @@ public class SettingsScreenController {
         String[] addresses = {"Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано"};
         String[] phases = {"Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано", "Не выбрано"};
 
-        SettingsManager.saveAddressPhaseSettings(settingsFilePath, addresses, phases);
+        _1_SettingsManager.saveAddressPhaseSettings(settingsFilePath, addresses, phases);
         
         addressComboBox1.setValue(addresses[0]);
         addressComboBox2.setValue(addresses[1]);
@@ -237,17 +237,17 @@ public class SettingsScreenController {
     @FXML
     public void updateActualAddressPhase() {
         for(int i = 0; i < 6; i++) {
-            actualValuesOfAddresses[i] = SettingsManager.loadAddressPhaseSettings(settingsFilePath, 6)[0][i];
-            actualValuesOfPhases[i] = SettingsManager.loadAddressPhaseSettings(settingsFilePath, 6)[1][i];
+            actualValuesOfAddresses[i] = _1_SettingsManager.loadAddressPhaseSettings(settingsFilePath, 6)[0][i];
+            actualValuesOfPhases[i] = _1_SettingsManager.loadAddressPhaseSettings(settingsFilePath, 6)[1][i];
         }
     }
     
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("baseWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("0.baseWindow.fxml"));
         rootForMainScreen = loader.load();
 
-        MainScreenController mainController = loader.getController();
+        _0_MainScreenController mainController = loader.getController();
 
         //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
         stageForMainScreen = (Stage)((Node)event.getSource()).getScene().getWindow();

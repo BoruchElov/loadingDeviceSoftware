@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class DifProtectionScreenController {
+public class _7_DifProtectionScreenController {
 
     private boolean windingOneStatus = false;
     private boolean windingTwoStatus = false;
@@ -125,91 +125,91 @@ public class DifProtectionScreenController {
 
     //Объекты картинок контактов
     Image normallyClosedContact = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/icon_for_DZ/иконкаНормЗамкКонт.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормЗамкКонт.png")).toExternalForm());
     Image normallyOpenedContact = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png")).toExternalForm());
     
     //Объекты фоновых картинок
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
+            getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
     
     //Папка RS_I
     Image RSI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_._I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_._I.png")).toExternalForm());
     Image RSAI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_A_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_A_I.png")).toExternalForm());
     Image RSABI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_AB_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_AB_I.png")).toExternalForm());
     Image RSABCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_ABC_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_ABC_I.png")).toExternalForm());
     Image RSACI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_AC_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_AC_I.png")).toExternalForm());
     Image RSBI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_B_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_B_I.png")).toExternalForm());
     Image RSBCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_BC_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_BC_I.png")).toExternalForm());
     Image RSCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_I/RS_C_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_I/RS_C_I.png")).toExternalForm());
     //Папка RS_O
     Image RSO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_._O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_._O.png")).toExternalForm());
     Image RSAO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_A_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_A_O.png")).toExternalForm());
     Image RSABO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_AB_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_AB_O.png")).toExternalForm());
     Image RSABCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_ABC_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_ABC_O.png")).toExternalForm());
     Image RSACO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_AC_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_AC_O.png")).toExternalForm());
     Image RSBO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_B_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_B_O.png")).toExternalForm());
     Image RSBCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_BC_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_BC_O.png")).toExternalForm());
     Image RSCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/RS_O/RS_C_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/RS_O/RS_C_O.png")).toExternalForm());
     //Папка SR_I
     Image SRI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_._I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_._I.png")).toExternalForm());
     Image SRAI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_A_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_A_I.png")).toExternalForm());
     Image SRABI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_AB_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_AB_I.png")).toExternalForm());
     Image SRABCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_ABC_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_ABC_I.png")).toExternalForm());
     Image SRACI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_AC_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_AC_I.png")).toExternalForm());
     Image SRBI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_B_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_B_I.png")).toExternalForm());
     Image SRBCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_BC_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_BC_I.png")).toExternalForm());
     Image SRCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_I/SR_C_I.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_I/SR_C_I.png")).toExternalForm());
     //Папка SR_O
     Image SRO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_._O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_._O.png")).toExternalForm());
     Image SRAO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_A_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_A_O.png")).toExternalForm());
     Image SRABO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_AB_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_AB_O.png")).toExternalForm());
     Image SRABCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_ABC_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_ABC_O.png")).toExternalForm());
     Image SRACO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_AC_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_AC_O.png")).toExternalForm());
     Image SRBO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_B_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_B_O.png")).toExternalForm());
     Image SRBCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_BC_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_BC_O.png")).toExternalForm());
     Image SRCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/SR_O/SR_C_O.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/SR_O/SR_C_O.png")).toExternalForm());
     
     
     //Объекты картинок для кнопок и статусов инверторов
     Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
     Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
     Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
 
     @FXML
     public void initialize() {
@@ -264,10 +264,10 @@ public class DifProtectionScreenController {
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
         stopUpdatingDateAndTime();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("baseWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("0.baseWindow.fxml"));
         rootForMainScreen = loader.load();
 
-        MainScreenController mainController = loader.getController();
+        _0_MainScreenController mainController = loader.getController();
 
         //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
         stageForMainScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -278,10 +278,10 @@ public class DifProtectionScreenController {
     @FXML
     public void goToStartScreen (ActionEvent event) throws IOException {
         stopUpdatingDateAndTime();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DifProtectionStart.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("9.DifProtectionStart.fxml"));
         rootForStartScreen = loader.load();
 
-        DifProtectionSecondScreenController StartController = loader.getController();
+        _7_DifProtectionSecondScreenController StartController = loader.getController();
 
         //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
         stageForStartScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -406,6 +406,7 @@ public class DifProtectionScreenController {
             textField.getParent().requestFocus();
         });
     }
+
     //Метод для настройки кнопок соединения обмоток
     public void setupConnectionSchemesButtons(Button button, ImageView imageView, double width, double height) {
         button.setStyle("-fx-background-color: #CFECF8; " + // Голубой фон

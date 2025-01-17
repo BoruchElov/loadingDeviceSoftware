@@ -11,17 +11,17 @@ import java.util.Objects;
 
 public class ApplicationFile extends Application {
 
-    private MainScreenController mainScreenController;
-    private DifProtectionScreenController difProtectionScreenController;
+    private _0_MainScreenController a0MainScreenController;
+    private _7_DifProtectionScreenController a7DifProtectionScreenController;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationFile.class.
-                getResource("baseWindow.fxml"));
+                getResource("0.baseWindow.fxml"));
         FXMLLoader fxmlDPLoader = new FXMLLoader(ApplicationFile.class.
                 getResource("DifProtectionScreen.fxml"));
-        mainScreenController = fxmlLoader.getController();
-        difProtectionScreenController = fxmlDPLoader.getController();
+        a0MainScreenController = fxmlLoader.getController();
+        a7DifProtectionScreenController = fxmlDPLoader.getController();
         Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().
                 getResource("/images/control-system.png")).toExternalForm()));
@@ -35,12 +35,12 @@ public class ApplicationFile extends Application {
     @Override
     public void stop() throws Exception {
         // Остановка потока при завершении приложения
-        if (mainScreenController != null) {
-            mainScreenController.stopUpdatingDateAndTime();
+        if (a0MainScreenController != null) {
+            a0MainScreenController.stopUpdatingDateAndTime();
         }
         // Остановка потока при завершении приложения
-        if (difProtectionScreenController != null) {
-            difProtectionScreenController.stopUpdatingDateAndTime();
+        if (a7DifProtectionScreenController != null) {
+            a7DifProtectionScreenController.stopUpdatingDateAndTime();
         }
     }
 

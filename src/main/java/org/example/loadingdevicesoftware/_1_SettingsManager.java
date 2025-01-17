@@ -3,7 +3,7 @@ package org.example.loadingdevicesoftware;
 import java.io.*;
 import java.util.Properties;
 
-public class SettingsManager {
+public class _1_SettingsManager {
 
     // Сохранение адресов и фаз в указанный файл
     public static void saveAddressPhaseSettings(String filePath, String[] addresses, String[] phases) {
