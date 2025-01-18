@@ -3,45 +3,23 @@ package org.example.loadingdevicesoftware;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 
 public class _7_DifProtectionSecondScreenController {
 
-    private Stage stageForMainScreen;
-    private Scene sceneForMainScreen;
-    private Parent rootForMainScreen;
-
-    private Stage stageForDifProtection;
-    private Scene sceneForDifProtection;
-    private Parent rootForDifProtection;
-
-    //Объявление объекта для получения текущих значений даты и времени
-    LocalDateTime currentDateTime;
-    //Создание объекта для задания форматирования значений даты и времени
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy   HH:mm");
-    //Объявление объекта для выполнения команды по заданному расписанию
-    private ScheduledExecutorService scheduler;
+    private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
     //Объявление текстового поля для вывода даты-времени
     @FXML
@@ -141,12 +119,11 @@ public class _7_DifProtectionSecondScreenController {
 
     @FXML
     public void initialize() {
+        //Привязка текстового поля к потоку обновления даты и времени
+        dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
+
         //Установка изображения на фон
         backgroundImageView.setImage(background);
-        //Инициализация планировщика задач
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        //Вызов метода для запуска задачи по обновлению строки даты и времени
-        startUpdatingDateAndTime();
         //Настройка кнопки "Меню"
         setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ", 138, 70);
         //Настройка кнопки "Пуск"
@@ -183,72 +160,21 @@ public class _7_DifProtectionSecondScreenController {
         startButton.setDisable(true);
     }
 
-    //Метод для выполнения задачи обновления строки даты-времени
-    public void startUpdatingDateAndTime() {
-        Runnable updateDateTimeTask = () -> {
-            currentDateTime = LocalDateTime.now();
-            String formattedDateTime = currentDateTime.format(formatter);
-
-            // Обновляем текстовое поле в JavaFX Application Thread
-            Platform.runLater(() -> dateTimeText.setText(formattedDateTime));
-            //Platform.runLater(() -> System.out.println(1));
-        };
-        // Запуск задачи с интервалом в 1 минуту
-        scheduler.scheduleAtFixedRate(updateDateTimeTask, 0, 1, TimeUnit.SECONDS);
-    }
-    //Метод для остановки обновления строки даты-времени
-    public void stopUpdatingDateAndTime() {
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdown();
-        }
-    }
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
     public void setupBottomButtons(Button button, ImageView imageView, Image image, String text,
-                                   double width, double height) {
-        imageView.setImage(image);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
-        button.setText(text);
-        button.setStyle("-fx-background-color: #D0ECF8; " + // Светло-голубой фон
-                "-fx-background-radius: 17px; " + // Закругление фона
-                "-fx-text-fill: black; " +        // Цвет текста
-                "-fx-font-size: 26px; " +         // Размер текста
-                "-fx-font-family: 'Myriad Pro'; " +    // Шрифт текста
-                "-fx-padding: 0; " +              // Убираем отступы
-                "-fx-background-insets: 0; " +    // Убираем стандартные отступы JavaFX
-                "-fx-border-insets: 0; ");
+                                   int width, int height) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
+                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
+                imageView, image, button, width, height, true, text);
     }
     //Метод для перехода на экран главного меню
     @FXML
     public void goToMainScreen(ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("0.baseWindow.fxml"));
-        rootForMainScreen = loader.load();
-
-        _0_MainScreenController mainController = loader.getController();
-
-        stageForMainScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForMainScreen = new Scene(rootForMainScreen);
-        stageForMainScreen.setScene(sceneForMainScreen);
-        stageForMainScreen.show();
-
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "baseWindow.fxml");
     }
     //Метод для перехода на экран сценария диф.защиты
     public void goToDPScreen(ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("7.DifProtection.fxml"));
-        rootForDifProtection = loader.load();
-
-        _7_DifProtectionScreenController DifProtectionController = loader.getController();
-
-        stageForDifProtection = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForDifProtection = new Scene(rootForDifProtection, 1280, 800);
-        stageForDifProtection.setScene(sceneForDifProtection);
-        stageForDifProtection.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "DifProtection.fxml");
     }
 
     /**
@@ -270,17 +196,9 @@ public class _7_DifProtectionSecondScreenController {
     }
     //Метод для настройки кнопок статусов
     private void setupStatusButton(Button button, ImageView imageView, Image image) {
-        imageView.setImage(image);
-        // Делаем кнопку невидимой
-        //button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
-        button.setStyle("-fx-background-color: #D0ECF8; " + // Светло-голубой фон
-                "-fx-background-radius: 17px; " + // Закругление фона
-                "-fx-text-fill: black; " +        // Цвет текста
-                "-fx-font-size: 26px; " +         // Размер текста
-                "-fx-font-family: 'Myriad Pro'; " +    // Шрифт текста
-                "-fx-padding: 0; " +              // Убираем отступы
-                "-fx-background-insets: 0; " +    // Убираем стандартные отступы JavaFX
-                "-fx-border-insets: 0; ");
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                0, 17, 0, ApplicationConstants.colours.WHITE, 0,
+                imageView, image, button, 20, 20, true);
     }
     //Метод для отключения видимости кнопок статусов
     public void setStatucButtonDisabled(Button button, ImageView imageView) {
