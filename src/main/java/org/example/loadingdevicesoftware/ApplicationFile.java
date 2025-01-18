@@ -14,8 +14,8 @@ public class ApplicationFile extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationFile.class.
-                getResource("baseWindow.fxml"));
-        MainScreenController mainScreenController = fxmlLoader.getController();
+                getResource("0.baseWindow.fxml"));
+        _0_MainScreenController mainScreenController = fxmlLoader.getController();
         Scene scene = new Scene(fxmlLoader.load(), ApplicationConstants.APPLICATION_WINDOW_LENGTH,
                 ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().

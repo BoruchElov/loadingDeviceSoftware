@@ -244,16 +244,7 @@ public class _1_SettingsScreenController {
     
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("0.baseWindow.fxml"));
-        rootForMainScreen = loader.load();
-
-        _0_MainScreenController mainController = loader.getController();
-
-        //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
-        stageForMainScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForMainScreen = new Scene(rootForMainScreen);
-        stageForMainScreen.setScene(sceneForMainScreen);
-        stageForMainScreen.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
 
     }

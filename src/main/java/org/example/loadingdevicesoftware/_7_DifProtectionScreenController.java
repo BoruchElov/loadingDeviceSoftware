@@ -239,12 +239,12 @@ public class _7_DifProtectionScreenController {
 
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "baseWindow.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
 
     @FXML
     public void goToStartScreen (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "DifProtectionStart.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "9.DifProtectionStart.fxml");
     }
 
     @FXML
@@ -307,7 +307,7 @@ public class _7_DifProtectionScreenController {
 
     //Метод, запускающийся при нажатии на кнопку "Фаза А"
     public void phaseA() {
-        commonMethodForRightSideButtons(phaseBButton);
+        commonMethodForRightSideButtons(phaseAButton);
     }
 
     //Метод, запускающийся при нажатии на кнопку "Фаза В"

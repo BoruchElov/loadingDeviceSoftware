@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.Objects;
 
-public class MainScreenController {
+public class _0_MainScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
@@ -73,7 +73,6 @@ public class MainScreenController {
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
     Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
-
 
 
 
@@ -179,146 +178,52 @@ public class MainScreenController {
      */
     @FXML
     public void goToSettings (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "settingsWindow.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "1.settingsWindow.fxml");
     }
 
-    /**
-     * Метод для перехода на страницу сценария Диф.защиты.
-     * @param event
-     * @throws IOException
-     */
     //Метод для перехода на страницу сценария теста выключателя
      public void goToTestOfSwitcher (ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("2.TestOfSwitcher3X.fxml"));
-        rootForTestOfSwitcher = loader.load();
-
-        _2_TestOfSwitcher3XScreenController a2TestOfSwitcher1XScreenController = loader.getController();
-
-        stageForTestOfSwitcher = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForTestOfSwitcher = new Scene(rootForTestOfSwitcher, 1280, 800);
-        stageForTestOfSwitcher.setScene(sceneForTestOfSwitcher);
-        stageForTestOfSwitcher.show();
-    }
+         InterfaceElementsLogic.switchScene((Node) event.getSource(), "2.TestOfSwitcher3X.fxml");
+     }
 
     //Метод для перехода на страницу сценария теста РЗА
     public void goToTestOfStageProtection (ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("3.TestOfStageProtection3X.fxml"));
-        rootForTestOfStageProtection = loader.load();
-
-        _3_TestOfStageProtection3XScreenController test3TestOfStageProtection1XScreenController = loader.getController();
-
-        stageForTestOfStageProtection = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForTestOfStageProtection = new Scene(rootForTestOfStageProtection, 1280, 800);
-        stageForTestOfStageProtection.setScene(sceneForTestOfStageProtection);
-        stageForTestOfStageProtection.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "3.TestOfStageProtection3X.fxml");
     }
 
     //Метод для перехода на страницу сценария Журнал событий
     public void goToEventLogger (ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("4.EventLogger.fxml"));
-        rootForEventLogger = loader.load();
-
-        _4_EventLoggerScreenController a4EventLoggerScreenController = loader.getController();
-
-        stageForEventLogger = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForEventLogger = new Scene(rootForEventLogger, 1280, 800);
-        stageForEventLogger.setScene(sceneForEventLogger);
-        stageForEventLogger.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "4.EventLogger.fxml");
     }
 
     //Метод для перехода на страницу сценария Проверка измерительного трансформатора
     public void goToTestOfMeasurementTransformer (ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("5.TestOfMeasurementTransformer.fxml"));
-        rootForTestOfMeasurementTransformer = loader.load();
-
-        _5_TestOfMeasurementTransformerScreenController a5TestOfMeasurementTransformerScreenController = loader.getController();
-
-        stageForTestOfMeasurementTransformer = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForTestOfMeasurementTransformer = new Scene(rootForTestOfMeasurementTransformer, 1280, 800);
-        stageForTestOfMeasurementTransformer.setScene(sceneForTestOfMeasurementTransformer);
-        stageForTestOfMeasurementTransformer.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "5.TestOfMeasurementTransformer.fxml");
     }
 
-    //Метод для перехода на страницу сценария Журнал событий
+    //Метод для перехода на страницу сценария Comtrade
     public void goToComTrade (ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("6.ComTrade.fxml"));
-        rootForComTrade = loader.load();
-
-        _6_ComTradeScreenController comTraderScreenController = loader.getController();
-
-        stageForComTrade = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForComTrade = new Scene(rootForComTrade, 1280, 800);
-        stageForComTrade.setScene(sceneForComTrade);
-        stageForComTrade.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "6.ComTrade.fxml");
     }
 
     //Метод для перехода на страницу сценария диф.защиты
     public void goToDifProtection (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "DifProtection.fxml");
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("7.DifProtection.fxml"));
-        rootForDifProtection = loader.load();
-
-        _7_DifProtectionScreenController DifProtectionController = loader.getController();
-
-        stageForDifProtection = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForDifProtection = new Scene(rootForDifProtection, 1280, 800);
-        stageForDifProtection.setScene(sceneForDifProtection);
-        stageForDifProtection.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
     }
 
+    //Метод для перехода на страницу сценария Ручное управление
+    public void goToHandControl (ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "8.HandControl.fxml");
+    }
+
+    //Метод для перехода на страницу сценария Отладка
+    public void goToDeBugger (ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "9.DeBugger.fxml");
+    }
     /**
      * Тестовый метод для проверки работоспособности кнопки. Печатает в консоль текст "Кнопка работает".
      * Позже удалю.
      */
-    //Метод для перехода на страницу сценария Журнал событий
-    public void goToHandControl (ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("8.HandControl.fxml"));
-        rootForHandControl = loader.load();
-
-        _8_HandControlScreenController a8HandControlScreenController = loader.getController();
-
-        stageForHandControl = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForHandControl = new Scene(rootForHandControl, 1280, 800);
-        stageForHandControl.setScene(sceneForHandControl);
-        stageForHandControl.show();
-    }
-
-    //Метод для перехода на страницу сценария Журнал событий
-    public void goToDeBugger (ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        stopUpdatingDateAndTime();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("9.DeBugger.fxml"));
-        rootForDeBugger = loader.load();
-
-        _9_DeBuggerScreenController a9DeBuggerScreenController = loader.getController();
-
-        stageForDeBugger = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForDeBugger = new Scene(rootForDeBugger, 1280, 800);
-        stageForDeBugger.setScene(sceneForDeBugger);
-        stageForDeBugger.show();
-    }
-
     //Тестовый метод для проверки работы кнопки
     public void testClick() {
         System.out.println("Кнопка работает");

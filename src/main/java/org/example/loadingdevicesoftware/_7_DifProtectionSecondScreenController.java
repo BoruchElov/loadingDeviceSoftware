@@ -170,11 +170,11 @@ public class _7_DifProtectionSecondScreenController {
     //Метод для перехода на экран главного меню
     @FXML
     public void goToMainScreen(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "baseWindow.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
     //Метод для перехода на экран сценария диф.защиты
     public void goToDPScreen(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "DifProtection.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
     }
 
     /**
