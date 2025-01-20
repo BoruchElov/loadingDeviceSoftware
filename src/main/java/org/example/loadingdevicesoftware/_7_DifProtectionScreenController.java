@@ -88,7 +88,7 @@ public class _7_DifProtectionScreenController {
     //Объявление текстового поля для задания названия объекта
     @FXML
     private TextField objectNameTextField;
-    //Объявление текстового поля для задания названия объекта
+    //Объявление текстового поля для задания ФИО работника
     @FXML
     private TextField userNameTextField;
     //Объявление текстовых полей для задания токов фаз
@@ -140,7 +140,7 @@ public class _7_DifProtectionScreenController {
     //Объекты картинок для кнопок и статусов инверторов
     Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
-    
+
 
     @FXML
     public void initialize() {
@@ -215,7 +215,7 @@ public class _7_DifProtectionScreenController {
 
     @FXML
     public void goToStartScreen (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "9.DifProtectionStart.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtectionStart.fxml");
     }
 
     @FXML
