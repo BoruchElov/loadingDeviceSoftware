@@ -7,31 +7,128 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class _5_TestOfMeasurementTransformerScreenController {
 
-    private Stage stageForMainScreen;
-    private Scene sceneForMainScreen;
-    private Parent rootForMainScreen;
+    private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
-
+    //кнопки
     @FXML
     private Button toMenuButton;
+    @FXML
+    private Button startButton;
 
+    // картинка фона
+    @FXML
+    private ImageView backgroundImageView;
+    //инвертора
+    @FXML
+    private ImageView inverterA1Status;
+    @FXML
+    private ImageView inverterA2Status;
+    @FXML
+    private ImageView inverterB1Status;
+    @FXML
+    private ImageView inverterB2Status;
+    @FXML
+    private ImageView inverterC1Status;
+    @FXML
+    private ImageView inverterC2Status;
+    //картинка кнопок старт/меню
+    @FXML
+    ImageView toMenuButtonImageView;
+    @FXML
+    ImageView startButtonImageView;
+
+    //Объявление текстового поля для задания названия объекта
+    @FXML
+    private TextField objectNameTextField;
+    //Объявление текстового поля для задания ФИО работника
+    @FXML
+    private TextField userNameTextField;
+    //Объявление текстовых полей для задания токов фаз/ фазового угла
+    @FXML
+    private TextField phaseA1TextField;
+    @FXML
+    private TextField angleA1TextField;
+
+    //Объявление текстового поля для вывода даты-времени
+    @FXML
+    private Text dateTimeText;
+
+    //Объект фоновой картинки
+    Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/5.проверкаИзмерительногоТрансформатора/ПроверкаИзмерительногоТранса1форма(безКнопок).png")).toExternalForm());
+
+    //Объекты картинок для кнопок и статусов инверторов
+    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
+    Image statusConnected = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
+    Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
+
+    public void initialize() {
+        dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
+        //Настройка стилей текстовых полей для ввода
+        setupObjectNameField(objectNameTextField, "Введите название объекта");
+        setupObjectNameField(userNameTextField, "Введите ФИО исполнителя");
+
+        setupObjectNameField(phaseA1TextField, "         А");
+        setupObjectNameField(angleA1TextField, "    °");
+
+        //Задание изображений для статусов инверторов
+        inverterA1Status.setImage(statusConnected);
+        inverterA2Status.setImage(statusConnected);
+        inverterB1Status.setImage(statusConnected);
+        inverterB2Status.setImage(statusConnected);
+        inverterC1Status.setImage(statusConnected);
+        inverterC2Status.setImage(statusConnected);
+        //Установка картинки на фон
+        backgroundImageView.setImage(backImageOutSC);
+
+        //Настройка кнопки "Меню"
+        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
+        //Настройка кнопки "Пуск"
+        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
+    }
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("0.baseWindow.fxml"));
-        rootForMainScreen = loader.load();
-
-        _0_MainScreenController mainController = loader.getController();
-
-        //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
-        stageForMainScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForMainScreen = new Scene(rootForMainScreen);
-        stageForMainScreen.setScene(sceneForMainScreen);
-        stageForMainScreen.show();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
+    @FXML
+    public void goToStartScreen (ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtectionStart.fxml");
+    }
+
+    //Метод для настройки параметров текстового поля с названием объекта
+    public void setupObjectNameField(TextField textField, String prompt) {
+        interfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
+                prompt);
+    }
+
+    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
+    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
+                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
+                imageView, image, button, 138, 64, true, text);
+    }
+
+    //Тестовый метод для проверки работы кнопки
+    public void testClick() {
+        System.out.println("Кнопка работает");
+    }
+
+
+
 }
+

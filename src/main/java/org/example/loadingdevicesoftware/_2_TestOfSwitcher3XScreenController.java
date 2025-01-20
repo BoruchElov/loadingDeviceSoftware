@@ -130,7 +130,7 @@ public class _2_TestOfSwitcher3XScreenController {
     //Метод для перехода в старт
     @FXML
     public void goToStartScreen(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "9.DifProtectionStart.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtectionStart.fxml");
     }
 
     //Методы для настройки кнопок выбора контактов
