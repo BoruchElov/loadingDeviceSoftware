@@ -14,9 +14,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware._7_DifProtectionScreenController">
    <children>
-      <ImageView fx:id="backgroundImageView" fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backgroundImageView" fitHeight="800.0" fitWidth="1293.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../screen/7.дифзащита/диф_защита_1форма(без кнопок).png" />
+            <Image url="@../../../screen/7.дифзащита/главный_экран_RS_GI.png" />
          </image>
       </ImageView>
       <Text fill="WHITE" layoutX="1011.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="ВЫБОР МЕСТА ПОВРЕЖДЕНИЯ" textAlignment="CENTER" wrappingWidth="236.0">
@@ -29,11 +29,7 @@
             <Font size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="windingOneView" fitHeight="59.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/Polygon1.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="windingOneView" fitHeight="59.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
       <Button fx:id="windingTwoConnection" layoutX="599.0" layoutY="398.0" mnemonicParsing="false" onAction="#setPictureForWindingTwo" prefHeight="74.0" prefWidth="77.0">
@@ -41,11 +37,7 @@
             <Font size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="windingTwoView" fitHeight="59.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/Star1.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="windingTwoView" fitHeight="59.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
       <Button fx:id="toMenuButton" contentDisplay="CENTER" layoutX="74.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="138.0">
@@ -53,11 +45,7 @@
             <Font size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
       <Button fx:id="startButton" contentDisplay="CENTER" layoutX="1058.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToStartScreen" prefHeight="64.0" prefWidth="138.0">
@@ -65,11 +53,7 @@
             <Font size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
       <ToggleButton fx:id="shortCircuitLocationButton" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="1015.0" layoutY="185.0" mnemonicParsing="false" onAction="#shortCircuitLocation" prefHeight="59.0" prefWidth="210.0" text="Внешнее КЗ">
@@ -77,17 +61,17 @@
             <Font size="18.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseAButton" layoutX="1016.0" layoutY="360.0" mnemonicParsing="false" onAction="#phaseA" prefHeight="74.0" prefWidth="71.0" text="A">
+      <ToggleButton fx:id="phaseAButton" layoutX="1022.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseA" prefHeight="50.0" prefWidth="50.0" text="A">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseBButton" layoutX="1089.0" layoutY="360.0" mnemonicParsing="false" onAction="#phaseB" prefHeight="74.0" prefWidth="71.0" text="B">
+      <ToggleButton fx:id="phaseBButton" layoutX="1074.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseB" prefHeight="50.0" prefWidth="50.0" text="B">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseCButton" layoutX="1163.0" layoutY="360.0" mnemonicParsing="false" onAction="#phaseC" prefHeight="74.0" prefWidth="71.0" text="C">
+      <ToggleButton fx:id="phaseCButton" layoutX="1126.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseC" prefHeight="50.0" prefWidth="50.0" text="C">
          <font>
             <Font size="24.0" />
          </font>
@@ -122,12 +106,12 @@
             <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР А1" wrappingWidth="135.75800323486328" GridPane.columnIndex="1">
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ А1" wrappingWidth="135.75800323486328" GridPane.columnIndex="1">
                <font>
                   <Font name="MyriadPro-Regular" size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР А2" wrappingWidth="131.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ А2" wrappingWidth="131.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="MyriadPro-Regular" size="18.0" />
                </font>
@@ -154,12 +138,12 @@
             <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР В1" wrappingWidth="128.75800323486328" GridPane.columnIndex="1">
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ В1" wrappingWidth="128.75800323486328" GridPane.columnIndex="1">
                <font>
                   <Font name="MyriadPro-Regular" size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР В2" wrappingWidth="128.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ В2" wrappingWidth="128.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="MyriadPro-Regular" size="18.0" />
                </font>
@@ -186,12 +170,12 @@
             <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР С1" wrappingWidth="133.75800323486328" GridPane.columnIndex="1">
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ С1" wrappingWidth="133.75800323486328" GridPane.columnIndex="1">
                <font>
                   <Font name="MyriadPro-Regular" size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   ИНВЕРТОР С2" wrappingWidth="130.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ С2" wrappingWidth="130.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="MyriadPro-Regular" size="18.0" />
                </font>
@@ -208,17 +192,13 @@
             </ImageView>
          </children>
       </GridPane>
-      <TextField fx:id="objectNameTextField" layoutX="368.0" layoutY="596.0" prefHeight="43.0" prefWidth="272.0" />
+      <TextField fx:id="objectNameTextField" layoutX="112.0" layoutY="589.0" prefHeight="43.0" prefWidth="272.0" />
       <Button fx:id="contactOneButton" layoutX="296.0" layoutY="213.0" mnemonicParsing="false" onAction="#setPictureForContactOne" prefHeight="43.0" prefWidth="56.0">
          <font>
             <Font size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="contactOneView" fitHeight="11.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="contactOneView" fitHeight="11.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
       <Text layoutX="286.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="Кон1" textAlignment="CENTER" wrappingWidth="76.99999999999994">
@@ -236,11 +216,7 @@
             <Font size="24.0" />
          </font>
          <graphic>
-            <ImageView fx:id="contactTwoView" fitHeight="34.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/Polygon1.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="contactTwoView" fitHeight="34.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
       <Text layoutX="190.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="А1" textAlignment="CENTER" wrappingWidth="56.0">
@@ -248,7 +224,7 @@
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
       </Text>
-      <Text layoutX="759.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="А2" textAlignment="CENTER" wrappingWidth="56.0">
+      <Text layoutX="741.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="А2" textAlignment="CENTER" wrappingWidth="56.0">
          <font>
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
@@ -263,12 +239,12 @@
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
       </Text>
-      <Text layoutX="760.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="В2" textAlignment="CENTER" wrappingWidth="56.0">
+      <Text layoutX="742.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="В2" textAlignment="CENTER" wrappingWidth="56.0">
          <font>
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
       </Text>
-      <Text layoutX="759.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="С2" textAlignment="CENTER" wrappingWidth="56.0">
+      <Text layoutX="741.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="С2" textAlignment="CENTER" wrappingWidth="56.0">
          <font>
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
@@ -276,8 +252,14 @@
       <TextField fx:id="phaseA1TextField" layoutX="82.0" layoutY="291.0" prefHeight="43.0" prefWidth="111.0" />
       <TextField fx:id="phaseB1TextField" layoutX="82.0" layoutY="385.0" prefHeight="43.0" prefWidth="111.0" />
       <TextField fx:id="phaseC1TextField" layoutX="82.0" layoutY="479.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseA2TextField" layoutX="813.0" layoutY="291.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseB2TextField" layoutX="813.0" layoutY="385.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseC2TextField" layoutX="813.0" layoutY="479.0" prefHeight="43.0" prefWidth="111.0" />
+      <TextField fx:id="phaseA2TextField" layoutX="795.0" layoutY="291.0" prefHeight="43.0" prefWidth="111.0" />
+      <TextField fx:id="phaseB2TextField" layoutX="795.0" layoutY="385.0" prefHeight="43.0" prefWidth="111.0" />
+      <TextField fx:id="phaseC2TextField" layoutX="795.0" layoutY="479.0" prefHeight="43.0" prefWidth="111.0" />
+      <TextField fx:id="userNameTextField" layoutX="113.0" layoutY="642.0" prefHeight="43.0" prefWidth="272.0" />
+      <ToggleButton fx:id="groundButton" layoutX="1178.0" layoutY="373.0" mnemonicParsing="false" onAction="#ground" prefHeight="50.0" prefWidth="50.0" text="G">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </ToggleButton>
    </children>
 </AnchorPane>

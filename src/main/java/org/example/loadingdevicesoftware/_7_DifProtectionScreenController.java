@@ -24,6 +24,9 @@ public class _7_DifProtectionScreenController {
     private boolean contactOneStatus = false;
     private boolean contactTwoStatus = false;
 
+    private boolean isLocationPressed = false;
+    private boolean isFeedingWindingPressed = false;
+
     @FXML
     private ToggleButton shortCircuitLocationButton;
     @FXML
@@ -36,6 +39,8 @@ public class _7_DifProtectionScreenController {
     private ToggleButton phaseBButton;
     @FXML
     private ToggleButton phaseCButton;
+    @FXML
+    private ToggleButton groundButton;
     @FXML
     private ToggleButton feedingWindingButton;
     @FXML
@@ -76,6 +81,9 @@ public class _7_DifProtectionScreenController {
     //Объявление текстового поля для задания названия объекта
     @FXML
     private TextField objectNameTextField;
+    //Объявление текстового поля для задания названия объекта
+    @FXML
+    private TextField userNameTextField;
     //Объявление текстовых полей для задания токов фаз
     @FXML
     private TextField phaseA1TextField;
@@ -106,80 +114,10 @@ public class _7_DifProtectionScreenController {
     Image normallyOpenedContact = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png")).toExternalForm());
     
-    //Объекты фоновых картинок
+    //Объект фоновой картинки
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
-    
-    //Папка RS_I
-    Image RSI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_._I.png")).toExternalForm());
-    Image RSAI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_A_I.png")).toExternalForm());
-    Image RSABI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_AB_I.png")).toExternalForm());
-    Image RSABCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_ABC_I.png")).toExternalForm());
-    Image RSACI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_AC_I.png")).toExternalForm());
-    Image RSBI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_B_I.png")).toExternalForm());
-    Image RSBCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_BC_I.png")).toExternalForm());
-    Image RSCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_I/RS_C_I.png")).toExternalForm());
-    //Папка RS_O
-    Image RSO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_._O.png")).toExternalForm());
-    Image RSAO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_A_O.png")).toExternalForm());
-    Image RSABO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_AB_O.png")).toExternalForm());
-    Image RSABCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_ABC_O.png")).toExternalForm());
-    Image RSACO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_AC_O.png")).toExternalForm());
-    Image RSBO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_B_O.png")).toExternalForm());
-    Image RSBCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_BC_O.png")).toExternalForm());
-    Image RSCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/RS_O/RS_C_O.png")).toExternalForm());
-    //Папка SR_I
-    Image SRI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_._I.png")).toExternalForm());
-    Image SRAI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_A_I.png")).toExternalForm());
-    Image SRABI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_AB_I.png")).toExternalForm());
-    Image SRABCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_ABC_I.png")).toExternalForm());
-    Image SRACI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_AC_I.png")).toExternalForm());
-    Image SRBI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_B_I.png")).toExternalForm());
-    Image SRBCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_BC_I.png")).toExternalForm());
-    Image SRCI = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_I/SR_C_I.png")).toExternalForm());
-    //Папка SR_O
-    Image SRO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_._O.png")).toExternalForm());
-    Image SRAO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_A_O.png")).toExternalForm());
-    Image SRABO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_AB_O.png")).toExternalForm());
-    Image SRABCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_ABC_O.png")).toExternalForm());
-    Image SRACO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_AC_O.png")).toExternalForm());
-    Image SRBO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_B_O.png")).toExternalForm());
-    Image SRBCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_BC_O.png")).toExternalForm());
-    Image SRCO = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/SR_O/SR_C_O.png")).toExternalForm());
-    
-    
+
     //Объекты картинок для кнопок и статусов инверторов
     Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
@@ -187,12 +125,14 @@ public class _7_DifProtectionScreenController {
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
     Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
+    
 
     @FXML
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
         //Настройка стилей текстовых полей для ввода
         setupObjectNameField(objectNameTextField, "Введите название объекта");
+        setupObjectNameField(userNameTextField, "Введите ФИО исполнителя");
 
         setupObjectNameField(phaseA1TextField, "Ток А1, А");
         setupObjectNameField(phaseA2TextField, "Ток А2, А");
@@ -210,8 +150,9 @@ public class _7_DifProtectionScreenController {
         inverterC2Status.setImage(statusConnected);
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
+
         //Настройка кнопки "Выбор места повреждения"
-        shortCircuitLocationButton.setText("ВНЕШНЕЕ КЗ");
+        shortCircuitLocationButton.setText("");
         setupRightSideButtons(shortCircuitLocationButton);
         //Настройка кнопки "Выбор фазы А"
         phaseAButton.setText("A");
@@ -222,9 +163,12 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопки "Выбор фазы С"
         phaseCButton.setText("C");
         setupRightSideButtons(phaseCButton);
+        //Настройка кнопки "Выбор кз на землю"
+        groundButton.setText("G");
+        setupRightSideButtons(groundButton);
         //Настройка кнопки "Выбор питающей обмотки"
-        feedingWindingButton.setText("I");
         setupRightSideButtons(feedingWindingButton);
+        feedingWinding();
         //Настройка кнопки "Меню"
         setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
         //Настройка кнопки "Пуск"
@@ -235,6 +179,7 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопок для задания положения контактов
         setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
         setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
+        disableOrEnablePhaseButtons();
     }
 
     @FXML
@@ -300,6 +245,23 @@ public class _7_DifProtectionScreenController {
                 imageView, image, button, 138, 64, true, text);
     }
 
+    private void disableOrEnablePhaseButtons() {
+        if (isLocationPressed) {
+            phaseAButton.setDisable(false);
+            phaseBButton.setDisable(false);
+            phaseCButton.setDisable(false);
+            groundButton.setDisable(false);
+            feedingWindingButton.setDisable(false);
+            feedingWindingButton.setText("I");
+        } else {
+            phaseAButton.setDisable(true);
+            phaseBButton.setDisable(true);
+            phaseCButton.setDisable(true);
+            groundButton.setDisable(true);
+            feedingWindingButton.setDisable(true);
+        }
+    }
+
     //Тестовый метод для проверки работы кнопки
     public void testClick() {
         System.out.println("Кнопка работает");
@@ -319,14 +281,27 @@ public class _7_DifProtectionScreenController {
     public void phaseC() {
         commonMethodForRightSideButtons(phaseCButton);
     }
+    public void ground() { commonMethodForRightSideButtons(groundButton); }
 
     //Метод, запускающийся при нажатии на кнопку "Выбор питающей обмотки"
     public void feedingWinding() {
-        commonMethodForRightSideButtons(feedingWindingButton, "II", "I");
+        if (isFeedingWindingPressed) {
+            commonMethodForRightSideButtons(feedingWindingButton, "II", "I");
+        } else {
+            feedingWindingButton.setText("");
+            isFeedingWindingPressed = true;
+        }
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 36, 0,
+                feedingWindingButton);
     }
 
     //Метод, запускающийся при нажатии на кнопку "Выбор места повреждения"
     public void shortCircuitLocation() {
+        if (!isLocationPressed) {
+            isLocationPressed = true;
+            disableOrEnablePhaseButtons();
+        }
         commonMethodForRightSideButtons(shortCircuitLocationButton, "ВНУТРЕННЕЕ КЗ",
                 "ВНЕШНЕЕ КЗ");
     }
@@ -363,7 +338,8 @@ public class _7_DifProtectionScreenController {
             setupRightSideButtons(toggleButton);
         }
         backgroundImageView.setImage(selectImage(shortCircuitLocationButton.isSelected(), phaseAButton.isSelected(),
-                phaseBButton.isSelected(),phaseCButton.isSelected(), feedingWindingButton.isSelected()));
+                phaseBButton.isSelected(), phaseCButton.isSelected(), groundButton.isSelected(),
+                feedingWindingButton.isSelected()));
     }
 
     /**
@@ -384,73 +360,68 @@ public class _7_DifProtectionScreenController {
             setupRightSideButtons(toggleButton);
         }
         backgroundImageView.setImage(selectImage(shortCircuitLocationButton.isSelected(), phaseAButton.isSelected(),
-                phaseBButton.isSelected(),phaseCButton.isSelected(), feedingWindingButton.isSelected()));
+                phaseBButton.isSelected(), phaseCButton.isSelected(), groundButton.isSelected(),
+                feedingWindingButton.isSelected()));
     }
 
-    /**
-     * Метод для поиска нужной картинки заднего плана при текущем положении кнопок в правой части страницы.
-     * @param shortCircuitLocation статус кнопки "Выбор места повреждения"
-     * @param phaseA статус кнопки "Фаза А"
-     * @param phaseB статус кнопки "Фаза В"
-     * @param phaseC статус кнопки "Фаза С"
-     * @param sendingWinding статус кнопки "Выбор питающей обмотки"
-     * @return нужная картинка
-     */
-
     private Image selectImage(boolean shortCircuitLocation, boolean phaseA, boolean phaseB, boolean phaseC,
-                             boolean sendingWinding) {
-        /*
-         * shortCircuitLocation = false - Внешнее КЗ, true - Внутреннее
-         * phaseA = true - КЗ фазы А
-         * phaseB = true - КЗ фазы В
-         * phaseC = true - КЗ фазы С
-         * sendingWinding = false - Питающая обмотка 1, true - 2
-         */
-        // Карта для сопоставления комбинаций логических переменных и имен картинок
-        Map<String, Image> imageMap = new HashMap<>();
+                              boolean ground, boolean sendingWinding) {
 
-        //Пары значения-картинка для случая RS_I
-        imageMap.put("true,false,false,false,true", RSI);
-        imageMap.put("true,true,false,false,true", RSAI);
-        imageMap.put("true,true,true,false,true", RSABI);
-        imageMap.put("true,true,true,true,true", RSABCI);
-        imageMap.put("true,true,false,true,true", RSACI);
-        imageMap.put("true,false,true,false,true", RSBI);
-        imageMap.put("true,false,true,true,true", RSBCI);
-        imageMap.put("true,false,false,true,true", RSCI);
-        //Пары значения-картинка для случая RS_O
-        imageMap.put("false,false,false,false,true", RSO);
-        imageMap.put("false,true,false,false,true", RSAO);
-        imageMap.put("false,true,true,false,true", RSABO);
-        imageMap.put("false,true,true,true,true", RSABCO);
-        imageMap.put("false,true,false,true,true", RSACO);
-        imageMap.put("false,false,true,false,true", RSBO);
-        imageMap.put("false,false,true,true,true", RSBCO);
-        imageMap.put("false,false,false,true,true", RSCO);
-        //Пары значения-картинка для случая SR_I
-        imageMap.put("true,false,false,false,false", SRI);
-        imageMap.put("true,true,false,false,false", SRAI);
-        imageMap.put("true,true,true,false,false", SRABI);
-        imageMap.put("true,true,true,true,false", SRABCI);
-        imageMap.put("true,true,false,true,false", SRACI);
-        imageMap.put("true,false,true,false,false", SRBI);
-        imageMap.put("true,false,true,true,false", SRBCI);
-        imageMap.put("true,false,false,true,false", SRCI);
-        //Пары значения-картинка для случая SR_O
-        imageMap.put("false,false,false,false,false", SRO);
-        imageMap.put("false,true,false,false,false", SRAO);
-        imageMap.put("false,true,true,false,false", SRABO);
-        imageMap.put("false,true,true,true,false", SRABCO);
-        imageMap.put("false,true,false,true,false", SRACO);
-        imageMap.put("false,false,true,false,false", SRBO);
-        imageMap.put("false,false,true,true,false", SRBCO);
-        imageMap.put("false,false,false,true,false", SRCO);
+        return getProperPicture(shortCircuitLocation, phaseA, phaseB, phaseC, ground, sendingWinding);
+    }
 
-        // Создаем строку ключа на основе значений переменных
-        String key = shortCircuitLocation + "," + phaseA + "," + phaseB + "," + phaseC + "," + sendingWinding;
+    private Image getProperPicture(boolean shortCircuitLocation, boolean phaseA, boolean phaseB, boolean phaseC,
+                                    boolean ground, boolean sendingWinding) {
 
-        // Ищем соответствующую картинку
-        return imageMap.getOrDefault(key, backImageOutSC); // Возвращаем картинку по умолчанию, если комбинация не найдена
+        String winding;
+
+        if (sendingWinding) {
+            winding = "RS_";
+        } else {
+            winding = "SR_";
+        }
+
+        String phaseCombination = getPhasesCombination(phaseA, phaseB, phaseC, ground);
+
+        String location;
+
+        if (shortCircuitLocation) {
+            location = "I";
+        } else {
+            location = "O";
+        }
+        String fileName = winding + phaseCombination + location;
+
+        return new Image(Objects.requireNonNull(getClass().
+                getResource("/screen/7.дифзащита/" + fileName + ".png")).toExternalForm());
+    }
+
+    private String getPhasesCombination (boolean phaseA, boolean phaseB, boolean phaseC,
+                                        boolean ground) {
+
+        Map<String,String> hashMap = new HashMap<>();
+
+        hashMap.put("true,false,false,false","A_");
+        hashMap.put("true,true,false,false","AB_");
+        hashMap.put("true,true,true,false","ABC_");
+        hashMap.put("true,true,true,true","ABCG_");
+        hashMap.put("false,true,false,false","B_");
+        hashMap.put("false,true,true,false","BC_");
+        hashMap.put("false,true,true,true","BCG_");
+        hashMap.put("false,false,true,false","C_");
+        hashMap.put("false,false,true,true","C_");
+        hashMap.put("true,false,false,true","A_");
+        hashMap.put("false,true,false,true","B_");
+        hashMap.put("true,false,true,false","AC_");
+        hashMap.put("true,false,true,true","ACG_");
+        hashMap.put("true,true,false,true","ABG_");
+        hashMap.put("false,false,false,true","G_");
+        hashMap.put("false,false,false,false","");
+
+        String key = phaseA + "," + phaseB + "," + phaseC + "," + ground;
+
+        return hashMap.getOrDefault(key, ""); // Возвращаем картинку по умолчанию, если комбинация не найдена
+
     }
 
 
