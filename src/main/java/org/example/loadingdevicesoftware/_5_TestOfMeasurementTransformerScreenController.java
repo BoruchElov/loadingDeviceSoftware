@@ -71,10 +71,6 @@ public class _5_TestOfMeasurementTransformerScreenController {
     //Объекты картинок для кнопок и статусов инверторов
     Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
-    Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
-    Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
 
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
@@ -86,12 +82,12 @@ public class _5_TestOfMeasurementTransformerScreenController {
         setupObjectNameField(angleA1TextField, "    °");
 
         //Задание изображений для статусов инверторов
-        inverterA1Status.setImage(statusConnected);
-        inverterA2Status.setImage(statusConnected);
-        inverterB1Status.setImage(statusConnected);
-        inverterB2Status.setImage(statusConnected);
-        inverterC1Status.setImage(statusConnected);
-        inverterC2Status.setImage(statusConnected);
+        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
 
