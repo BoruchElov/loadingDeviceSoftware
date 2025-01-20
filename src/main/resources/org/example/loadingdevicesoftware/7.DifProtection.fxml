@@ -24,7 +24,7 @@
             <Font name="MyriadPro-Regular" size="26.0" />
          </font>
       </Text>
-      <Button fx:id="windingOneConnection" layoutX="338.0" layoutY="398.0" mnemonicParsing="false" onAction="#setPictureForWindingOne" prefHeight="74.0" prefWidth="77.0">
+      <Button fx:id="windingOneConnection" layoutX="271.0" layoutY="398.0" mnemonicParsing="false" onAction="#setPictureForWindingOne" prefHeight="74.0" prefWidth="77.0">
          <font>
             <Font size="24.0" />
          </font>
@@ -32,7 +32,7 @@
             <ImageView fx:id="windingOneView" fitHeight="59.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <Button fx:id="windingTwoConnection" layoutX="599.0" layoutY="398.0" mnemonicParsing="false" onAction="#setPictureForWindingTwo" prefHeight="74.0" prefWidth="77.0">
+      <Button fx:id="windingTwoConnection" layoutX="543.0" layoutY="398.0" mnemonicParsing="false" onAction="#setPictureForWindingTwo" prefHeight="74.0" prefWidth="77.0">
          <font>
             <Font size="24.0" />
          </font>
@@ -56,7 +56,7 @@
             <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <ToggleButton fx:id="shortCircuitLocationButton" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="1015.0" layoutY="185.0" mnemonicParsing="false" onAction="#shortCircuitLocation" prefHeight="59.0" prefWidth="210.0" text="Внешнее КЗ">
+      <ToggleButton fx:id="shortCircuitLocationButton" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="1019.0" layoutY="185.0" mnemonicParsing="false" onAction="#shortCircuitLocation" prefHeight="59.0" prefWidth="210.0" text="Внешнее КЗ">
          <font>
             <Font size="18.0" />
          </font>
@@ -81,7 +81,7 @@
             <Font name="MyriadPro-Regular" size="26.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="1038.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="ВЫБОР ПИТАЮЩЕЙ ОБМОТКИ" textAlignment="CENTER" wrappingWidth="182.0">
+      <Text fill="WHITE" layoutX="1040.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="ВЫБОР ПИТАЮЩЕЙ ОБМОТКИ" textAlignment="CENTER" wrappingWidth="182.0">
          <font>
             <Font name="MyriadPro-Regular" size="26.0" />
          </font>
@@ -91,7 +91,7 @@
             <Font name="MyriadPro-Regular" size="24.0" />
          </font>
       </Text>
-      <ToggleButton fx:id="feedingWindingButton" layoutX="1089.0" layoutY="555.0" mnemonicParsing="false" onAction="#feedingWinding" prefHeight="74.0" prefWidth="71.0" text="I">
+      <ToggleButton fx:id="feedingWindingButton" layoutX="1093.0" layoutY="555.0" mnemonicParsing="false" onAction="#feedingWinding" prefHeight="74.0" prefWidth="71.0" text="I">
          <font>
             <Font size="24.0" />
          </font>
@@ -224,7 +224,7 @@
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
       </Text>
-      <Text layoutX="741.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="А2" textAlignment="CENTER" wrappingWidth="56.0">
+      <Text layoutX="728.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="А2" textAlignment="CENTER" wrappingWidth="56.0">
          <font>
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
@@ -239,27 +239,35 @@
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
       </Text>
-      <Text layoutX="742.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="В2" textAlignment="CENTER" wrappingWidth="56.0">
+      <Text layoutX="729.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="В2" textAlignment="CENTER" wrappingWidth="56.0">
          <font>
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
       </Text>
-      <Text layoutX="741.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="С2" textAlignment="CENTER" wrappingWidth="56.0">
+      <Text layoutX="728.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="С2" textAlignment="CENTER" wrappingWidth="56.0">
          <font>
             <Font name="MyriadPro-Regular" size="36.0" />
          </font>
       </Text>
-      <TextField fx:id="phaseA1TextField" layoutX="82.0" layoutY="291.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseB1TextField" layoutX="82.0" layoutY="385.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseC1TextField" layoutX="82.0" layoutY="479.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseA2TextField" layoutX="795.0" layoutY="291.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseB2TextField" layoutX="795.0" layoutY="385.0" prefHeight="43.0" prefWidth="111.0" />
-      <TextField fx:id="phaseC2TextField" layoutX="795.0" layoutY="479.0" prefHeight="43.0" prefWidth="111.0" />
+      <TextField fx:id="phaseA1TextField" layoutX="131.0" layoutY="291.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseB1TextField" layoutX="131.0" layoutY="385.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseC1TextField" layoutX="131.0" layoutY="479.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseA2TextField" layoutX="782.0" layoutY="291.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseB2TextField" layoutX="782.0" layoutY="385.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseC2TextField" layoutX="782.0" layoutY="479.0" prefHeight="43.0" prefWidth="62.0" />
       <TextField fx:id="userNameTextField" layoutX="113.0" layoutY="642.0" prefHeight="43.0" prefWidth="272.0" />
       <ToggleButton fx:id="groundButton" layoutX="1178.0" layoutY="373.0" mnemonicParsing="false" onAction="#ground" prefHeight="50.0" prefWidth="50.0" text="G">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
+      <TextField fx:id="phaseA2AngleTextField" layoutX="849.0" layoutY="291.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseB2AngleTextField" layoutX="849.0" layoutY="385.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseC2AngleTextField" layoutX="849.0" layoutY="479.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseA1AngleTextField" layoutX="65.0" layoutY="291.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseB1AngleTextField" layoutX="65.0" layoutY="385.0" prefHeight="43.0" prefWidth="62.0" />
+      <TextField fx:id="phaseC1AngleTextField" layoutX="65.0" layoutY="479.0" prefHeight="43.0" prefWidth="62.0" />
+      <Button fx:id="windingOneGroupButton" layoutX="357.0" layoutY="399.0" mnemonicParsing="false" onAction="#firstScheme" prefHeight="74.0" prefWidth="77.0" />
+      <Button fx:id="windingTwoGroupButton" layoutX="629.0" layoutY="398.0" mnemonicParsing="false" onAction="#secondScheme" prefHeight="74.0" prefWidth="77.0" />
    </children>
 </AnchorPane>
