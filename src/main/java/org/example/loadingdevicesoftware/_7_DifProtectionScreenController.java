@@ -27,6 +27,9 @@ public class _7_DifProtectionScreenController {
     private boolean isLocationPressed = false;
     private boolean isFeedingWindingPressed = false;
 
+    private int counterOne = 0;
+    private int counterTwo = 0;
+
     @FXML
     private ToggleButton shortCircuitLocationButton;
     @FXML
@@ -51,6 +54,10 @@ public class _7_DifProtectionScreenController {
     private Button toMenuButton;
     @FXML
     private Button startButton;
+    @FXML
+    private Button windingOneGroupButton;
+    @FXML
+    private Button windingTwoGroupButton;
     @FXML
     private ImageView backgroundImageView;
     @FXML
@@ -97,6 +104,18 @@ public class _7_DifProtectionScreenController {
     private TextField phaseC1TextField;
     @FXML
     private TextField phaseC2TextField;
+    @FXML
+    private TextField phaseA1AngleTextField;
+    @FXML
+    private TextField phaseA2AngleTextField;
+    @FXML
+    private TextField phaseB1AngleTextField;
+    @FXML
+    private TextField phaseB2AngleTextField;
+    @FXML
+    private TextField phaseC1AngleTextField;
+    @FXML
+    private TextField phaseC2AngleTextField;
 
     //Объявление текстового поля для вывода даты-времени
     @FXML
@@ -121,11 +140,7 @@ public class _7_DifProtectionScreenController {
     //Объекты картинок для кнопок и статусов инверторов
     Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
-    Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
-    Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
-    
+
 
     @FXML
     public void initialize() {
@@ -134,20 +149,28 @@ public class _7_DifProtectionScreenController {
         setupObjectNameField(objectNameTextField, "Введите название объекта");
         setupObjectNameField(userNameTextField, "Введите ФИО исполнителя");
 
-        setupObjectNameField(phaseA1TextField, "Ток А1, А");
-        setupObjectNameField(phaseA2TextField, "Ток А2, А");
-        setupObjectNameField(phaseB1TextField, "Ток В1, А");
-        setupObjectNameField(phaseB2TextField, "Ток В2, А");
-        setupObjectNameField(phaseC1TextField, "Ток С1, А");
-        setupObjectNameField(phaseC2TextField, "Ток С2, А");
+        setupObjectNameField(phaseA1TextField, "Ток");
+        setupObjectNameField(phaseA2TextField, "Ток");
+        setupObjectNameField(phaseB1TextField, "Ток");
+        setupObjectNameField(phaseB2TextField, "Ток");
+        setupObjectNameField(phaseC1TextField, "Ток");
+        setupObjectNameField(phaseC2TextField, "Ток");
+
+        setupObjectNameField(phaseA1AngleTextField, "Угол");
+        setupObjectNameField(phaseA2AngleTextField, "Угол");
+        setupObjectNameField(phaseB1AngleTextField, "Угол");
+        setupObjectNameField(phaseB2AngleTextField, "Угол");
+        setupObjectNameField(phaseC1AngleTextField, "Угол");
+        setupObjectNameField(phaseC2AngleTextField, "Угол");
 
         //Задание изображений для статусов инверторов
-        inverterA1Status.setImage(statusConnected);
-        inverterA2Status.setImage(statusConnected);
-        inverterB1Status.setImage(statusConnected);
-        inverterB2Status.setImage(statusConnected);
-        inverterC1Status.setImage(statusConnected);
-        inverterC2Status.setImage(statusConnected);
+        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
 
@@ -179,6 +202,9 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопок для задания положения контактов
         setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
         setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
+        //Настройка кнопок для задания номера схемы
+        setupConnectionSchemesButtons(windingOneGroupButton);
+        setupConnectionSchemesButtons(windingTwoGroupButton);
         disableOrEnablePhaseButtons();
     }
 
@@ -236,6 +262,12 @@ public class _7_DifProtectionScreenController {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.WHITE, 0,
                 imageView, null, button, width, height, false);
+    }
+    //Метод для настройки кнопок номеров групп
+    public void setupConnectionSchemesButtons(Button button) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 42,
+                0, button);
     }
 
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
@@ -304,6 +336,23 @@ public class _7_DifProtectionScreenController {
         }
         commonMethodForRightSideButtons(shortCircuitLocationButton, "ВНУТРЕННЕЕ КЗ",
                 "ВНЕШНЕЕ КЗ");
+    }
+
+    public void firstScheme() {
+        windingOneGroupButton.setText(Integer.toString(counterOne));
+        if (counterOne >= 11) {
+            counterOne = 0;
+        } else {
+            counterOne++;
+        }
+    }
+    public void secondScheme() {
+        windingTwoGroupButton.setText(Integer.toString(counterTwo));
+        if (counterTwo >= 11) {
+            counterTwo = 0;
+        } else {
+            counterTwo++;
+        }
     }
 
     /**

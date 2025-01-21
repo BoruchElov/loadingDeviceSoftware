@@ -69,11 +69,6 @@ public class _0_MainScreenController {
             getResource("/screen/0.main/иконки/8.png")).toExternalForm());
     Image deBuggerButtonImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/0.main/иконки/9.png")).toExternalForm());
-    Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
-    Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
-
 
 
     @FXML
@@ -106,12 +101,12 @@ public class _0_MainScreenController {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
 
         //Задание изображения для статусов инверторов
-        inverterA1Status.setImage(statusConnected);
-        inverterA2Status.setImage(statusConnected);
-        inverterB1Status.setImage(statusConnected);
-        inverterB2Status.setImage(statusConnected);
-        inverterC1Status.setImage(statusConnected);
-        inverterC2Status.setImage(statusConnected);
+        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
 
         //Установка картинки на фон
         backgroungImage.setImage(backImage);

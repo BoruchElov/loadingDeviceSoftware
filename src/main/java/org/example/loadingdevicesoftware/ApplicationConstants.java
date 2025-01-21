@@ -1,5 +1,9 @@
 package org.example.loadingdevicesoftware;
 
+import javafx.scene.image.Image;
+
+import java.util.Objects;
+
 /**
  * Класс, содержащий константы приложения: используемые цвета, название шрифта, размеры окна и т.д.
  */
@@ -37,5 +41,10 @@ public class ApplicationConstants {
 
     //Константы для текста
     public static final String FONT_NAME = "Myriad Pro";
+
+    public static final Image STATUS_CONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
+    public static final Image STATUS_DISCONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
 
 }
