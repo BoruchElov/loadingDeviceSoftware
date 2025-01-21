@@ -59,6 +59,10 @@ public class _5_TestOfMeasurementTransformerScreenController {
     private TextField phaseA1TextField;
     @FXML
     private TextField angleA1TextField;
+    @FXML
+    private TextField currentMeasure;
+    @FXML
+    private TextField voltageMeasure;
 
     //Объявление текстового поля для вывода даты-времени
     @FXML
@@ -80,6 +84,8 @@ public class _5_TestOfMeasurementTransformerScreenController {
 
         setupObjectNameField(phaseA1TextField, "         А");
         setupObjectNameField(angleA1TextField, "    °");
+        setupObjectNameField(voltageMeasure, "0");
+        setupObjectNameField(currentMeasure, "0");
 
         //Задание изображений для статусов инверторов
         inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);

@@ -5,12 +5,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware._8_HandControlScreenController">
     <children>
 
@@ -53,9 +53,9 @@
             <font>
                 <Font size="24.0" />
             </font>
-            <graphic>
+         <graphic>
                 <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
-            </graphic>
+         </graphic>
         </Button>
         <!--кнопка перехода в старт-->
         <Button fx:id="startButton" contentDisplay="CENTER" layoutX="1058.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToStartScreen" prefHeight="64.0" prefWidth="138.0">
@@ -67,7 +67,7 @@
             </graphic>
         </Button>
         <!--кнопки настройки режима-->
-        <Button fx:id="stopwatchSetting" contentDisplay="CENTER" layoutX="1028.0" layoutY="129.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="200.0">
+        <Button fx:id="stopwatchSetting" contentDisplay="CENTER" layoutX="1028.0" layoutY="129.0" mnemonicParsing="false" onAction="#testClick" prefHeight="120.0" prefWidth="200.0">
             <font>
                 <Font size="24.0" />
             </font>
@@ -79,7 +79,7 @@
             </Text>
          </graphic>
         </Button>
-        <Button fx:id="shutdownConditions" contentDisplay="CENTER" layoutX="1028.0" layoutY="298.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="200.0">
+        <Button fx:id="shutdownConditions" contentDisplay="CENTER" layoutX="1028.0" layoutY="298.0" mnemonicParsing="false" onAction="#testClick" prefHeight="120.0" prefWidth="200.0">
             <font>
                 <Font size="24.0" />
             </font>

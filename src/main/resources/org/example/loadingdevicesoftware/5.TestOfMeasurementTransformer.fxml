@@ -33,6 +33,8 @@
         <TextField fx:id="phaseA1TextField" layoutX="133.0" layoutY="285.0" prefHeight="43.0" prefWidth="90.0" />
         <TextField fx:id="angleA1TextField" layoutX="236.0" layoutY="285.0" prefHeight="43.0" prefWidth="51.0" />
 
+        <TextField fx:id="voltageMeasure" layoutX="148.0" layoutY="480.0" prefHeight="43.0" prefWidth="51.0" />
+        <TextField fx:id="currentMeasure" layoutX="221.0" layoutY="480.0" prefHeight="43.0" prefWidth="51.0" />
 
         <!--кнопка меню -->
         <Button fx:id="toMenuButton" contentDisplay="CENTER" layoutX="74.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="138.0">
@@ -150,6 +152,12 @@
                 </ImageView>
             </children>
         </GridPane>
+      <Text layoutX="113.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 1">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+
 
     </children>
 </AnchorPane>
