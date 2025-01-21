@@ -96,7 +96,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="56.0" layoutY="637.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="COMTRADE" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+      <Text fill="WHITE" layoutX="56.0" layoutY="637.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="COMETRADE" textAlignment="CENTER" wrappingWidth="164.13397216796875">
          <font>
             <Font name="MyriadPro-Regular" size="18.0" />
          </font>
