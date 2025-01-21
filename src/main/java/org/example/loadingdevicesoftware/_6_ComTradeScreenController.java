@@ -7,31 +7,101 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class _6_ComTradeScreenController {
 
-    private Stage stageForMainScreen;
-    private Scene sceneForMainScreen;
-    private Parent rootForMainScreen;
-
+    InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
     @FXML
     private Button toMenuButton;
+    @FXML
+    private Button startButton;
+    @FXML
+    private Button chooseFileButton;
+
+    @FXML
+    ImageView toMenuButtonImageView;
+    @FXML
+    ImageView startButtonImageView;
+
+    //Объявление текстового поля для вывода даты-времени
+    @FXML
+    private Text dateTimeText;
+
+    @FXML
+    private ImageView inverterA1Status;
+    @FXML
+    private ImageView inverterA2Status;
+    @FXML
+    private ImageView inverterB1Status;
+    @FXML
+    private ImageView inverterB2Status;
+    @FXML
+    private ImageView inverterC1Status;
+    @FXML
+    private ImageView inverterC2Status;
+    @FXML
+    private ImageView contactOneView;
+    @FXML
+    private ImageView contactTwoView;
+
+    //Объекты картинок для кнопок и статусов инверторов
+    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
+
+    @FXML
+    public void initialize() {
+        dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
+        //Настройка кнопки "Меню"
+        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
+        //Настройка кнопки "Пуск"
+        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
+        //Настройка кнопки для открытия файла
+        setupOpenFileButton(chooseFileButton);
+        chooseFileButton.setText("Выберите файл формата COMETRADE");
+        //Задание изображений для статусов инверторов
+        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+    }
 
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("0.baseWindow.fxml"));
-        rootForMainScreen = loader.load();
+        InterfaceElementsLogic.switchScene((Node) event.getSource(),"0.baseWindow.fxml");
+    }
 
-        _0_MainScreenController mainController = loader.getController();
+    @FXML
+    public void chooseFile() {
+        InterfaceElementsLogic.openFileManager();
+    }
+    @FXML
+    public void testClick() {
+        System.out.println("");
+    }
 
-        //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
-        stageForMainScreen = (Stage)((Node)event.getSource()).getScene().getWindow();
-        sceneForMainScreen = new Scene(rootForMainScreen);
-        stageForMainScreen.setScene(sceneForMainScreen);
-        stageForMainScreen.show();
+    //Метод для настройки кнопок в нижней части окна сценария
+    private void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
+                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
+                imageView, image, button, 138, 64, true, text);
+    }
+
+    //Метод для настройки кнопки открытия файла
+    private void setupOpenFileButton (Button button) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.WHITE, 26, 0,
+                button);
     }
 }

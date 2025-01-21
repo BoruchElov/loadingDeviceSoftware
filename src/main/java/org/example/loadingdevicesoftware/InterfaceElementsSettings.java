@@ -83,10 +83,10 @@ public class InterfaceElementsSettings {
      * @param button объект кнопки
      */
     public void buttonSettings(ApplicationConstants.colours colourOfBackground,
-                               ApplicationConstants.colours colourOfBorder,
-                               int borderWidth, int backgroundRadius,
-                               int borderRadius, ApplicationConstants.colours colourOfText,
-                               int fontSize, int padding, ButtonBase button) {
+                                      ApplicationConstants.colours colourOfBorder,
+                                      int borderWidth, int backgroundRadius,
+                                      int borderRadius, ApplicationConstants.colours colourOfText,
+                                      int fontSize, int padding, ButtonBase button) {
 
         String backgroundColour = setColour(colourOfBackground, true);
         String borderColour = setColour(colourOfBorder, true);
@@ -133,12 +133,12 @@ public class InterfaceElementsSettings {
      * @param text текст на кнопке
      */
     public void buttonSettings(ApplicationConstants.colours colourOfBackground,
-                               ApplicationConstants.colours colourOfBorder,
-                               int borderWidth, int backgroundRadius,
-                               int borderRadius, ApplicationConstants.colours colourOfText,
-                               int fontSize,  int padding, ImageView backgroundImageView,
-                               Image backgroundImage, ButtonBase button, int fitWidth, int fitHeight,
-                               boolean isVisible, String text) {
+                                      ApplicationConstants.colours colourOfBorder,
+                                      int borderWidth, int backgroundRadius,
+                                      int borderRadius, ApplicationConstants.colours colourOfText,
+                                      int fontSize, int padding, ImageView backgroundImageView,
+                                      Image backgroundImage, ButtonBase button, int fitWidth, int fitHeight,
+                                      boolean isVisible, String text) {
 
         backgroundImageView.setImage(backgroundImage);
         backgroundImageView.setFitWidth(fitWidth);
