@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -39,6 +41,18 @@ public class InterfaceElementsLogic {
         stage.setScene(new Scene(root, ApplicationConstants.APPLICATION_WINDOW_LENGTH,
                 ApplicationConstants.APPLICATION_WINDOW_HEIGHT));
         stage.show();
+    }
+    @FXML
+    public static void openFileManager() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Выберите рабочую директорию");
+
+        // Устанавливаем начальную директорию
+        File initialDirectory = new File(System.getProperty("user.home"));
+        directoryChooser.setInitialDirectory(initialDirectory);
+
+        // Открываем окно выбора директории
+        directoryChooser.showDialog(new Stage());
     }
 
 
