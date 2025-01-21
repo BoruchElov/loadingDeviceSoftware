@@ -109,9 +109,9 @@ public class _7_DifProtectionSecondScreenController {
     private Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/Кнопка(черная).png")).toExternalForm());
     private Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
+            getResource("/screen/BasePictures/иконкаЗеленыйКруг.png")).toExternalForm());
     private Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
+            getResource("/screen/BasePictures/иконкаКрасныйКруг.png")).toExternalForm());
     //Объект картинки для фона
     private Image background = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_2форма(без кнопок).png")).toExternalForm());

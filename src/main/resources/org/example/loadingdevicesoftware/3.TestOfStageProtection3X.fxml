@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,14 +12,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware._3_TestOfStageProtection3XScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware._3_TestOfStageProtection3XScreenController">
     <children>
-        <ImageView fx:id="backgroundImageView" fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="backgroundImageView" fitHeight="800.0" fitWidth="1280.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../screen/3.проверкаРЗА1Х3Х/TestOfStageProtection(3X).png" />
+                <Image url="@../../../screen/2.проверкаВыключателя1Х3Х/switchCheckBackgroundl(3X).png" />
             </image>
         </ImageView>
-        <Text fill="WHITE" layoutX="1011.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="ВЫБОР МЕСТА ПОВРЕЖДЕНИЯ" textAlignment="CENTER" wrappingWidth="236.0">
+        <Text fill="WHITE" layoutX="1006.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="КОНФИГУРАЦИЯ ЗАЩИТЫ" textAlignment="CENTER" wrappingWidth="236.0">
             <font>
                 <Font name="MyriadPro-Regular" size="26.0" />
             </font>
@@ -45,7 +46,7 @@
             <graphic>
                 <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
+                        <Image url="@../../../screen/BasePictures/Кнопка(белая).png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -58,7 +59,7 @@
             <graphic>
                 <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
+                        <Image url="@../../../screen/BasePictures/Кнопка(белая).png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -89,19 +90,6 @@
                 </ImageView>
             </graphic>
         </Button>
-        <!--кнопка перехода в 1х фазный режим-->
-        <Button fx:id="testOfSwitcher1X" contentDisplay="TEXT_ONLY" layoutX="1018.0" layoutY="192.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="210.0" text="3 ФАЗНЫЙ">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <graphic>
-                <ImageView fx:id="testSwicther1XImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
 
         <!--панели настройки состояния инверторов-->
         <GridPane layoutX="31.0" layoutY="19.0" prefHeight="82.0" prefWidth="164.0">
@@ -126,12 +114,12 @@
                 </Text>
                 <ImageView fx:id="inverterA1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="inverterA2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
             </children>
@@ -158,12 +146,12 @@
                 </Text>
                 <ImageView fx:id="inverterB1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="inverterB2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
             </children>
@@ -190,15 +178,30 @@
                 </Text>
                 <ImageView fx:id="inverterC1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="inverterC2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
             </children>
         </GridPane>
+        <ToggleButton fx:id="testOfStageProtection1X" layoutX="1018.0" layoutY="197.0" mnemonicParsing="false" onAction="#changeStageProtectionConfiguration" prefHeight="59.0" prefWidth="210.0" text="3 ФАЗНЫЙ">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </ToggleButton>
+        <Text layoutX="46.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="Кон1" textAlignment="CENTER" wrappingWidth="76.99999999999994">
+            <font>
+                <Font name="MyriadPro-Regular" size="26.0" />
+            </font>
+        </Text>
+        <Text layoutX="104.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="Кон2" textAlignment="CENTER" wrappingWidth="76.99999999999994">
+            <font>
+                <Font name="MyriadPro-Regular" size="26.0" />
+            </font>
+        </Text>
     </children>
 </AnchorPane>

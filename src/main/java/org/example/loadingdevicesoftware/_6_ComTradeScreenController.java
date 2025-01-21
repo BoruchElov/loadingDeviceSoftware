@@ -2,17 +2,11 @@ package org.example.loadingdevicesoftware;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -56,7 +50,7 @@ public class _6_ComTradeScreenController {
 
     //Объекты картинок для кнопок и статусов инверторов
     Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
+            getResource("/screen/BasePictures/Кнопка(белая).png")).toExternalForm());
 
     @FXML
     public void initialize() {
@@ -67,7 +61,7 @@ public class _6_ComTradeScreenController {
         setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
         //Настройка кнопки для открытия файла
         setupOpenFileButton(chooseFileButton);
-        chooseFileButton.setText("Выберите файл формата COMETRADE");
+        chooseFileButton.setText("Выберите файл формата COMTRADE");
         //Задание изображений для статусов инверторов
         inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
@@ -94,7 +88,7 @@ public class _6_ComTradeScreenController {
     //Метод для настройки кнопок в нижней части окна сценария
     private void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
+                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
                 imageView, image, button, 138, 64, true, text);
     }
 

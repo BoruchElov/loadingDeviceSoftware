@@ -139,7 +139,7 @@ public class _7_DifProtectionScreenController {
 
     //Объекты картинок для кнопок и статусов инверторов
     Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
+            getResource("/screen/BasePictures/Кнопка(белая).png")).toExternalForm());
 
 
     @FXML
@@ -193,9 +193,9 @@ public class _7_DifProtectionScreenController {
         setupRightSideButtons(feedingWindingButton);
         feedingWinding();
         //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
+        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
         //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
+        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
         //Настройка кнопок для выбора схемы соединения обмоток трансформатора
         setupConnectionSchemesButtons(windingOneConnection, windingOneView, 55, 55);
         setupConnectionSchemesButtons(windingTwoConnection, windingTwoView, 55, 55);
@@ -273,7 +273,7 @@ public class _7_DifProtectionScreenController {
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
     public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
+                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
                 imageView, image, button, 138, 64, true, text);
     }
 

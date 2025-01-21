@@ -95,9 +95,9 @@ public class _9_DeBuggerScreenController {
         backgroundImageView.setImage(backImageOutSC);
 
         //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
+        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.BLACK_BUTTON, "МЕНЮ");
         //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "СОХРАНИТЬ");
+        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.BLACK_BUTTON, "СОХРАНИТЬ");
 
         //настройка текстовых полей для переменных
         setupObjectNameField(alphaTextField, "0");
@@ -125,8 +125,8 @@ public class _9_DeBuggerScreenController {
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
     public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.LIGHT_BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
-                imageView, image, button, 138, 64, true, text);
+                0, 17, 0, ApplicationConstants.colours.BLACK, 22, 0,
+                imageView, image, button, 300, 64, true, text);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта
