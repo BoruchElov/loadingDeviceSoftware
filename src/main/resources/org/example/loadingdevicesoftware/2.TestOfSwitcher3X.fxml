@@ -72,7 +72,7 @@
          <graphic>
             <ImageView fx:id="contactOneView" fitHeight="11.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png" />
+                  <Image url="@../../../screen/BasePictures/иконкаНормРазомкКонт.png" />
                </image>
             </ImageView>
          </graphic>

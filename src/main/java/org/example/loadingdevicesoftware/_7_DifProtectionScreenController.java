@@ -126,21 +126,10 @@ public class _7_DifProtectionScreenController {
             getResource("/images/Polygon1.png")).toExternalForm());
     Image starConnection = new Image(Objects.requireNonNull(getClass().
             getResource("/images/Star1.png")).toExternalForm());
-
-    //Объекты картинок контактов
-    Image normallyClosedContact = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормЗамкКонт.png")).toExternalForm());
-    Image normallyOpenedContact = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png")).toExternalForm());
     
     //Объект фоновой картинки
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
-
-    //Объекты картинок для кнопок и статусов инверторов
-    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/BasePictures/Кнопка(белая).png")).toExternalForm());
-
 
     @FXML
     public void initialize() {
@@ -228,13 +217,13 @@ public class _7_DifProtectionScreenController {
     }
     @FXML
     public void setPictureForContactOne() {
-        contactOneStatus = commonMethodForPositionPicturesButtons(contactOneView, contactOneStatus, normallyClosedContact,
-                normallyOpenedContact);
+        contactOneStatus = commonMethodForPositionPicturesButtons(contactOneView, contactOneStatus, ApplicationConstants.NORMALLY_CLOSED_CONTACT,
+                ApplicationConstants.NORMALLY_OPENED_CONTACT);
     }
     @FXML
     public void setPictureForContactTwo() {
-        contactTwoStatus = commonMethodForPositionPicturesButtons(contactTwoView, contactTwoStatus, normallyClosedContact,
-                normallyOpenedContact);
+        contactTwoStatus = commonMethodForPositionPicturesButtons(contactTwoView, contactTwoStatus, ApplicationConstants.NORMALLY_CLOSED_CONTACT,
+                ApplicationConstants.NORMALLY_OPENED_CONTACT);
     }
 
     //метод для настройки кнопок в правой части окна сценария диф.защиты
