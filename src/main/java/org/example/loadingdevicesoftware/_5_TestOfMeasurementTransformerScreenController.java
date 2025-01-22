@@ -2,16 +2,12 @@ package org.example.loadingdevicesoftware;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -72,10 +68,6 @@ public class _5_TestOfMeasurementTransformerScreenController {
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/5.проверкаИзмерительногоТрансформатора/ПроверкаИзмерительногоТранса1форма(безКнопок).png")).toExternalForm());
 
-    //Объекты картинок для кнопок и статусов инверторов
-    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
-
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
         //Настройка стилей текстовых полей для ввода
@@ -98,9 +90,9 @@ public class _5_TestOfMeasurementTransformerScreenController {
         backgroundImageView.setImage(backImageOutSC);
 
         //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
+        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
         //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
+        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
     }
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
@@ -121,7 +113,7 @@ public class _5_TestOfMeasurementTransformerScreenController {
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
     public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
+                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
                 imageView, image, button, 138, 64, true, text);
     }
 

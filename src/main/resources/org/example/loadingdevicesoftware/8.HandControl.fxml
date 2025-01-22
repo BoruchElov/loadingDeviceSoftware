@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware._8_HandControlScreenController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware._8_HandControlScreenController">
     <children>
 
         <!--фоновая картинка-->
@@ -24,28 +24,28 @@
         <!--Ввод параметров объекта/ФИО/Токов/прочего -->
         <TextField fx:id="objectNameTextField" layoutX="620.0" layoutY="653.0" prefHeight="43.0" prefWidth="272.0" />
         <TextField fx:id="userNameTextField" layoutX="98.0" layoutY="653.0" prefHeight="43.0" prefWidth="272.0" />
-        <TextField fx:id="phaseA1TextField" layoutX="104.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleA1TextField" layoutX="251.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
+        <TextField fx:id="phaseA1TextField" layoutX="90.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
+        <TextField fx:id="angleA1TextField" layoutX="237.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
         <TextField fx:id="IP_A1" layoutX="125.0" layoutY="317.0" prefHeight="34.0" prefWidth="162.0" />
 
-        <TextField fx:id="phaseB1TextField" layoutX="425.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleB1TextField" layoutX="570.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
+        <TextField fx:id="phaseB1TextField" layoutX="409.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
+        <TextField fx:id="angleB1TextField" layoutX="554.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
         <TextField fx:id="IP_B1" layoutX="442.0" layoutY="317.0" prefHeight="34.0" prefWidth="162.0" />
 
-        <TextField fx:id="phaseC1TextField" layoutX="733.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleC1TextField" layoutX="880.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
+        <TextField fx:id="phaseC1TextField" layoutX="721.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
+        <TextField fx:id="angleC1TextField" layoutX="868.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
         <TextField fx:id="IP_C1" layoutX="758.0" layoutY="317.0" prefHeight="34.0" prefWidth="162.0" />
 
-        <TextField fx:id="phaseA2TextField" layoutX="104.0" layoutY="513.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleA2TextField" layoutX="250.0" layoutY="513.0" prefHeight="43.0" prefWidth="51.0" />
+        <TextField fx:id="phaseA2TextField" layoutX="90.0" layoutY="510.0" prefHeight="43.0" prefWidth="90.0" />
+        <TextField fx:id="angleA2TextField" layoutX="236.0" layoutY="510.0" prefHeight="43.0" prefWidth="51.0" />
         <TextField fx:id="IP_A2" layoutX="125.0" layoutY="577.0" prefHeight="34.0" prefWidth="162.0" />
 
-        <TextField fx:id="phaseB2TextField" layoutX="424.0" layoutY="513.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleB2TextField" layoutX="569.0" layoutY="513.0" prefHeight="43.0" prefWidth="51.0" />
+        <TextField fx:id="phaseB2TextField" layoutX="410.0" layoutY="510.0" prefHeight="43.0" prefWidth="90.0" />
+        <TextField fx:id="angleB2TextField" layoutX="555.0" layoutY="510.0" prefHeight="43.0" prefWidth="51.0" />
         <TextField fx:id="IP_B2" layoutX="445.0" layoutY="577.0" prefHeight="34.0" prefWidth="162.0" />
 
-        <TextField fx:id="phaseC2TextField" layoutX="733.0" layoutY="513.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleC2TextField" layoutX="880.0" layoutY="513.0" prefHeight="43.0" prefWidth="51.0" />
+        <TextField fx:id="phaseC2TextField" layoutX="718.0" layoutY="510.0" prefHeight="43.0" prefWidth="90.0" />
+        <TextField fx:id="angleC2TextField" layoutX="865.0" layoutY="510.0" prefHeight="43.0" prefWidth="51.0" />
         <TextField fx:id="IP_C2" layoutX="755.0" layoutY="577.0" prefHeight="34.0" prefWidth="162.0" />
 
         <!--кнопка перехода домой-->
@@ -67,19 +67,19 @@
             </graphic>
         </Button>
         <!--кнопки настройки режима-->
-        <Button fx:id="stopwatchSetting" contentDisplay="CENTER" layoutX="1028.0" layoutY="129.0" mnemonicParsing="false" onAction="#testClick" prefHeight="120.0" prefWidth="200.0">
+        <Button fx:id="stopwatchSetting" contentDisplay="CENTER" layoutX="1016.0" layoutY="157.0" mnemonicParsing="false" onAction="#testClick" prefHeight="73.0" prefWidth="217.0">
             <font>
                 <Font size="24.0" />
             </font>
          <graphic>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="НАСТРОЙКА СЕКУНДОМЕРА" textAlignment="CENTER" wrappingWidth="172.18359375">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="НАСТРОЙКА СЕКУНДОМЕРА" textAlignment="CENTER" wrappingWidth="178.18359375">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
          </graphic>
         </Button>
-        <Button fx:id="shutdownConditions" contentDisplay="CENTER" layoutX="1028.0" layoutY="298.0" mnemonicParsing="false" onAction="#testClick" prefHeight="120.0" prefWidth="200.0">
+        <Button fx:id="shutdownConditions" contentDisplay="CENTER" layoutX="1016.0" layoutY="327.0" mnemonicParsing="false" onAction="#testClick" prefHeight="73.0" prefWidth="217.0">
             <font>
                 <Font size="24.0" />
             </font>
@@ -98,124 +98,24 @@
                 <Font name="MyriadPro-Regular" size="24.0" />
             </font>
         </Text>
-        <Text fx:id="module1" fill="BLACK" layoutX="82.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 1" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+        <Text fill="BLACK" layoutX="64.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 1 (А1)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
             <font>
-                <Font name="MyriadPro-Regular" size="24.0" />
+                <Font name="MyriadPro-Regular" size="30.0" />
             </font>
         </Text>
-      <Text fx:id="module2" fill="BLACK" layoutX="401.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 2" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+      <Text layoutX="198.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
          <font>
-            <Font name="MyriadPro-Regular" size="24.0" />
+            <Font name="MyriadPro-Regular" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="module3" fill="BLACK" layoutX="711.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 3" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+      <Text layoutX="44.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
          <font>
-            <Font name="MyriadPro-Regular" size="24.0" />
+            <Font name="MyriadPro-Regular" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="module4" fill="BLACK" layoutX="81.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 4" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+      <Text layoutX="91.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
          <font>
-            <Font name="MyriadPro-Regular" size="24.0" />
-         </font>
-      </Text>
-      <Text fx:id="module5" fill="BLACK" layoutX="401.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 5" textAlignment="CENTER" wrappingWidth="201.13397216796875">
-         <font>
-            <Font name="MyriadPro-Regular" size="24.0" />
-         </font>
-      </Text>
-      <Text fx:id="module6" fill="BLACK" layoutX="711.0" layoutY="492.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 6" textAlignment="CENTER" wrappingWidth="201.13397216796875">
-         <font>
-            <Font name="MyriadPro-Regular" size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="516.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α(B1)" wrappingWidth="54.9609375">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="376.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I(B1)" wrappingWidth="45.783203125">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="196.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α(A1)" wrappingWidth="59.4609375">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="56.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I(A1)" wrappingWidth="48.783203125">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="196.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α(A2)" wrappingWidth="59.4609375">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="56.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I(A2)" wrappingWidth="48.783203125">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="825.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α(C1)" wrappingWidth="59.4609375">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="685.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I(C1)" wrappingWidth="48.783203125">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="516.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α(B2)" wrappingWidth="54.9609375">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="376.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I(B2)" wrappingWidth="45.783203125">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="825.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α(C2)" wrappingWidth="59.4609375">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="685.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I(C2)" wrappingWidth="48.783203125">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="382.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP(B1)">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="65.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP(A1)">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="65.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP(A2)">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="385.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP(B2)">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="695.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP(C2)">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="698.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP(C1)">
-         <font>
-            <Font size="23.0" />
+            <Font name="MyriadPro-Regular" size="30.0" />
          </font>
       </Text>
 
@@ -242,12 +142,12 @@
                 </Text>
                 <ImageView fx:id="inverterA1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="inverterA2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
             </children>
@@ -274,12 +174,12 @@
                 </Text>
                 <ImageView fx:id="inverterB1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="inverterB2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
             </children>
@@ -306,15 +206,115 @@
                 </Text>
                 <ImageView fx:id="inverterC1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="inverterC2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                     </image>
                 </ImageView>
             </children>
         </GridPane>
+      <Text layoutX="517.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="363.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="410.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="828.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="674.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="721.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="197.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="43.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="90.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="516.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="362.0" layoutY="542.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="409.0" layoutY="604.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="825.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="671.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="718.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text fill="BLACK" layoutX="391.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 2 (В1)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text fill="BLACK" layoutX="693.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 3 (С1)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text fill="BLACK" layoutX="64.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 4 (А2)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text fill="BLACK" layoutX="391.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 5 (В2)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text fill="BLACK" layoutX="690.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 6 (С2)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
+         <font>
+            <Font name="MyriadPro-Regular" size="30.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

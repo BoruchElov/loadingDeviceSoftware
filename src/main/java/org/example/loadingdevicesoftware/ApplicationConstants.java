@@ -43,8 +43,14 @@ public class ApplicationConstants {
     public static final String FONT_NAME = "Myriad Pro";
 
     public static final Image STATUS_CONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
+            getResource("/screen/BasePictures/иконкаЗеленыйКруг.png")).toExternalForm());
     public static final Image STATUS_DISCONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
+            getResource("/screen/BasePictures/иконкаКрасныйКруг.png")).toExternalForm());
+    public static final Image WHITE_BUTTON = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Кнопка(белая).png")).toExternalForm());
+    public static final Image WHITE_BUTTON_LONG = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Кнопка(белая)_длинная.png")).toExternalForm());
+    public static final Image BLACK_BUTTON = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Кнопка(черная).png")).toExternalForm());
 
 }

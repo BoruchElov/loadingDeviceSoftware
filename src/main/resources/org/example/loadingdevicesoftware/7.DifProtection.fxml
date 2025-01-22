@@ -118,12 +118,12 @@
             </Text>
             <ImageView fx:id="inverterA1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                  <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                </image>
             </ImageView>
             <ImageView fx:id="inverterA2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                  <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                </image>
             </ImageView>
          </children>
@@ -150,12 +150,12 @@
             </Text>
             <ImageView fx:id="inverterB1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                  <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                </image>
             </ImageView>
             <ImageView fx:id="inverterB2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                  <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                </image>
             </ImageView>
          </children>
@@ -182,12 +182,12 @@
             </Text>
             <ImageView fx:id="inverterC1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                  <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                </image>
             </ImageView>
             <ImageView fx:id="inverterC2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png" />
+                  <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
                </image>
             </ImageView>
          </children>

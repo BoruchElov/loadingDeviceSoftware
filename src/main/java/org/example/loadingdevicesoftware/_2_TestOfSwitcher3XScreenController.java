@@ -1,26 +1,18 @@
 package org.example.loadingdevicesoftware;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class _2_TestOfSwitcher3XScreenController {
 
@@ -37,6 +29,8 @@ public class _2_TestOfSwitcher3XScreenController {
     private Button contactOneButton;
     @FXML
     private Button contactTwoButton;
+    @FXML
+    private ToggleButton testOfSwitcher1X;
     @FXML
     private ImageView inverterA1Status;
     @FXML
@@ -84,16 +78,11 @@ public class _2_TestOfSwitcher3XScreenController {
             getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png")).toExternalForm());
 
     //Объекты фоновых картинок
-    Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
+    Image backImageOutThree = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/2.проверкаВыключателя1Х3Х/switchCheckBackgroundl(3X).png")).toExternalForm());
-
-    //Объекты картинок для кнопок и статусов инверторов
-    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
-    Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
-    Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
+    //Объекты фоновых картинок
+    Image backImageOutOne = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/2.проверкаВыключателя1Х3Х/switchCheckBackgroundl(1X).png")).toExternalForm());
 
     public void initialize() {
         //Привязка текстового поля к потоку обновления даты и времени
@@ -105,18 +94,21 @@ public class _2_TestOfSwitcher3XScreenController {
         setupObjectNameField(phaseB1TextField, "Ток В1, А");
         setupObjectNameField(phaseC1TextField, "Ток С1, А");
         //Задание изображения для статуса инвертора
-        inverterA1Status.setImage(statusConnected);
-        inverterA2Status.setImage(statusConnected);
-        inverterB1Status.setImage(statusConnected);
-        inverterB2Status.setImage(statusConnected);
-        inverterC1Status.setImage(statusConnected);
-        inverterC2Status.setImage(statusConnected);
+        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         //Установка картинки на фон
-        backgroundImageView.setImage(backImageOutSC);
+        backgroundImageView.setImage(backImageOutThree);
         //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
+        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
         //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
+        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
+        //Настройка кнопки смены конфигурации выключателя
+        setupRightSideButton(testOfSwitcher1X);
+        testOfSwitcher1X.setText("3 фазы");
         //Настройка кнопок для задания положения контактов
         setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
         setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
@@ -157,6 +149,23 @@ public class _2_TestOfSwitcher3XScreenController {
         }
     }
 
+    @FXML
+    public void changeSwitcherConfiguration() {
+        if (testOfSwitcher1X.isSelected()) {
+            testOfSwitcher1X.setText("1 фаза");
+            backgroundImageView.setImage(backImageOutOne);
+            phaseA1TextField.setVisible(false);
+            phaseC1TextField.setVisible(false);
+            setupObjectNameField(phaseB1TextField, "Ток, А");
+        } else {
+            testOfSwitcher1X.setText("3 фазы");
+            backgroundImageView.setImage(backImageOutThree);
+            phaseA1TextField.setVisible(true);
+            phaseC1TextField.setVisible(true);
+            setupObjectNameField(phaseB1TextField, "Ток В1, А");
+        }
+    }
+
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
     public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
             interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
@@ -177,17 +186,16 @@ public class _2_TestOfSwitcher3XScreenController {
                 3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
                 prompt);
     }
+    //Метод для настройки кнопки смены конфигурации
+    private void setupRightSideButton (ButtonBase button) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
+                button);
+    }
 
     //Тестовый метод для проверки работы кнопки
     public void testClick() {
         System.out.println("Кнопка работает");
     }
 
-    // Функция для кнопки перехода в 1 фазный режим
-    //@FXML
-    //public void goToTest1X(ActionEvent event) throws IOException {
-        //Вызов метода для остановки выполнения задачи по обновлению даты и времени
-        //stopUpdatingDateAndTime();
-
-    //}
 }

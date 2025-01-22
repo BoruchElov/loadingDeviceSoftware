@@ -2,13 +2,11 @@ package org.example.loadingdevicesoftware;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -20,11 +18,6 @@ import java.util.Objects;
 public class _8_HandControlScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
-
-    private Stage stageForMainScreen;
-    private Scene sceneForMainScreen;
-    private Parent rootForMainScreen;
-
 
     @FXML
     private Button toMenuButton;
@@ -97,10 +90,6 @@ public class _8_HandControlScreenController {
     private ImageView inverterC1Status;
     @FXML
     private ImageView inverterC2Status;
-    @FXML
-    private ImageView contactOneView;
-    @FXML
-    private ImageView contactTwoView;
 
     //Объявление текстового поля для вывода даты-времени
     @FXML
@@ -110,13 +99,6 @@ public class _8_HandControlScreenController {
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/8.ручнойРежим/ручнойРежим1Форма(безКнопок).png")).toExternalForm());
 
-    //Объекты картинок для кнопок и статусов инверторов
-    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png")).toExternalForm());
-    Image statusConnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаЗеленыйКруг.png")).toExternalForm());
-    Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаКрасныйКруг.png")).toExternalForm());
 
     @FXML
     public void initialize() {
@@ -145,12 +127,12 @@ public class _8_HandControlScreenController {
         setupObjectNameField(IP_C1, "");
         setupObjectNameField(IP_C2, "");
         //Задание изображений для статусов инверторов
-        inverterA1Status.setImage(statusConnected);
-        inverterA2Status.setImage(statusConnected);
-        inverterB1Status.setImage(statusConnected);
-        inverterB2Status.setImage(statusConnected);
-        inverterC1Status.setImage(statusConnected);
-        inverterC2Status.setImage(statusConnected);
+        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
 
         //настройка кнопок в правой части
         setupRightSideButtons(stopwatchSetting);
@@ -159,9 +141,9 @@ public class _8_HandControlScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
         //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
+        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
         //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
+        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
     }
 
     @FXML
@@ -176,7 +158,7 @@ public class _8_HandControlScreenController {
 
     public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
+                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
                 imageView, image, button, 138, 64, true, text);
     }
 
