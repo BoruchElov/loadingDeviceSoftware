@@ -2,6 +2,7 @@ package org.example.loadingdevicesoftware;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -223,6 +224,36 @@ public class InterfaceElementsSettings {
         textField.setOnAction(event -> {
             textField.getParent().requestFocus();
         });
+    }
+
+    public void comboBoxSettings (ApplicationConstants.colours colourOfBackground,
+                               ApplicationConstants.colours colourOfBorder,
+                               int borderWidth, int backgroundRadius,
+                               int borderRadius, ApplicationConstants.colours colourOfText,
+                               int fontSize, int padding, ComboBox comboBox) {
+
+        String backgroundColour = setColour(colourOfBackground, true);
+        String borderColour = setColour(colourOfBorder, true);
+
+        String widthOfBorder = setIntToText(borderWidth);
+        String radiusOfBackground = setIntToText(backgroundRadius);
+        String radiusOfBorder = setIntToText(borderRadius);
+
+        String textColour = setColour(colourOfText, false);
+        String sizeOfFont = setIntToText(fontSize);
+        String textPadding = " " + padding + ";";
+
+        comboBox.setStyle("-fx-background-color:" + backgroundColour + // Цвет фона
+                "-fx-border-color:" + borderColour + // Цвет границы
+                "-fx-border-width:" + widthOfBorder + // Ширина границы
+                "-fx-background-radius:" + radiusOfBackground + // Закругление фона
+                "-fx-border-radius:" + radiusOfBorder + // Закругление границы
+                "-fx-text-fill:" + textColour +   // Цвет текста
+                "-fx-font-size:" + sizeOfFont +        // Размер текста
+                "-fx-font-family: " + ApplicationConstants.FONT_NAME + "; " +    // Шрифт текста
+                "-fx-padding:" + textPadding + //Величина отступа
+                "-fx-background-insets: 0; " +    // Убираем стандартные отступы JavaFX
+                "-fx-border-insets: 0; ");
     }
 
     /**

@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
@@ -21,9 +22,7 @@ import java.util.Objects;
 
 public class _1_SettingsScreenController {
 
-    private Stage stageForMainScreen;
-    private Scene sceneForMainScreen;
-    private Parent rootForMainScreen;
+    InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
     String workingDirectory;
 
@@ -41,7 +40,7 @@ public class _1_SettingsScreenController {
     ImageView image6;
 
     Image inverterImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/icons8-dynamo-96.png")).toExternalForm());
+            getResource("/screen/1.настройки/икон/инвертор.png")).toExternalForm());
 
     //Massive for storing addresses values
     private String[] actualValuesOfAddresses = new String[6];
@@ -55,7 +54,45 @@ public class _1_SettingsScreenController {
     @FXML
     private Button backToMenuButton;
     @FXML
-    private Button choiceOfWorkingDirectory;
+    private Button choiceOfWorkingDirectoryButton;
+    @FXML
+    private Button saveAllButton;
+    @FXML
+    private Button clearAllButton;
+    @FXML
+    private ImageView backToMenuImageView;
+    @FXML
+    private ImageView choiceOfWorkingDirectoryImageView;
+    @FXML
+    private ImageView saveAllImageView;
+    @FXML
+    private ImageView clearAllImageView;
+
+
+    @FXML
+    private Button saveButton1;
+    @FXML
+    private Button saveButton2;
+    @FXML
+    private Button saveButton3;
+    @FXML
+    private Button saveButton4;
+    @FXML
+    private Button saveButton5;
+    @FXML
+    private Button saveButton6;
+    @FXML
+    private Button clearButton1;
+    @FXML
+    private Button clearButton2;
+    @FXML
+    private Button clearButton3;
+    @FXML
+    private Button clearButton4;
+    @FXML
+    private Button clearButton5;
+    @FXML
+    private Button clearButton6;
     
     //Declaration of addresses ComboBoxes
     @FXML
@@ -84,11 +121,19 @@ public class _1_SettingsScreenController {
     @FXML
     private ComboBox<String> phaseComboBox6;
 
-    //Declaration of buttons for saving and deleting settings for all ComboBoxes
     @FXML
-    private Button saveAll;
+    private ImageView inverterA1Status;
     @FXML
-    private Button clearAll;
+    private ImageView inverterA2Status;
+    @FXML
+    private ImageView inverterB1Status;
+    @FXML
+    private ImageView inverterB2Status;
+    @FXML
+    private ImageView inverterC1Status;
+    @FXML
+    private ImageView inverterC2Status;
+
 
     private static final String CONFIG_FILE = "directory.config";
     private String settingsFilePath; // Путь к файлу настроек в рабочей директории
@@ -97,6 +142,14 @@ public class _1_SettingsScreenController {
 
     @FXML
     public void initialize() {
+
+        //Задание изображений для статусов инверторов
+        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         // Проверяем или создаем путь к файлу directory.config
         File configFile = new File(CONFIG_FILE);
 
@@ -158,6 +211,40 @@ public class _1_SettingsScreenController {
         image5.setImage(inverterImage);
         image6.setImage(inverterImage);
 
+        setupBottomButtons(backToMenuButton, backToMenuImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ",
+                150, 64, 21);
+        setupBottomButtons(choiceOfWorkingDirectoryButton, choiceOfWorkingDirectoryImageView,
+                ApplicationConstants.WHITE_BUTTON_LONG, "ДИРЕКТОРИЯ", 350, 64, 21);
+        setupBottomButtons(saveAllButton, saveAllImageView, ApplicationConstants.WHITE_BUTTON_LONG, "СОХРАНИТЬ",
+                350, 64, 21);
+        setupBottomButtons(clearAllButton, clearAllImageView, ApplicationConstants.WHITE_BUTTON, "ОЧИСТИТЬ",
+                150, 64, 21);
+
+        setupScreenButtons(saveButton1);
+        setupScreenButtons(saveButton2);
+        setupScreenButtons(saveButton3);
+        setupScreenButtons(saveButton4);
+        setupScreenButtons(saveButton5);
+        setupScreenButtons(saveButton6);
+        setupScreenButtons(clearButton1);
+        setupScreenButtons(clearButton2);
+        setupScreenButtons(clearButton3);
+        setupScreenButtons(clearButton4);
+        setupScreenButtons(clearButton5);
+        setupScreenButtons(clearButton6);
+
+        setupScreenComboBoxes(phaseComboBox1);
+        setupScreenComboBoxes(phaseComboBox2);
+        setupScreenComboBoxes(phaseComboBox3);
+        setupScreenComboBoxes(phaseComboBox4);
+        setupScreenComboBoxes(phaseComboBox5);
+        setupScreenComboBoxes(phaseComboBox6);
+        setupScreenComboBoxes(addressComboBox1);
+        setupScreenComboBoxes(addressComboBox2);
+        setupScreenComboBoxes(addressComboBox3);
+        setupScreenComboBoxes(addressComboBox4);
+        setupScreenComboBoxes(addressComboBox5);
+        setupScreenComboBoxes(addressComboBox6);
 
     }
 
@@ -245,6 +332,32 @@ public class _1_SettingsScreenController {
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+    }
+
+    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
+    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text, int width, int height,
+                                   int fontSize) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
+                0, 17, 0, ApplicationConstants.colours.WHITE, fontSize, 0,
+                imageView, image, button, width, height, true, text);
+    }
+    //Тестовый метод для проверки работы кнопки
+    public void testClick() {
+        System.out.println("Кнопка работает");
+    }
+
+    //метод для настройки кнопок в основной части
+    public void setupScreenButtons (Button button) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 16, 0,
+                button);
+    }
+
+    //метод для настройки кнопок в основной части
+    public void setupScreenComboBoxes (ComboBox comboBox) {
+        interfaceElementsSettings.comboBoxSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 16, 0,
+                comboBox);
     }
 
     }
