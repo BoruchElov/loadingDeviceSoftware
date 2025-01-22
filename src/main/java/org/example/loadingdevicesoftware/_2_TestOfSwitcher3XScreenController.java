@@ -71,12 +71,6 @@ public class _2_TestOfSwitcher3XScreenController {
     @FXML
     private Text dateTimeText;
 
-    //Объекты картинок контактов
-    Image normallyClosedContact = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормЗамкКонт.png")).toExternalForm());
-    Image normallyOpenedContact = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/icon_for_DZ/иконкаНормРазомкКонт.png")).toExternalForm());
-
     //Объекты фоновых картинок
     Image backImageOutThree = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/2.проверкаВыключателя1Х3Х/switchCheckBackgroundl(3X).png")).toExternalForm());
@@ -130,10 +124,10 @@ public class _2_TestOfSwitcher3XScreenController {
     public void setPictureForContactOne() {
         contactOneView.setVisible(true);
         if(contactOneStatus) {
-            contactOneView.setImage(normallyClosedContact);
+            contactOneView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
             contactOneStatus = false;
         } else {
-            contactOneView.setImage(normallyOpenedContact);
+            contactOneView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
             contactOneStatus = true;
         }
     }
@@ -141,10 +135,10 @@ public class _2_TestOfSwitcher3XScreenController {
     public void setPictureForContactTwo() {
         contactTwoView.setVisible(true);
         if(contactTwoStatus) {
-            contactTwoView.setImage(normallyClosedContact);
+            contactTwoView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
             contactTwoStatus = false;
         } else {
-            contactTwoView.setImage(normallyOpenedContact);
+            contactTwoView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
             contactTwoStatus = true;
         }
     }
