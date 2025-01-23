@@ -204,7 +204,7 @@ public class _7_DifProtectionScreenController {
 
     @FXML
     public void goToStartScreen (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtectionStart.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
     }
 
     @FXML

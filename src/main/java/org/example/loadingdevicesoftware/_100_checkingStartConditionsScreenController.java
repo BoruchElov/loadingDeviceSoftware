@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class _7_DifProtectionSecondScreenController {
+public class _100_checkingStartConditionsScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
@@ -45,6 +45,7 @@ public class _7_DifProtectionSecondScreenController {
     private Button startButton;
     @FXML
     private Button cancelButton;
+
     //Объявление кнопок для задания статуса выполнения операций при пуске
     @FXML
     private Button status1True;
@@ -105,6 +106,7 @@ public class _7_DifProtectionSecondScreenController {
     //Объявление области изображения для фона
     @FXML
     private ImageView backgroundImageView;
+
     //Объекты картинок для кнопок и статусов инверторов
     private Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/Кнопка(черная).png")).toExternalForm());
@@ -175,6 +177,10 @@ public class _7_DifProtectionSecondScreenController {
     //Метод для перехода на экран сценария диф.защиты
     public void goToDPScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
+    }
+
+    public void goToWorkDevice(ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "101.deviceWorking.fxml");
     }
 
     /**
