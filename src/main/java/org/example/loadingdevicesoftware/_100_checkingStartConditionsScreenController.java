@@ -133,7 +133,7 @@ public class _100_checkingStartConditionsScreenController {
         //Настройка кнопки "Отмена"
         setupBottomButtons(cancelButton,cancelButtonImageView,lowButtoncImage, "ОТМЕНА", 138, 70);
         //Печать текста первой проверки
-        typeText(status1,"1. Введены все параметры формы", 100);
+        typeText(status1,"1. Проверка параметров формы", 100);
         //Скрытие кнопок остальных проверок
         setStatucButtonDisabled(status2True,status2TrueImageView);
         setStatucButtonDisabled(status2False,status2FalseImageView);
@@ -218,13 +218,13 @@ public class _100_checkingStartConditionsScreenController {
     }
     //Метод, срабатывающий при нажатии галочки первого статуса
     public void statusOneTrue() {
-        typeText(status2,"2. Количество настроенных инверторов", 100);
+        typeText(status2,"2. Проверка настройки модулей", 100);
         setStatusButtonEnabled(status2True,status2TrueImageView);
         setStatusButtonEnabled(status2False,status2FalseImageView);
     }
     //Метод, срабатывающий при нажатии галочки второго статуса
     public void statusTwoTrue() {
-        typeText(status3,"3. Включены ли инверторы", 100);
+        typeText(status3,"3. Проверка питания модулей", 100);
         setStatusButtonEnabled(status3True,status3TrueImageView);
         setStatusButtonEnabled(status3False,status3FalseImageView);
     }
@@ -236,13 +236,13 @@ public class _100_checkingStartConditionsScreenController {
     }
     //Метод, срабатывающий при нажатии галочки четвёртого статуса
     public void statusFourTrue() {
-        typeText(status5,"5. Проверка галетного переключателя", 100);
+        typeText(status5,"5. Проверка диапазона тока", 100);
         setStatusButtonEnabled(status5True,status5TrueImageView);
         setStatusButtonEnabled(status5False,status5FalseImageView);
     }
     //Метод, срабатывающий при нажатии галочки пятого статуса
     public void statusFiveTrue() {
-        typeText(status6,"6. Проверка сопротивления", 100);
+        typeText(status6,"6. Проверка сопротивления силовых контактов", 100);
         setStatusButtonEnabled(status6True,status6TrueImageView);
         setStatusButtonEnabled(status6False,status6FalseImageView);
     }
@@ -288,11 +288,11 @@ public class _100_checkingStartConditionsScreenController {
     //метод для вызова всплывающего окна
     public void errorMethod5() {
         showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
-                "Ошибка проверки галетного переключателя");
+                "Ошибка положения галетного переключателя");
     }
     //метод для вызова всплывающего окна
     public void errorMethod6() {
         showAlert(Alert.AlertType.CONFIRMATION, "Ошибка!",
-                "Ошибка проверки сопротивления");
+                "Превышение допустимого сопротивления");
     }
 }

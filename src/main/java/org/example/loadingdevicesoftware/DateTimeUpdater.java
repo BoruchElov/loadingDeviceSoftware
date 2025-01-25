@@ -44,7 +44,7 @@ public class DateTimeUpdater implements Runnable {
     public void run() {
         while (running) {
             try {
-                Thread.sleep(60000); // Обновление каждую минуту
+                Thread.sleep(1000); // Обновление каждую минуту
                 Platform.runLater(this::updateDateTime);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -53,7 +53,7 @@ public class DateTimeUpdater implements Runnable {
     }
 
     private void updateDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy   HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy   HH:mm:ss");
         dateTimeProperty.set(LocalDateTime.now().format(formatter));
     }
 }
