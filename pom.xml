@@ -146,6 +146,46 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>plugin-loader</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <headerType>gui</headerType>
+                            <outfile>${exeFileName}.exe</outfile>
+                            <jar>${project.artifactId}.jar</jar>
+                            <errTitle>${product.title}</errTitle>
+                            <icon>favicon.ico</icon>
+                            <classPath>
+                                <mainClass>Boostrap</mainClass>
+                                <addDependencies>true</addDependencies>
+                                <preCp>anything</preCp>
+                            </classPath>
+                            <jre>
+                                <minVersion>${jdkVersion}.0</minVersion>
+                            </jre>
+                            <versionInfo>
+                                <fileVersion>${project.version}.0</fileVersion>
+                                <txtFileVersion>${project.version}</txtFileVersion>
+                                <fileDescription>Swing application</fileDescription>
+                                <copyright>Copyright © 2011 ${product.company}</copyright>
+                                <productVersion>${project.version}.0</productVersion>
+                                <txtProductVersion>${project.version}</txtProductVersion>
+                                <companyName>${product.company}</companyName>
+                                <productName>${product.title}</productName>
+                                <internalName>${exeFileName}</internalName>
+                                <originalFilename>${exeFileName}.exe</originalFilename>
+                            </versionInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
