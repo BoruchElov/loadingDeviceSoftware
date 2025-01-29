@@ -32,7 +32,4 @@ public class ApplicationFile extends Application {
         super.stop();
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
 }

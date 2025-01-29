@@ -101,6 +101,7 @@ public class _5_TestOfMeasurementTransformerScreenController {
     @FXML
     public void goToStartScreen (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+        Buffer.setPreviousPage("5.TestOfMeasurementTransformer.fxml");
     }
 
     //Метод для настройки параметров текстового поля с названием объекта

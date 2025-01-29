@@ -54,7 +54,7 @@
          </graphic>
       </Button>
 
-      <Button fx:id="cancelButton" contentDisplay="CENTER" layoutX="51.0" layoutY="723.0" mnemonicParsing="false" onAction="#goToDPScreen" prefHeight="64.0" prefWidth="172.0">
+      <Button fx:id="cancelButton" contentDisplay="CENTER" layoutX="51.0" layoutY="723.0" mnemonicParsing="false" onAction="#goToPreviousPage" prefHeight="64.0" prefWidth="172.0">
          <font>
             <Font size="24.0" />
          </font>

@@ -10,6 +10,7 @@ module org.example.loadingdevicesoftware {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires static lombok;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;

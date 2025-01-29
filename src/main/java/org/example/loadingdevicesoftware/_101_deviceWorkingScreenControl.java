@@ -66,11 +66,11 @@ public class _101_deviceWorkingScreenControl {
         backgroundImageView.setImage(background);
 
         //Настройка кнопки "Меню"
-        setupBottomButtons(cancelButton, cancelButtonImageView, lowButtonImage, "ОТМЕНА", 138, 70);
+        setupBottomButtons(cancelButton, cancelButtonImageView, ApplicationConstants.WHITE_BUTTON_LONG, "ОТМЕНА", 182, 70);
         //Настройка кнопки "Пуск"
         setupBottomButtons(protocolButton, toProtocolButtonImageView, lowButtonImage, "ПРОТОКОЛ", 182, 70);
         //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtonImage, "ПУСК", 132, 70);
+        setupBottomButtons(startButton, startButtonImageView, lowButtonImage, "ПУСК", 182, 70);
     }
 
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты
@@ -91,9 +91,10 @@ public class _101_deviceWorkingScreenControl {
 
 
 
+    @FXML
     //Метод для перехода на экран сценария диф.защиты
-    public void goToDPScreen(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
+    public void goToPreviousPage (ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), Buffer.getPreviousPage());
     }
 
 

@@ -133,7 +133,7 @@ public class _100_checkingStartConditionsScreenController {
         //Настройка кнопки "Отмена"
         setupBottomButtons(cancelButton,cancelButtonImageView,lowButtoncImage, "ОТМЕНА", 138, 70);
         //Печать текста первой проверки
-        typeText(status1,"1. Проверка параметров формы", 100);
+        typeText(status1,"1. Проверка параметров формы");
         //Скрытие кнопок остальных проверок
         setStatucButtonDisabled(status2True,status2TrueImageView);
         setStatucButtonDisabled(status2False,status2FalseImageView);
@@ -174,9 +174,10 @@ public class _100_checkingStartConditionsScreenController {
     public void goToMainScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
+    @FXML
     //Метод для перехода на экран сценария диф.защиты
-    public void goToDPScreen(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
+    public void goToPreviousPage (ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), Buffer.getPreviousPage());
     }
 
     public void goToWorkDevice(ActionEvent event) throws IOException {
@@ -190,15 +191,8 @@ public class _100_checkingStartConditionsScreenController {
      * @param text     Текст, который нужно вывести
      * @param delay    Задержка между символами в миллисекундах
      */
-    private void typeText(Text textNode, String text, int delay) {
-        Timeline timeline = new Timeline();
-        for (int i = 0; i <= text.length(); i++) {
-            final int index = i;
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(delay * i), event -> {
-                textNode.setText(text.substring(0, index));
-            }));
-        }
-        timeline.play();
+    private void typeText(Text textNode, String text) {
+        textNode.setText(text);
     }
     //Метод для настройки кнопок статусов
     private void setupStatusButton(Button button, ImageView imageView, Image image) {
@@ -218,31 +212,31 @@ public class _100_checkingStartConditionsScreenController {
     }
     //Метод, срабатывающий при нажатии галочки первого статуса
     public void statusOneTrue() {
-        typeText(status2,"2. Проверка настройки модулей", 100);
+        typeText(status2,"2. Проверка настройки модулей");
         setStatusButtonEnabled(status2True,status2TrueImageView);
         setStatusButtonEnabled(status2False,status2FalseImageView);
     }
     //Метод, срабатывающий при нажатии галочки второго статуса
     public void statusTwoTrue() {
-        typeText(status3,"3. Проверка питания модулей", 100);
+        typeText(status3,"3. Проверка питания модулей");
         setStatusButtonEnabled(status3True,status3TrueImageView);
         setStatusButtonEnabled(status3False,status3FalseImageView);
     }
     //Метод, срабатывающий при нажатии галочки третьего статуса
     public void statusThreeTrue() {
-        typeText(status4,"4. Проверка синхронизации", 100);
+        typeText(status4,"4. Проверка синхронизации");
         setStatusButtonEnabled(status4True,status4TrueImageView);
         setStatusButtonEnabled(status4False,status4FalseImageView);
     }
     //Метод, срабатывающий при нажатии галочки четвёртого статуса
     public void statusFourTrue() {
-        typeText(status5,"5. Проверка диапазона тока", 100);
+        typeText(status5,"5. Проверка диапазона тока");
         setStatusButtonEnabled(status5True,status5TrueImageView);
         setStatusButtonEnabled(status5False,status5FalseImageView);
     }
     //Метод, срабатывающий при нажатии галочки пятого статуса
     public void statusFiveTrue() {
-        typeText(status6,"6. Проверка сопротивления силовых контактов", 100);
+        typeText(status6,"6. Проверка сопротивления силовых контактов");
         setStatusButtonEnabled(status6True,status6TrueImageView);
         setStatusButtonEnabled(status6False,status6FalseImageView);
     }

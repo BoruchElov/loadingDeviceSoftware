@@ -117,6 +117,7 @@ public class _3_TestOfStageProtection3XScreenController {
     @FXML
     public void goToStartScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+        Buffer.setPreviousPage("3.TestOfStageProtection3X.fxml");
     }
 
     //Методы для настройки кнопок выбора контактов

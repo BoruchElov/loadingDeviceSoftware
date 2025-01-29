@@ -154,6 +154,7 @@ public class _8_HandControlScreenController {
     @FXML
     public void goToStartScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+        Buffer.setPreviousPage("8.HandControl.fxml");
     }
 
     public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {

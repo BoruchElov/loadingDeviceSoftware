@@ -77,6 +77,12 @@ public class _6_ComTradeScreenController {
     }
 
     @FXML
+    public void goToStartScreen (ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+        Buffer.setPreviousPage("6.ComTrade.fxml");
+    }
+
+    @FXML
     public void chooseFile() {
         InterfaceElementsLogic.openFileManager();
     }
