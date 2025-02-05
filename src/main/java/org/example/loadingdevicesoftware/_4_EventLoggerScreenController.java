@@ -79,11 +79,6 @@ public class _4_EventLoggerScreenController {
         backgroundImageView.setImage(backImageOutSC);
 
         //Настройка кнопки "Меню"
-        setupImageButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.BLACK_BUTTON, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupImageButtons(startButton, startButtonImageView, ApplicationConstants.BLACK_BUTTON, "СОХРАНИТЬ");
-
-        //Настройка кнопки "Меню"
         setupTextBottoms(event1, "СОБЫТИЕ 1");
         //Настройка кнопки "Пуск"
         setupTextBottoms(event2, "СОБЫТИЕ 2");
@@ -95,6 +90,9 @@ public class _4_EventLoggerScreenController {
         setupTextBottoms(event5, "СОБЫТИЕ 5");
         //Настройка кнопки "Пуск"
         setupTextBottoms(event6, "СОБЫТИЕ 6");
+
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView);
     }
 
     @FXML
@@ -105,13 +103,6 @@ public class _4_EventLoggerScreenController {
     @FXML
     public void goToStartScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupImageButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.LIGHT_BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 22, 0,
-                imageView, image, button, 300, 64, true, text);
     }
 
     //Метод для настройки кнопок в нижней части окна сценария диф.защиты

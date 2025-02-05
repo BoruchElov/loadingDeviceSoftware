@@ -1,8 +1,5 @@
 package org.example.loadingdevicesoftware;
 
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -107,9 +103,7 @@ public class _100_checkingStartConditionsScreenController {
     @FXML
     private ImageView backgroundImageView;
 
-    //Объекты картинок для кнопок и статусов инверторов
-    private Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/Кнопка(черная).png")).toExternalForm());
+
     private Image statusConnected = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/BasePictures/иконкаЗеленыйКруг.png")).toExternalForm());
     private Image statusDisconnected = new Image(Objects.requireNonNull(getClass().
@@ -126,12 +120,6 @@ public class _100_checkingStartConditionsScreenController {
 
         //Установка изображения на фон
         backgroundImageView.setImage(background);
-        //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ", 138, 70);
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК", 138, 70);
-        //Настройка кнопки "Отмена"
-        setupBottomButtons(cancelButton,cancelButtonImageView,lowButtoncImage, "ОТМЕНА", 138, 70);
         //Печать текста первой проверки
         typeText(status1,"1. Проверка параметров формы");
         //Скрытие кнопок остальных проверок
@@ -158,17 +146,14 @@ public class _100_checkingStartConditionsScreenController {
         setupStatusButton(status5False,status5FalseImageView,statusDisconnected);
         setupStatusButton(status6True,status6TrueImageView,statusConnected);
         setupStatusButton(status6False,status6FalseImageView,statusDisconnected);
+
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getBlackCancelButton(cancelButton,cancelButtonImageView);
+        interfaceElementsSettings.getBlackStartButton(startButton,startButtonImageView);
         //Отключение кнопки запуска сценария
         startButton.setDisable(true);
     }
 
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text,
-                                   int width, int height) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
-                imageView, image, button, width, height, true, text);
-    }
     //Метод для перехода на экран главного меню
     @FXML
     public void goToMainScreen(ActionEvent event) throws IOException {
@@ -194,6 +179,7 @@ public class _100_checkingStartConditionsScreenController {
     private void typeText(Text textNode, String text) {
         textNode.setText(text);
     }
+
     //Метод для настройки кнопок статусов
     private void setupStatusButton(Button button, ImageView imageView, Image image) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,

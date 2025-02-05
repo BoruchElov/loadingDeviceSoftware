@@ -52,6 +52,8 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/Кнопка(белая)_длинная.png")).toExternalForm());
     public static final Image BLACK_BUTTON = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Кнопка(черная).png")).toExternalForm());
+    public static final Image BLACK_BUTTON_LONG = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Кнопка(черная)_длинная.png")).toExternalForm());
     public static final Image NORMALLY_CLOSED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/иконкаНормЗамкКонт.png")).toExternalForm());
     public static final Image NORMALLY_OPENED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.

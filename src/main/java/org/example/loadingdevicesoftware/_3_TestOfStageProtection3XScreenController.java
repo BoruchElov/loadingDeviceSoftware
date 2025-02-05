@@ -96,16 +96,15 @@ public class _3_TestOfStageProtection3XScreenController {
         inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutThree);
-        //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
         //Настройка кнопки смены конфигурации выключателя
         setupRightSideButton(testOfStageProtection1X);
         testOfStageProtection1X.setText("3 фазы");
         //Настройка кнопок для задания положения контактов
         setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
         setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
+
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
     }
 
     //Метод для перехода в главное меню
@@ -159,13 +158,6 @@ public class _3_TestOfStageProtection3XScreenController {
             phaseC1TextField.setVisible(true);
             setupObjectNameField(phaseB1TextField, "Ток В1, А");
         }
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
-                imageView, image, button, 138, 64, true, text);
     }
 
     //Метод для настройки кнопок соединения обмоток

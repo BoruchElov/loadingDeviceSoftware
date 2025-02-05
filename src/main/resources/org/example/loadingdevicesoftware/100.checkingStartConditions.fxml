@@ -28,45 +28,6 @@
          </font>
       </Text>
 
-      <Button fx:id="startButton" contentDisplay="CENTER" layoutX="1089.0" layoutY="723.0" mnemonicParsing="false" onAction="#goToWorkDevice" prefHeight="64.0" prefWidth="138.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <graphic>
-            <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-
-      <Button fx:id="toMenuButton" contentDisplay="CENTER" layoutX="236.0" layoutY="724.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="138.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <graphic>
-            <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-
-      <Button fx:id="cancelButton" contentDisplay="CENTER" layoutX="51.0" layoutY="723.0" mnemonicParsing="false" onAction="#goToPreviousPage" prefHeight="64.0" prefWidth="172.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <graphic>
-            <ImageView fx:id="cancelButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../screen/7.дифзащита/icon_for_DZ/иконкаРамкаПуска.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-
       <GridPane layoutX="74.0" layoutY="138.0" prefHeight="345.0" prefWidth="1176.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1068.0" minWidth="10.0" prefWidth="1011.0" />
@@ -139,5 +100,20 @@
             <ImageView fx:id="status6FalseImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
          </children>
       </GridPane>
+      <Button fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="724.0" mnemonicParsing="false" onAction="#goToPreviousPage" prefHeight="64.0" prefWidth="140.0" text="ОТМЕНА">
+         <graphic>
+            <ImageView fx:id="cancelButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Button>
+      <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1054.0" layoutY="723.0" mnemonicParsing="false" onAction="#goToWorkDevice" prefHeight="64.0" prefWidth="140.0" text="ПУСК">
+         <graphic>
+            <ImageView fx:id="startButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Button>
+      <Button fx:id="toMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="724.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="140.0" text="МЕНЮ">
+         <graphic>
+            <ImageView fx:id="toMenuButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

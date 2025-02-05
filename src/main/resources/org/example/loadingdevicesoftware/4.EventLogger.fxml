@@ -27,26 +27,6 @@
             </font>
         </Text>
 
-        <!--кнопка меню -->
-        <Button fx:id="toMenuButton" contentDisplay="CENTER" layoutX="74.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="138.0">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <graphic>
-                <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
-            </graphic>
-        </Button>
-
-        <!--кнопка старт -->
-        <Button fx:id="startButton" contentDisplay="CENTER" layoutX="997.0" layoutY="726.0" mnemonicParsing="false" onAction="#testClick" prefHeight="64.0" prefWidth="188.0">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <graphic>
-                <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true" />
-            </graphic>
-        </Button>
-
         <!--инвертора -->
         <GridPane layoutX="31.0" layoutY="19.0" prefHeight="82.0" prefWidth="164.0">
             <columnConstraints>
@@ -173,6 +153,16 @@
             <Button fx:id="event6" mnemonicParsing="false" onAction="#testClick" prefHeight="58.0" prefWidth="234.0" text="СОБЫТИЕ 6" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
+      <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1012.0" layoutY="724.0" mnemonicParsing="false" onAction="#testClick" prefHeight="64.0" prefWidth="140.0" text="СОХРАНИТЬ">
+         <graphic>
+            <ImageView fx:id="startButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Button>
+      <Button fx:id="toMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="82.0" layoutY="724.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="140.0" text="МЕНЮ">
+         <graphic>
+            <ImageView fx:id="toMenuButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Button>
 
     </children>
 </AnchorPane>
