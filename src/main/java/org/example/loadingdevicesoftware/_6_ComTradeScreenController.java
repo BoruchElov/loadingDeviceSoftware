@@ -43,22 +43,14 @@ public class _6_ComTradeScreenController {
     private ImageView inverterC1Status;
     @FXML
     private ImageView inverterC2Status;
-    @FXML
-    private ImageView contactOneView;
-    @FXML
-    private ImageView contactTwoView;
 
-    //Объекты картинок для кнопок и статусов инверторов
-    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/BasePictures/Кнопка(белая).png")).toExternalForm());
+
 
     @FXML
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
-        //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, lowButtoncImage, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtoncImage, "ПУСК");
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
         //Настройка кнопки для открытия файла
         setupOpenFileButton(chooseFileButton);
         chooseFileButton.setText("Выберите файл формата COMTRADE");
@@ -91,12 +83,6 @@ public class _6_ComTradeScreenController {
         System.out.println("");
     }
 
-    //Метод для настройки кнопок в нижней части окна сценария
-    private void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
-                imageView, image, button, 138, 64, true, text);
-    }
 
     //Метод для настройки кнопки открытия файла
     private void setupOpenFileButton (Button button) {

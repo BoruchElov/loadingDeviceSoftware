@@ -140,10 +140,8 @@ public class _8_HandControlScreenController {
 
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
-        //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
     }
 
     @FXML
@@ -155,12 +153,6 @@ public class _8_HandControlScreenController {
     public void goToStartScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
         Buffer.setPreviousPage("8.HandControl.fxml");
-    }
-
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
-                imageView, image, button, 138, 64, true, text);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта

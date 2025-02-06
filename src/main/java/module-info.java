@@ -12,6 +12,7 @@ module org.example.loadingdevicesoftware {
     requires com.almasb.fxgl.all;
     requires static lombok;
     requires itext;
+    requires java.compiler;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;

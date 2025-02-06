@@ -181,10 +181,8 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопки "Выбор питающей обмотки"
         setupRightSideButtons(feedingWindingButton);
         feedingWinding();
-        //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
         //Настройка кнопок для выбора схемы соединения обмоток трансформатора
         setupConnectionSchemesButtons(windingOneConnection, windingOneView, 55, 55);
         setupConnectionSchemesButtons(windingTwoConnection, windingTwoView, 55, 55);
@@ -258,13 +256,6 @@ public class _7_DifProtectionScreenController {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.BLACK, 42,
                 0, button);
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
-                imageView, image, button, 138, 64, true, text);
     }
 
     private void disableOrEnablePhaseButtons() {

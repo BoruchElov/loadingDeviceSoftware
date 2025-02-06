@@ -78,10 +78,6 @@ public class _9_DeBuggerScreenController {
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/9.отладка/отладка(безКнопок).png")).toExternalForm());
 
-    //Объекты картинок для кнопок и статусов инверторов
-    Image lowButtoncImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/Кнопка(черная).png")).toExternalForm());
-
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
         //Задание изображений для статусов инверторов
@@ -94,11 +90,8 @@ public class _9_DeBuggerScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
 
-        //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.BLACK_BUTTON, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.BLACK_BUTTON, "СОХРАНИТЬ");
-
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView);
         //настройка текстовых полей для переменных
         setupObjectNameField(alphaTextField, "0");
         setupObjectNameField(beta1TextField, "0");
@@ -120,13 +113,6 @@ public class _9_DeBuggerScreenController {
     @FXML
     public void goToStartScreen (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.LIGHT_BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 22, 0,
-                imageView, image, button, 300, 64, true, text);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта

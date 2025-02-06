@@ -50,9 +50,6 @@ public class _101_deviceWorkingScreenControl {
     //Объект картинки для фона
     private Image background = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_3форма_предупреждение(без кнопок).png")).toExternalForm());
-    //Объекты картинок для кнопок
-    private Image lowButtonImage = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/BasePictures/Кнопка(белая)_длинная.png")).toExternalForm());
 
     @FXML
     public void initialize() {
@@ -64,22 +61,9 @@ public class _101_deviceWorkingScreenControl {
 
         //Установка изображения на фон
         backgroundImageView.setImage(background);
-
-        //Настройка кнопки "Меню"
-        setupBottomButtons(cancelButton, cancelButtonImageView, ApplicationConstants.WHITE_BUTTON_LONG, "ОТМЕНА", 182, 70);
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(protocolButton, toProtocolButtonImageView, lowButtonImage, "ПРОТОКОЛ", 182, 70);
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, lowButtonImage, "ПУСК", 182, 70);
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text,
-                                   int width, int height) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
-                imageView, image, button, width, height, true, text);
-
+        interfaceElementsSettings.getWhiteCancelButton(cancelButton, cancelButtonImageView);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
+        interfaceElementsSettings.getWhiteReportButton(protocolButton, toProtocolButtonImageView);
     }
 
 

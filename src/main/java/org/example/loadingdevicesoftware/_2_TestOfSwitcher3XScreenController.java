@@ -1,5 +1,7 @@
 package org.example.loadingdevicesoftware;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Element;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import javax.lang.model.util.Elements;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -109,8 +112,9 @@ public class _2_TestOfSwitcher3XScreenController {
 
     //Метод для перехода в главное меню
     @FXML
-    public void goToMainScreen(ActionEvent event) throws IOException {
+    public void goToMainScreen(ActionEvent event) throws IOException, BadElementException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+        InterfaceElementsLogic.writeToPdf("newFile", new Element[]{InterfaceElementsLogic.getTable()});
     }
     //Метод для перехода в старт
     @FXML

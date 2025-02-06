@@ -15,6 +15,10 @@ public class InterfaceElementsSettings {
 
     public InterfaceElementsSettings() {}
 
+    private enum Background {
+        BLUE, LIGHT_BLUE
+    }
+
     public void getBlackMenuButton(ButtonBase button, ImageView imageView) {
         buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
                 0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,

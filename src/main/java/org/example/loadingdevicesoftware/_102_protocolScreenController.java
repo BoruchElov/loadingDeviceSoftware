@@ -61,10 +61,8 @@ public class _102_protocolScreenController {
         //Установка изображения на фон
         backgroundImageView.setImage(background);
 
-        //Настройка кнопки "Меню"
-        setupImageButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.BLACK_BUTTON, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupImageButtons(startButton, startButtonImageView, ApplicationConstants.BLACK_BUTTON, "СОХРАНИТЬ");
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton, toMenuButtonImageView);
+        interfaceElementsSettings.getBlackSaveButton(startButton, startButtonImageView);
 
         //Настройка стилей текстовых полей для ввода
         setupObjectNameField(current1, "500");
@@ -92,13 +90,6 @@ public class _102_protocolScreenController {
     @FXML
     public void goToStartScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupImageButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.LIGHT_BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
-                imageView, image, button, 300, 64, true, text);
     }
 
     //Тестовый метод для проверки работы кнопки

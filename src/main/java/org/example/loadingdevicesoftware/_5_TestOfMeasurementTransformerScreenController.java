@@ -89,10 +89,8 @@ public class _5_TestOfMeasurementTransformerScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
 
-        //Настройка кнопки "Меню"
-        setupBottomButtons(toMenuButton, toMenuButtonImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ");
-        //Настройка кнопки "Пуск"
-        setupBottomButtons(startButton, startButtonImageView, ApplicationConstants.WHITE_BUTTON, "ПУСК");
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
     }
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
@@ -109,13 +107,6 @@ public class _5_TestOfMeasurementTransformerScreenController {
         interfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
                 prompt);
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 22, 0,
-                imageView, image, button, 138, 64, true, text);
     }
 
     //Тестовый метод для проверки работы кнопки
