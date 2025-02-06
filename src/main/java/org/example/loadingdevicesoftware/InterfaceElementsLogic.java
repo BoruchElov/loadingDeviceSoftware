@@ -1,5 +1,8 @@
 package org.example.loadingdevicesoftware;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,6 +12,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -55,5 +59,21 @@ public class InterfaceElementsLogic {
         directoryChooser.showDialog(new Stage());
     }
 
+    public static void writeToPdf (String text) {
+        try {
+            Document document = new Document();
+            //создание файла
+            PdfWriter.getInstance(document, new FileOutputStream("output.pdf"));
+            document.open();
+            //добавление заглавия ("Дата: 'dataText'    Время: 'timeText'")
+            document.add(new Paragraph(text, ApplicationConstants.EXPORT_FONT));
+            //закрываем файл, пишем об удачном создании
+            document.close();
+            System.out.println("Файл создан!");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
 }

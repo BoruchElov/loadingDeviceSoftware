@@ -1,7 +1,11 @@
 package org.example.loadingdevicesoftware;
 
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.pdf.BaseFont;
 import javafx.scene.image.Image;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -41,6 +45,17 @@ public class ApplicationConstants {
 
     //Константы для текста
     public static final String FONT_NAME = "Myriad Pro";
+    //Шрифт для сохранения файла
+    public static final Font EXPORT_FONT;
+
+    static {
+        try {
+            EXPORT_FONT = new Font(BaseFont.createFont("ofont.ru_Myriad Pro.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED), 12, Font.NORMAL);
+        } catch (DocumentException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static final Image STATUS_CONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/иконкаЗеленыйКруг.png")).toExternalForm());
