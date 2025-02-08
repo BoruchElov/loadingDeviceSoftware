@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,10 +10,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Buffer;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -22,8 +19,8 @@ public class _3_TestOfStageProtection3XScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
-    private boolean contactOneStatus = false;
-    private boolean contactTwoStatus = false;
+    ContactObject contactOne;
+    ContactObject contactTwo;
 
     @FXML
     private Button toMenuButton;
@@ -104,8 +101,10 @@ public class _3_TestOfStageProtection3XScreenController {
         setupRightSideButton(testOfStageProtection1X);
         testOfStageProtection1X.setText("3 фазы");
         //Настройка кнопок для задания положения контактов
-        setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
-        setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
+        contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
+        contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
 
         interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
         interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
@@ -126,24 +125,19 @@ public class _3_TestOfStageProtection3XScreenController {
     //Методы для настройки кнопок выбора контактов
     @FXML
     public void setPictureForContactOne() {
-        contactOneView.setVisible(true);
-        if(contactOneStatus) {
-            contactOneView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
-            contactOneStatus = false;
-        } else {
-            contactOneView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
-            contactOneStatus = true;
+        contactOne.setEnabled();
+        switch (contactOne.getContactPosition()) {
+            case OPENED -> contactOne.setClosed();
+            case CLOSED -> contactOne.setOpened();
         }
     }
+
     @FXML
     public void setPictureForContactTwo() {
-        contactTwoView.setVisible(true);
-        if(contactTwoStatus) {
-            contactTwoView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
-            contactTwoStatus = false;
-        } else {
-            contactTwoView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
-            contactTwoStatus = true;
+        contactTwo.setEnabled();
+        switch (contactTwo.getContactPosition()) {
+            case OPENED -> contactTwo.setClosed();
+            case CLOSED -> contactTwo.setOpened();
         }
     }
 
@@ -162,13 +156,6 @@ public class _3_TestOfStageProtection3XScreenController {
             phaseC1TextField.setVisible(true);
             setupObjectNameField(phaseB1TextField, "Ток В1, А");
         }
-    }
-
-    //Метод для настройки кнопок соединения обмоток
-    public void setupConnectionSchemesButtons(Button button, ImageView imageView, int width, int height) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.WHITE, 0,
-                imageView, null, button, width, height, false);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта

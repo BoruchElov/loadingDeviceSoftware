@@ -1,11 +1,10 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
 
 /**
  * Класс <b>InterfaceElementsSettings</b> используется для удобной настройки внешнего
@@ -116,25 +115,10 @@ public class InterfaceElementsSettings {
                 button, 210, 64, true, "ОЧИСТИТЬ");
     }
 
-    enum ContactPosition {
-        OPENED, CLOSED
-    }
-
-    public void getContactButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getContactButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.WHITE, 0,
                 imageView, null, button, 45, 30, false);
-    }
-
-    public void setContactPosition(ImageView imageView, ContactPosition position) {
-        switch (position) {
-            case OPENED:
-                imageView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
-                break;
-            case CLOSED:
-                imageView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
-                break;
-        }
     }
 
 
@@ -156,12 +140,12 @@ public class InterfaceElementsSettings {
      * @param fitHeight           высота картинки
      * @param isVisible           настройка видимости изображения на кнопке
      */
-    public void buttonSettings(ApplicationConstants.colours colourOfBackground,
-                               ApplicationConstants.colours colourOfBorder,
-                               int borderWidth, int backgroundRadius,
-                               int borderRadius, ApplicationConstants.colours colourOfText,
-                               int padding, ImageView backgroundImageView, Image backgroundImage,
-                               ButtonBase button, int fitWidth, int fitHeight, boolean isVisible) {
+    public static void buttonSettings(ApplicationConstants.colours colourOfBackground,
+                                      ApplicationConstants.colours colourOfBorder,
+                                      int borderWidth, int backgroundRadius,
+                                      int borderRadius, ApplicationConstants.colours colourOfText,
+                                      int padding, ImageView backgroundImageView, Image backgroundImage,
+                                      ButtonBase button, int fitWidth, int fitHeight, boolean isVisible) {
 
         backgroundImageView.setImage(backgroundImage);
         backgroundImageView.setFitWidth(fitWidth);
@@ -392,7 +376,7 @@ public class InterfaceElementsSettings {
      * @return текстовый объект нужного вида (цвет в кодировке HEX или в виде
      * названия цвета на английском).
      */
-    private String setColour(ApplicationConstants.colours colours, boolean isHex) {
+    private static String setColour(ApplicationConstants.colours colours, boolean isHex) {
         if (isHex) {
             return " " + switch (colours) {
                 case BLACK -> ApplicationConstants.BLACK_HEX;
@@ -417,7 +401,7 @@ public class InterfaceElementsSettings {
      *
      * @return текстовый объект нужного вида (число, но с нужным форматированием).
      */
-    private String setIntToText(int value) {
+    private static String setIntToText(int value) {
         return " " + value + "px; ";
     }
 

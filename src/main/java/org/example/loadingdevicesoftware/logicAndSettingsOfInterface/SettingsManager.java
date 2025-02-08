@@ -1,9 +1,9 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import java.io.*;
 import java.util.Properties;
 
-public class _1_SettingsManager {
+public class SettingsManager {
 
     // Сохранение адресов и фаз в указанный файл
     public static void saveAddressPhaseSettings(String filePath, String[] addresses, String[] phases) {

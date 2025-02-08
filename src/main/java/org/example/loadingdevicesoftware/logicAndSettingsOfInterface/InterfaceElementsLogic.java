@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.example.loadingdevicesoftware.ApplicationFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,7 +40,7 @@ public class InterfaceElementsLogic {
         Stage stage = (Stage) node.getScene().getWindow();
 
         // Загружаем новый FXML
-        Parent root = FXMLLoader.load(Objects.requireNonNull(InterfaceElementsLogic.class.
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ApplicationFile.class.
                 getResource(fxmlFilePath)));
 
         // Устанавливаем новую сцену

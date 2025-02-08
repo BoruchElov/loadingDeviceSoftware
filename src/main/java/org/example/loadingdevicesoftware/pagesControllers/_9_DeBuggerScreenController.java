@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsSettings;
 
 import java.io.IOException;
 import java.util.Objects;

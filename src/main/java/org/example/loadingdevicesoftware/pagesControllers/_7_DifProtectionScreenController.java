@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,10 +9,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Buffer;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,8 +22,9 @@ public class _7_DifProtectionScreenController {
 
     private boolean windingOneStatus = false;
     private boolean windingTwoStatus = false;
-    private boolean contactOneStatus = false;
-    private boolean contactTwoStatus = false;
+
+    ContactObject contactOne;
+    ContactObject contactTwo;
 
     private boolean isLocationPressed = false;
     private boolean isFeedingWindingPressed = false;
@@ -191,8 +189,10 @@ public class _7_DifProtectionScreenController {
         setupConnectionSchemesButtons(windingOneConnection, windingOneView, 55, 55);
         setupConnectionSchemesButtons(windingTwoConnection, windingTwoView, 55, 55);
         //Настройка кнопок для задания положения контактов
-        setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
-        setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
+        contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
+        contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
         //Настройка кнопок для задания номера схемы
         setupConnectionSchemesButtons(windingOneGroupButton);
         setupConnectionSchemesButtons(windingTwoGroupButton);
@@ -218,15 +218,23 @@ public class _7_DifProtectionScreenController {
     public void setPictureForWindingTwo() {
         windingTwoStatus = commonMethodForPositionPicturesButtons(windingTwoView, windingTwoStatus, starConnection, deltaConnection);
     }
+    //Методы для настройки кнопок выбора контактов
     @FXML
     public void setPictureForContactOne() {
-        contactOneStatus = commonMethodForPositionPicturesButtons(contactOneView, contactOneStatus, ApplicationConstants.NORMALLY_CLOSED_CONTACT,
-                ApplicationConstants.NORMALLY_OPENED_CONTACT);
+        contactOne.setEnabled();
+        switch (contactOne.getContactPosition()) {
+            case OPENED -> contactOne.setClosed();
+            case CLOSED -> contactOne.setOpened();
+        }
     }
+
     @FXML
     public void setPictureForContactTwo() {
-        contactTwoStatus = commonMethodForPositionPicturesButtons(contactTwoView, contactTwoStatus, ApplicationConstants.NORMALLY_CLOSED_CONTACT,
-                ApplicationConstants.NORMALLY_OPENED_CONTACT);
+        contactTwo.setEnabled();
+        switch (contactTwo.getContactPosition()) {
+            case OPENED -> contactTwo.setClosed();
+            case CLOSED -> contactTwo.setOpened();
+        }
     }
 
     //метод для настройки кнопок в правой части окна сценария диф.защиты

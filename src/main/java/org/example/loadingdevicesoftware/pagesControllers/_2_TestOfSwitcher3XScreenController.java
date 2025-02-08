@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.pagesControllers;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Element;
@@ -12,10 +12,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Buffer;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -23,9 +20,9 @@ import java.util.Objects;
 public class _2_TestOfSwitcher3XScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
-
-    private boolean contactOneStatus = false;
-    private boolean contactTwoStatus = false;
+    
+    ContactObject contactOne;
+    ContactObject contactTwo;
 
     @FXML
     private Button toMenuButton;
@@ -105,9 +102,11 @@ public class _2_TestOfSwitcher3XScreenController {
         //Настройка кнопки смены конфигурации выключателя
         setupRightSideButton(testOfSwitcher1X);
         testOfSwitcher1X.setText("3 фазы");
-
-        interfaceElementsSettings.getContactButton(contactOneButton, contactOneView, InterfaceElementsSettings.Background.LIGHT_BLUE);
-        interfaceElementsSettings.getContactButton(contactTwoButton, contactTwoView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        
+        contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
+        contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
 
         interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
         interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
@@ -129,25 +128,19 @@ public class _2_TestOfSwitcher3XScreenController {
     //Методы для настройки кнопок выбора контактов
     @FXML
     public void setPictureForContactOne() {
-        contactOneView.setVisible(true);
-        if (contactOneStatus) {
-            //interfaceElementsSettings.setContactPosition();
-            contactOneView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
-            contactOneStatus = false;
-        } else {
-            contactOneView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
-            contactOneStatus = true;
+        contactOne.setEnabled();
+        switch (contactOne.getContactPosition()) {
+            case OPENED -> contactOne.setClosed();
+            case CLOSED -> contactOne.setOpened();
         }
     }
+    
     @FXML
     public void setPictureForContactTwo() {
-        contactTwoView.setVisible(true);
-        if(contactTwoStatus) {
-            contactTwoView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
-            contactTwoStatus = false;
-        } else {
-            contactTwoView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
-            contactTwoStatus = true;
+        contactTwo.setEnabled();
+        switch (contactTwo.getContactPosition()) {
+            case OPENED -> contactTwo.setClosed();
+            case CLOSED -> contactTwo.setOpened();
         }
     }
 
