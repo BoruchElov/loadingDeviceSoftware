@@ -1,18 +1,21 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsSettings;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class _5_TestOfMeasurementTransformerScreenController {
+public class _4_EventLoggerScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
@@ -21,10 +24,23 @@ public class _5_TestOfMeasurementTransformerScreenController {
     private Button toMenuButton;
     @FXML
     private Button startButton;
+    @FXML
+    private Button event1;
+    @FXML
+    private Button event2;
+    @FXML
+    private Button event3;
+    @FXML
+    private Button event4;
+    @FXML
+    private Button event5;
+    @FXML
+    private Button event6;
 
     // картинка фона
     @FXML
     private ImageView backgroundImageView;
+
     //инвертора
     @FXML
     private ImageView inverterA1Status;
@@ -44,41 +60,17 @@ public class _5_TestOfMeasurementTransformerScreenController {
     @FXML
     ImageView startButtonImageView;
 
-    //Объявление текстового поля для задания названия объекта
-    @FXML
-    private TextField objectNameTextField;
-    //Объявление текстового поля для задания ФИО работника
-    @FXML
-    private TextField userNameTextField;
-    //Объявление текстовых полей для задания токов фаз/ фазового угла
-    @FXML
-    private TextField phaseA1TextField;
-    @FXML
-    private TextField angleA1TextField;
-    @FXML
-    private TextField currentMeasure;
-    @FXML
-    private TextField voltageMeasure;
-
     //Объявление текстового поля для вывода даты-времени
     @FXML
     private Text dateTimeText;
 
     //Объект фоновой картинки
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/5.проверкаИзмерительногоТрансформатора/ПроверкаИзмерительногоТранса1форма(безКнопок).png")).toExternalForm());
+            getResource("/screen/9.отладка/отладка(безКнопок).png")).toExternalForm());
+
 
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
-        //Настройка стилей текстовых полей для ввода
-        setupObjectNameField(objectNameTextField, "Введите название объекта");
-        setupObjectNameField(userNameTextField, "Введите ФИО исполнителя");
-
-        setupObjectNameField(phaseA1TextField, "         А");
-        setupObjectNameField(angleA1TextField, "    °");
-        setupObjectNameField(voltageMeasure, "0");
-        setupObjectNameField(currentMeasure, "0");
-
         //Задание изображений для статусов инверторов
         inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
@@ -89,24 +81,39 @@ public class _5_TestOfMeasurementTransformerScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
 
-        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
-        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
-    }
-    @FXML
-    public void goToMainScreen (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
-    }
-    @FXML
-    public void goToStartScreen (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-        Buffer.setPreviousPage("5.TestOfMeasurementTransformer.fxml");
+        //Настройка кнопки "Меню"
+        setupTextBottoms(event1, "СОБЫТИЕ 1");
+        //Настройка кнопки "Пуск"
+        setupTextBottoms(event2, "СОБЫТИЕ 2");
+        //Настройка кнопки "Меню"
+        setupTextBottoms(event3, "СОБЫТИЕ 3");
+        //Настройка кнопки "Пуск"
+        setupTextBottoms(event4, "СОБЫТИЕ 4");
+        //Настройка кнопки "Меню"
+        setupTextBottoms(event5, "СОБЫТИЕ 5");
+        //Настройка кнопки "Пуск"
+        setupTextBottoms(event6, "СОБЫТИЕ 6");
+
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
     }
 
-    //Метод для настройки параметров текстового поля с названием объекта
-    public void setupObjectNameField(TextField textField, String prompt) {
-        interfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
-                prompt);
+    @FXML
+    public void goToMainScreen(ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+    }
+
+    @FXML
+    public void goToStartScreen(ActionEvent event) throws IOException {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+    }
+
+    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
+    public void setupTextBottoms(Button button, String text) {
+        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
+                button);
+        button.setText(text);
     }
 
     //Тестовый метод для проверки работы кнопки
@@ -115,6 +122,4 @@ public class _5_TestOfMeasurementTransformerScreenController {
     }
 
 
-
 }
-

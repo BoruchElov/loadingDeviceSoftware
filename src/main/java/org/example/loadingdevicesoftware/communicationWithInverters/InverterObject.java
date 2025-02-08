@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.communicationWithInverters;
 
 public class InverterObject {
 

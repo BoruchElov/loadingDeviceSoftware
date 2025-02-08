@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
@@ -9,14 +9,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.example.loadingdevicesoftware.ApplicationFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Formatter;
 import java.util.Objects;
 
 public class InterfaceElementsLogic {
@@ -41,7 +40,7 @@ public class InterfaceElementsLogic {
         Stage stage = (Stage) node.getScene().getWindow();
 
         // Загружаем новый FXML
-        Parent root = FXMLLoader.load(Objects.requireNonNull(InterfaceElementsLogic.class.
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ApplicationFile.class.
                 getResource(fxmlFilePath)));
 
         // Устанавливаем новую сцену

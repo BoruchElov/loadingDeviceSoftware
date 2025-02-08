@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;

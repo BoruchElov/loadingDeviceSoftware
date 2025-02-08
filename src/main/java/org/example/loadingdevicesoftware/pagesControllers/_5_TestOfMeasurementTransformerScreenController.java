@@ -1,22 +1,19 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class _9_DeBuggerScreenController {
+public class _5_TestOfMeasurementTransformerScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
@@ -48,38 +45,41 @@ public class _9_DeBuggerScreenController {
     @FXML
     ImageView startButtonImageView;
 
+    //Объявление текстового поля для задания названия объекта
+    @FXML
+    private TextField objectNameTextField;
+    //Объявление текстового поля для задания ФИО работника
+    @FXML
+    private TextField userNameTextField;
+    //Объявление текстовых полей для задания токов фаз/ фазового угла
+    @FXML
+    private TextField phaseA1TextField;
+    @FXML
+    private TextField angleA1TextField;
+    @FXML
+    private TextField currentMeasure;
+    @FXML
+    private TextField voltageMeasure;
+
     //Объявление текстового поля для вывода даты-времени
     @FXML
     private Text dateTimeText;
 
-    //Объявление текстовых полей
-    @FXML
-    private TextField alphaTextField;
-    @FXML
-    private TextField beta1TextField;
-    @FXML
-    private TextField beta2TextField;
-    @FXML
-    private TextField beta3TextField;
-    @FXML
-    private TextField beta4TextField;
-    @FXML
-    private TextField gamma1TextField;
-    @FXML
-    private TextField gamma2TextField;
-    @FXML
-    private TextField gamma3TextField;
-    @FXML
-    private TextField gamma4TextField;
-    @FXML
-    private TextField deltaTextField;
-
     //Объект фоновой картинки
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/9.отладка/отладка(безКнопок).png")).toExternalForm());
+            getResource("/screen/5.проверкаИзмерительногоТрансформатора/ПроверкаИзмерительногоТранса1форма(безКнопок).png")).toExternalForm());
 
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
+        //Настройка стилей текстовых полей для ввода
+        setupObjectNameField(objectNameTextField, "Введите название объекта");
+        setupObjectNameField(userNameTextField, "Введите ФИО исполнителя");
+
+        setupObjectNameField(phaseA1TextField, "         А");
+        setupObjectNameField(angleA1TextField, "    °");
+        setupObjectNameField(voltageMeasure, "0");
+        setupObjectNameField(currentMeasure, "0");
+
         //Задание изображений для статусов инверторов
         inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
@@ -90,22 +90,9 @@ public class _9_DeBuggerScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
 
-        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
-        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
-        //настройка текстовых полей для переменных
-        setupObjectNameField(alphaTextField, "0");
-        setupObjectNameField(beta1TextField, "0");
-        setupObjectNameField(beta2TextField, "0");
-        setupObjectNameField(beta3TextField, "0");
-        setupObjectNameField(beta4TextField, "0");
-        setupObjectNameField(gamma1TextField, "0");
-        setupObjectNameField(gamma2TextField, "0");
-        setupObjectNameField(gamma3TextField, "0");
-        setupObjectNameField(gamma4TextField, "0");
-        setupObjectNameField(deltaTextField, "0");
-
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
     }
-
     @FXML
     public void goToMainScreen (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
@@ -113,6 +100,7 @@ public class _9_DeBuggerScreenController {
     @FXML
     public void goToStartScreen (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+        Buffer.setPreviousPage("5.TestOfMeasurementTransformer.fxml");
     }
 
     //Метод для настройки параметров текстового поля с названием объекта
@@ -126,4 +114,8 @@ public class _9_DeBuggerScreenController {
     public void testClick() {
         System.out.println("Кнопка работает");
     }
+
+
+
 }
+

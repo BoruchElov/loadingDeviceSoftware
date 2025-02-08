@@ -1,7 +1,5 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.pagesControllers;
 
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Element;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,17 +10,17 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
-import javax.lang.model.util.Elements;
 import java.io.IOException;
 import java.util.Objects;
 
-public class _2_TestOfSwitcher3XScreenController {
+public class _3_TestOfStageProtection3XScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
-    private boolean contactOneStatus = false;
-    private boolean contactTwoStatus = false;
+    ContactObject contactOne;
+    ContactObject contactTwo;
 
     @FXML
     private Button toMenuButton;
@@ -33,7 +31,7 @@ public class _2_TestOfSwitcher3XScreenController {
     @FXML
     private Button contactTwoButton;
     @FXML
-    private ToggleButton testOfSwitcher1X;
+    private ToggleButton testOfStageProtection1X;
     @FXML
     private ImageView inverterA1Status;
     @FXML
@@ -76,10 +74,10 @@ public class _2_TestOfSwitcher3XScreenController {
 
     //Объекты фоновых картинок
     Image backImageOutThree = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/2.проверкаВыключателя1Х3Х/switchCheckBackgroundl(3X).png")).toExternalForm());
+            getResource("/screen/3.проверкаРЗА1Х3Х/TestOfStageProtection(3X).png")).toExternalForm());
     //Объекты фоновых картинок
     Image backImageOutOne = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/2.проверкаВыключателя1Х3Х/switchCheckBackgroundl(1X).png")).toExternalForm());
+            getResource("/screen/3.проверкаРЗА1Х3Х/TestOfStageProtection(1X).png")).toExternalForm());
 
     public void initialize() {
         //Привязка текстового поля к потоку обновления даты и времени
@@ -100,11 +98,13 @@ public class _2_TestOfSwitcher3XScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutThree);
         //Настройка кнопки смены конфигурации выключателя
-        setupRightSideButton(testOfSwitcher1X);
-        testOfSwitcher1X.setText("3 фазы");
+        setupRightSideButton(testOfStageProtection1X);
+        testOfStageProtection1X.setText("3 фазы");
         //Настройка кнопок для задания положения контактов
-        setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
-        setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
+        contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
+        contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED,
+                ContactObject.ContactStatus.DISABLED);
 
         interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
         interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
@@ -112,63 +112,50 @@ public class _2_TestOfSwitcher3XScreenController {
 
     //Метод для перехода в главное меню
     @FXML
-    public void goToMainScreen(ActionEvent event) throws IOException, BadElementException {
+    public void goToMainScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
-        InterfaceElementsLogic.writeToPdf("newFile", new Element[]{InterfaceElementsLogic.getTable()});
     }
     //Метод для перехода в старт
     @FXML
     public void goToStartScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-        Buffer.setPreviousPage("2.TestOfSwitcher3X.fxml");
+        Buffer.setPreviousPage("3.TestOfStageProtection3X.fxml");
     }
 
     //Методы для настройки кнопок выбора контактов
     @FXML
     public void setPictureForContactOne() {
-        contactOneView.setVisible(true);
-        if(contactOneStatus) {
-            contactOneView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
-            contactOneStatus = false;
-        } else {
-            contactOneView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
-            contactOneStatus = true;
-        }
-    }
-    @FXML
-    public void setPictureForContactTwo() {
-        contactTwoView.setVisible(true);
-        if(contactTwoStatus) {
-            contactTwoView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
-            contactTwoStatus = false;
-        } else {
-            contactTwoView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
-            contactTwoStatus = true;
+        contactOne.setEnabled();
+        switch (contactOne.getContactPosition()) {
+            case OPENED -> contactOne.setClosed();
+            case CLOSED -> contactOne.setOpened();
         }
     }
 
     @FXML
-    public void changeSwitcherConfiguration() {
-        if (testOfSwitcher1X.isSelected()) {
-            testOfSwitcher1X.setText("1 фаза");
+    public void setPictureForContactTwo() {
+        contactTwo.setEnabled();
+        switch (contactTwo.getContactPosition()) {
+            case OPENED -> contactTwo.setClosed();
+            case CLOSED -> contactTwo.setOpened();
+        }
+    }
+
+    @FXML
+    public void changeStageProtectionConfiguration() {
+        if (testOfStageProtection1X.isSelected()) {
+            testOfStageProtection1X.setText("1 фаза");
             backgroundImageView.setImage(backImageOutOne);
             phaseA1TextField.setVisible(false);
             phaseC1TextField.setVisible(false);
             setupObjectNameField(phaseB1TextField, "Ток, А");
         } else {
-            testOfSwitcher1X.setText("3 фазы");
+            testOfStageProtection1X.setText("3 фазы");
             backgroundImageView.setImage(backImageOutThree);
             phaseA1TextField.setVisible(true);
             phaseC1TextField.setVisible(true);
             setupObjectNameField(phaseB1TextField, "Ток В1, А");
         }
-    }
-
-    //Метод для настройки кнопок соединения обмоток
-    public void setupConnectionSchemesButtons(Button button, ImageView imageView, int width, int height) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.WHITE, 0,
-                imageView, null, button, width, height, false);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта
