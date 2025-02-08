@@ -140,8 +140,8 @@ public class _8_HandControlScreenController {
 
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
-        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
-        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
     }
 
     @FXML

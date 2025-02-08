@@ -211,14 +211,12 @@ public class _1_SettingsScreenController {
         image5.setImage(inverterImage);
         image6.setImage(inverterImage);
 
-        setupBottomButtons(backToMenuButton, backToMenuImageView, ApplicationConstants.WHITE_BUTTON, "МЕНЮ",
-                150, 64, 21);
-        setupBottomButtons(choiceOfWorkingDirectoryButton, choiceOfWorkingDirectoryImageView,
-                ApplicationConstants.WHITE_BUTTON_LONG, "ДИРЕКТОРИЯ", 350, 64, 21);
-        setupBottomButtons(saveAllButton, saveAllImageView, ApplicationConstants.WHITE_BUTTON_LONG, "СОХРАНИТЬ",
-                350, 64, 21);
-        setupBottomButtons(clearAllButton, clearAllImageView, ApplicationConstants.WHITE_BUTTON, "ОЧИСТИТЬ",
-                150, 64, 21);
+        interfaceElementsSettings.getWhiteMenuButton(backToMenuButton, backToMenuImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteDirectoryButton(choiceOfWorkingDirectoryButton, choiceOfWorkingDirectoryImageView,
+                InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteSaveButton(saveAllButton, saveAllImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteSaveButton(saveAllButton, saveAllImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteClearButton(clearAllButton, clearAllImageView, InterfaceElementsSettings.Background.BLUE);
 
         setupScreenButtons(saveButton1);
         setupScreenButtons(saveButton2);
@@ -334,13 +332,6 @@ public class _1_SettingsScreenController {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
 
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupBottomButtons(Button button, ImageView imageView, Image image, String text, int width, int height,
-                                   int fontSize) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, fontSize, 0,
-                imageView, image, button, width, height, true, text);
-    }
     //Тестовый метод для проверки работы кнопки
     public void testClick() {
         System.out.println("Кнопка работает");

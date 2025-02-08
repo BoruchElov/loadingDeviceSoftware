@@ -90,8 +90,8 @@ public class _9_DeBuggerScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
 
-        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView);
-        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView);
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
         //настройка текстовых полей для переменных
         setupObjectNameField(alphaTextField, "0");
         setupObjectNameField(beta1TextField, "0");

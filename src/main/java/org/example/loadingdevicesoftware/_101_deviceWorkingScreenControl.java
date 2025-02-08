@@ -61,9 +61,9 @@ public class _101_deviceWorkingScreenControl {
 
         //Установка изображения на фон
         backgroundImageView.setImage(background);
-        interfaceElementsSettings.getWhiteCancelButton(cancelButton, cancelButtonImageView);
-        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
-        interfaceElementsSettings.getWhiteReportButton(protocolButton, toProtocolButtonImageView);
+        interfaceElementsSettings.getWhiteCancelButton(cancelButton, cancelButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteReportButton(protocolButton, toProtocolButtonImageView, InterfaceElementsSettings.Background.BLUE);
     }
 
 

@@ -49,8 +49,8 @@ public class _6_ComTradeScreenController {
     @FXML
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
-        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
-        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
         //Настройка кнопки для открытия файла
         setupOpenFileButton(chooseFileButton);
         chooseFileButton.setText("Выберите файл формата COMTRADE");

@@ -106,8 +106,8 @@ public class _2_TestOfSwitcher3XScreenController {
         setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
         setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
 
-        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView);
-        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView);
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
     }
 
     //Метод для перехода в главное меню

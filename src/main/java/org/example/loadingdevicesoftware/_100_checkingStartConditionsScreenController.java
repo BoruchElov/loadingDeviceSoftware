@@ -147,9 +147,9 @@ public class _100_checkingStartConditionsScreenController {
         setupStatusButton(status6True,status6TrueImageView,statusConnected);
         setupStatusButton(status6False,status6FalseImageView,statusDisconnected);
 
-        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView);
-        interfaceElementsSettings.getBlackCancelButton(cancelButton,cancelButtonImageView);
-        interfaceElementsSettings.getBlackStartButton(startButton,startButtonImageView);
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        interfaceElementsSettings.getBlackCancelButton(cancelButton,cancelButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        interfaceElementsSettings.getBlackStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
         //Отключение кнопки запуска сценария
         startButton.setDisable(true);
     }

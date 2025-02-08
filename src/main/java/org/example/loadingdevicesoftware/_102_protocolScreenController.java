@@ -61,8 +61,8 @@ public class _102_protocolScreenController {
         //Установка изображения на фон
         backgroundImageView.setImage(background);
 
-        interfaceElementsSettings.getBlackMenuButton(toMenuButton, toMenuButtonImageView);
-        interfaceElementsSettings.getBlackSaveButton(startButton, startButtonImageView);
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getBlackSaveButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
 
         //Настройка стилей текстовых полей для ввода
         setupObjectNameField(current1, "500");

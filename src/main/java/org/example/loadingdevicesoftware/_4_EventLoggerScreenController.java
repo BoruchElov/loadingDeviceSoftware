@@ -91,8 +91,8 @@ public class _4_EventLoggerScreenController {
         //Настройка кнопки "Пуск"
         setupTextBottoms(event6, "СОБЫТИЕ 6");
 
-        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView);
-        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView);
+        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
     }
 
     @FXML

@@ -15,69 +15,104 @@ public class InterfaceElementsSettings {
 
     public InterfaceElementsSettings() {}
 
-    private enum Background {
-        BLUE, LIGHT_BLUE
+    public enum Background {
+        BLUE(ApplicationConstants.colours.BLUE), 
+        LIGHT_BLUE(ApplicationConstants.colours.LIGHT_BLUE);
+
+        private final ApplicationConstants.colours colours;
+
+        Background(ApplicationConstants.colours colours) {
+            this.colours = colours;
+        }
+        public ApplicationConstants.colours getColours() {
+            return colours;
+        }
     }
 
-    public void getBlackMenuButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
-                imageView, ApplicationConstants.BLACK_BUTTON, button, 140, 64, true, "МЕНЮ");
+    public void getBlackMenuButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON,
+                button, 140, 64, true, "МЕНЮ");
     }
 
-    public void getWhiteMenuButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
-                imageView, ApplicationConstants.WHITE_BUTTON, button, 140, 64, true, "МЕНЮ");
+    public void getWhiteMenuButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON,
+                button, 140, 64, true, "МЕНЮ");
     }
 
-    public void getBlackStartButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
-                imageView, ApplicationConstants.BLACK_BUTTON, button, 140, 64, true, "ПУСК");
+    public void getBlackStartButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON,
+                button, 140, 64, true, "ПУСК");
     }
 
-    public void getWhiteStartButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
-                imageView, ApplicationConstants.WHITE_BUTTON, button, 140, 64, true, "ПУСК");
+    public void getWhiteStartButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON,
+                button, 140, 64, true, "ПУСК");
     }
 
-    public void getBlackCancelButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
-                imageView, ApplicationConstants.BLACK_BUTTON_LONG, button, 210, 64, true, "ОТМЕНА");
+    public void getBlackCancelButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
+                button, 210, 64, true, "ОТМЕНА");
     }
 
-    public void getWhiteCancelButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
-                imageView, ApplicationConstants.WHITE_BUTTON_LONG, button, 210, 64, true, "ОТМЕНА");
+    public void getWhiteCancelButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
+                button, 210, 64, true, "ОТМЕНА");
     }
 
-    public void getBlackReportButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
-                imageView, ApplicationConstants.BLACK_BUTTON_LONG, button, 210, 64, true, "ПРОТОКОЛ");
+    public void getBlackReportButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
+                button, 210, 64, true, "ПРОТОКОЛ");
     }
 
-    public void getWhiteReportButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
-                imageView, ApplicationConstants.WHITE_BUTTON_LONG, button, 210, 64, true, "ПРОТОКОЛ");
+    public void getWhiteReportButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
+                button, 210, 64, true, "ПРОТОКОЛ");
     }
 
-    public void getBlackSaveButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.BLACK, 26, 0,
-                imageView, ApplicationConstants.BLACK_BUTTON_LONG, button, 210, 64, true, "СОХРАНИТЬ");
+    public void getBlackSaveButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
+                button, 210, 64, true, "СОХРАНИТЬ");
     }
 
-    public void getWhiteSaveButton(ButtonBase button, ImageView imageView) {
-        buttonSettings(ApplicationConstants.colours.BLUE, ApplicationConstants.colours.BLUE,
-                0, 17, 0, ApplicationConstants.colours.WHITE, 26, 0,
-                imageView, ApplicationConstants.WHITE_BUTTON_LONG, button, 210, 64, true, "СОХРАНИТЬ");
+    public void getWhiteSaveButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
+                button, 210, 64, true, "СОХРАНИТЬ");
     }
+    public void getBlackDirectoryButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
+                button, 210, 64, true, "ДИРЕКТОРИЯ");
+    }
+
+    public void getWhiteDirectoryButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
+                button, 210, 64, true, "ДИРЕКТОРИЯ");
+
+    }
+    public void getBlackClearButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
+                button, 210, 64, true, "ОЧИСТИТЬ");
+    }
+
+    public void getWhiteClearButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
+                button, 210, 64, true, "ОЧИСТИТЬ");
+
+    }
+
 
 
 

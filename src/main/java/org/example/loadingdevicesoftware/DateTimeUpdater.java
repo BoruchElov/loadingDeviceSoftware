@@ -46,7 +46,7 @@ public class DateTimeUpdater implements Runnable {
             try {
                 Thread.sleep(60000); // Обновление каждую минуту
                 Platform.runLater(this::updateDateTime);
-            } catch (InterruptedException e) {
+            } catch (Throwable e) {
                 Thread.currentThread().interrupt();
             }
         }
