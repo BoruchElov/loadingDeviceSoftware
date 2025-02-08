@@ -16,4 +16,6 @@ module org.example.loadingdevicesoftware {
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;
+    exports org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
+    opens org.example.loadingdevicesoftware.logicAndSettingsOfInterface to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware;
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import lombok.Getter;
 import lombok.Setter;

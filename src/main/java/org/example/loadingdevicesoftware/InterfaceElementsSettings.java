@@ -1,11 +1,11 @@
 package org.example.loadingdevicesoftware;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
 
 /**
  * Класс <b>InterfaceElementsSettings</b> используется для удобной настройки внешнего
@@ -13,10 +13,11 @@ import javafx.scene.image.ImageView;
  */
 public class InterfaceElementsSettings {
 
-    public InterfaceElementsSettings() {}
+    public InterfaceElementsSettings() {
+    }
 
     public enum Background {
-        BLUE(ApplicationConstants.colours.BLUE), 
+        BLUE(ApplicationConstants.colours.BLUE),
         LIGHT_BLUE(ApplicationConstants.colours.LIGHT_BLUE);
 
         private final ApplicationConstants.colours colours;
@@ -24,6 +25,7 @@ public class InterfaceElementsSettings {
         Background(ApplicationConstants.colours colours) {
             this.colours = colours;
         }
+
         public ApplicationConstants.colours getColours() {
             return colours;
         }
@@ -88,6 +90,7 @@ public class InterfaceElementsSettings {
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
                 button, 210, 64, true, "СОХРАНИТЬ");
     }
+
     public void getBlackDirectoryButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
@@ -100,6 +103,7 @@ public class InterfaceElementsSettings {
                 button, 210, 64, true, "ДИРЕКТОРИЯ");
 
     }
+
     public void getBlackClearButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
@@ -110,10 +114,28 @@ public class InterfaceElementsSettings {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
                 button, 210, 64, true, "ОЧИСТИТЬ");
-
     }
 
+    enum ContactPosition {
+        OPENED, CLOSED
+    }
 
+    public void getContactButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.WHITE, 0,
+                imageView, null, button, 45, 30, false);
+    }
+
+    public void setContactPosition(ImageView imageView, ContactPosition position) {
+        switch (position) {
+            case OPENED:
+                imageView.setImage(ApplicationConstants.NORMALLY_OPENED_CONTACT);
+                break;
+            case CLOSED:
+                imageView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
+                break;
+        }
+    }
 
 
     /**
@@ -132,7 +154,7 @@ public class InterfaceElementsSettings {
      * @param button              объект кнопки
      * @param fitWidth            ширина картинки
      * @param fitHeight           высота картинки
-     * @param isVisible настройка видимости изображения на кнопке
+     * @param isVisible           настройка видимости изображения на кнопке
      */
     public void buttonSettings(ApplicationConstants.colours colourOfBackground,
                                ApplicationConstants.colours colourOfBorder,
@@ -172,23 +194,23 @@ public class InterfaceElementsSettings {
 
     /**
      * <p>Данная версия метода <code>buttonSettings</code> предназначена для настройки объектов типа <code>Button</code>
-     *    и <code>ToggleButton</code> в случае, если на кнопке необходимо расположить только текст.</p>
+     * и <code>ToggleButton</code> в случае, если на кнопке необходимо расположить только текст.</p>
      *
      * @param colourOfBackground цвет фона
-     * @param colourOfBorder цвет границы
-     * @param borderWidth ширина границы
-     * @param backgroundRadius радиус закругления фона
-     * @param borderRadius радиус закругления границы
-     * @param colourOfText цвет шрифта
-     * @param fontSize размер шрифта
-     * @param padding отступ текста на кнопке
-     * @param button объект кнопки
+     * @param colourOfBorder     цвет границы
+     * @param borderWidth        ширина границы
+     * @param backgroundRadius   радиус закругления фона
+     * @param borderRadius       радиус закругления границы
+     * @param colourOfText       цвет шрифта
+     * @param fontSize           размер шрифта
+     * @param padding            отступ текста на кнопке
+     * @param button             объект кнопки
      */
     public void buttonSettings(ApplicationConstants.colours colourOfBackground,
-                                      ApplicationConstants.colours colourOfBorder,
-                                      int borderWidth, int backgroundRadius,
-                                      int borderRadius, ApplicationConstants.colours colourOfText,
-                                      int fontSize, int padding, ButtonBase button) {
+                               ApplicationConstants.colours colourOfBorder,
+                               int borderWidth, int backgroundRadius,
+                               int borderRadius, ApplicationConstants.colours colourOfText,
+                               int fontSize, int padding, ButtonBase button) {
 
         String backgroundColour = setColour(colourOfBackground, true);
         String borderColour = setColour(colourOfBorder, true);
@@ -224,23 +246,23 @@ public class InterfaceElementsSettings {
      * @param backgroundRadius    радиус закругления фона
      * @param borderRadius        радиус закругления границы
      * @param colourOfText        цвет шрифта
-     * @param fontSize размер шрифта
+     * @param fontSize            размер шрифта
      * @param padding             отступ текста на кнопке
      * @param backgroundImageView объект для расположения картинки на кнопке
      * @param backgroundImage     картинка, расположенная на кнопке
      * @param button              объект кнопки
      * @param fitWidth            ширина картинки
      * @param fitHeight           высота картинки
-     * @param isVisible настройка видимости изображения на кнопке
-     * @param text текст на кнопке
+     * @param isVisible           настройка видимости изображения на кнопке
+     * @param text                текст на кнопке
      */
     public void buttonSettings(ApplicationConstants.colours colourOfBackground,
-                                      ApplicationConstants.colours colourOfBorder,
-                                      int borderWidth, int backgroundRadius,
-                                      int borderRadius, ApplicationConstants.colours colourOfText,
-                                      int fontSize, int padding, ImageView backgroundImageView,
-                                      Image backgroundImage, ButtonBase button, int fitWidth, int fitHeight,
-                                      boolean isVisible, String text) {
+                               ApplicationConstants.colours colourOfBorder,
+                               int borderWidth, int backgroundRadius,
+                               int borderRadius, ApplicationConstants.colours colourOfText,
+                               int fontSize, int padding, ImageView backgroundImageView,
+                               Image backgroundImage, ButtonBase button, int fitWidth, int fitHeight,
+                               boolean isVisible, String text) {
 
         backgroundImageView.setImage(backgroundImage);
         backgroundImageView.setFitWidth(fitWidth);
@@ -277,17 +299,18 @@ public class InterfaceElementsSettings {
 
     /**
      * <p>Метод <code>textFieldSettings</code> предназначен для настройки объектов типа <code>TextField</code>
-     *    и <code>ToggleButton</code>.</p>
+     * и <code>ToggleButton</code>.</p>
+     *
      * @param colourOfBackground цвет фона
-     * @param colourOfBorder цвет границы
-     * @param borderWidth ширина границы
-     * @param backgroundRadius радиус закругления фона
-     * @param borderRadius радиус закругления границы
-     * @param colourOfText цвет шрифта
-     * @param fontSize размер шрифта
-     * @param padding отступ текста на кнопке
-     * @param textField объект текстового поля
-     * @param prompt текст по умолчанию
+     * @param colourOfBorder     цвет границы
+     * @param borderWidth        ширина границы
+     * @param backgroundRadius   радиус закругления фона
+     * @param borderRadius       радиус закругления границы
+     * @param colourOfText       цвет шрифта
+     * @param fontSize           размер шрифта
+     * @param padding            отступ текста на кнопке
+     * @param textField          объект текстового поля
+     * @param prompt             текст по умолчанию
      */
     public void textFieldSettings(ApplicationConstants.colours colourOfBackground,
                                   ApplicationConstants.colours colourOfBorder,
@@ -327,11 +350,11 @@ public class InterfaceElementsSettings {
         });
     }
 
-    public void comboBoxSettings (ApplicationConstants.colours colourOfBackground,
-                               ApplicationConstants.colours colourOfBorder,
-                               int borderWidth, int backgroundRadius,
-                               int borderRadius, ApplicationConstants.colours colourOfText,
-                               int fontSize, int padding, ComboBox comboBox) {
+    public void comboBoxSettings(ApplicationConstants.colours colourOfBackground,
+                                 ApplicationConstants.colours colourOfBorder,
+                                 int borderWidth, int backgroundRadius,
+                                 int borderRadius, ApplicationConstants.colours colourOfText,
+                                 int fontSize, int padding, ComboBox comboBox) {
 
         String backgroundColour = setColour(colourOfBackground, true);
         String borderColour = setColour(colourOfBorder, true);

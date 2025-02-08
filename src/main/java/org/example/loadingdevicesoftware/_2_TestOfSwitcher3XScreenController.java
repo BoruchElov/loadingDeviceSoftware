@@ -12,8 +12,11 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Buffer;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
 
-import javax.lang.model.util.Elements;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -102,9 +105,9 @@ public class _2_TestOfSwitcher3XScreenController {
         //Настройка кнопки смены конфигурации выключателя
         setupRightSideButton(testOfSwitcher1X);
         testOfSwitcher1X.setText("3 фазы");
-        //Настройка кнопок для задания положения контактов
-        setupConnectionSchemesButtons(contactOneButton, contactOneView, 45, 30);
-        setupConnectionSchemesButtons(contactTwoButton, contactTwoView, 45, 30);
+
+        interfaceElementsSettings.getContactButton(contactOneButton, contactOneView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        interfaceElementsSettings.getContactButton(contactTwoButton, contactTwoView, InterfaceElementsSettings.Background.LIGHT_BLUE);
 
         interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
         interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
@@ -127,7 +130,8 @@ public class _2_TestOfSwitcher3XScreenController {
     @FXML
     public void setPictureForContactOne() {
         contactOneView.setVisible(true);
-        if(contactOneStatus) {
+        if (contactOneStatus) {
+            //interfaceElementsSettings.setContactPosition();
             contactOneView.setImage(ApplicationConstants.NORMALLY_CLOSED_CONTACT);
             contactOneStatus = false;
         } else {
@@ -162,13 +166,6 @@ public class _2_TestOfSwitcher3XScreenController {
             phaseC1TextField.setVisible(true);
             setupObjectNameField(phaseB1TextField, "Ток В1, А");
         }
-    }
-
-    //Метод для настройки кнопок соединения обмоток
-    public void setupConnectionSchemesButtons(Button button, ImageView imageView, int width, int height) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.WHITE, 0,
-                imageView, null, button, width, height, false);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта
