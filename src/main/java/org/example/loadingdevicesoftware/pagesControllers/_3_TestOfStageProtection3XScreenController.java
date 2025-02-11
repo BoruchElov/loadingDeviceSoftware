@@ -17,8 +17,6 @@ import java.util.Objects;
 
 public class _3_TestOfStageProtection3XScreenController {
 
-    private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
-
     ContactObject contactOne;
     ContactObject contactTwo;
 
@@ -83,11 +81,13 @@ public class _3_TestOfStageProtection3XScreenController {
         //Привязка текстового поля к потоку обновления даты и времени
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
         //Настройка стилей текстовых полей для ввода
-        setupObjectNameField(objectNameTextField, "Введите название объекта");
-        setupObjectNameField(namePerfomerTextField, "Введите ФИО исполнителя");
-        setupObjectNameField(phaseA1TextField, "Ток А1, А");
-        setupObjectNameField(phaseB1TextField, "Ток В1, А");
-        setupObjectNameField(phaseC1TextField, "Ток С1, А");
+        InterfaceElementsSettings.getObjectNameTextField(objectNameTextField);
+        InterfaceElementsSettings.getOperatorTextField(namePerfomerTextField);
+
+        InterfaceElementsSettings.getCurrentTextField(phaseA1TextField, InterfaceElementsSettings.Phases.PhaseA1);
+        InterfaceElementsSettings.getCurrentTextField(phaseB1TextField, InterfaceElementsSettings.Phases.PhaseB1);
+        InterfaceElementsSettings.getCurrentTextField(phaseC1TextField, InterfaceElementsSettings.Phases.PhaseC1);
+
         //Задание изображения для статуса инвертора
         inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
@@ -98,16 +98,15 @@ public class _3_TestOfStageProtection3XScreenController {
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutThree);
         //Настройка кнопки смены конфигурации выключателя
-        setupRightSideButton(testOfStageProtection1X);
-        testOfStageProtection1X.setText("3 фазы");
+        InterfaceElementsSettings.getRightSideButton(testOfStageProtection1X, "3 фазы");
         //Настройка кнопок для задания положения контактов
         contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED,
                 ContactObject.ContactStatus.DISABLED);
         contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED,
                 ContactObject.ContactStatus.DISABLED);
 
-        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
-        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        InterfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        InterfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
     }
 
     //Метод для перехода в главное меню
@@ -148,27 +147,14 @@ public class _3_TestOfStageProtection3XScreenController {
             backgroundImageView.setImage(backImageOutOne);
             phaseA1TextField.setVisible(false);
             phaseC1TextField.setVisible(false);
-            setupObjectNameField(phaseB1TextField, "Ток, А");
+            InterfaceElementsSettings.getCurrentTextField(phaseB1TextField, InterfaceElementsSettings.Phases.SinglePhase);
         } else {
             testOfStageProtection1X.setText("3 фазы");
             backgroundImageView.setImage(backImageOutThree);
             phaseA1TextField.setVisible(true);
             phaseC1TextField.setVisible(true);
-            setupObjectNameField(phaseB1TextField, "Ток В1, А");
+            InterfaceElementsSettings.getCurrentTextField(phaseB1TextField, InterfaceElementsSettings.Phases.PhaseB1);
         }
-    }
-
-    //Метод для настройки параметров текстового поля с названием объекта
-    public void setupObjectNameField(TextField textField, String prompt) {
-        interfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
-                prompt);
-    }
-    //Метод для настройки кнопки смены конфигурации
-    private void setupRightSideButton (ButtonBase button) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
-                button);
     }
 
     //Тестовый метод для проверки работы кнопки

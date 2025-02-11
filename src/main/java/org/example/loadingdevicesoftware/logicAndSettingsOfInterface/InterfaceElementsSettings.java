@@ -30,86 +30,86 @@ public class InterfaceElementsSettings {
         }
     }
 
-    public void getBlackMenuButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getBlackMenuButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON,
                 button, 140, 64, true, "МЕНЮ");
     }
 
-    public void getWhiteMenuButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getWhiteMenuButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON,
                 button, 140, 64, true, "МЕНЮ");
     }
 
-    public void getBlackStartButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getBlackStartButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON,
                 button, 140, 64, true, "ПУСК");
     }
 
-    public void getWhiteStartButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getWhiteStartButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON,
                 button, 140, 64, true, "ПУСК");
     }
 
-    public void getBlackCancelButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getBlackCancelButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
                 button, 210, 64, true, "ОТМЕНА");
     }
 
-    public void getWhiteCancelButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getWhiteCancelButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
                 button, 210, 64, true, "ОТМЕНА");
     }
 
-    public void getBlackReportButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getBlackReportButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
                 button, 210, 64, true, "ПРОТОКОЛ");
     }
 
-    public void getWhiteReportButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getWhiteReportButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
                 button, 210, 64, true, "ПРОТОКОЛ");
     }
 
-    public void getBlackSaveButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getBlackSaveButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
                 button, 210, 64, true, "СОХРАНИТЬ");
     }
 
-    public void getWhiteSaveButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getWhiteSaveButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
                 button, 210, 64, true, "СОХРАНИТЬ");
     }
 
-    public void getBlackDirectoryButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getBlackDirectoryButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
                 button, 210, 64, true, "ДИРЕКТОРИЯ");
     }
 
-    public void getWhiteDirectoryButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getWhiteDirectoryButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
                 button, 210, 64, true, "ДИРЕКТОРИЯ");
 
     }
 
-    public void getBlackClearButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getBlackClearButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.BLACK, 26, 0, imageView, ApplicationConstants.BLACK_BUTTON_LONG,
                 button, 210, 64, true, "ОЧИСТИТЬ");
     }
 
-    public void getWhiteClearButton(ButtonBase button, ImageView imageView, Background background) {
+    public static void getWhiteClearButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
                 ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
                 button, 210, 64, true, "ОЧИСТИТЬ");
@@ -119,6 +119,44 @@ public class InterfaceElementsSettings {
         buttonSettings(background.getColours(), ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.WHITE, 0,
                 imageView, null, button, 45, 30, false);
+    }
+
+    public static void getObjectNameTextField(TextField textField) {
+        textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
+                "Введите название объекта");
+    }
+
+    public static void getOperatorTextField(TextField textField) {
+        textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
+                "Введите ФИО исполнителя");
+    }
+
+    public static void getRightSideButton(ButtonBase button, String textOnButton) {
+        buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
+                button);
+        button.setText(textOnButton);
+    }
+
+    public enum Phases {
+        PhaseA1, PhaseB1, PhaseC1, PhaseA2, PhaseB2, PhaseC2, SinglePhase
+    }
+
+    public static void getCurrentTextField(TextField textField, Phases phaseText) {
+        String phase = switch (phaseText) {
+            case PhaseA1 -> "Ток А1, А";
+            case PhaseA2 -> "Ток А2, А";
+            case PhaseB1 -> "Ток В1, А";
+            case PhaseB2 -> "Ток В2, А";
+            case PhaseC1 -> "Ток С1, А";
+            case PhaseC2 -> "Ток С2, А";
+            case SinglePhase -> "Ток, А";
+        };
+        textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
+                phase);
     }
 
 
@@ -190,11 +228,11 @@ public class InterfaceElementsSettings {
      * @param padding            отступ текста на кнопке
      * @param button             объект кнопки
      */
-    public void buttonSettings(ApplicationConstants.colours colourOfBackground,
-                               ApplicationConstants.colours colourOfBorder,
-                               int borderWidth, int backgroundRadius,
-                               int borderRadius, ApplicationConstants.colours colourOfText,
-                               int fontSize, int padding, ButtonBase button) {
+    public static void buttonSettings(ApplicationConstants.colours colourOfBackground,
+                                      ApplicationConstants.colours colourOfBorder,
+                                      int borderWidth, int backgroundRadius,
+                                      int borderRadius, ApplicationConstants.colours colourOfText,
+                                      int fontSize, int padding, ButtonBase button) {
 
         String backgroundColour = setColour(colourOfBackground, true);
         String borderColour = setColour(colourOfBorder, true);
@@ -240,13 +278,13 @@ public class InterfaceElementsSettings {
      * @param isVisible           настройка видимости изображения на кнопке
      * @param text                текст на кнопке
      */
-    public void buttonSettings(ApplicationConstants.colours colourOfBackground,
-                               ApplicationConstants.colours colourOfBorder,
-                               int borderWidth, int backgroundRadius,
-                               int borderRadius, ApplicationConstants.colours colourOfText,
-                               int fontSize, int padding, ImageView backgroundImageView,
-                               Image backgroundImage, ButtonBase button, int fitWidth, int fitHeight,
-                               boolean isVisible, String text) {
+    public static void buttonSettings(ApplicationConstants.colours colourOfBackground,
+                                      ApplicationConstants.colours colourOfBorder,
+                                      int borderWidth, int backgroundRadius,
+                                      int borderRadius, ApplicationConstants.colours colourOfText,
+                                      int fontSize, int padding, ImageView backgroundImageView,
+                                      Image backgroundImage, ButtonBase button, int fitWidth, int fitHeight,
+                                      boolean isVisible, String text) {
 
         backgroundImageView.setImage(backgroundImage);
         backgroundImageView.setFitWidth(fitWidth);
@@ -296,11 +334,11 @@ public class InterfaceElementsSettings {
      * @param textField          объект текстового поля
      * @param prompt             текст по умолчанию
      */
-    public void textFieldSettings(ApplicationConstants.colours colourOfBackground,
-                                  ApplicationConstants.colours colourOfBorder,
-                                  int borderWidth, int backgroundRadius,
-                                  int borderRadius, ApplicationConstants.colours colourOfText,
-                                  int fontSize, int padding, TextField textField, String prompt) {
+    public static void textFieldSettings(ApplicationConstants.colours colourOfBackground,
+                                         ApplicationConstants.colours colourOfBorder,
+                                         int borderWidth, int backgroundRadius,
+                                         int borderRadius, ApplicationConstants.colours colourOfText,
+                                         int fontSize, int padding, TextField textField, String prompt) {
 
         String backgroundColour = setColour(colourOfBackground, true);
         String borderColour = setColour(colourOfBorder, true);
