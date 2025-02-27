@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TableCreator {
     /**
      * Класс для генерации таблиц в Пдф. Класс содержит следующие поля:
