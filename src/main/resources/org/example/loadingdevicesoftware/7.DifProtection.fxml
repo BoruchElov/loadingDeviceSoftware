@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._7_DifProtectionScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._7_DifProtectionScreenController">
    <children>
       <ImageView fx:id="backgroundImageView" fitHeight="800.0" fitWidth="1293.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -86,7 +86,7 @@
             <Font name="MyriadPro-Regular" size="26.0" />
          </font>
       </Text>
-      <Text fx:id="dateTimeText" fill="WHITE" layoutX="539.0" layoutY="763.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+      <Text fx:id="dateTimeText" fill="WHITE" layoutX="481.0" layoutY="766.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="295.13397216796875">
          <font>
             <Font name="MyriadPro-Regular" size="24.0" />
          </font>

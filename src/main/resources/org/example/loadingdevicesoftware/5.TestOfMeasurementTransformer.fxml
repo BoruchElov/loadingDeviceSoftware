@@ -22,7 +22,7 @@
 
         <!--текстовое поле для времени/фио/объектов -->
         <!--текстовое поле для времени -->
-        <Text fx:id="dateTimeText" fill="WHITE" layoutX="539.0" layoutY="763.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+        <Text fx:id="dateTimeText" fill="WHITE" layoutX="473.0" layoutY="766.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="331.13397216796875">
             <font>
                 <Font name="MyriadPro-Regular" size="24.0" />
             </font>

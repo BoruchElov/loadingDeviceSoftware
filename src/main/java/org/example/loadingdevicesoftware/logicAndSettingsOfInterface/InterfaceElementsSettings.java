@@ -123,13 +123,13 @@ public class InterfaceElementsSettings {
 
     public static void getObjectNameTextField(TextField textField) {
         textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
+                3,17,15, ApplicationConstants.colours.BLACK,19,0,textField,
                 "Введите название объекта");
     }
 
     public static void getOperatorTextField(TextField textField) {
         textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
+                3,17,15, ApplicationConstants.colours.BLACK,19,0,textField,
                 "Введите ФИО исполнителя");
     }
 

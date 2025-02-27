@@ -26,9 +26,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="94.0" layoutY="378.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="НАСТРОЙКА" wrappingWidth="110.0">
+      <Text fill="WHITE" layoutX="88.0" layoutY="378.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="НАСТРОЙКА" wrappingWidth="110.0">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="testOfSwitcherButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="268.0" layoutY="207.0" mnemonicParsing="false" onAction="#goToTestOfSwitcher" prefHeight="214.0" prefWidth="246.0">
@@ -40,9 +40,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="302.0" layoutY="356.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА АВТОМАТИЧЕСКОГО ВЫКЛЮЧАТЕЛЯ" textAlignment="CENTER" wrappingWidth="182.13397216796875">
+      <Text fill="WHITE" layoutX="301.0" layoutY="356.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА АВТОМАТИЧЕСКОГО ВЫКЛЮЧАТЕЛЯ" textAlignment="CENTER" wrappingWidth="182.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="testOfStageProtectionButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="517.0" layoutY="207.0" mnemonicParsing="false" onAction="#goToTestOfStageProtection" prefHeight="214.0" prefWidth="246.0">
@@ -54,9 +54,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="558.0" layoutY="358.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА РЕЛЕЙНОЙ ЗАЩИТЫ" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+      <Text fill="WHITE" layoutX="548.0" layoutY="365.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА РЕЛЕЙНОЙ ЗАЩИТЫ" textAlignment="CENTER" wrappingWidth="182.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="eventLoggerButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="766.0" layoutY="207.0" mnemonicParsing="false" onAction="#goToEventLogger" prefHeight="214.0" prefWidth="246.0">
@@ -68,9 +68,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="807.0" layoutY="381.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ЖУРНАЛ СОБЫТИЙ" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+      <Text fill="WHITE" layoutX="805.0" layoutY="381.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ЖУРНАЛ СОБЫТИЙ" textAlignment="CENTER" wrappingWidth="164.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="testOfMeasurementTransformerButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="1018.0" layoutY="207.0" mnemonicParsing="false" onAction="#goToTestOfMeasurementTransformer" prefHeight="214.0" prefWidth="239.0">
@@ -84,7 +84,7 @@
       </Button>
       <Text fill="WHITE" layoutX="1046.0" layoutY="355.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА ИЗМЕРИТЕЛЬНОГО ТРАНСФОРМАТОРА" textAlignment="CENTER" wrappingWidth="182.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="comTradeButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="19.0" layoutY="467.0" mnemonicParsing="false" onAction="#goToComTrade" prefHeight="214.0" prefWidth="239.0">
@@ -98,7 +98,7 @@
       </Button>
       <Text fill="WHITE" layoutX="56.0" layoutY="637.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="COMETRADE" textAlignment="CENTER" wrappingWidth="164.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="testOfDifProtectionButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="271.0" layoutY="467.0" mnemonicParsing="false" onAction="#goToDifProtection" prefHeight="214.0" prefWidth="239.0">
@@ -110,9 +110,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="294.0" layoutY="617.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА ДИФФЕРЕНЦИАЛЬНОЙ ЗАЩИТЫ" textAlignment="CENTER" wrappingWidth="194.13397216796875">
+      <Text fill="WHITE" layoutX="283.0" layoutY="616.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОВЕРКА ДИФФЕРЕНЦИАЛЬНОЙ ЗАЩИТЫ" textAlignment="CENTER" wrappingWidth="213.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="handControlButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="517.0" layoutY="467.0" mnemonicParsing="false" onAction="#goToHandControl" prefHeight="214.0" prefWidth="246.0">
@@ -124,9 +124,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="561.0" layoutY="639.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="РУЧНОЙ ВВОД" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+      <Text fill="WHITE" layoutX="557.0" layoutY="639.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="РУЧНОЙ ВВОД" textAlignment="CENTER" wrappingWidth="164.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <Button fx:id="deBuggerButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="766.0" layoutY="467.0" mnemonicParsing="false" onAction="#goToDeBugger" prefHeight="214.0" prefWidth="239.0">
@@ -138,9 +138,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fill="WHITE" layoutX="807.0" layoutY="640.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ОТЛАДКА" textAlignment="CENTER" wrappingWidth="164.13397216796875">
+      <Text fill="WHITE" layoutX="801.0" layoutY="640.0" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="ОТЛАДКА" textAlignment="CENTER" wrappingWidth="164.13397216796875">
          <font>
-            <Font name="MyriadPro-Regular" size="18.0" />
+            <Font size="17.0" />
          </font>
       </Text>
       <GridPane layoutX="31.0" layoutY="18.0" prefHeight="82.0" prefWidth="164.0">
@@ -239,7 +239,7 @@
             </ImageView>
          </children>
       </GridPane>
-      <Text fx:id="dateTimeText" fill="WHITE" layoutX="539.0" layoutY="764.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="201.13397216796875">
+      <Text fx:id="dateTimeText" fill="WHITE" layoutX="458.0" layoutY="763.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="362.13397216796875">
          <font>
             <Font name="MyriadPro-Regular" size="24.0" />
          </font>
