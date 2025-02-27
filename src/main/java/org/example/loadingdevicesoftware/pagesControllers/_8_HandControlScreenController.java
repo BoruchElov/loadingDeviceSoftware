@@ -25,6 +25,8 @@ public class _8_HandControlScreenController {
     private Button stopwatchSetting;
     @FXML
     private Button shutdownConditions;
+    @FXML
+    private Button symmetricalElements;
 
     @FXML
     ImageView toMenuButtonImageView;
@@ -135,6 +137,7 @@ public class _8_HandControlScreenController {
         //настройка кнопок в правой части
         setupRightSideButtons(stopwatchSetting);
         setupRightSideButtons(shutdownConditions);
+        setupRightSideButtons(symmetricalElements);
 
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);

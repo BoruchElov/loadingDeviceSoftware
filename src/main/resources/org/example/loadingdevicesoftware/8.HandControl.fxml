@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._8_HandControlScreenController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._8_HandControlScreenController">
     <children>
 
         <!--фоновая картинка-->
@@ -66,7 +66,7 @@
                 <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
             </graphic>
         </Button>
-        <!--кнопки настройки режима-->
+        <!--кнопки настройки режима находящиеся справа-->
         <Button fx:id="stopwatchSetting" contentDisplay="CENTER" layoutX="1016.0" layoutY="157.0" mnemonicParsing="false" onAction="#testClick" prefHeight="73.0" prefWidth="217.0">
             <font>
                 <Font size="24.0" />
@@ -91,7 +91,18 @@
             </Text>
          </graphic>
         </Button>
-
+        <Button fx:id="symmetricalElements" contentDisplay="CENTER" layoutX="1012.0" layoutY="503.0" mnemonicParsing="false" onAction="#testClick" prefHeight="89.0" prefWidth="224.0">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <graphic>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="СИММЕТРИЧНЫЕ СОСТАВЛЯЮЩИЕ" textAlignment="CENTER" wrappingWidth="202.18359375">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Text>
+            </graphic>
+        </Button>
         <!--текст времени и модулей-->
         <Text fx:id="dateTimeText" fill="WHITE" layoutX="509.0" layoutY="766.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="201.13397216796875">
             <font>
