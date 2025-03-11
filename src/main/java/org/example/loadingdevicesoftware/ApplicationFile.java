@@ -28,6 +28,7 @@ public class ApplicationFile extends Application {
 
     @Override
     public void stop() throws Exception {
+        //ввввв
         // Завершаем поток даты и времени
         DateTimeUpdater.getInstance().stop();
         super.stop();
