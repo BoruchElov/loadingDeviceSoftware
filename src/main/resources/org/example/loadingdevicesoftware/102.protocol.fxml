@@ -44,8 +44,6 @@
         <Text layoutX="869.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 
 
-
-
         <!--кнопка меню -->
         <Button fx:id="toMenuButton" contentDisplay="CENTER" layoutX="74.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="138.0">
             <font>
