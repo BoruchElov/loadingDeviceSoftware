@@ -9,6 +9,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import org.example.loadingdevicesoftware.communicationWithInverters.CommandsForInverters;
+import org.example.loadingdevicesoftware.communicationWithInverters.InverterConnection;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
@@ -17,6 +19,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class _7_DifProtectionScreenController {
+
+    InverterConnection inverterConnection;
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
