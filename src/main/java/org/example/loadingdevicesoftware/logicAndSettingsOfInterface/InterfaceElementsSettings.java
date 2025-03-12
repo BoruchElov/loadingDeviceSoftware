@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
+
 /**
  * Класс <b>InterfaceElementsSettings</b> используется для удобной настройки внешнего
  * вида элементов интерфейса в соответствие с корпоративным стилем холдинга Россети
@@ -315,8 +317,6 @@ public class InterfaceElementsSettings {
                 "-fx-padding:" + textPadding + //Величина отступа
                 "-fx-background-insets: 0; " +    // Убираем стандартные отступы JavaFX
                 "-fx-border-insets: 0; ");
-
-
     }
 
     /**

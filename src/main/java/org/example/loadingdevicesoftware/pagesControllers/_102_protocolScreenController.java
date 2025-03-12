@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import com.lowagie.text.DocumentException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsSettings;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ReportGenerator;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -95,7 +97,15 @@ public class _102_protocolScreenController {
     }
 
     //Тестовый метод для проверки работы кнопки
-    public void testClick() {
-        System.out.println("Кнопка работает");
+    public void createPDFProtocol() throws DocumentException, IOException {
+        ReportGenerator.generateReport(dataForCreatePDF);
     }
+
+    String[] fileName = new String[]{"DifferentialProtection.pdf"};
+    String[] headerElement = new String[]{"ДИФФЕРЕНЦИАЛЬНАЯ ЗАЩИТА"};
+    String[] scenarioInfoElement = new String[]{"01.01.2025", "12.00.00", "Т-16-У3", "Иванов Иван Иванович", "D-0/y-1", "ABG"};
+    String[] scenarioTableElement = new String[]{"101", "10", "102", "130", "103", "250", "51", "20", "52", "160", "53", "280","да", "нет"};
+    String[] errorsElement = new String[]{"Аварий нет"};
+
+    String[][] dataForCreatePDF = new String[][]{fileName, headerElement, scenarioInfoElement, scenarioTableElement, errorsElement};
 }

@@ -54,8 +54,8 @@
             </graphic>
         </Button>
 
-        <!--кнопка старт -->
-        <Button fx:id="startButton" contentDisplay="CENTER" layoutX="997.0" layoutY="726.0" mnemonicParsing="false" onAction="#testClick" prefHeight="64.0" prefWidth="188.0">
+        <!--кнопка сохранить -->
+        <Button fx:id="startButton" contentDisplay="CENTER" layoutX="997.0" layoutY="726.0" mnemonicParsing="false" onAction="#createPDFProtocol" prefHeight="64.0" prefWidth="188.0">
             <font>
                 <Font size="24.0" />
             </font>
