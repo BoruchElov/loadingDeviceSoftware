@@ -13,6 +13,22 @@ import java.util.Objects;
  */
 public class ApplicationConstants {
 
+    /**
+     * <p>Данные константы обозначают разрешённые в приложении цвета,
+     * соответствующие брендбуку Россетей.</p>
+     * <p>Каждый цвет соответствует следующему коду в формате HEX:</p>
+     * <ul>
+     * <li><b>BLACK</b> (чёрный) </li>
+     * <li><b>BLUE</b> (синий) </li>
+     * <li><b>DARK_BLUE</b> (тёмно-синий) </li>
+     * <li><b>LIGHT_BLUE</b> (голубой) </li>
+     * <li><b>WHITE</b> (белый)</li>
+     * <ul>
+     */
+    public enum colours {
+        BLACK, BLUE, LIGHT_BLUE, WHITE, ORANGE
+    }
+
     //Размеры окна приложения
     public static final int APPLICATION_WINDOW_LENGTH = 1280;
     public static final int APPLICATION_WINDOW_HEIGHT = 800;
@@ -29,6 +45,14 @@ public class ApplicationConstants {
     public static final String FONT_NAME = "Myriad Pro";
     //Шрифт для сохранения файла
     public static final Font EXPORT_FONT;
+    static {
+        try {
+            EXPORT_FONT = new Font(BaseFont.createFont("ofont.ru_Myriad Pro.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED), 12, Font.NORMAL);
+        } catch (DocumentException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static final Image STATUS_CONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/иконкаЗеленыйКруг.png")).toExternalForm());
     public static final Image STATUS_DISCONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
@@ -45,30 +69,5 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/иконкаНормЗамкКонт.png")).toExternalForm());
     public static final Image NORMALLY_OPENED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/иконкаНормРазомкКонт.png")).toExternalForm());
-
-    static {
-        try {
-            EXPORT_FONT = new Font(BaseFont.createFont("ofont.ru_Myriad Pro.ttf", BaseFont.IDENTITY_H,
-                    BaseFont.EMBEDDED), 12, Font.NORMAL);
-        } catch (DocumentException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * <p>Данные константы обозначают разрешённые в приложении цвета,
-     * соответствующие брендбуку Россетей.</p>
-     * <p>Каждый цвет соответствует следующему коду в формате HEX:</p>
-     * <ul>
-     * <li><b>BLACK</b> (чёрный) </li>
-     * <li><b>BLUE</b> (синий) </li>
-     * <li><b>DARK_BLUE</b> (тёмно-синий) </li>
-     * <li><b>LIGHT_BLUE</b> (голубой) </li>
-     * <li><b>WHITE</b> (белый)</li>
-     * <ul>
-     */
-    public enum colours {
-        BLACK, BLUE, LIGHT_BLUE, WHITE, ORANGE
-    }
 
 }
