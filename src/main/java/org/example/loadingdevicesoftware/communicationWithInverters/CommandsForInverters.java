@@ -2,16 +2,16 @@ package org.example.loadingdevicesoftware.communicationWithInverters;
 
 public class CommandsForInverters {
 
-    private String messageForInverter;
-    private String messageFromInverter;
+    private static String messageForInverter;
+    private static String messageFromInverter;
 
-     public enum messagesForInverter {
+     public static enum messagesForInverter {
         DEVICE_ONLINE_OK, SET_PARAMETER, GET_PARAMETERS, BLINK_LED_START, BLINK_LED_STOP, CHECK_SYNCH,
         CHECK_SWITCH_POS, MASTER_TIME_REQ, CHECK_RESISTANCE, CHECK_RESISTANCE_RESULTS_OK, SCENARIO_PULSE_OPERATION_BEGIN,
         SCENARIO_CURRENT_STABILIZATION_BEGIN, SCENARIO_RESULTS_OK, FAULT_OK, FORCED_STOP
      }
 
-     public enum messagesFromInverter {
+     public static enum messagesFromInverter {
         DEVICE_ONLINE, SET_PARAMETER_OK, PARAMETERS, BLINK_LED_START_OK, BLINK_LED_START_ERROR, BLINK_LED_STOP_OK,
         BLINK_LED_STOP_ERROR, CHECK_SYNCH, CHECK_SWITCH_POS_RESP, MASTER_TIME_RESP, CHECK_RESISTANCE_OK,
         CHECK_RESISTANCE_ERROR, CHECK_RESISTANCE_RESULTS, SCENARIO_PULSE_OPERATION_BEGIN_OK,
@@ -19,7 +19,7 @@ public class CommandsForInverters {
         SCENARIO_CURRENT_STABILIZATION_BEGIN_ERROR, SCENARIO_RESULTS, FAULT, FORCED_STOP_OK
      }
 
-     public void constructMessageToInverter(String MACAddress, messagesForInverter messageType, String[] parameters) {
+     public static String constructMessageToInverter(String MACAddress, messagesForInverter messageType, String[] parameters) {
         String messageForInverter = switch (messageType) {
             case DEVICE_ONLINE_OK -> "DEVICE_ONLINE_OK";
             case GET_PARAMETERS -> "GET_PARAMETERS";
@@ -41,10 +41,10 @@ public class CommandsForInverters {
                     + "," + parameters[1] + "," + parameters[2] + "," + parameters[3] +  ")";
         };
 
-        this.messageForInverter = "TO       " + MACAddress + ":\n" + messageForInverter;
+        return MACAddress + ":" + messageForInverter + "()\n";
     }
 
-    public void constructMessageFromInverter(String MACAddress, messagesFromInverter messageType, String[] parameters) {
+    public static void constructMessageFromInverter(String MACAddress, messagesFromInverter messageType, String[] parameters) {
 
         String messageFromInverter;
 
@@ -93,19 +93,19 @@ public class CommandsForInverters {
 
         };
 
-        this.messageFromInverter = "FROM    " + MACAddress + ":\n" + messageFromInverter;
+        //this.messageFromInverter = "FROM    " + MACAddress + ":\n" + messageFromInverter;
     }
 
-    public void sendMessage() {
-        System.out.println(this.messageForInverter);
+    public static void sendMessage() {
+        System.out.println(messageForInverter);
     }
 
-    public String getMessageFromInverter() {
+    public static String getMessageFromInverter() {
         return "";
     }
 
-    public void readMessageFromInverter() {
-        System.out.println(this.messageFromInverter);
+    public static void readMessageFromInverter() {
+        System.out.println(messageFromInverter);
     }
 
 }

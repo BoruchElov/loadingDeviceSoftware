@@ -13,6 +13,7 @@ module org.example.loadingdevicesoftware {
     requires static lombok;
     requires itext;
     requires java.compiler;
+    requires com.fazecast.jSerialComm;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;
