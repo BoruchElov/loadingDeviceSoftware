@@ -167,7 +167,8 @@ public class _100_checkingStartConditionsScreenController {
     }
 
     public void goToWorkDevice(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "101.deviceWorking.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
+        _7_DifProtectionScreenController.lookButtonsForWork();
     }
 
     /**

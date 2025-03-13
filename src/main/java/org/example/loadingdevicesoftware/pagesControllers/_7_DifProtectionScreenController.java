@@ -1,6 +1,10 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -8,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
@@ -16,9 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+
 public class _7_DifProtectionScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
+
     ContactObject contactOne;
     ContactObject contactTwo;
     @FXML
@@ -29,6 +37,7 @@ public class _7_DifProtectionScreenController {
     ImageView toMenuButtonImageView;
     @FXML
     ImageView startButtonImageView;
+
     //Объекты картинок групп соединения обмоток
     Image deltaConnection = new Image(Objects.requireNonNull(getClass().
             getResource("/images/Polygon1.png")).toExternalForm());
@@ -37,40 +46,15 @@ public class _7_DifProtectionScreenController {
     //Объект фоновой картинки
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
+
     private boolean windingOneStatus = false;
     private boolean windingTwoStatus = false;
     private boolean isLocationPressed = false;
     private boolean isFeedingWindingPressed = false;
     private int counterOne = 0;
     private int counterTwo = 0;
-    @FXML
-    private ToggleButton shortCircuitLocationButton;
-    @FXML
-    private Button contactOneButton;
-    @FXML
-    private Button contactTwoButton;
-    @FXML
-    private ToggleButton phaseAButton;
-    @FXML
-    private ToggleButton phaseBButton;
-    @FXML
-    private ToggleButton phaseCButton;
-    @FXML
-    private ToggleButton groundButton;
-    @FXML
-    private ToggleButton feedingWindingButton;
-    @FXML
-    private Button windingOneConnection;
-    @FXML
-    private Button windingTwoConnection;
-    @FXML
-    private Button toMenuButton;
-    @FXML
-    private Button startButton;
-    @FXML
-    private Button windingOneGroupButton;
-    @FXML
-    private Button windingTwoGroupButton;
+
+//Картинки
     @FXML
     private ImageView backgroundImageView;
     @FXML
@@ -89,10 +73,41 @@ public class _7_DifProtectionScreenController {
     private ImageView contactOneView;
     @FXML
     private ImageView contactTwoView;
-    //Объявление текстового поля для задания названия объекта
+
+//Кнопки
+    @FXML
+    private static Button contactOneButton;
+    @FXML
+    private static Button contactTwoButton;
+    @FXML
+    private static Button windingOneConnection;
+    @FXML
+    private static Button windingTwoConnection;
+    @FXML
+    private static Button toMenuButton;
+    @FXML
+    private static Button startButton;
+    @FXML
+    private static Button windingOneGroupButton;
+    @FXML
+    private static Button windingTwoGroupButton;
+
+//Текстовые поля для ввода данных
+    @FXML
+    private ToggleButton phaseAButton;
+    @FXML
+    private ToggleButton phaseBButton;
+    @FXML
+    private ToggleButton phaseCButton;
+    @FXML
+    private ToggleButton groundButton;
+    @FXML
+    private ToggleButton shortCircuitLocationButton;
+    @FXML
+    private ToggleButton feedingWindingButton;
+    //Объявление текстового поля для задания названия объекта и ФИО работника
     @FXML
     private TextField objectNameTextField;
-    //Объявление текстового поля для задания ФИО работника
     @FXML
     private TextField userNameTextField;
     //Объявление текстовых полей для задания токов фаз
@@ -123,6 +138,18 @@ public class _7_DifProtectionScreenController {
     //Объявление текстового поля для вывода даты-времени
     @FXML
     private Text dateTimeText;
+
+//Объекты элементы
+    // индикаторы элементов
+    @FXML
+    private Circle indicatorContactOne;
+    @FXML
+    private Circle indicatorContactTwo;
+    // они закомичены по причине ненужности, но они работают
+//    @FXML
+//    private Line linePhaseA;
+//    @FXML
+//    private Button changerButton;
 
     @FXML
     public void initialize() {
@@ -174,20 +201,30 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопки "Выбор питающей обмотки"
         setupRightSideButtons(feedingWindingButton);
         feedingWinding();
-        interfaceElementsSettings.getWhiteMenuButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
-        interfaceElementsSettings.getWhiteStartButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        InterfaceElementsSettings.getWhiteMenuButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        InterfaceElementsSettings.getWhiteStartButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
+
         //Настройка кнопок для выбора схемы соединения обмоток трансформатора
         setupConnectionSchemesButtons(windingOneConnection, windingOneView, 55, 55);
         setupConnectionSchemesButtons(windingTwoConnection, windingTwoView, 55, 55);
+
         //Настройка кнопок для задания положения контактов
         contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED,
                 ContactObject.ContactStatus.DISABLED);
         contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED,
                 ContactObject.ContactStatus.DISABLED);
+
         //Настройка кнопок для задания номера схемы
         setupConnectionSchemesButtons(windingOneGroupButton);
         setupConnectionSchemesButtons(windingTwoGroupButton);
         disableOrEnablePhaseButtons();
+
+
+        //Настройка индикаторов контактов
+        blinkingIndicator();
+        //метод по изменению цвета линии
+        //changeColorLine();
+
     }
 
     @FXML
@@ -230,37 +267,101 @@ public class _7_DifProtectionScreenController {
         }
     }
 
+    //Метод по смене цвета индикатора. По идеи его нужно просто переписать в случае срабатывания контакта 1 или 2
+    @FXML
+    public void blinkingIndicator(){
+        indicatorContactOne.setOnMouseEntered(event-> indicatorContactOne.setFill(Color.RED));
+        indicatorContactOne.setOnMouseExited(event -> indicatorContactOne.setFill(Color.GREEN));
+
+        indicatorContactTwo.setOnMouseEntered(event-> indicatorContactTwo.setFill(Color.RED));
+        indicatorContactTwo.setOnMouseExited(event -> indicatorContactTwo.setFill(Color.GREEN));
+    }
+
+    //Метод для блокировки кнопок и всего содержимого во время работы
+//    @FXML
+//    public static void lookButtonsForWork(){
+//         contactOneButton.setDisable(true);
+////         contactTwoButton.setDisable(true);
+////         windingOneConnection.setDisable(true);
+////         windingTwoConnection.setDisable(true);
+////         toMenuButton.setDisable(true);
+////         startButton.setDisable(true);
+////         windingOneGroupButton.setDisable(true);
+////         windingTwoGroupButton.setDisable(true);
+//        // Создаем задачу для разблокировки через 5 секунд
+//        Task<Void> task = new Task<>() {
+//            @Override
+//            protected Void call() throws Exception {
+//                Thread.sleep(5000); // Ждем 5 секунд
+//                return null;
+//            }
+//        };
+//
+//        // Разблокируем кнопку после завершения задачи
+//        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+//            @Override
+//            public void handle(WorkerStateEvent event) {
+//                contactOneButton.setDisable(false);
+////                contactTwoButton.setDisable(false);
+////                windingOneConnection.setDisable(false);
+////                windingTwoConnection.setDisable(false);
+////                toMenuButton.setDisable(false);
+////                startButton.setDisable(false);
+////                windingOneGroupButton.setDisable(false);
+////                windingTwoGroupButton.setDisable(false);
+//            }
+//        });
+//
+//        // Запускаем задачу в новом потоке
+//        new Thread(task).start();
+//    }
+
+    //Метод по смене цвета у линии. Нужно, чтобы перейти к новому дизайну
+//    @FXML
+//    public void changeColorLine() {
+//
+//        changerButton.setOnAction(event -> {
+//            if (linePhaseA.getStroke().equals(Color.BLACK)) {
+//                linePhaseA.setStroke(Color.RED);
+//                linePhaseA.setStrokeWidth(8.0);
+//            } else {
+//                linePhaseA.setStroke(Color.BLACK);
+//                linePhaseA.setStrokeWidth(5.0);
+//            }
+//        });
+//    }
+
     //метод для настройки кнопок в правой части окна сценария диф.защиты
     public void setupRightSideButtons(ToggleButton button) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
                 button);
     }
 
     //метод для изменения выделения кнопок в правой части окна сценария диф.защиты
     public void changeColorRightSideButtons(ToggleButton button) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.ORANGE,
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.ORANGE,
                 3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
                 button);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта
     public void setupObjectNameField(TextField textField, String prompt) {
-        interfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+        InterfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.BLACK, 20, 0, textField,
                 prompt);
     }
 
     //Метод для настройки кнопок соединения обмоток и контактов
     public void setupConnectionSchemesButtons(Button button, ImageView imageView, int width, int height) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.WHITE, 0,
                 imageView, null, button, width, height, false);
     }
 
     //Метод для настройки кнопок номеров групп
     public void setupConnectionSchemesButtons(Button button) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.BLACK, 42,
                 0, button);
     }
@@ -288,20 +389,15 @@ public class _7_DifProtectionScreenController {
     }
 
     //Метод, запускающийся при нажатии на кнопку "Фаза А"
-    public void phaseA() {
-        commonMethodForRightSideButtons(phaseAButton);
-    }
-
+    public void phaseA() { commonMethodForRightSideButtons(phaseAButton);}
     //Метод, запускающийся при нажатии на кнопку "Фаза В"
     public void phaseB() {
         commonMethodForRightSideButtons(phaseBButton);
     }
-
     //Метод, запускающийся при нажатии на кнопку "Фаза С"
     public void phaseC() {
         commonMethodForRightSideButtons(phaseCButton);
     }
-
     public void ground() {
         commonMethodForRightSideButtons(groundButton);
     }
@@ -314,7 +410,7 @@ public class _7_DifProtectionScreenController {
             feedingWindingButton.setText("");
             isFeedingWindingPressed = true;
         }
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.BLACK, 36, 0,
                 feedingWindingButton);
     }
@@ -416,7 +512,6 @@ public class _7_DifProtectionScreenController {
 
     private Image getProperPicture(boolean shortCircuitLocation, boolean phaseA, boolean phaseB, boolean phaseC,
                                    boolean ground, boolean sendingWinding) {
-
         String winding;
 
         if (sendingWinding) {
