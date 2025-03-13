@@ -167,7 +167,8 @@ public class _100_checkingStartConditionsScreenController {
     }
 
     public void goToWorkDevice(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "101.deviceWorking.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
+     //   _7_DifProtectionScreenController.lookButtonsForWork();
     }
 
     /**
@@ -175,7 +176,6 @@ public class _100_checkingStartConditionsScreenController {
      *
      * @param textNode Текстовый узел, куда будет выведен текст
      * @param text     Текст, который нужно вывести
-     * @param delay    Задержка между символами в миллисекундах
      */
     private void typeText(Text textNode, String text) {
         textNode.setText(text);
