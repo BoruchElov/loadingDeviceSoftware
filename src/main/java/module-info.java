@@ -22,6 +22,4 @@ module org.example.loadingdevicesoftware {
     opens org.example.loadingdevicesoftware.pagesControllers to javafx.fxml;
     exports org.example.loadingdevicesoftware.communicationWithInverters;
     opens org.example.loadingdevicesoftware.communicationWithInverters to javafx.fxml;
-    exports org.example;
-    opens org.example to javafx.fxml;
 }

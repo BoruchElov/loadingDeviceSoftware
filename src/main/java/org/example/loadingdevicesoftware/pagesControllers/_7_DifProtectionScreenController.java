@@ -19,19 +19,30 @@ import java.util.Objects;
 public class _7_DifProtectionScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
-
-    private boolean windingOneStatus = false;
-    private boolean windingTwoStatus = false;
-
     ContactObject contactOne;
     ContactObject contactTwo;
-
+    @FXML
+    ImageView windingOneView;
+    @FXML
+    ImageView windingTwoView;
+    @FXML
+    ImageView toMenuButtonImageView;
+    @FXML
+    ImageView startButtonImageView;
+    //Объекты картинок групп соединения обмоток
+    Image deltaConnection = new Image(Objects.requireNonNull(getClass().
+            getResource("/images/Polygon1.png")).toExternalForm());
+    Image starConnection = new Image(Objects.requireNonNull(getClass().
+            getResource("/images/Star1.png")).toExternalForm());
+    //Объект фоновой картинки
+    Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
+    private boolean windingOneStatus = false;
+    private boolean windingTwoStatus = false;
     private boolean isLocationPressed = false;
     private boolean isFeedingWindingPressed = false;
-
     private int counterOne = 0;
     private int counterTwo = 0;
-
     @FXML
     private ToggleButton shortCircuitLocationButton;
     @FXML
@@ -63,14 +74,6 @@ public class _7_DifProtectionScreenController {
     @FXML
     private ImageView backgroundImageView;
     @FXML
-    ImageView windingOneView;
-    @FXML
-    ImageView windingTwoView;
-    @FXML
-    ImageView toMenuButtonImageView;
-    @FXML
-    ImageView startButtonImageView;
-    @FXML
     private ImageView inverterA1Status;
     @FXML
     private ImageView inverterA2Status;
@@ -86,7 +89,6 @@ public class _7_DifProtectionScreenController {
     private ImageView contactOneView;
     @FXML
     private ImageView contactTwoView;
-
     //Объявление текстового поля для задания названия объекта
     @FXML
     private TextField objectNameTextField;
@@ -118,20 +120,9 @@ public class _7_DifProtectionScreenController {
     private TextField phaseC1AngleTextField;
     @FXML
     private TextField phaseC2AngleTextField;
-
     //Объявление текстового поля для вывода даты-времени
     @FXML
     private Text dateTimeText;
-
-    //Объекты картинок групп соединения обмоток
-    Image deltaConnection = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/Polygon1.png")).toExternalForm());
-    Image starConnection = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/Star1.png")).toExternalForm());
-    
-    //Объект фоновой картинки
-    Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
 
     @FXML
     public void initialize() {
@@ -183,8 +174,8 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопки "Выбор питающей обмотки"
         setupRightSideButtons(feedingWindingButton);
         feedingWinding();
-        interfaceElementsSettings.getWhiteMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
-        interfaceElementsSettings.getWhiteStartButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteMenuButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        interfaceElementsSettings.getWhiteStartButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
         //Настройка кнопок для выбора схемы соединения обмоток трансформатора
         setupConnectionSchemesButtons(windingOneConnection, windingOneView, 55, 55);
         setupConnectionSchemesButtons(windingTwoConnection, windingTwoView, 55, 55);
@@ -200,12 +191,12 @@ public class _7_DifProtectionScreenController {
     }
 
     @FXML
-    public void goToMainScreen (ActionEvent event) throws IOException {
+    public void goToMainScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
 
     @FXML
-    public void goToStartScreen (ActionEvent event) throws IOException {
+    public void goToStartScreen(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
         Buffer.setPreviousPage("7.DifProtection.fxml");
     }
@@ -214,10 +205,12 @@ public class _7_DifProtectionScreenController {
     public void setPictureForWindingOne() {
         windingOneStatus = commonMethodForPositionPicturesButtons(windingOneView, windingOneStatus, starConnection, deltaConnection);
     }
+
     @FXML
     public void setPictureForWindingTwo() {
         windingTwoStatus = commonMethodForPositionPicturesButtons(windingTwoView, windingTwoStatus, starConnection, deltaConnection);
     }
+
     //Методы для настройки кнопок выбора контактов
     @FXML
     public void setPictureForContactOne() {
@@ -243,6 +236,7 @@ public class _7_DifProtectionScreenController {
                 3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
                 button);
     }
+
     //метод для изменения выделения кнопок в правой части окна сценария диф.защиты
     public void changeColorRightSideButtons(ToggleButton button) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.ORANGE,
@@ -253,7 +247,7 @@ public class _7_DifProtectionScreenController {
     //Метод для настройки параметров текстового поля с названием объекта
     public void setupObjectNameField(TextField textField, String prompt) {
         interfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3,17,15, ApplicationConstants.colours.BLACK,20,0,textField,
+                3, 17, 15, ApplicationConstants.colours.BLACK, 20, 0, textField,
                 prompt);
     }
 
@@ -263,6 +257,7 @@ public class _7_DifProtectionScreenController {
                 3, 17, 15, ApplicationConstants.colours.WHITE, 0,
                 imageView, null, button, width, height, false);
     }
+
     //Метод для настройки кнопок номеров групп
     public void setupConnectionSchemesButtons(Button button) {
         interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
@@ -306,7 +301,10 @@ public class _7_DifProtectionScreenController {
     public void phaseC() {
         commonMethodForRightSideButtons(phaseCButton);
     }
-    public void ground() { commonMethodForRightSideButtons(groundButton); }
+
+    public void ground() {
+        commonMethodForRightSideButtons(groundButton);
+    }
 
     //Метод, запускающийся при нажатии на кнопку "Выбор питающей обмотки"
     public void feedingWinding() {
@@ -339,6 +337,7 @@ public class _7_DifProtectionScreenController {
             counterOne++;
         }
     }
+
     public void secondScheme() {
         windingTwoGroupButton.setText(Integer.toString(counterTwo));
         if (counterTwo >= 11) {
@@ -350,15 +349,16 @@ public class _7_DifProtectionScreenController {
 
     /**
      * Метод для изменения картинки на кнопках контактов и схем соединения обмоток.
-     * @param imageView объект для картинки
-     * @param status положение кнопки
-     * @param imageIfTrue картинка в первом положении
+     *
+     * @param imageView    объект для картинки
+     * @param status       положение кнопки
+     * @param imageIfTrue  картинка в первом положении
      * @param imageIfFalse картинка во втором положении
      */
     private boolean commonMethodForPositionPicturesButtons(ImageView imageView, boolean status, Image imageIfTrue,
-                                                        Image imageIfFalse) {
+                                                           Image imageIfFalse) {
         imageView.setVisible(true);
-        if(status) {
+        if (status) {
             imageView.setImage(imageIfTrue);
             status = false;
         } else {
@@ -371,6 +371,7 @@ public class _7_DifProtectionScreenController {
     /**
      * Общий метод для изменения цвета кнопок в правой части при нажатии. Запускается при нажатии на кнопку,
      * меняет цвет её границы и определяет, какую картинку поставить на задний план при изменении статуса кнопки.
+     *
      * @param toggleButton кнопка
      */
     private void commonMethodForRightSideButtons(ToggleButton toggleButton) {
@@ -387,13 +388,14 @@ public class _7_DifProtectionScreenController {
     /**
      * Общий метод для изменения цвета и текста кнопок в правой части при нажатии. Запускается при нажатии на кнопку,
      * меняет цвет её границы и текст на ней, определяет, какую картинку поставить на задний план при изменении статуса кнопки.
-     * @param toggleButton кнопка
-     * @param textIfSelected текст на кнопке при нажатом положении
+     *
+     * @param toggleButton      кнопка
+     * @param textIfSelected    текст на кнопке при нажатом положении
      * @param textIfNotSelected текст на кнопке при отжатом положении
      */
 
     private void commonMethodForRightSideButtons(ToggleButton toggleButton, String textIfSelected,
-                                                String textIfNotSelected) {
+                                                 String textIfNotSelected) {
         if (toggleButton.isSelected()) {
             toggleButton.setText(textIfSelected);
             changeColorRightSideButtons(toggleButton);
@@ -413,7 +415,7 @@ public class _7_DifProtectionScreenController {
     }
 
     private Image getProperPicture(boolean shortCircuitLocation, boolean phaseA, boolean phaseB, boolean phaseC,
-                                    boolean ground, boolean sendingWinding) {
+                                   boolean ground, boolean sendingWinding) {
 
         String winding;
 
@@ -438,34 +440,31 @@ public class _7_DifProtectionScreenController {
                 getResource("/screen/7.дифзащита/" + fileName + ".png")).toExternalForm());
     }
 
-    private String getPhasesCombination (boolean phaseA, boolean phaseB, boolean phaseC,
+    private String getPhasesCombination(boolean phaseA, boolean phaseB, boolean phaseC,
                                         boolean ground) {
 
-        Map<String,String> hashMap = new HashMap<>();
+        Map<String, String> hashMap = new HashMap<>();
 
-        hashMap.put("true,false,false,false","A_");
-        hashMap.put("true,true,false,false","AB_");
-        hashMap.put("true,true,true,false","ABC_");
-        hashMap.put("true,true,true,true","ABCG_");
-        hashMap.put("false,true,false,false","B_");
-        hashMap.put("false,true,true,false","BC_");
-        hashMap.put("false,true,true,true","BCG_");
-        hashMap.put("false,false,true,false","C_");
-        hashMap.put("false,false,true,true","C_");
-        hashMap.put("true,false,false,true","A_");
-        hashMap.put("false,true,false,true","B_");
-        hashMap.put("true,false,true,false","AC_");
-        hashMap.put("true,false,true,true","ACG_");
-        hashMap.put("true,true,false,true","ABG_");
-        hashMap.put("false,false,false,true","G_");
-        hashMap.put("false,false,false,false","");
+        hashMap.put("true,false,false,false", "A_");
+        hashMap.put("true,true,false,false", "AB_");
+        hashMap.put("true,true,true,false", "ABC_");
+        hashMap.put("true,true,true,true", "ABCG_");
+        hashMap.put("false,true,false,false", "B_");
+        hashMap.put("false,true,true,false", "BC_");
+        hashMap.put("false,true,true,true", "BCG_");
+        hashMap.put("false,false,true,false", "C_");
+        hashMap.put("false,false,true,true", "C_");
+        hashMap.put("true,false,false,true", "A_");
+        hashMap.put("false,true,false,true", "B_");
+        hashMap.put("true,false,true,false", "AC_");
+        hashMap.put("true,false,true,true", "ACG_");
+        hashMap.put("true,true,false,true", "ABG_");
+        hashMap.put("false,false,false,true", "G_");
+        hashMap.put("false,false,false,false", "");
 
         String key = phaseA + "," + phaseB + "," + phaseC + "," + ground;
 
         return hashMap.getOrDefault(key, ""); // Возвращаем картинку по умолчанию, если комбинация не найдена
 
     }
-
-
-
 }
