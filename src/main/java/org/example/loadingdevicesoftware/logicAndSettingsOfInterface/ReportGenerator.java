@@ -92,7 +92,7 @@ public class ReportGenerator {
     //Метод для создания таблицы
     private static PdfPTable getScenarioTable(String[][] bufferData, int rows, int columns) throws DocumentException, IOException {
         // Создаем таблицу
-        org.example.TableCreator infoTable = new org.example.TableCreator(rows, columns);
+        TableCreator infoTable = new TableCreator(rows, columns);
         PdfPTable table = infoTable.getTable();
         //Заполняем ячейки данными
         //первая строчка

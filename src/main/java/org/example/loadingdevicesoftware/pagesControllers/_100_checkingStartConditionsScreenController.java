@@ -175,7 +175,6 @@ public class _100_checkingStartConditionsScreenController {
      *
      * @param textNode Текстовый узел, куда будет выведен текст
      * @param text     Текст, который нужно вывести
-     * @param delay    Задержка между символами в миллисекундах
      */
     private void typeText(Text textNode, String text) {
         textNode.setText(text);

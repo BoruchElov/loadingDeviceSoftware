@@ -61,17 +61,17 @@
             <Font size="18.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseAButton" layoutX="1022.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseA" prefHeight="50.0" prefWidth="50.0" text="A">
+      <ToggleButton fx:id="phaseAButton" layoutX="996.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseA" prefHeight="65.0" prefWidth="65.0" text="A">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseBButton" layoutX="1074.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseB" prefHeight="50.0" prefWidth="50.0" text="B">
+      <ToggleButton fx:id="phaseBButton" layoutX="1061.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseB" prefHeight="65.0" prefWidth="65.0" text="B">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseCButton" layoutX="1126.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseC" prefHeight="50.0" prefWidth="50.0" text="C">
+      <ToggleButton fx:id="phaseCButton" layoutX="1126.0" layoutY="373.0" mnemonicParsing="false" onAction="#phaseC" prefHeight="65.0" prefWidth="65.0" text="C">
          <font>
             <Font size="24.0" />
          </font>
@@ -91,7 +91,7 @@
             <Font name="MyriadPro-Regular" size="24.0" />
          </font>
       </Text>
-      <ToggleButton fx:id="feedingWindingButton" layoutX="1093.0" layoutY="555.0" mnemonicParsing="false" onAction="#feedingWinding" prefHeight="74.0" prefWidth="71.0" text="I">
+      <ToggleButton fx:id="feedingWindingButton" layoutX="1093.0" layoutY="555.0" mnemonicParsing="false" onAction="#feedingWinding" prefHeight="74.0" prefWidth="74.0" text="I">
          <font>
             <Font size="24.0" />
          </font>
@@ -256,7 +256,7 @@
       <TextField fx:id="phaseB2TextField" layoutX="782.0" layoutY="385.0" prefHeight="43.0" prefWidth="62.0" />
       <TextField fx:id="phaseC2TextField" layoutX="782.0" layoutY="479.0" prefHeight="43.0" prefWidth="62.0" />
       <TextField fx:id="userNameTextField" layoutX="113.0" layoutY="642.0" prefHeight="43.0" prefWidth="272.0" />
-      <ToggleButton fx:id="groundButton" layoutX="1178.0" layoutY="373.0" mnemonicParsing="false" onAction="#ground" prefHeight="50.0" prefWidth="50.0" text="G">
+      <ToggleButton fx:id="groundButton" layoutX="1191.0" layoutY="373.0" mnemonicParsing="false" onAction="#ground" prefHeight="65.0" prefWidth="65.0" text="G">
          <font>
             <Font size="24.0" />
          </font>
