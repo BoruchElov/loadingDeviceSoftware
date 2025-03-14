@@ -291,13 +291,33 @@
 
 
 
+
+
+
+
+
+
+
+
+<!--ТЕСТОВЫЕ ОБЪЕКТЫ-->
+
 <!--Объекты элементы -->
          <!--индикаторы контаков-->
       <Circle fx:id="indicatorContactOne" fill="green" layoutX="321.0" layoutY="241.0" onMouseDragEntered="#blinkingIndicator" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="indicatorContactTwo" fill="green" layoutX="381.0" layoutY="241.0" onMouseDragEntered="#blinkingIndicator" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
          <!--пробная линия-->
 <!--      пока они будут закомичены, но все методы лежащие в контроллере для них работают-->
-<!--      <Line fx:id="linePhaseA" endX="120.0" layoutX="161.0" layoutY="343.0" startX="-100.0" strokeLineCap="ROUND" strokeWidth="5.0" stroke="BLACK" />-->
-<!--      <Button fx:id="changerButton" layoutX="96.0" layoutY="252.0" onAction="#changeColorLine" text="changeColor" />-->
+      <Line fx:id="linePhaseA" endX="120.0" layoutX="161.0" layoutY="343.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
+      <Button fx:id="changerButton" layoutX="96.0" layoutY="252.0" onAction="#changeColorLine" text="changeColor" />
+
+
+
+
+
+
+      
+
+
+
    </children>
 </AnchorPane>

@@ -2,12 +2,18 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.example.loadingdevicesoftware.ApplicationFile;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
@@ -17,6 +23,7 @@ import java.util.Objects;
 public class _100_checkingStartConditionsScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
+
 
     //Объявление текстового поля для вывода даты-времени
     @FXML
@@ -68,6 +75,7 @@ public class _100_checkingStartConditionsScreenController {
     private Button status6True;
     @FXML
     private Button status6False;
+
     //Объявление областей изображений для кнопок статусов
     @FXML
     private ImageView status1TrueImageView;
@@ -165,11 +173,46 @@ public class _100_checkingStartConditionsScreenController {
     public void goToPreviousPage (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), Buffer.getPreviousPage());
     }
-
+// это чтобы вернуть как было все
     public void goToWorkDevice(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
-     //   _7_DifProtectionScreenController.lookButtonsForWork();
+
     }
+
+
+
+
+// тесты
+//    @FXML
+//    private void goToWorkDevice() throws IOException {
+//
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("org/example.loadingdevicesoftware/_7_DifProtectionScreenController.fxml"));
+//        Parent root = loader.load();
+//
+//        System.out.println("goToWorkDevice 1 ");
+//
+//        _7_DifProtectionScreenController dzTest = loader.getController();
+//
+//        System.out.println("goToWorkDevice 2 ");
+//
+//        if (dzTest != null) {
+//            dzTest.lookButtonIfDo();
+//        } else {
+//            System.out.println("Ошибка: контроллер не был загружен!");
+//        }
+//
+//        Stage stage = (Stage) startButton.getScene().getWindow();
+//        stage.setScene(new Scene(root));
+//    }
+
+
+
+
+
+
+
+
+
 
     /**
      * Функция для побуквенного вывода текста в Text
