@@ -362,7 +362,6 @@ public class _7_DifProtectionScreenController {
     private void changeShortCircuitLocation(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2) {
         isLocationPressed = true;
         disableOrEnablePhaseButtons();
-        imageView1.
 
         if (feedingWindingButton.isSelected()) {        //питающая обмотка 1
             commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
@@ -483,18 +482,6 @@ public class _7_DifProtectionScreenController {
         commonMethodForRightSideButtons(groundButton);
     }
 
-//    //Метод, запускающийся при нажатии на кнопку "Выбор питающей обмотки"
-//    public void feedingWinding() {
-//        if (isFeedingWindingPressed) {
-//            commonMethodForRightSideButtons(feedingWindingButton, "II", "I");
-//        } else {
-//            feedingWindingButton.setText("");
-//            isFeedingWindingPressed = true;
-//        }
-//        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-//                3, 17, 15, ApplicationConstants.colours.BLACK, 36, 0,
-//                feedingWindingButton);
-//    }
 
     //Метод, запускающийся при нажатии на кнопку "Выбор места повреждения"
     public void shortCircuitLocation() {
@@ -567,7 +554,6 @@ public class _7_DifProtectionScreenController {
      * @param textIfSelected    текст на кнопке при нажатом положении
      * @param textIfNotSelected текст на кнопке при отжатом положении
      */
-
     private void commonMethodForRightSideButtons(ToggleButton toggleButton, String textIfSelected,
                                                  String textIfNotSelected) {
         if (toggleButton.isSelected()) {
