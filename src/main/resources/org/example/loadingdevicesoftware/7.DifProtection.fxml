@@ -249,17 +249,17 @@
 
       <!--Кнопки с залипанием-->
       <!--Кнопки с залипанием выбора фаз -->
-      <ToggleButton fx:id="phaseAButton" layoutX="996.0" layoutY="415.0" mnemonicParsing="false" onAction="#phaseA" prefHeight="65.0" prefWidth="65.0" text="A">
+      <ToggleButton fx:id="phaseAButton" layoutX="996.0" layoutY="415.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="65.0" text="A">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseBButton" layoutX="1061.0" layoutY="415.0" mnemonicParsing="false" onAction="#phaseB" prefHeight="65.0" prefWidth="65.0" text="B">
+      <ToggleButton fx:id="phaseBButton" layoutX="1061.0" layoutY="415.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="65.0" text="B">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="phaseCButton" layoutX="1126.0" layoutY="415.0" mnemonicParsing="false" onAction="#phaseC" prefHeight="65.0" prefWidth="65.0" text="C">
+      <ToggleButton fx:id="phaseCButton" layoutX="1126.0" layoutY="415.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="65.0" text="C">
          <font>
             <Font size="24.0" />
          </font>
