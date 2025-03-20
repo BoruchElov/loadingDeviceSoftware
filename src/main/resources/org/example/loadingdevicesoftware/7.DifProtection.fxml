@@ -61,6 +61,7 @@
             <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
+
       <!--Кнопки контактов-->
       <Button fx:id="contactOneButton" layoutX="296.0" layoutY="173.0" mnemonicParsing="false" onAction="#setPictureForContactOne" prefHeight="43.0" prefWidth="56.0">
          <font>
@@ -78,7 +79,6 @@
             <ImageView fx:id="contactTwoView" fitHeight="34.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-
 
 <!--Таблицы с инверторами-->
       <GridPane layoutX="31.0" layoutY="19.0" prefHeight="82.0" prefWidth="164.0">
@@ -246,9 +246,10 @@
 
 
 <!--Текстовые поля для заполнения режиимных параметров-->
+
       <!--Кнопки с залипанием-->
       <!--Кнопки с залипанием выбора фаз -->
-      <ToggleButton fx:id="phaseAButton" layoutX="996.0" layoutY="415.0" mnemonicParsing="false" onAction="#changeColorLine" prefHeight="65.0" prefWidth="65.0" text="A">
+      <ToggleButton fx:id="phaseAButton" layoutX="996.0" layoutY="415.0" mnemonicParsing="false" onAction="#phaseA" prefHeight="65.0" prefWidth="65.0" text="A">
          <font>
             <Font size="24.0" />
          </font>
@@ -263,17 +264,20 @@
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="feedingWindingButton" layoutX="1088.0" layoutY="216.0" mnemonicParsing="false" onAction="#feedingWinding" prefHeight="74.0" prefWidth="74.0" text="I">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </ToggleButton>
       <ToggleButton fx:id="groundButton" layoutX="1191.0" layoutY="415.0" mnemonicParsing="false" onAction="#ground" prefHeight="65.0" prefWidth="65.0" text="G">
          <font>
             <Font size="24.0" />
          </font>
       </ToggleButton>
-      <!--Кнопки с залипанием выбора места повреждения -->
+
+      <!--Кнопка выбора питающей омботки-->
+      <ToggleButton fx:id="feedingWindingButton" layoutX="1088.0" layoutY="216.0" mnemonicParsing="false" onAction="#feedingWinding" prefHeight="74.0" prefWidth="74.0" text="I">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </ToggleButton>
+
+      <!--Кнопки выбора места повреждения -->
       <ToggleButton fx:id="shortCircuitLocationButton" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="1015.0" layoutY="583.0" mnemonicParsing="false" onAction="#shortCircuitLocation" prefHeight="59.0" prefWidth="210.0" text="Внешнее КЗ">
          <font>
             <Font size="18.0" />

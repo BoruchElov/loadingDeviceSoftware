@@ -139,10 +139,6 @@ public class _7_DifProtectionScreenController {
 
 
 
-
-
-
-
     //Объекты элементы
     // индикаторы элементов
     @FXML
@@ -248,7 +244,11 @@ public class _7_DifProtectionScreenController {
         blinkingIndicator();
 
         //метод по изменению цвета линии
-        changeColorLine();
+
+
+        phaseAButton.setOnAction(event -> changeColorPhaseLine(phaseAButton, linePhaseA1, linePhaseA2));
+        phaseBButton.setOnAction(event -> changeColorPhaseLine(phaseBButton, linePhaseB1, linePhaseB2));
+        phaseCButton.setOnAction(event -> changeColorPhaseLine(phaseCButton, linePhaseC1, linePhaseC2));
     }
 
 
@@ -308,23 +308,38 @@ public class _7_DifProtectionScreenController {
 
 
     //Метод по смене цвета у линии. Нужно, чтобы перейти к новому дизайну
-    public void changeColorLine() {
-        phaseAButton.setOnAction(event -> {
-            if (linePhaseA1.getStroke().equals(Color.BLACK)) {
-                linePhaseA1.setStroke(Color.RED);
-                linePhaseA1.setStrokeWidth(8.0);
-                linePhaseA2.setStroke(Color.RED);
-                linePhaseA2.setStrokeWidth(8.0);
-                commonMethodForRightSideButtons(phaseAButton);
+    public void changeColorPhaseLine(ToggleButton toggleButton, Line line1, Line line2) {
+            if (toggleButton.isSelected()) {
+                changeColorRightSideButtons(toggleButton);
+                line1.setStroke(Color.RED);
+                line1.setStrokeWidth(8.0);
+                line2.setStroke(Color.RED);
+                line2.setStrokeWidth(8.0);
             } else {
-                linePhaseA1.setStroke(Color.BLACK);
-                linePhaseA1.setStrokeWidth(5.0);
-                linePhaseA2.setStroke(Color.BLACK);
-                linePhaseA2.setStrokeWidth(5.0);
-                commonMethodForRightSideButtons(phaseAButton);
+                setupRightSideButtons(toggleButton);
+                line1.setStroke(Color.BLACK);
+                line1.setStrokeWidth(5.0);
+                line2.setStroke(Color.BLACK);
+                line2.setStrokeWidth(5.0);
             }
-        });
     }
+    //Метод изменения питающей обмотки
+    public void changeFeedingWinding(ToggleButton toggleButton, Circle circle1, Circle circle2) {
+        if (toggleButton.isSelected()) {
+            changeColorRightSideButtons(toggleButton);
+            toggleButton.setText("I");
+            circle1.setStroke(Color.GREEN);
+            circle2.setStroke(Color.BLUE);
+        } else {
+            changeColorRightSideButtons(toggleButton);
+            toggleButton.setText("II");
+            circle1.setStroke(Color.BLUE);
+            circle2.setStroke(Color.GREEN);
+        }
+    }
+
+
+
 
 
 
