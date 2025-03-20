@@ -159,6 +159,17 @@ public class _7_DifProtectionScreenController {
     @FXML
     private Line linePhaseC2;
 
+    @FXML
+    private Circle feedingOne;
+    @FXML
+    private Circle feedingTwo;
+
+
+    @FXML
+    private ImageView imageShortCircuit;
+    @FXML
+    private ImageView imageGround;
+
 
 
 
@@ -218,7 +229,9 @@ public class _7_DifProtectionScreenController {
         setupRightSideButtons(groundButton);
         //Настройка кнопки "Выбор питающей обмотки"
         setupRightSideButtons(feedingWindingButton);
-        feedingWinding();
+
+//        feedingWinding();
+
         InterfaceElementsSettings.getWhiteMenuButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
         InterfaceElementsSettings.getWhiteStartButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
 
@@ -243,12 +256,18 @@ public class _7_DifProtectionScreenController {
         //Настройка индикаторов контактов
         blinkingIndicator();
 
+        //Метод по изменению цвета питающей обмотки
+        feedingWindingButton.setOnAction(event -> changeFeedingWinding(feedingWindingButton,feedingOne, feedingTwo));
+
         //метод по изменению цвета линии
-
-
         phaseAButton.setOnAction(event -> changeColorPhaseLine(phaseAButton, linePhaseA1, linePhaseA2));
         phaseBButton.setOnAction(event -> changeColorPhaseLine(phaseBButton, linePhaseB1, linePhaseB2));
         phaseCButton.setOnAction(event -> changeColorPhaseLine(phaseCButton, linePhaseC1, linePhaseC2));
+
+
+        shortCircuitLocationButton.setOnAction(event -> changeShortCircuitLocation(shortCircuitLocationButton, imageShortCircuit, imageGround));
+
+
     }
 
 
@@ -307,37 +326,80 @@ public class _7_DifProtectionScreenController {
     }
 
 
-    //Метод по смене цвета у линии. Нужно, чтобы перейти к новому дизайну
-    public void changeColorPhaseLine(ToggleButton toggleButton, Line line1, Line line2) {
-            if (toggleButton.isSelected()) {
-                changeColorRightSideButtons(toggleButton);
+
+
+
+
+    //Метод изменения питающей обмотки.
+    private void changeFeedingWinding(ToggleButton toggleButton, Circle circle1, Circle circle2) {
+        commonMethodForRightSideButtons(toggleButton, "I", "II");
+        if (toggleButton.isSelected()) {
+            circle1.setStroke(Color.GREEN);
+            circle2.setStroke(Color.BLUE);
+        } else {
+            circle1.setStroke(Color.BLUE);
+            circle2.setStroke(Color.GREEN);
+        }
+    }
+
+    //Метод выделяющий цветом выбранную линию.
+    private void changeColorPhaseLine(ToggleButton toggleButton, Line line1, Line line2) {
+        commonMethodForRightSideButtons(toggleButton);
+        if (toggleButton.isSelected()) {
                 line1.setStroke(Color.RED);
                 line1.setStrokeWidth(8.0);
                 line2.setStroke(Color.RED);
                 line2.setStrokeWidth(8.0);
             } else {
-                setupRightSideButtons(toggleButton);
                 line1.setStroke(Color.BLACK);
                 line1.setStrokeWidth(5.0);
                 line2.setStroke(Color.BLACK);
                 line2.setStrokeWidth(5.0);
             }
     }
-    //Метод изменения питающей обмотки
-    public void changeFeedingWinding(ToggleButton toggleButton, Circle circle1, Circle circle2) {
-        if (toggleButton.isSelected()) {
-            changeColorRightSideButtons(toggleButton);
-            toggleButton.setText("I");
-            circle1.setStroke(Color.GREEN);
-            circle2.setStroke(Color.BLUE);
-        } else {
-            changeColorRightSideButtons(toggleButton);
-            toggleButton.setText("II");
-            circle1.setStroke(Color.BLUE);
-            circle2.setStroke(Color.GREEN);
+
+    //метод для выбора КЗ.
+    private void changeShortCircuitLocation(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2) {
+        isLocationPressed = true;
+        disableOrEnablePhaseButtons();
+        imageView1.
+
+        if (feedingWindingButton.isSelected()) {        //питающая обмотка 1
+            commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
+            if (toggleButton.isSelected()) {
+                imageView1.setLayoutX(464);                 //расположение по центру
+                imageView1.setLayoutY(222);
+                imageView1.setRotate(180);
+
+                imageView2.setLayoutX(449);
+                imageView2.setLayoutY(497);
+            } else {
+                imageView1.setLayoutX(860);                 //справа
+                imageView1.setLayoutY(121);
+                imageView1.setRotate(0);
+
+                imageView2.setLayoutX(887);
+                imageView2.setLayoutY(547);
+            }
+        } else {//питающая обмотка 2
+            commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
+            if (toggleButton.isSelected()) {
+                imageView1.setLayoutX(464);                 //центр
+                imageView1.setLayoutY(222);
+                imageView1.setRotate(180);
+
+                imageView2.setLayoutX(449);
+                imageView2.setLayoutY(497);
+            } else {
+                imageView1.setLayoutX(41);                  //слева
+                imageView1.setLayoutY(121);
+                imageView1.setRotate(180);
+
+                imageView2.setLayoutX(19);
+                imageView2.setLayoutY(547);
+            }
         }
     }
-
 
 
 
@@ -421,18 +483,18 @@ public class _7_DifProtectionScreenController {
         commonMethodForRightSideButtons(groundButton);
     }
 
-    //Метод, запускающийся при нажатии на кнопку "Выбор питающей обмотки"
-    public void feedingWinding() {
-        if (isFeedingWindingPressed) {
-            commonMethodForRightSideButtons(feedingWindingButton, "II", "I");
-        } else {
-            feedingWindingButton.setText("");
-            isFeedingWindingPressed = true;
-        }
-        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.BLACK, 36, 0,
-                feedingWindingButton);
-    }
+//    //Метод, запускающийся при нажатии на кнопку "Выбор питающей обмотки"
+//    public void feedingWinding() {
+//        if (isFeedingWindingPressed) {
+//            commonMethodForRightSideButtons(feedingWindingButton, "II", "I");
+//        } else {
+//            feedingWindingButton.setText("");
+//            isFeedingWindingPressed = true;
+//        }
+//        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
+//                3, 17, 15, ApplicationConstants.colours.BLACK, 36, 0,
+//                feedingWindingButton);
+//    }
 
     //Метод, запускающийся при нажатии на кнопку "Выбор места повреждения"
     public void shortCircuitLocation() {
@@ -516,7 +578,4 @@ public class _7_DifProtectionScreenController {
             setupRightSideButtons(toggleButton);
         }
     }
-
-
-
 }
