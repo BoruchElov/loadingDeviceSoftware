@@ -3,11 +3,8 @@ package org.example.loadingdevicesoftware.pagesControllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -21,28 +18,10 @@ import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 
 public class _7_DifProtectionScreenController {
-
-
-
-
-    public void lookButtonIfDo() {
-        System.out.println("lookButtonIfDo");
-    }
-
-
-
-
-
-
-
-
-
 
     //Кнопки
     @FXML
@@ -81,6 +60,7 @@ public class _7_DifProtectionScreenController {
     //Объект фоновой картинки
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
+
     private boolean windingOneStatus = false;
     private boolean windingTwoStatus = false;
     private boolean isLocationPressed = false;
@@ -106,6 +86,7 @@ public class _7_DifProtectionScreenController {
     private ImageView contactOneView;
     @FXML
     private ImageView contactTwoView;
+
     //Текстовые поля для ввода данных
     @FXML
     private ToggleButton phaseAButton;
@@ -170,9 +151,18 @@ public class _7_DifProtectionScreenController {
     private Circle indicatorContactTwo;
     // они закомичены по причине ненужности, но они работают
     @FXML
-    private Line linePhaseA;
+    private Line linePhaseA1;
     @FXML
-    private Button changerButton;
+    private Line linePhaseB1;
+    @FXML
+    private Line linePhaseC1;
+    @FXML
+    private Line linePhaseA2;
+    @FXML
+    private Line linePhaseB2;
+    @FXML
+    private Line linePhaseC2;
+
 
 
 
@@ -252,12 +242,19 @@ public class _7_DifProtectionScreenController {
         disableOrEnablePhaseButtons();
 
 
-//        ТЕСТОВЫЕ ФУНКЦИИ
+
+//ТЕСТОВЫЕ ФУНКЦИИ
         //Настройка индикаторов контактов
         blinkingIndicator();
+
         //метод по изменению цвета линии
         changeColorLine();
     }
+
+
+
+
+
 
     @FXML
     public void goToMainScreen(ActionEvent event) throws IOException {
@@ -311,19 +308,27 @@ public class _7_DifProtectionScreenController {
 
 
     //Метод по смене цвета у линии. Нужно, чтобы перейти к новому дизайну
-    @FXML
     public void changeColorLine() {
-
-        changerButton.setOnAction(event -> {
-            if (linePhaseA.getStroke().equals(Color.BLACK)) {
-                linePhaseA.setStroke(Color.RED);
-                linePhaseA.setStrokeWidth(8.0);
+        phaseAButton.setOnAction(event -> {
+            if (linePhaseA1.getStroke().equals(Color.BLACK)) {
+                linePhaseA1.setStroke(Color.RED);
+                linePhaseA1.setStrokeWidth(8.0);
+                linePhaseA2.setStroke(Color.RED);
+                linePhaseA2.setStrokeWidth(8.0);
+                commonMethodForRightSideButtons(phaseAButton);
             } else {
-                linePhaseA.setStroke(Color.BLACK);
-                linePhaseA.setStrokeWidth(5.0);
+                linePhaseA1.setStroke(Color.BLACK);
+                linePhaseA1.setStrokeWidth(5.0);
+                linePhaseA2.setStroke(Color.BLACK);
+                linePhaseA2.setStrokeWidth(5.0);
+                commonMethodForRightSideButtons(phaseAButton);
             }
         });
     }
+
+
+
+
 
     //метод для настройки кнопок в правой части окна сценария диф.защиты
     public void setupRightSideButtons(ToggleButton button) {
@@ -475,9 +480,6 @@ public class _7_DifProtectionScreenController {
         } else {
             setupRightSideButtons(toggleButton);
         }
-        backgroundImageView.setImage(selectImage(shortCircuitLocationButton.isSelected(), phaseAButton.isSelected(),
-                phaseBButton.isSelected(), phaseCButton.isSelected(), groundButton.isSelected(),
-                feedingWindingButton.isSelected()));
     }
 
     /**
@@ -498,66 +500,8 @@ public class _7_DifProtectionScreenController {
             toggleButton.setText(textIfNotSelected);
             setupRightSideButtons(toggleButton);
         }
-        backgroundImageView.setImage(selectImage(shortCircuitLocationButton.isSelected(), phaseAButton.isSelected(),
-                phaseBButton.isSelected(), phaseCButton.isSelected(), groundButton.isSelected(),
-                feedingWindingButton.isSelected()));
     }
 
-    private Image selectImage(boolean shortCircuitLocation, boolean phaseA, boolean phaseB, boolean phaseC,
-                              boolean ground, boolean sendingWinding) {
 
-        return getProperPicture(shortCircuitLocation, phaseA, phaseB, phaseC, ground, sendingWinding);
-    }
 
-    private Image getProperPicture(boolean shortCircuitLocation, boolean phaseA, boolean phaseB, boolean phaseC,
-                                   boolean ground, boolean sendingWinding) {
-        String winding;
-
-        if (sendingWinding) {
-            winding = "RS_";
-        } else {
-            winding = "SR_";
-        }
-
-        String phaseCombination = getPhasesCombination(phaseA, phaseB, phaseC, ground);
-
-        String location;
-
-        if (shortCircuitLocation) {
-            location = "I";
-        } else {
-            location = "O";
-        }
-        String fileName = winding + phaseCombination + location;
-
-        return new Image(Objects.requireNonNull(getClass().
-                getResource("/screen/7.дифзащита/" + fileName + ".png")).toExternalForm());
-    }
-
-    private String getPhasesCombination(boolean phaseA, boolean phaseB, boolean phaseC,
-                                        boolean ground) {
-
-        Map<String, String> hashMap = new HashMap<>();
-
-        hashMap.put("true,false,false,false", "A_");
-        hashMap.put("true,true,false,false", "AB_");
-        hashMap.put("true,true,true,false", "ABC_");
-        hashMap.put("true,true,true,true", "ABCG_");
-        hashMap.put("false,true,false,false", "B_");
-        hashMap.put("false,true,true,false", "BC_");
-        hashMap.put("false,true,true,true", "BCG_");
-        hashMap.put("false,false,true,false", "C_");
-        hashMap.put("false,false,true,true", "C_");
-        hashMap.put("true,false,false,true", "A_");
-        hashMap.put("false,true,false,true", "B_");
-        hashMap.put("true,false,true,false", "AC_");
-        hashMap.put("true,false,true,true", "ACG_");
-        hashMap.put("true,true,false,true", "ABG_");
-        hashMap.put("false,false,false,true", "G_");
-        hashMap.put("false,false,false,false", "");
-
-        String key = phaseA + "," + phaseB + "," + phaseC + "," + ground;
-
-        return hashMap.getOrDefault(key, ""); // Возвращаем картинку по умолчанию, если комбинация не найдена
-    }
 }
