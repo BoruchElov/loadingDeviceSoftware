@@ -1,4 +1,4 @@
-package org.example;
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;

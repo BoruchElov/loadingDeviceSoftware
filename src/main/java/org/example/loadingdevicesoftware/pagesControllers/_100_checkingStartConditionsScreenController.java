@@ -2,12 +2,18 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.example.loadingdevicesoftware.ApplicationFile;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
@@ -17,6 +23,7 @@ import java.util.Objects;
 public class _100_checkingStartConditionsScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
+
 
     //Объявление текстового поля для вывода даты-времени
     @FXML
@@ -68,6 +75,7 @@ public class _100_checkingStartConditionsScreenController {
     private Button status6True;
     @FXML
     private Button status6False;
+
     //Объявление областей изображений для кнопок статусов
     @FXML
     private ImageView status1TrueImageView;
@@ -165,9 +173,10 @@ public class _100_checkingStartConditionsScreenController {
     public void goToPreviousPage (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), Buffer.getPreviousPage());
     }
-
+    // это чтобы вернуть как было все
     public void goToWorkDevice(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "101.deviceWorking.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
+
     }
 
     /**
@@ -175,7 +184,6 @@ public class _100_checkingStartConditionsScreenController {
      *
      * @param textNode Текстовый узел, куда будет выведен текст
      * @param text     Текст, который нужно вывести
-     * @param delay    Задержка между символами в миллисекундах
      */
     private void typeText(Text textNode, String text) {
         textNode.setText(text);
