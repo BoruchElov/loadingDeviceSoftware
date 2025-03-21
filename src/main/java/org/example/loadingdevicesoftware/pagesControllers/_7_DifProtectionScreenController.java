@@ -1,5 +1,8 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
@@ -40,8 +44,10 @@ public class _7_DifProtectionScreenController {
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
     //объекты элементов
-    Image shortCircuit = new Image(Objects.requireNonNull(getClass().
+    Image shortCircuitYellow = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/BasePictures/молния_желтая.png")).toExternalForm());
+    Image shortCircuitRed = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/BasePictures/молния_красная.png")).toExternalForm());
     Image ground = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/BasePictures/ground.png")).toExternalForm());
     //Кнопки
@@ -170,6 +176,8 @@ public class _7_DifProtectionScreenController {
     @FXML
     private ImageView imageGround;
 
+    private Timeline timeline;
+
     @FXML
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
@@ -198,6 +206,7 @@ public class _7_DifProtectionScreenController {
         inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
         inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
+
 
         //Установка картинки на фон
         backgroundImageView.setImage(backImageOutSC);
@@ -255,7 +264,74 @@ public class _7_DifProtectionScreenController {
         shortCircuitLocationButton.setOnAction(event -> changeShortCircuitLocation(shortCircuitLocationButton, imageShortCircuit, imageGround));
 
 
+        //тестовая функция по блокировке кнопок при возвращении из 100 формы
+        // Проверяем, откуда был выполнен переход
+        if (InterfaceElementsLogic.isFromCheckingStartConditions()) {
+            lockAllButtonsAndStartAnimation();
+        }
     }
+
+    //общий метод по блокировке и анимированию
+    private void lockAllButtonsAndStartAnimation() {
+        // Блокируем кнопки
+        lockAllButtons(true);
+
+        // Запускаем анимацию картинок
+        startLightingAnimation();
+
+        // Создаем задержку на 5 секунд
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(event -> {
+            stopLightningAnimation();
+            lockAllButtons(false);
+        });
+        pause.play();
+    }
+
+    //Тестовая функция по блокировке кнопок
+    private void lockAllButtons(boolean lock){
+        windingOneConnection.setDisable(lock);
+        windingTwoConnection.setDisable(lock);
+        windingOneGroupButton.setDisable(lock);
+        windingTwoGroupButton.setDisable(lock);
+        toMenuButton.setDisable(lock);
+        startButton.setDisable(lock);
+        contactOneButton.setDisable(lock);
+        contactTwoButton.setDisable(lock);
+        feedingWindingButton.setDisable(lock);
+        objectNameTextField.setDisable(lock);
+        phaseA1AngleTextField.setDisable(lock);
+        phaseB1AngleTextField.setDisable(lock);
+        phaseC1AngleTextField.setDisable(lock);
+        phaseA2TextField.setDisable(lock);
+        phaseB2TextField.setDisable(lock);
+        phaseC2TextField.setDisable(lock);
+    }
+
+    //Тестовая функция по анимации картинок
+    private void startLightingAnimation(){
+        // Создаем Timeline для смены картинок каждые 0.5 секунд
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), event -> imageShortCircuit.setImage(shortCircuitYellow)),
+                new KeyFrame(Duration.seconds(0.3), event -> imageShortCircuit.setImage(shortCircuitRed)),
+                new KeyFrame(Duration.seconds(0.6), event -> imageShortCircuit.setImage(shortCircuitYellow)));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        timeline.play();
+    }
+
+    //остановка анимации
+    private void stopLightningAnimation() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+    }
+
+
+
+
+
 
 
     @FXML
@@ -343,7 +419,7 @@ public class _7_DifProtectionScreenController {
     //метод для выбора КЗ.
     private void changeShortCircuitLocation(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2) {
 
-        imageView1.setImage(shortCircuit);
+        imageView1.setImage(shortCircuitYellow);
 
         if (feedingWindingButton.isSelected()) {
             commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
@@ -372,7 +448,7 @@ public class _7_DifProtectionScreenController {
                 imageView2.setLayoutX(449);
                 imageView2.setLayoutY(497);
             } else {
-                imageView1.setLayoutX(41);                  //слева
+                imageView1.setLayoutX(41);
                 imageView1.setLayoutY(121);
                 imageView1.setRotate(180);
 
