@@ -207,6 +207,9 @@ public class _0_MainScreenController {
 
     //Метод для перехода на страницу сценария диф.защиты
     public void goToDifProtection (ActionEvent event) throws IOException {
+        //установка флага
+        InterfaceElementsLogic.setFromCheckingStartConditions(false);
+
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
     }
 
