@@ -173,46 +173,11 @@ public class _100_checkingStartConditionsScreenController {
     public void goToPreviousPage (ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), Buffer.getPreviousPage());
     }
-// это чтобы вернуть как было все
+    // это чтобы вернуть как было все
     public void goToWorkDevice(ActionEvent event) throws IOException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
 
     }
-
-
-
-
-// тесты
-//    @FXML
-//    private void goToWorkDevice() throws IOException {
-//
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("org/example.loadingdevicesoftware/_7_DifProtectionScreenController.fxml"));
-//        Parent root = loader.load();
-//
-//        System.out.println("goToWorkDevice 1 ");
-//
-//        _7_DifProtectionScreenController dzTest = loader.getController();
-//
-//        System.out.println("goToWorkDevice 2 ");
-//
-//        if (dzTest != null) {
-//            dzTest.lookButtonIfDo();
-//        } else {
-//            System.out.println("Ошибка: контроллер не был загружен!");
-//        }
-//
-//        Stage stage = (Stage) startButton.getScene().getWindow();
-//        stage.setScene(new Scene(root));
-//    }
-
-
-
-
-
-
-
-
-
 
     /**
      * Функция для побуквенного вывода текста в Text

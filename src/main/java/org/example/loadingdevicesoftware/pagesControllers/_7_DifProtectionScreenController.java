@@ -64,7 +64,6 @@ public class _7_DifProtectionScreenController {
     private boolean windingOneStatus = false;
     private boolean windingTwoStatus = false;
     private boolean isLocationPressed = false;
-    private boolean isFeedingWindingPressed = false;
 
     private int counterOne = 0;
     private int counterTwo = 0;
@@ -221,7 +220,6 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопки "Выбор питающей обмотки"
         setupRightSideButtons(feedingWindingButton);
 
-
         InterfaceElementsSettings.getWhiteMenuButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
         InterfaceElementsSettings.getWhiteStartButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
 
@@ -253,7 +251,7 @@ public class _7_DifProtectionScreenController {
         phaseBButton.setOnAction(event -> changeColorPhaseLine(phaseBButton, linePhaseB1, linePhaseB2));
         phaseCButton.setOnAction(event -> changeColorPhaseLine(phaseCButton, linePhaseC1, linePhaseC2));
 
-
+        //Метод по изменению положения картинок
         shortCircuitLocationButton.setOnAction(event -> changeShortCircuitLocation(shortCircuitLocationButton, imageShortCircuit, imageGround));
 
 
@@ -300,7 +298,8 @@ public class _7_DifProtectionScreenController {
         }
     }
 
-    //Метод по смене цвета индикатора. По идеи его нужно просто переписать в случае срабатывания контакта 1 или 2
+//ТЕСТОВЫЕ МЕТОДЫ ПО РАБОТЕ С ФОРМОЙ
+    //Метод по смене цвета индикатора.
     @FXML
     public void blinkingIndicator() {
         indicatorContactOne.setOnMouseEntered(event -> indicatorContactOne.setFill(Color.RED));
@@ -313,6 +312,8 @@ public class _7_DifProtectionScreenController {
 
     //Метод изменения питающей обмотки.
     private void changeFeedingWinding(ToggleButton toggleButton, Circle circle1, Circle circle2) {
+        isLocationPressed = true;
+        disableOrEnablePhaseButtons();
         commonMethodForRightSideButtons(toggleButton, "I", "II");
         if (toggleButton.isSelected()) {
             circle1.setStroke(Color.GREEN);
@@ -341,31 +342,30 @@ public class _7_DifProtectionScreenController {
 
     //метод для выбора КЗ.
     private void changeShortCircuitLocation(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2) {
-        isLocationPressed = true;
-        disableOrEnablePhaseButtons();
+
         imageView1.setImage(shortCircuit);
 
-        if (feedingWindingButton.isSelected()) {            //питающая обмотка 1
+        if (feedingWindingButton.isSelected()) {
             commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
             if (toggleButton.isSelected()) {
-                imageView1.setLayoutX(464);                 //расположение по центру
+                imageView1.setLayoutX(464);
                 imageView1.setLayoutY(222);
                 imageView1.setRotate(180);
 
                 imageView2.setLayoutX(449);
                 imageView2.setLayoutY(497);
             } else {
-                imageView1.setLayoutX(860);                 //справа
+                imageView1.setLayoutX(860);
                 imageView1.setLayoutY(121);
                 imageView1.setRotate(0);
 
                 imageView2.setLayoutX(887);
                 imageView2.setLayoutY(547);
             }
-        } else {                                            //питающая обмотка 2
+        } else {
             commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
             if (toggleButton.isSelected()) {
-                imageView1.setLayoutX(464);                 //центр
+                imageView1.setLayoutX(464);
                 imageView1.setLayoutY(222);
                 imageView1.setRotate(180);
 
@@ -379,6 +379,16 @@ public class _7_DifProtectionScreenController {
                 imageView2.setLayoutX(19);
                 imageView2.setLayoutY(547);
             }
+        }
+    }
+
+    //Метод по отображению значка земли по нажатию кнопки
+    public void ground() {
+        imageGround.setImage(ground);
+        commonMethodForRightSideButtons(groundButton);
+        if (groundButton.isSelected()) imageGround.setVisible(true);
+        else {
+            imageGround.setVisible(false);
         }
     }
 
@@ -423,37 +433,18 @@ public class _7_DifProtectionScreenController {
             phaseBButton.setDisable(false);
             phaseCButton.setDisable(false);
             groundButton.setDisable(false);
-            feedingWindingButton.setDisable(false);
-            feedingWindingButton.setText("I");
+            shortCircuitLocationButton.setDisable(false);
+            shortCircuitLocationButton.setText("ВНУТРЕННЕЕ КЗ");
         } else {
             phaseAButton.setDisable(true);
             phaseBButton.setDisable(true);
             phaseCButton.setDisable(true);
             groundButton.setDisable(true);
-            feedingWindingButton.setDisable(true);
+            shortCircuitLocationButton.setDisable(true);
         }
     }
 
-    public void ground() {
-        imageGround.setImage(ground);
-        commonMethodForRightSideButtons(groundButton);
-        if (groundButton.isSelected()) imageGround.setVisible(true);
-        else {
-            imageGround.setVisible(false);
-        }
-    }
-
-
-    //Метод, запускающийся при нажатии на кнопку "Выбор места повреждения"
-    public void shortCircuitLocation() {
-        if (!isLocationPressed) {
-            isLocationPressed = true;
-            disableOrEnablePhaseButtons();
-        }
-        commonMethodForRightSideButtons(shortCircuitLocationButton, "ВНУТРЕННЕЕ КЗ",
-                "ВНЕШНЕЕ КЗ");
-    }
-
+    //Метод для изменения схемы обмоток 1
     public void firstScheme() {
         windingOneGroupButton.setText(Integer.toString(counterOne));
         if (counterOne >= 11) {
@@ -463,6 +454,7 @@ public class _7_DifProtectionScreenController {
         }
     }
 
+    //Метод для изменения схемы обмоток 2
     public void secondScheme() {
         windingTwoGroupButton.setText(Integer.toString(counterTwo));
         if (counterTwo >= 11) {
