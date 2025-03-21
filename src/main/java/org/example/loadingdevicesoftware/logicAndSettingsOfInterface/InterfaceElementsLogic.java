@@ -140,15 +140,14 @@ public class InterfaceElementsLogic {
 //        }
 //    }
 
+
     //тестовые функции для перехода
     /**
      * -- SETTER --
      *  Устанавливает флаг, указывающий, откуда был выполнен переход.
      * -- GETTER --
      *  Возвращает значение флага.
-
      */
-
     @Getter
     @Setter
     private static boolean fromCheckingStartConditions = false;

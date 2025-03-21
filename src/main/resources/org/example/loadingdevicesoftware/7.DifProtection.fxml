@@ -24,6 +24,26 @@
             </image>
         </ImageView>
 
+        <!--картинки земли и молнии-->
+        <ImageView fx:id="imageShortCircuit" fitHeight="150.0" fitWidth="200.0" layoutX="464.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+            <rotationAxis>
+                <Point3D y="1.0" />
+            </rotationAxis>
+        </ImageView>
+        <ImageView fx:id="imageGround" fitHeight="117.0" fitWidth="74.0" layoutX="449.0" layoutY="497.0" pickOnBounds="true" preserveRatio="true" />
+
+        <!--Линии фаз-->
+        <Line fx:id="linePhaseA1" endX="148.25" layoutX="162.0" layoutY="343.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
+        <Line fx:id="linePhaseB1" endX="103.0" layoutX="162.0" layoutY="436.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
+        <Line fx:id="linePhaseC1" endX="148.75" layoutX="162.0" layoutY="529.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
+        <Line fx:id="linePhaseA2" endX="112.0" layoutX="807.0" layoutY="343.0" startX="-146.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
+        <Line fx:id="linePhaseB2" endX="120.0" layoutX="800.0" layoutY="436.0" startX="-92.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
+        <Line fx:id="linePhaseC2" endX="120.0" layoutX="800.0" layoutY="529.0" startX="-139.5" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
+
+        <!--Шины-->
+        <Line endX="245.0" layoutX="-16.0" layoutY="438.0" rotate="90.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="11.0" />
+        <Line endX="245.0" layoutX="852.0" layoutY="439.0" rotate="90.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="11.0" />
+
 
         <!--Обмотки трансформатора-->
         <Circle fx:id="feedingOne" fill="#1f93ff00" layoutX="385.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
@@ -306,26 +326,13 @@
         <Circle fx:id="indicatorContactOne" fill="green" layoutX="321.0" layoutY="241.0" onMouseDragEntered="#blinkingIndicator" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
         <Circle fx:id="indicatorContactTwo" fill="green" layoutX="381.0" layoutY="241.0" onMouseDragEntered="#blinkingIndicator" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
 
-        <!--Линии фаз-->
-        <Line fx:id="linePhaseA1" endX="149.33334350585938" layoutX="162.0" layoutY="343.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
-        <Line fx:id="linePhaseB1" endX="103.0" layoutX="162.0" layoutY="436.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
-        <Line fx:id="linePhaseC1" endX="149.33334350585938" layoutX="162.0" layoutY="529.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
-        <Line fx:id="linePhaseA2" endX="112.0" layoutX="807.0" layoutY="343.0" startX="-144.33331298828125" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
-        <Line fx:id="linePhaseB2" endX="120.0" layoutX="800.0" layoutY="436.0" startX="-92.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
-        <Line fx:id="linePhaseC2" endX="120.0" layoutX="800.0" layoutY="529.0" startX="-136.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="5.0" />
 
-        <!--Шины-->
-        <Line endX="245.0" layoutX="-16.0" layoutY="438.0" rotate="90.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="11.0" />
-        <Line endX="245.0" layoutX="852.0" layoutY="439.0" rotate="90.0" startX="-100.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="11.0" />
-
-        <!--картинки земли и молнии-->
-        <ImageView fx:id="imageShortCircuit" fitHeight="150.0" fitWidth="200.0" layoutX="464.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
-            <rotationAxis>
-                <Point3D y="1.0" />
-            </rotationAxis>
-        </ImageView>
-        <ImageView fx:id="imageGround" fitHeight="117.0" fitWidth="74.0" layoutX="449.0" layoutY="497.0" pickOnBounds="true" preserveRatio="true" />
-
-
+        <!--Стрелочки над линиями-->
+        <ImageView fx:id="phaseA1Image" fitHeight="30.0" fitWidth="77.0" layoutX="125.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" />
+        <ImageView fx:id="phaseB1Image" fitHeight="30.0" fitWidth="77.0" layoutX="125.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" />
+        <ImageView fx:id="phaseC1Image" fitHeight="30.0" fitWidth="77.0" layoutX="125.0" layoutY="534.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" />
+        <ImageView fx:id="phaseA2Image" fitHeight="30.0" fitWidth="77.0" layoutX="785.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="phaseB2Image" fitHeight="30.0" fitWidth="77.0" layoutX="785.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="phaseC2Image" fitHeight="30.0" fitWidth="77.0" layoutX="785.0" layoutY="534.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>

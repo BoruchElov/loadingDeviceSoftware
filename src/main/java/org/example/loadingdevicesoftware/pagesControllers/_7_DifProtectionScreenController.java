@@ -25,6 +25,7 @@ import java.util.Objects;
 public class _7_DifProtectionScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
+
     ContactObject contactOne;
     ContactObject contactTwo;
     @FXML
@@ -43,6 +44,7 @@ public class _7_DifProtectionScreenController {
     //Объект фоновой картинки
     Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
+
     //объекты элементов
     Image shortCircuitYellow = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/BasePictures/молния_желтая.png")).toExternalForm());
@@ -50,6 +52,12 @@ public class _7_DifProtectionScreenController {
             getResource("/screen/BasePictures/молния_красная.png")).toExternalForm());
     Image ground = new Image(Objects.requireNonNull(getClass().
             getResource("/screen/BasePictures/ground.png")).toExternalForm());
+
+    //картинка стрелочек
+    Image arrows = new Image(Objects.requireNonNull(getClass().
+            getResource("/screen/BasePictures/стрелочка.png")).toExternalForm());
+
+
     //Кнопки
     @FXML
     private Button contactOneButton;
@@ -150,19 +158,32 @@ public class _7_DifProtectionScreenController {
     private Circle indicatorContactOne;
     @FXML
     private Circle indicatorContactTwo;
+
     // объекты линии
     @FXML
     private Line linePhaseA1;
     @FXML
+    private ImageView phaseA1Image;
+    @FXML
     private Line linePhaseB1;
+    @FXML
+    private ImageView phaseB1Image;
     @FXML
     private Line linePhaseC1;
     @FXML
+    private ImageView phaseC1Image;
+    @FXML
     private Line linePhaseA2;
+    @FXML
+    private ImageView phaseA2Image;
     @FXML
     private Line linePhaseB2;
     @FXML
+    private ImageView phaseB2Image;
+    @FXML
     private Line linePhaseC2;
+    @FXML
+    private ImageView phaseC2Image;
 
     //объект трансформатор
     @FXML
@@ -176,6 +197,7 @@ public class _7_DifProtectionScreenController {
     @FXML
     private ImageView imageGround;
 
+    //для анимации
     private Timeline timeline;
 
     @FXML
@@ -256,12 +278,12 @@ public class _7_DifProtectionScreenController {
         feedingWindingButton.setOnAction(event -> changeFeedingWinding(feedingWindingButton, feedingOne, feedingTwo));
 
         //метод по изменению цвета линии
-        phaseAButton.setOnAction(event -> changeColorPhaseLine(phaseAButton, linePhaseA1, linePhaseA2));
-        phaseBButton.setOnAction(event -> changeColorPhaseLine(phaseBButton, linePhaseB1, linePhaseB2));
-        phaseCButton.setOnAction(event -> changeColorPhaseLine(phaseCButton, linePhaseC1, linePhaseC2));
+        phaseAButton.setOnAction(event -> changeColorPhaseLine(phaseAButton, phaseA1Image, phaseA2Image, linePhaseA1, linePhaseA2));
+        phaseBButton.setOnAction(event -> changeColorPhaseLine(phaseBButton, phaseB1Image, phaseB2Image, linePhaseB1, linePhaseB2));
+        phaseCButton.setOnAction(event -> changeColorPhaseLine(phaseCButton, phaseC1Image, phaseC2Image, linePhaseC1, linePhaseC2));
 
         //Метод по изменению положения картинок
-        shortCircuitLocationButton.setOnAction(event -> changeShortCircuitLocation(shortCircuitLocationButton, imageShortCircuit, imageGround));
+        shortCircuitLocationButton.setOnAction(event -> changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton, imageShortCircuit, imageGround));
 
 
         //тестовая функция по блокировке кнопок при возвращении из 100 формы
@@ -270,69 +292,6 @@ public class _7_DifProtectionScreenController {
             lockAllButtonsAndStartAnimation();
         }
     }
-
-    //общий метод по блокировке и анимированию
-    private void lockAllButtonsAndStartAnimation() {
-        // Блокируем кнопки
-        lockAllButtons(true);
-
-        // Запускаем анимацию картинок
-        startLightingAnimation();
-
-        // Создаем задержку на 5 секунд
-        PauseTransition pause = new PauseTransition(Duration.seconds(5));
-        pause.setOnFinished(event -> {
-            stopLightningAnimation();
-            lockAllButtons(false);
-        });
-        pause.play();
-    }
-
-    //Тестовая функция по блокировке кнопок
-    private void lockAllButtons(boolean lock){
-        windingOneConnection.setDisable(lock);
-        windingTwoConnection.setDisable(lock);
-        windingOneGroupButton.setDisable(lock);
-        windingTwoGroupButton.setDisable(lock);
-        toMenuButton.setDisable(lock);
-        startButton.setDisable(lock);
-        contactOneButton.setDisable(lock);
-        contactTwoButton.setDisable(lock);
-        feedingWindingButton.setDisable(lock);
-        objectNameTextField.setDisable(lock);
-        phaseA1AngleTextField.setDisable(lock);
-        phaseB1AngleTextField.setDisable(lock);
-        phaseC1AngleTextField.setDisable(lock);
-        phaseA2TextField.setDisable(lock);
-        phaseB2TextField.setDisable(lock);
-        phaseC2TextField.setDisable(lock);
-    }
-
-    //Тестовая функция по анимации картинок
-    private void startLightingAnimation(){
-        // Создаем Timeline для смены картинок каждые 0.5 секунд
-        timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), event -> imageShortCircuit.setImage(shortCircuitYellow)),
-                new KeyFrame(Duration.seconds(0.3), event -> imageShortCircuit.setImage(shortCircuitRed)),
-                new KeyFrame(Duration.seconds(0.6), event -> imageShortCircuit.setImage(shortCircuitYellow)));
-
-        timeline.setCycleCount(Timeline.INDEFINITE);
-
-        timeline.play();
-    }
-
-    //остановка анимации
-    private void stopLightningAnimation() {
-        if (timeline != null) {
-            timeline.stop();
-        }
-    }
-
-
-
-
-
-
 
     @FXML
     public void goToMainScreen(ActionEvent event) throws IOException {
@@ -374,7 +333,6 @@ public class _7_DifProtectionScreenController {
         }
     }
 
-//ТЕСТОВЫЕ МЕТОДЫ ПО РАБОТЕ С ФОРМОЙ
     //Метод по смене цвета индикатора.
     @FXML
     public void blinkingIndicator() {
@@ -385,7 +343,9 @@ public class _7_DifProtectionScreenController {
         indicatorContactTwo.setOnMouseExited(event -> indicatorContactTwo.setFill(Color.GREEN));
     }
 
-
+    /**
+     * Функции по смене параметров объектов на форме в зависимости от нажатий кнопок.
+     */
     //Метод изменения питающей обмотки.
     private void changeFeedingWinding(ToggleButton toggleButton, Circle circle1, Circle circle2) {
         isLocationPressed = true;
@@ -401,14 +361,22 @@ public class _7_DifProtectionScreenController {
     }
 
     //Метод выделяющий цветом выбранную линию.
-    private void changeColorPhaseLine(ToggleButton toggleButton, Line line1, Line line2) {
+    private void changeColorPhaseLine(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2, Line line1, Line line2) {
         commonMethodForRightSideButtons(toggleButton);
         if (toggleButton.isSelected()) {
+            imageView1.setImage(arrows);
+            imageView1.setVisible(true);
+            imageView2.setImage(arrows);
+            imageView2.setVisible(true);
+
             line1.setStroke(Color.RED);
             line1.setStrokeWidth(8.0);
             line2.setStroke(Color.RED);
             line2.setStrokeWidth(8.0);
         } else {
+            imageView1.setVisible(false);
+            imageView2.setVisible(false);
+
             line1.setStroke(Color.BLACK);
             line1.setStrokeWidth(5.0);
             line2.setStroke(Color.BLACK);
@@ -417,44 +385,52 @@ public class _7_DifProtectionScreenController {
     }
 
     //метод для выбора КЗ.
-    private void changeShortCircuitLocation(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2) {
-
+    private void changeShortCircuitLocation(ToggleButton button1, ToggleButton button2, ImageView imageView1, ImageView imageView2) {
+        boolean isButton1Selected = button1.isSelected();
+        boolean isButton2Selected = button2.isSelected();
         imageView1.setImage(shortCircuitYellow);
-
-        if (feedingWindingButton.isSelected()) {
-            commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
-            if (toggleButton.isSelected()) {
-                imageView1.setLayoutX(464);
-                imageView1.setLayoutY(222);
-                imageView1.setRotate(180);
-
-                imageView2.setLayoutX(449);
-                imageView2.setLayoutY(497);
-            } else {
-                imageView1.setLayoutX(860);
-                imageView1.setLayoutY(121);
-                imageView1.setRotate(0);
-
-                imageView2.setLayoutX(887);
-                imageView2.setLayoutY(547);
-            }
+        commonMethodForRightSideButtons(button2, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
+        if (!isButton1Selected && !isButton2Selected) {
+            // Слева: F1, F2
+            //Смена расположения молнии
+            imageView1.setLayoutX(41);
+            imageView1.setLayoutY(121);
+            imageView1.setRotate(180);
+            //смена расположения земли
+            imageView2.setLayoutX(19);
+            imageView2.setLayoutY(547);
+            //смена направления стрелочек
+            phaseA1Image.setRotate(0);
+            phaseB1Image.setRotate(0);
+            phaseC1Image.setRotate(0);
+        } else if (isButton1Selected && !isButton2Selected) {
+            // Справа: T1, F2
+            //Смена расположения молнии
+            imageView1.setLayoutX(860);
+            imageView1.setLayoutY(121);
+            imageView1.setRotate(0);
+            //смена направления стрелочек
+            imageView2.setLayoutX(887);
+            imageView2.setLayoutY(547);
+            //смена направления стрелочек
+            phaseA2Image.setRotate(180);
+            phaseB2Image.setRotate(180);
+            phaseC2Image.setRotate(180);
         } else {
-            commonMethodForRightSideButtons(toggleButton, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
-            if (toggleButton.isSelected()) {
-                imageView1.setLayoutX(464);
-                imageView1.setLayoutY(222);
-                imageView1.setRotate(180);
-
-                imageView2.setLayoutX(449);
-                imageView2.setLayoutY(497);
-            } else {
-                imageView1.setLayoutX(41);
-                imageView1.setLayoutY(121);
-                imageView1.setRotate(180);
-
-                imageView2.setLayoutX(19);
-                imageView2.setLayoutY(547);
-            }
+            // По центру: T1, T2 или F1, T2
+            imageView1.setLayoutX(464);
+            imageView1.setLayoutY(222);
+            imageView1.setRotate(180);
+            //смена расположения земли
+            imageView2.setLayoutX(449);
+            imageView2.setLayoutY(497);
+            //смена направления стрелочек
+            phaseA1Image.setRotate(180);
+            phaseB1Image.setRotate(180);
+            phaseC1Image.setRotate(180);
+            phaseA2Image.setRotate(0);
+            phaseB2Image.setRotate(0);
+            phaseC2Image.setRotate(0);
         }
     }
 
@@ -465,6 +441,70 @@ public class _7_DifProtectionScreenController {
         if (groundButton.isSelected()) imageGround.setVisible(true);
         else {
             imageGround.setVisible(false);
+        }
+    }
+
+    /**
+     * Блок методов определяющий работу формы после перехода из формы проверок.
+     * Здесь на 5 секунд все кнопки будут заблокированы и во время ожидания будет моргать молния.
+     * По истечении 5 секунд кнопки будут разблокированы.
+     * Это удалось достигнуть в результате изменения общего метода @switchScene. В него просто добавлен флаг, который
+     * меняется в зависимости от перехода из формы в форму на true false
+     */
+    //общий метод по блокировке и анимированию
+    private void lockAllButtonsAndStartAnimation() {
+        // Блокируем кнопки
+        lockAllButtons(true);
+
+        // Запускаем анимацию картинок
+        startLightingAnimation();
+
+        // Создаем задержку на 5 секунд
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(event -> {
+            stopLightningAnimation();
+            lockAllButtons(false);
+        });
+        pause.play();
+    }
+
+    //Тестовая функция по блокировке кнопок
+    private void lockAllButtons(boolean lock) {
+        windingOneConnection.setDisable(lock);
+        windingTwoConnection.setDisable(lock);
+        windingOneGroupButton.setDisable(lock);
+        windingTwoGroupButton.setDisable(lock);
+        toMenuButton.setDisable(lock);
+        startButton.setDisable(lock);
+        contactOneButton.setDisable(lock);
+        contactTwoButton.setDisable(lock);
+        feedingWindingButton.setDisable(lock);
+        objectNameTextField.setDisable(lock);
+        phaseA1AngleTextField.setDisable(lock);
+        phaseB1AngleTextField.setDisable(lock);
+        phaseC1AngleTextField.setDisable(lock);
+        phaseA2TextField.setDisable(lock);
+        phaseB2TextField.setDisable(lock);
+        phaseC2TextField.setDisable(lock);
+    }
+
+    //Тестовая функция по анимации картинок
+    private void startLightingAnimation() {
+        // Создаем Timeline для смены картинок каждые 0.5 секунд
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), event -> imageShortCircuit.setImage(shortCircuitYellow)),
+                new KeyFrame(Duration.seconds(0.3), event -> imageShortCircuit.setImage(shortCircuitRed)),
+                new KeyFrame(Duration.seconds(0.6), event -> imageShortCircuit.setImage(shortCircuitYellow)));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        timeline.play();
+    }
+
+    //остановка анимации
+    private void stopLightningAnimation() {
+        if (timeline != null) {
+            timeline.stop();
         }
     }
 
@@ -503,6 +543,7 @@ public class _7_DifProtectionScreenController {
                 0, button);
     }
 
+    //Метод для блокировок кнопок в начале работы
     private void disableOrEnablePhaseButtons() {
         if (isLocationPressed) {
             phaseAButton.setDisable(false);
