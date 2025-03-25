@@ -78,7 +78,7 @@
             </graphic>
         </Button>
 
-        <Button fx:id="cleanButton" contentDisplay="CENTER" layoutX="819.0" layoutY="726.0" mnemonicParsing="false" onAction="#clearAll">
+        <Button fx:id="cleanButton" contentDisplay="CENTER" layoutX="819.0" layoutY="726.0" mnemonicParsing="false" onAction="#clearAllButton">
             <font>
                 <Font size="24.0" />
             </font>
