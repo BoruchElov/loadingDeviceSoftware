@@ -1,16 +1,17 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -26,6 +27,9 @@ public class _7_DifProtectionScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
 
+    @FXML
+    private AnchorPane mainPane;
+
     ContactObject contactOne;
     ContactObject contactTwo;
     @FXML
@@ -36,6 +40,8 @@ public class _7_DifProtectionScreenController {
     ImageView toMenuButtonImageView;
     @FXML
     ImageView startButtonImageView;
+    @FXML
+    ImageView cleanButtonImageView;
     //Объекты картинок групп соединения обмоток
     Image deltaConnection = new Image(Objects.requireNonNull(getClass().
             getResource("/images/Polygon1.png")).toExternalForm());
@@ -71,6 +77,8 @@ public class _7_DifProtectionScreenController {
     private Button toMenuButton;
     @FXML
     private Button startButton;
+    @FXML
+    private Button cleanButton;
     @FXML
     private Button windingOneGroupButton;
     @FXML
@@ -253,6 +261,7 @@ public class _7_DifProtectionScreenController {
 
         InterfaceElementsSettings.getWhiteMenuButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
         InterfaceElementsSettings.getWhiteStartButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
+        InterfaceElementsSettings.getWhiteClearButton(cleanButton, cleanButtonImageView, InterfaceElementsSettings.Background.BLUE);
 
         //Настройка кнопок для выбора схемы соединения обмоток трансформатора
         setupConnectionSchemesButtons(windingOneConnection, windingOneView, 55, 55);
@@ -267,6 +276,7 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопок для задания номера схемы
         setupConnectionSchemesButtons(windingOneGroupButton);
         setupConnectionSchemesButtons(windingTwoGroupButton);
+
         disableOrEnablePhaseButtons();
 
 
@@ -274,8 +284,8 @@ public class _7_DifProtectionScreenController {
         //Настройка индикаторов контактов
         blinkingIndicator();
 
-        //Метод по изменению цвета питающей обмотки
-        feedingWindingButton.setOnAction(event -> changeFeedingWinding(feedingWindingButton, feedingOne, feedingTwo));
+
+
 
         //метод по изменению цвета линии
         phaseAButton.setOnAction(event -> changeColorPhaseLine(phaseAButton, phaseA1Image, phaseA2Image, linePhaseA1, linePhaseA2));
@@ -283,7 +293,9 @@ public class _7_DifProtectionScreenController {
         phaseCButton.setOnAction(event -> changeColorPhaseLine(phaseCButton, phaseC1Image, phaseC2Image, linePhaseC1, linePhaseC2));
 
         //Метод по изменению положения картинок
-        shortCircuitLocationButton.setOnAction(event -> changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton, imageShortCircuit, imageGround));
+        shortCircuitLocationButton.setOnAction(event -> changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton,
+                imageShortCircuit, imageGround));
+
 
 
         //тестовая функция по блокировке кнопок при возвращении из 100 формы
@@ -343,37 +355,109 @@ public class _7_DifProtectionScreenController {
         indicatorContactTwo.setOnMouseExited(event -> indicatorContactTwo.setFill(Color.GREEN));
     }
 
+    @FXML
+    public void changeFeedWind(ActionEvent event){
+        System.out.println("Метод changeFeedWind");
+        ToggleButton toggleButton = (ToggleButton) event.getSource();
+        // Помечаем кнопку как "активированную"
+        if (toggleButton.getUserData() == null) {
+            toggleButton.setUserData("activated");
+        }
+        // Обновляем круги
+        changeFeedingWinding(feedingWindingButton, feedingOne, feedingTwo);
+    }
+
+    @FXML
+    public void clearAll(){
+        defoltAllButton(mainPane);
+    }
+
+    private void defoltAllButton(Node node){
+        // Очищаем текстовые поля (TextField, TextArea, PasswordField)
+        if (node instanceof TextInputControl) {
+            ((TextInputControl) node).clear();
+        } else if (node instanceof ToggleButton){
+            ToggleButton toggleButton = (ToggleButton) node;
+            toggleButton.setUserData(null);
+            toggleButton.setSelected(false);
+            changeFeedingWinding(feedingWindingButton, feedingOne, feedingTwo);
+            changeColorPhaseLine(phaseAButton, phaseA1Image, phaseA2Image, linePhaseA1, linePhaseA2);
+            changeColorPhaseLine(phaseBButton, phaseB1Image, phaseB2Image, linePhaseB1, linePhaseB2);
+            changeColorPhaseLine(phaseCButton, phaseC1Image, phaseC2Image, linePhaseC1, linePhaseC2);
+            ground();
+            changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton, imageShortCircuit, imageGround);
+        }
+        else if (node instanceof Pane) {
+            // Если это контейнер, рекурсивно очищаем его дочерние элементы
+            for (Node child : ((Pane) node).getChildren()) {
+                defoltAllButton(child); // Рекурсивный вызов
+            }
+        }
+
+
+
+//        feedingWindingButton.setSelected(false);
+//        feedingWindingButton.setUserData(null);
+//
+//        changeFeedingWinding(feedingWindingButton, feedingOne, feedingTwo);
+//
+//        phaseAButton.setSelected(false);
+//        phaseBButton.setSelected(false);
+//        phaseCButton.setSelected(false);
+//        groundButton.setSelected(false);
+//        changeColorPhaseLine(phaseAButton, phaseA1Image, phaseA2Image, linePhaseA1, linePhaseA2);
+//        changeColorPhaseLine(phaseBButton, phaseB1Image, phaseB2Image, linePhaseB1, linePhaseB2);
+//        changeColorPhaseLine(phaseCButton, phaseC1Image, phaseC2Image, linePhaseC1, linePhaseC2);
+//        ground();
+//        feedingWindingButton.setSelected(false);
+//        feedingWindingButton.setUserData(null);
+//        changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton, imageShortCircuit, imageGround);
+
+    }
+
     /**
      * Функции по смене параметров объектов на форме в зависимости от нажатий кнопок.
      */
+
+
     //Метод изменения питающей обмотки.
     private void changeFeedingWinding(ToggleButton toggleButton, Circle circle1, Circle circle2) {
+        System.out.println("Метод changeFeedingWinding");
+        //Кнопка никогда не нажималась
+        if (toggleButton.getUserData() == null) {
+            circle1.setStroke(Color.BLACK);
+            circle2.setStroke(Color.BLACK);
+            isLocationPressed = false;
+            disableOrEnablePhaseButtons();
+            commonMethodForRightSideButtons(toggleButton, "I", "II");
+            return;
+        }
         isLocationPressed = true;
         disableOrEnablePhaseButtons();
         commonMethodForRightSideButtons(toggleButton, "I", "II");
         if (toggleButton.isSelected()) {
             circle1.setStroke(Color.GREEN);
             circle2.setStroke(Color.BLUE);
-        } else {
+        } else{
             circle1.setStroke(Color.BLUE);
             circle2.setStroke(Color.GREEN);
-        }
+       }
     }
 
     //Метод выделяющий цветом выбранную линию.
     private void changeColorPhaseLine(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2, Line line1, Line line2) {
         commonMethodForRightSideButtons(toggleButton);
+        imageView1.setImage(arrows);
+        imageView2.setImage(arrows);
         if (toggleButton.isSelected()) {
-            imageView1.setImage(arrows);
             imageView1.setVisible(true);
-            imageView2.setImage(arrows);
             imageView2.setVisible(true);
 
             line1.setStroke(Color.RED);
             line1.setStrokeWidth(8.0);
             line2.setStroke(Color.RED);
             line2.setStrokeWidth(8.0);
-        } else {
+        } else{
             imageView1.setVisible(false);
             imageView2.setVisible(false);
 
@@ -386,13 +470,18 @@ public class _7_DifProtectionScreenController {
 
     //метод для выбора КЗ.
     private void changeShortCircuitLocation(ToggleButton button1, ToggleButton button2, ImageView imageView1, ImageView imageView2) {
-        boolean isButton1Selected = button1.isSelected();
-        boolean isButton2Selected = button2.isSelected();
         imageView1.setImage(shortCircuitYellow);
+        imageView1.setVisible(false);
         commonMethodForRightSideButtons(button2, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
-        if (!isButton1Selected && !isButton2Selected) {
+        if (button1.getUserData() == null){
+            imageView1.setVisible(false);
+            button2.setText("");
+            setupRightSideButtons(button2);
+        }
+        if (!button1.isSelected() && !button2.isSelected()) {
             // Слева: F1, F2
             //Смена расположения молнии
+            imageView1.setVisible(true);
             imageView1.setLayoutX(41);
             imageView1.setLayoutY(121);
             imageView1.setRotate(180);
@@ -403,9 +492,10 @@ public class _7_DifProtectionScreenController {
             phaseA1Image.setRotate(0);
             phaseB1Image.setRotate(0);
             phaseC1Image.setRotate(0);
-        } else if (isButton1Selected && !isButton2Selected) {
+        } else if (button1.isSelected() && !button2.isSelected()) {
             // Справа: T1, F2
             //Смена расположения молнии
+            imageView1.setVisible(true);
             imageView1.setLayoutX(860);
             imageView1.setLayoutY(121);
             imageView1.setRotate(0);
@@ -418,6 +508,7 @@ public class _7_DifProtectionScreenController {
             phaseC2Image.setRotate(180);
         } else {
             // По центру: T1, T2 или F1, T2
+            imageView1.setVisible(true);
             imageView1.setLayoutX(464);
             imageView1.setLayoutY(222);
             imageView1.setRotate(180);
@@ -438,10 +529,11 @@ public class _7_DifProtectionScreenController {
     public void ground() {
         imageGround.setImage(ground);
         commonMethodForRightSideButtons(groundButton);
-        if (groundButton.isSelected()) imageGround.setVisible(true);
-        else {
+        if (groundButton.isSelected())
+            imageGround.setVisible(true);
+        else
             imageGround.setVisible(false);
-        }
+
     }
 
     /**
@@ -495,9 +587,7 @@ public class _7_DifProtectionScreenController {
                 new KeyFrame(Duration.seconds(0), event -> imageShortCircuit.setImage(shortCircuitYellow)),
                 new KeyFrame(Duration.seconds(0.3), event -> imageShortCircuit.setImage(shortCircuitRed)),
                 new KeyFrame(Duration.seconds(0.6), event -> imageShortCircuit.setImage(shortCircuitYellow)));
-
         timeline.setCycleCount(Timeline.INDEFINITE);
-
         timeline.play();
     }
 
@@ -627,10 +717,10 @@ public class _7_DifProtectionScreenController {
     private void commonMethodForRightSideButtons(ToggleButton toggleButton, String textIfSelected,
                                                  String textIfNotSelected) {
         if (toggleButton.isSelected()) {
-            toggleButton.setText(textIfSelected);
+            toggleButton.setText(textIfNotSelected);
             changeColorRightSideButtons(toggleButton);
         } else {
-            toggleButton.setText(textIfNotSelected);
+            toggleButton.setText(textIfSelected);
             setupRightSideButtons(toggleButton);
         }
     }

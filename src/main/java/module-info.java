@@ -13,6 +13,7 @@ module org.example.loadingdevicesoftware {
     requires static lombok;
     requires itext;
     requires java.compiler;
+    requires com.fasterxml.jackson.databind;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;

@@ -15,9 +15,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._7_DifProtectionScreenController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._7_DifProtectionScreenController">
     <children>
-
         <ImageView fx:id="backgroundImageView" fitHeight="800.0" fitWidth="1293.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../screen/7.дифзащита/диф_защита_1форма(без кнопок).png" />
@@ -46,8 +45,8 @@
 
 
         <!--Обмотки трансформатора-->
-        <Circle fx:id="feedingOne" fill="#1f93ff00" layoutX="385.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
-        <Circle fx:id="feedingTwo" fill="#1f93ff00" layoutX="588.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
+        <Circle fx:id="feedingOne" fill="TRANSPARENT" layoutX="385.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
+        <Circle fx:id="feedingTwo" fill="TRANSPARENT" layoutX="588.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
 
         <!--Кнопки -->
         <!--Кнопки обмоток трансформатора -->
@@ -78,6 +77,16 @@
                 <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
             </graphic>
         </Button>
+
+        <Button fx:id="cleanButton" contentDisplay="CENTER" layoutX="819.0" layoutY="726.0" mnemonicParsing="false" onAction="#clearAll">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <graphic>
+                <ImageView fx:id="cleanButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+            </graphic>
+        </Button>
+
         <Button fx:id="startButton" contentDisplay="CENTER" layoutX="1058.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToStartScreen" prefHeight="64.0" prefWidth="138.0">
             <font>
                 <Font size="24.0" />
@@ -86,6 +95,7 @@
                 <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
             </graphic>
         </Button>
+
 
         <!--Кнопки контактов-->
         <Button fx:id="contactOneButton" layoutX="296.0" layoutY="173.0" mnemonicParsing="false" onAction="#setPictureForContactOne" prefHeight="43.0" prefWidth="56.0">
@@ -290,7 +300,7 @@
         </ToggleButton>
 
         <!--Кнопка выбора питающей омботки-->
-        <ToggleButton fx:id="feedingWindingButton" layoutX="1088.0" layoutY="216.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="74.0" text="I">
+        <ToggleButton fx:id="feedingWindingButton" layoutX="1088.0" layoutY="216.0" mnemonicParsing="false" prefHeight="74.0" onAction="#changeFeedWind" prefWidth="74.0" text="I">
             <font>
                 <Font size="24.0" />
             </font>
@@ -334,5 +344,8 @@
         <ImageView fx:id="phaseA2Image" fitHeight="30.0" fitWidth="77.0" layoutX="785.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="phaseB2Image" fitHeight="30.0" fitWidth="77.0" layoutX="785.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="phaseC2Image" fitHeight="30.0" fitWidth="77.0" layoutX="785.0" layoutY="534.0" pickOnBounds="true" preserveRatio="true" />
+
+
+
     </children>
 </AnchorPane>

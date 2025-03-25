@@ -177,7 +177,6 @@ public class _100_checkingStartConditionsScreenController {
     public void goToWorkDevice(ActionEvent event) throws IOException {
         //установка флага
         InterfaceElementsLogic.setFromCheckingStartConditions(true);
-
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
     }
 
