@@ -74,30 +74,48 @@ public class InterfaceElementsLogic {
     @Setter
     private static boolean fromCheckingStartConditions = false;
 
+
     /**
-     * Обходит всю форму и применяет действие к элементам
-     * @param root Корневой элемент (AnchorPane/VBox и т.д.)
-     * @param action Действие (нода + доп. параметр)
-     * @param param Дополнительный параметр для действия
-     * @param exclusions Условия исключения элементов (например, по fx:id)
+     * Специализированный метод для булевых операций (блокировка/разблокировка)
+     * @param root Корневой элемент формы
+     * @param shouldDisable true - заблокировать, false - разблокировать
+     * @param action Действие с нод и булевым флагом (например, setDisable)
+     * @param exclusionConditions Условия исключения элементов
      */
-    public static <T> void walk(Parent root, BiConsumer<Node, T> action, T param, Predicate<Node>... exclusions) {
-        walkRecursive(root, action, param, Arrays.asList(exclusions));
+    public static void walk(
+            Parent root,
+            boolean shouldDisable,
+            BiConsumer<Node, Boolean> action,
+            Predicate<Node>... exclusionConditions
+    ) {
+        walkRecursive(
+                root,
+                action,
+                shouldDisable,
+                // Объединяем все условия исключений
+                node -> Arrays.stream(exclusionConditions)
+                        .anyMatch(condition -> condition.test(node))
+        );
     }
 
-    private static <T> void walkRecursive(Node node, BiConsumer<Node, T> action, T param, List<Predicate<Node>> exclusions) {
-        // Проверяем исключения
-        boolean shouldSkip = exclusions.stream()
-                .anyMatch(predicate -> predicate.test(node));
-
-        if (!shouldSkip) {
-            action.accept(node, param); // Применяем действие
+    private static void walkRecursive(
+            Node node,
+            BiConsumer<Node, Boolean> action,
+            boolean shouldDisable,
+            Predicate<Node> shouldExclude
+    ) {
+        // Пропускаем элементы, соответствующие условиям исключения
+        if (shouldExclude.test(node)) {
+            return;
         }
+
+        // Применяем действие
+        action.accept(node, shouldDisable);
 
         // Рекурсивный обход дочерних элементов
         if (node instanceof Parent) {
             ((Parent) node).getChildrenUnmodifiable()
-                    .forEach(child -> walkRecursive(child, action, param, exclusions));
+                    .forEach(child -> walkRecursive(child, action, shouldDisable, shouldExclude));
         }
     }
 }

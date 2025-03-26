@@ -308,10 +308,18 @@ public class _7_DifProtectionScreenController {
         shortCircuitLocationButton.setOnAction(_ -> changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton,
                 imageShortCircuit, imageGround));
 
+
+        startButton.setOnAction(event -> {
+            try {
+                goToStartScreen(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 //тестовая функция по блокировке кнопок при возвращении из 100 формы
         // Проверяем, откуда был выполнен переход
         if (isFromCheckingStartConditions()) {
-            lockAllButtonsAndStartAnimation();
+            workForms();
         }
     }
 
@@ -320,9 +328,9 @@ public class _7_DifProtectionScreenController {
         switchScene((Node) event.getSource(), "0.baseWindow.fxml");
     }
 
-    @FXML
+//    @FXML
     public void goToStartScreen(ActionEvent event) throws IOException {
-        switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
         Buffer.setPreviousPage("7.DifProtection.fxml");
     }
 
@@ -529,57 +537,6 @@ public class _7_DifProtectionScreenController {
         imageGround.setVisible(groundButton.isSelected());
     }
 
-    /**
-     * Блок методов определяющий работу формы после перехода из формы проверок.
-     * Здесь на 5 секунд все кнопки будут заблокированы и во время ожидания будет моргать молния.
-     * По истечении 5 секунд кнопки будут разблокированы.
-     * Это удалось достигнуть в результате изменения общего метода @switchScene. В него просто добавлен флаг, который
-     * меняется в зависимости от перехода из формы в форму на true false
-     */
-    //Метод по блокировке и анимированию
-    private void lockAllButtonsAndStartAnimation() {
-        lockAll(true);
-        startLightingAnimation();
-        // Создаем задержку на 5 секунд
-        PauseTransition pause = new PauseTransition(Duration.seconds(5));
-        pause.setOnFinished(_ -> {
-            stopLightningAnimation();
-            lockAll(false);});
-        pause.play();
-    }
-
-    //Общий метод по обходу всех элементов и блокировки их.
-    private void lockAll(boolean lock){
-        InterfaceElementsLogic.walk(
-                mainPane,
-                (node, key) -> node.setDisable(lock),
-                lock,
-                node -> node.getId() != null && node.getId().equals("startButton"));
-    }
-
-    //Тестовая функция по анимации картинок
-    private void startLightingAnimation() {
-        // Создаем Timeline для смены картинок каждые 0.5 секунд
-        timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), _ -> imageShortCircuit.setImage(shortCircuitYellow)),
-                new KeyFrame(Duration.seconds(0.3), _ -> imageShortCircuit.setImage(shortCircuitRed)),
-                new KeyFrame(Duration.seconds(0.6), _ -> imageShortCircuit.setImage(shortCircuitYellow)));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
-
-
-    //остановка анимации
-    private void stopLightningAnimation() {
-        if (timeline != null) {
-            timeline.stop();
-        }
-    }
-
-
-
-
-
     //метод для настройки кнопок в правой части окна сценария диф.защиты
     public void setupRightSideButtons(ToggleButton button) {
         InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
@@ -711,4 +668,83 @@ public class _7_DifProtectionScreenController {
     public void testClick() {
         System.out.println("Кнопка работает");
     }
+
+
+
+
+    
+    
+    
+
+
+
+
+    /**
+     * Блок методов определяющий работу формы после перехода из формы проверок.
+     * Здесь на 5 секунд все кнопки будут заблокированы и во время ожидания будет моргать молния.
+     * По истечении 5 секунд кнопки будут разблокированы.
+     * Это удалось достигнуть в результате изменения общего метода @switchScene. В него просто добавлен флаг, который
+     * меняется в зависимости от перехода из формы в форму на true false
+     */
+    //Метод по блокировке и анимированию
+    private void workForms() {
+        lockAll(true);
+        startLightingAnimation();
+        // Создаем задержку на 5 секунд
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(_ -> {stopLightningAnimation(); lockAll(false);});
+        pause.play();
+
+
+    }
+
+    //Общий метод по обходу всех элементов и блокировки их.
+    private void lockAll(boolean lock) {
+        InterfaceElementsLogic.walk(
+                mainPane,
+                lock,
+                (node, shouldDisable) -> {
+                    if (node instanceof Control) {
+                        ((Control) node).setDisable(shouldDisable);
+                    }
+                },
+                node -> "startButton".equals(node.getId()));
+
+
+        //Метод по изменению названий кнопок
+        if (lock){
+            toMenuButton.setText("");
+            startButton.setText("СТОП");
+            cleanButton.setText("");
+            startButton.setOnAction(event -> stopLightningAnimation());
+        } else {
+
+            toMenuButton.setPrefSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
+            startButton.setPrefSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
+            cleanButton.setPrefSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
+
+            toMenuButton.setText("ПРОДОЛЖИТЬ");
+            startButton.setText("ЗАКОНЧИТЬ");
+            cleanButton.setText("СОХРАНИТЬ");
+        }
+    }
+
+    //Тестовая функция по анимации картинок
+    private void startLightingAnimation() {
+        // Создаем Timeline для смены картинок каждые 0.5 секунд
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), _ -> imageShortCircuit.setImage(shortCircuitYellow)),
+                new KeyFrame(Duration.seconds(0.3), _ -> imageShortCircuit.setImage(shortCircuitRed)),
+                new KeyFrame(Duration.seconds(0.6), _ -> imageShortCircuit.setImage(shortCircuitYellow)));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    //остановка анимации
+    private void stopLightningAnimation() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+    }
+
 }
