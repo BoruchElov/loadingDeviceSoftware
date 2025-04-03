@@ -45,8 +45,8 @@
 
 
         <!--Обмотки трансформатора-->
-        <Circle fx:id="windingOne" fill="TRANSPARENT" layoutX="385.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
-        <Circle fx:id="windingTwo" fill="TRANSPARENT" layoutX="588.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" />
+        <Circle fx:id="windingOne" fill="TRANSPARENT" layoutX="385.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="7.0" />
+        <Circle fx:id="windingTwo" fill="TRANSPARENT" layoutX="588.0" layoutY="436.0" radius="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="7.0" />
 
         <!--Кнопки -->
         <!--Кнопки обмоток трансформатора -->

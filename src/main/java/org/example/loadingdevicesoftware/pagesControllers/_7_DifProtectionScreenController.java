@@ -36,6 +36,7 @@ public class _7_DifProtectionScreenController {
     ImageView startButtonImageView;
     @FXML
     ImageView cleanButtonImageView;
+
     //Объекты картинок групп соединения обмоток
     Image deltaConnection = new Image(Objects.requireNonNull(getClass().getResource("/images/Polygon1.png")).toExternalForm());
     Image starConnection = new Image(Objects.requireNonNull(getClass().getResource("/images/Star1.png")).toExternalForm());
@@ -50,6 +51,7 @@ public class _7_DifProtectionScreenController {
     //Объекты контакты
     ContactObject contactOne;
     ContactObject contactTwo;
+
     @FXML
     private AnchorPane mainPane;
     //Кнопки
@@ -192,11 +194,9 @@ public class _7_DifProtectionScreenController {
     private int counterOne = 0;
     private int counterTwo = 0;
 
-
-    private int currentShortCircuitPosition = 0;
-
     private PhaseLines phaseA, phaseB, phaseC;
     private ShortCircuit shortCircuit;
+
 
     @FXML
     public void initialize() {
@@ -262,22 +262,18 @@ public class _7_DifProtectionScreenController {
         //Метод для блокировок кнопок пока не нажата первая кнопка
         disableOrEnablePhaseButtons();
 
-//ТЕСТОВЫЕ ФУНКЦИИ
         //Настройка индикаторов контактов
         blinkingIndicator();
 
-
-//тестовая функция по блокировке кнопок при возвращении из 100 формы
         // Проверяем, откуда был выполнен переход
         if (InterfaceElementsLogic.isFromCheckingStartConditions()) {
             workForms();
         }
 
-
-//Измененные методы с FXML
         //методы по переходу на другие формы
         startButton.setOnAction(this::goToStartScreen);
         toMenuButton.setOnAction(this::goToMenu);
+//ТЕСТОВЫЕ ФУНКЦИИ
 
         //Методы выбора обмоток Трансформатора
         windingOneConnection.setOnAction(event -> setPictureForWindingOne());
@@ -291,60 +287,86 @@ public class _7_DifProtectionScreenController {
         cleanButton.setOnAction(event -> clearAllButton());
 
         // Метод для кнопки выбора питающей обмотки
-        feedingWindingButton.setOnAction(this::changeFeedWind);
-
-
 
         phaseA = new PhaseLines(linePhaseA1, linePhaseA2, phaseA1Image, phaseA2Image, Color.BLACK, Color.RED, 5.0, 8.0);
         phaseB = new PhaseLines(linePhaseB1, linePhaseB2, phaseB1Image, phaseB2Image, Color.BLACK, Color.RED, 5.0, 8.0);
         phaseC = new PhaseLines(linePhaseC1, linePhaseC2, phaseC1Image, phaseC2Image, Color.BLACK, Color.RED, 5.0, 8.0);
-        shortCircuitLocationButton.setOnAction(this::handleShortCircuitLocation);
-        phaseAButton.setOnAction(this::handlePhaseAButton);
+
+        phaseAButton.setOnAction(e -> handlePhaseButton(phaseAButton, linePhaseA1, linePhaseA2, phaseA1Image, phaseA2Image));
+        phaseBButton.setOnAction(e -> handlePhaseButton(phaseBButton, linePhaseB1, linePhaseB2, phaseB1Image, phaseB2Image));
+        phaseCButton.setOnAction(e -> handlePhaseButton(phaseCButton, linePhaseC1, linePhaseC2, phaseC1Image, phaseC2Image));
+
+        feedingWindingButton.setOnAction(this::changeFeedWind);
+        shortCircuitLocationButton.setOnAction(e -> handleShortCircuitLocation(shortCircuitLocationButton, feedingWindingButton));
     }
 
+    //Метод по перемещению монии и земли
+    private void handleShortCircuitLocation(ToggleButton TB1, ToggleButton TB2) {
+        commonMethodForRightSideButtons(TB1, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
+        imageShortCircuit.setImage(shortCircuitYellow);
+        int positionCase = 0;
 
+        if (!TB1.isSelected() && !TB2.isSelected()) positionCase = 0;  // 00 - слева
+        if (TB1.isSelected()) positionCase = 1;                       // 01 - центр
+        if (!TB1.isSelected() && TB2.isSelected()) positionCase = 2;  // 10 - справа
 
-    // Обработчик для кнопки фазы A
-    private void handlePhaseAButton(ActionEvent event) {
-        boolean isSelected = phaseAButton.isSelected();
-
-        // Обновляем стиль линий
-        updateLineStyle(linePhaseA1, isSelected);
-        updateLineStyle(linePhaseA2, isSelected);
-
-        // Обновляем видимость стрелок
-        phaseA1Image.setVisible(isSelected);
-        phaseA2Image.setVisible(isSelected);
-    }
-
-    // Обработчик для кнопки перемещения молнии
-    private void handleShortCircuitLocation(ActionEvent event) {
-        currentShortCircuitPosition = (currentShortCircuitPosition + 1) % 3;
-
-        switch(currentShortCircuitPosition) {
-            case 0 -> setShortCircuitPosition(41, 121, 180, 19, 547);  // Слева
-            case 1 -> setShortCircuitPosition(860, 121, 0, 887, 547);  // Справа
-            case 2 -> setShortCircuitPosition(464, 222, 180, 449, 497); // Центр
+        switch (positionCase) {
+            case 0 -> {
+                setShortCircuitPosition(41, 121, 180, 19, 547);             // Слева
+                rotateLeftArrows(0);
+            }
+            case 1 -> {
+                setShortCircuitPosition(464, 222, 180, 449, 497);           // Центр
+                rotateLeftArrows(180);
+                rotateRightArrows(0);
+            }
+            case 2 -> {
+                setShortCircuitPosition(860, 121, 0, 887, 547);             // Справа
+                rotateRightArrows(180);
+            }
         }
     }
 
-//--- Вспомогательные методы ---//
-
-    // Устанавливает стиль для линии
-    private void updateLineStyle(Line line, boolean isSelected) {
-        line.setStroke(isSelected ? Color.RED : Color.BLACK);
-        line.setStrokeWidth(isSelected ? 3.0 : 1.0);
-    }
-
+    //--- Вспомогательные методы ---//
     // Устанавливает позицию молнии и земли
-    private void setShortCircuitPosition(double scX, double scY, double rotate,
-                                         double groundX, double groundY) {
+    private void setShortCircuitPosition(double scX, double scY, double rotate, double groundX, double groundY) {
         imageShortCircuit.setLayoutX(scX);
         imageShortCircuit.setLayoutY(scY);
         imageShortCircuit.setRotate(rotate);
         imageGround.setLayoutX(groundX);
         imageGround.setLayoutY(groundY);
     }
+    //вращает стрелочки которые слева
+    private void rotateLeftArrows(double angle) {
+        phaseA1Image.setRotate(angle);
+        phaseB1Image.setRotate(angle);
+        phaseC1Image.setRotate(angle);
+    }
+    //вращает стрелочки которы справа
+    private void rotateRightArrows(double angle) {
+        phaseA2Image.setRotate(angle);
+        phaseB2Image.setRotate(angle);
+        phaseC2Image.setRotate(angle);
+    }
+
+    // Обработчик для кнопки фаз
+    private void handlePhaseButton(ToggleButton button, Line line1, Line line2, ImageView arrow1, ImageView arrow2) {
+        boolean isSelected = button.isSelected();
+        commonMethodForRightSideButtons(button);
+        // Обновляем линии
+        updateLineStyle(line1, isSelected);
+        updateLineStyle(line2, isSelected);
+        // Обновляем стрелки
+        arrow1.setImage(arrows);
+        arrow2.setImage(arrows);
+        arrow1.setVisible(isSelected);
+        arrow2.setVisible(isSelected);
+    }
+
+    private void updateLineStyle(Line line, boolean isSelected) {
+        line.setStroke(isSelected ? Color.RED : Color.BLACK);
+        line.setStrokeWidth(isSelected ? 10.0 : 5.0);
+    }
 
 
 
@@ -353,11 +375,14 @@ public class _7_DifProtectionScreenController {
 
 
 
-
-
-
-
-
+    //Метод для кнопки по смене питающей обмотки
+    public void changeFeedWind(ActionEvent event) {
+        ToggleButton toggleButton = (ToggleButton) event.getSource();
+        if (toggleButton.getUserData() == null) {
+            toggleButton.setUserData("activated");
+        }
+        changeFeedingWinding(feedingWindingButton, windingOne, windingTwo);
+    }
 
 
     // Методы переходов на другие формы
@@ -378,7 +403,6 @@ public class _7_DifProtectionScreenController {
     }
 
     //Метод по смене цвета индикатора при наведении мыши
-
     public void setPictureForWindingTwo() {
         windingTwoStatus = commonMethodForPositionPicturesButtons(windingTwoView, windingTwoStatus, starConnection, deltaConnection);
     }
@@ -405,15 +429,6 @@ public class _7_DifProtectionScreenController {
 
         indicatorContactTwo.setOnMouseEntered(_ -> indicatorContactTwo.setFill(Color.RED));
         indicatorContactTwo.setOnMouseExited(_ -> indicatorContactTwo.setFill(Color.GREEN));
-    }
-
-    //Метод для кнопки по смене питающей обмотки
-    public void changeFeedWind(ActionEvent event) {
-        ToggleButton toggleButton = (ToggleButton) event.getSource();
-        if (toggleButton.getUserData() == null) {
-            toggleButton.setUserData("activated");
-        }
-        changeFeedingWinding(feedingWindingButton, windingOne, windingTwo);
     }
 
     //Метод по очистке всего введенного
@@ -476,12 +491,6 @@ public class _7_DifProtectionScreenController {
             circle1.setStroke(Color.BLUE);
             circle2.setStroke(Color.GREEN);
         }
-    }
-
-    //Метод выделяющий цветом выбранную линию.
-    private void changeColorPhaseLine(ToggleButton button, PhaseLines phase) {
-        commonMethodForRightSideButtons(button);
-        phase.setSelected(button.isSelected());
     }
 
     //Метод по отображению значка земли по нажатию кнопки
@@ -633,7 +642,6 @@ public class _7_DifProtectionScreenController {
                 ((Control) node).setDisable(shouldDisable);
             }
         }, node -> "startButton".equals(node.getId()));
-
 
         //Метод по изменению названий кнопок
         if (lock) {
