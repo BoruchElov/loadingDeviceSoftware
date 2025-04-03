@@ -29,8 +29,6 @@ import java.util.Objects;
 
 public class _7_DifProtectionScreenController {
 
-    private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
-
     @FXML
     private AnchorPane mainPane;
 
@@ -719,13 +717,11 @@ public class _7_DifProtectionScreenController {
             startButton.setOnAction(event -> stopLightningAnimation());
         } else {
 
-            toMenuButton.setPrefSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
-            startButton.setPrefSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
-            cleanButton.setPrefSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
 
-            toMenuButton.setText("ПРОДОЛЖИТЬ");
-            startButton.setText("ЗАКОНЧИТЬ");
-            cleanButton.setText("СОХРАНИТЬ");
+            InterfaceElementsSettings.getWhiteContinueButton(toMenuButton, toMenuButtonImageView, InterfaceElementsSettings.Background.BLUE);
+            InterfaceElementsSettings.getWhiteEndButton(startButton, startButtonImageView, InterfaceElementsSettings.Background.BLUE);
+            InterfaceElementsSettings.getWhiteClearButton(cleanButton, cleanButtonImageView, InterfaceElementsSettings.Background.BLUE);
+
         }
     }
 

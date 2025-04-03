@@ -117,6 +117,18 @@ public class InterfaceElementsSettings {
                 button, 210, 64, true, "ОЧИСТИТЬ");
     }
 
+    public static void getWhiteContinueButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
+                button, 210, 64, true, "ПРОДОЛЖИТЬ");
+    }
+
+    public static void getWhiteEndButton(ButtonBase button, ImageView imageView, Background background) {
+        buttonSettings(background.getColours(), background.getColours(), 0, 17, 0,
+                ApplicationConstants.colours.WHITE, 26, 0, imageView, ApplicationConstants.WHITE_BUTTON_LONG,
+                button, 210, 64, true, "ЗАКОНЧИТЬ");
+    }
+
     public static void getContactButton(ButtonBase button, ImageView imageView, Background background) {
         buttonSettings(background.getColours(), ApplicationConstants.colours.BLACK,
                 3, 17, 15, ApplicationConstants.colours.WHITE, 0,
