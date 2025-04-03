@@ -116,7 +116,7 @@ public class _2_TestOfSwitcher3XScreenController {
     @FXML
     public void goToMainScreen(ActionEvent event) throws IOException, BadElementException {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
-        InterfaceElementsLogic.writeToPdf("newFile", new Element[]{InterfaceElementsLogic.getTable()});
+//        InterfaceElementsLogic.writeToPdf("newFile", new Element[]{InterfaceElementsLogic.getTable()});
     }
     //Метод для перехода в старт
     @FXML

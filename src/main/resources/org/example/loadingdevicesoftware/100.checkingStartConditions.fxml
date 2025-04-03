@@ -17,6 +17,7 @@
             <Image url="@../../../screen/7.дифзащита/диф_защита_2форма.png" />
          </image>
       </ImageView>
+
       <Text fill="WHITE" layoutX="386.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: -5;" text="ПРОВЕРКА УСЛОВИЙ ПУСКА" textAlignment="CENTER" wrappingWidth="511.0">
          <font>
             <Font name="MyriadPro-Regular" size="36.0" />
@@ -74,6 +75,7 @@
                   <Font name="MyriadPro-Regular" size="36.0" />
                </font>
             </Text>
+            <!-- Кнопки проверки статуса проверки-->
             <Button fx:id="status1True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusOneTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" />
             <Button fx:id="status1False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod1" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" />
             <Button fx:id="status2True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusTwoTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -86,6 +88,8 @@
             <Button fx:id="status5False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod5" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Button fx:id="status6True" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#statusSixTrue" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <Button fx:id="status6False" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#errorMethod6" prefHeight="41.0" prefWidth="52.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+
+            <!-- Картинки-->
             <ImageView fx:id="status1FalseImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
             <ImageView fx:id="status1TrueImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
             <ImageView fx:id="status2TrueImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -100,20 +104,27 @@
             <ImageView fx:id="status6FalseImageView" fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
          </children>
       </GridPane>
+
       <Button fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="724.0" mnemonicParsing="false" onAction="#goToPreviousPage" prefHeight="64.0" prefWidth="140.0" text="ОТМЕНА">
          <graphic>
             <ImageView fx:id="cancelButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
+
       <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1054.0" layoutY="723.0" mnemonicParsing="false" onAction="#goToWorkDevice" prefHeight="64.0" prefWidth="140.0" text="ПУСК">
          <graphic>
             <ImageView fx:id="startButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
+
       <Button fx:id="toMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="724.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="140.0" text="МЕНЮ">
          <graphic>
             <ImageView fx:id="toMenuButtonImageView" fitHeight="64.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
+
+
+
+
    </children>
 </AnchorPane>

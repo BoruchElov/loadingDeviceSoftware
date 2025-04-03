@@ -14,6 +14,7 @@ module org.example.loadingdevicesoftware {
     requires itext;
     requires java.compiler;
     requires com.fazecast.jSerialComm;
+    requires com.fasterxml.jackson.databind;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;
@@ -23,6 +24,4 @@ module org.example.loadingdevicesoftware {
     opens org.example.loadingdevicesoftware.pagesControllers to javafx.fxml;
     exports org.example.loadingdevicesoftware.communicationWithInverters;
     opens org.example.loadingdevicesoftware.communicationWithInverters to javafx.fxml;
-    exports org.example;
-    opens org.example to javafx.fxml;
 }
