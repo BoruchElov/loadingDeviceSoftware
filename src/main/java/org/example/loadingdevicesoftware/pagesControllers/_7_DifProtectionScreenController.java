@@ -385,6 +385,7 @@ public class _7_DifProtectionScreenController {
     }
 
 
+
     // Методы переходов на другие формы
     // Переход в старт
     public void goToStartScreen(ActionEvent event) {
