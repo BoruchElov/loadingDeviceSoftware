@@ -33,21 +33,23 @@ public class InterfaceElementsLogic {
      * @param node графический узел (в любом контроллере в качестве этой переменной должно задаваться
      *             <code>(Node) event.getSource()</code>
      * @param fxmlFilePath имя файла fxml в формате <b>fileName.fxml</b>
-     * @throws IOException исключение
+     * @throws IOException исключение//УБРАЛ ЕГО
      */
     @FXML
-    public static void switchScene(Node node, String fxmlFilePath) throws IOException {
-        // Получаем текущий Stage из элемента интерфейса
-        Stage stage = (Stage) node.getScene().getWindow();
-
-        // Загружаем новый FXML
-        Parent root = FXMLLoader.load(Objects.requireNonNull(ApplicationFile.class.
-                getResource(fxmlFilePath)));
-
-        // Устанавливаем новую сцену
-        stage.setScene(new Scene(root, ApplicationConstants.APPLICATION_WINDOW_LENGTH,
-                ApplicationConstants.APPLICATION_WINDOW_HEIGHT));
-        stage.show();
+    public static void switchScene(Node node, String fxmlFilePath)  {
+        try {
+            // Получаем текущий Stage из элемента интерфейса
+            Stage stage = (Stage) node.getScene().getWindow();
+            // Загружаем новый FXML
+            Parent root = FXMLLoader.load(Objects.requireNonNull(ApplicationFile.class.
+                    getResource(fxmlFilePath)));
+            // Устанавливаем новую сцену
+            stage.setScene(new Scene(root, ApplicationConstants.APPLICATION_WINDOW_LENGTH,
+                    ApplicationConstants.APPLICATION_WINDOW_HEIGHT));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось перейти на форму: " + fxmlFilePath, e);
+        }
     }
 
     @FXML

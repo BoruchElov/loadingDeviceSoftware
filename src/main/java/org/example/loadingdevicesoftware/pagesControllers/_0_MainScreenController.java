@@ -173,43 +173,41 @@ public class _0_MainScreenController {
     /**
      * Метод для перехода на страницу настроек.
      * @param event
-     * @throws IOException
      */
     @FXML
-    public void goToSettings (ActionEvent event) throws IOException {
+    public void goToSettings (ActionEvent event) {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "1.settingsWindow.fxml");
     }
 
     //Метод для перехода на страницу сценария теста выключателя
-     public void goToTestOfSwitcher (ActionEvent event) throws IOException {
+     public void goToTestOfSwitcher (ActionEvent event) {
          InterfaceElementsLogic.switchScene((Node) event.getSource(), "2.TestOfSwitcher3X.fxml");
      }
 
     //Метод для перехода на страницу сценария теста РЗА
-    public void goToTestOfStageProtection (ActionEvent event) throws IOException {
+    public void goToTestOfStageProtection (ActionEvent event) {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "3.TestOfStageProtection3X.fxml");
     }
 
     //Метод для перехода на страницу сценария Журнал событий
-    public void goToEventLogger (ActionEvent event) throws IOException {
+    public void goToEventLogger (ActionEvent event) {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "4.EventLogger.fxml");
     }
 
     //Метод для перехода на страницу сценария Проверка измерительного трансформатора
-    public void goToTestOfMeasurementTransformer (ActionEvent event) throws IOException {
+    public void goToTestOfMeasurementTransformer (ActionEvent event) {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "5.TestOfMeasurementTransformer.fxml");
     }
 
     //Метод для перехода на страницу сценария Comtrade
-    public void goToComTrade (ActionEvent event) throws IOException {
+    public void goToComTrade (ActionEvent event) {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "6.ComTrade.fxml");
     }
 
     //Метод для перехода на страницу сценария диф.защиты
-    public void goToDifProtection (ActionEvent event) throws IOException {
+    public void goToDifProtection (ActionEvent event)  {
         //установка флага
         InterfaceElementsLogic.setFromCheckingStartConditions(false);
-
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
     }
 

@@ -212,8 +212,6 @@ public class InterfaceElementsSettings {
                 "-fx-padding:" + textPadding +
                 "-fx-background-insets: 0; " +
                 "-fx-border-insets: 0; ");
-
-
     }
 
     /**

@@ -14,6 +14,7 @@ module org.example.loadingdevicesoftware {
     requires itext;
     requires java.compiler;
     requires com.fasterxml.jackson.databind;
+    requires java.desktop;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;
@@ -23,4 +24,6 @@ module org.example.loadingdevicesoftware {
     opens org.example.loadingdevicesoftware.pagesControllers to javafx.fxml;
     exports org.example.loadingdevicesoftware.communicationWithInverters;
     opens org.example.loadingdevicesoftware.communicationWithInverters to javafx.fxml;
+    exports org.example.loadingdevicesoftware.logicAndSettingsOfInterface.BaseComponents;
+    opens org.example.loadingdevicesoftware.logicAndSettingsOfInterface.BaseComponents to javafx.fxml;
 }

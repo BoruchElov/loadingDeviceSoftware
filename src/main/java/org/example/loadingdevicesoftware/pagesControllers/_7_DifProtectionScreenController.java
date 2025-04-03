@@ -6,7 +6,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,22 +17,15 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
-import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic.*;
-
-import java.io.IOException;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.BaseComponents.PhaseLines;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.BaseComponents.ShortCircuit;
 
 import java.util.Objects;
-
-
 
 
 public class _7_DifProtectionScreenController {
 
     private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
-
-    @FXML
-    private AnchorPane mainPane;
-
     @FXML
     ImageView windingOneView;
     @FXML
@@ -45,28 +37,22 @@ public class _7_DifProtectionScreenController {
     @FXML
     ImageView cleanButtonImageView;
     //Объекты картинок групп соединения обмоток
-    Image deltaConnection = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/Polygon1.png")).toExternalForm());
-    Image starConnection = new Image(Objects.requireNonNull(getClass().
-            getResource("/images/Star1.png")).toExternalForm());
+    Image deltaConnection = new Image(Objects.requireNonNull(getClass().getResource("/images/Polygon1.png")).toExternalForm());
+    Image starConnection = new Image(Objects.requireNonNull(getClass().getResource("/images/Star1.png")).toExternalForm());
     //Объект фоновой картинки
-    Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
-
+    Image backImageOutSC = new Image(Objects.requireNonNull(getClass().getResource("/screen/7.дифзащита/диф_защита_1форма(без кнопок).png")).toExternalForm());
     //объекты элементов
-    Image shortCircuitYellow = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/BasePictures/молния_желтая.png")).toExternalForm());
-    Image shortCircuitRed = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/BasePictures/молния_красная.png")).toExternalForm());
-    Image ground = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/BasePictures/ground.png")).toExternalForm());
-
+    Image shortCircuitYellow = new Image(Objects.requireNonNull(getClass().getResource("/screen/BasePictures/молния_желтая.png")).toExternalForm());
+    Image shortCircuitRed = new Image(Objects.requireNonNull(getClass().getResource("/screen/BasePictures/молния_красная.png")).toExternalForm());
+    Image ground = new Image(Objects.requireNonNull(getClass().getResource("/screen/BasePictures/ground.png")).toExternalForm());
     //картинка стрелочек
-    Image arrows = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/BasePictures/стрелочка.png")).toExternalForm());
-
-
-//Кнопки
+    Image arrows = new Image(Objects.requireNonNull(getClass().getResource("/screen/BasePictures/стрелочка.png")).toExternalForm());
+    //Объекты контакты
+    ContactObject contactOne;
+    ContactObject contactTwo;
+    @FXML
+    private AnchorPane mainPane;
+    //Кнопки
     //Кнопки контактов
     @FXML
     private Button contactOneButton;
@@ -89,9 +75,7 @@ public class _7_DifProtectionScreenController {
     private Button startButton;
     @FXML
     private Button cleanButton;
-
-
-//Кнопки переключатели справа
+    //Кнопки переключатели справа
     @FXML
     private ToggleButton phaseAButton;
     @FXML
@@ -104,8 +88,7 @@ public class _7_DifProtectionScreenController {
     private ToggleButton shortCircuitLocationButton;
     @FXML
     private ToggleButton feedingWindingButton;
-
-//Картинки
+    //Картинки
     @FXML
     private ImageView backgroundImageView;
     @FXML
@@ -142,9 +125,7 @@ public class _7_DifProtectionScreenController {
     private ImageView imageShortCircuit;
     @FXML
     private ImageView imageGround;
-
-
-//Текстовые поля
+    //Текстовые поля
     //Названия объекта и ФИО работника
     @FXML
     private TextField objectNameTextField;
@@ -175,19 +156,16 @@ public class _7_DifProtectionScreenController {
     private TextField phaseC1AngleTextField;
     @FXML
     private TextField phaseC2AngleTextField;
-
-//Текстовые поля
+    //Текстовые поля
     //Вывода даты-времени
     @FXML
     private Text dateTimeText;
-
-//ТЕСТОВЫЕ ЭЛЕМЕНТЫ
+    //ТЕСТОВЫЕ ЭЛЕМЕНТЫ
     // Индикаторы контактов
     @FXML
     private Circle indicatorContactOne;
     @FXML
     private Circle indicatorContactTwo;
-
     //Линии
     @FXML
     private Line linePhaseA1;
@@ -201,41 +179,38 @@ public class _7_DifProtectionScreenController {
     private Line linePhaseB2;
     @FXML
     private Line linePhaseC2;
-
     //Трансформатор
     @FXML
-    private Circle feedingOne;
+    private Circle windingOne;
     @FXML
-    private Circle feedingTwo;
-
-//Объекты контакты
-    ContactObject contactOne;
-    ContactObject contactTwo;
-
-//для анимации
+    private Circle windingTwo;
+    //для анимации
     private Timeline timeline;
-
     private boolean windingOneStatus = false;
     private boolean windingTwoStatus = false;
     private boolean isLocationPressed = false;
-
     private int counterOne = 0;
     private int counterTwo = 0;
+
+
+    private int currentShortCircuitPosition = 0;
+
+    private PhaseLines phaseA, phaseB, phaseC;
+    private ShortCircuit shortCircuit;
 
     @FXML
     public void initialize() {
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
+// НАСТРОЙКА ВНЕШНЕГО ВИДА
         //Настройка стилей текстовых полей для ввода
         setupObjectNameField(objectNameTextField, "Введите название объекта");
         setupObjectNameField(userNameTextField, "Введите ФИО исполнителя");
-
         setupObjectNameField(phaseA1TextField, "Ток");
         setupObjectNameField(phaseA2TextField, "Ток");
         setupObjectNameField(phaseB1TextField, "Ток");
         setupObjectNameField(phaseB2TextField, "Ток");
         setupObjectNameField(phaseC1TextField, "Ток");
         setupObjectNameField(phaseC2TextField, "Ток");
-
         setupObjectNameField(phaseA1AngleTextField, "Угол");
         setupObjectNameField(phaseA2AngleTextField, "Угол");
         setupObjectNameField(phaseB1AngleTextField, "Угол");
@@ -257,19 +232,14 @@ public class _7_DifProtectionScreenController {
         //Настройка кнопки "Выбор места повреждения"
         shortCircuitLocationButton.setText("");
         setupRightSideButtons(shortCircuitLocationButton);
-        //Настройка кнопки "Выбор фазы А"
         phaseAButton.setText("A");
         setupRightSideButtons(phaseAButton);
-        //Настройка кнопки "Выбор фазы В"
         phaseBButton.setText("B");
         setupRightSideButtons(phaseBButton);
-        //Настройка кнопки "Выбор фазы С"
         phaseCButton.setText("C");
         setupRightSideButtons(phaseCButton);
-        //Настройка кнопки "Выбор кз на землю"
         groundButton.setText("G");
         setupRightSideButtons(groundButton);
-        //Настройка кнопки "Выбор питающей обмотки"
         setupRightSideButtons(feedingWindingButton);
 
         //Настройка кнопок снизу
@@ -282,10 +252,8 @@ public class _7_DifProtectionScreenController {
         setupConnectionSchemesButtons(windingTwoConnection, windingTwoView, 55, 55);
 
         //Настройка кнопок для задания положения контактов
-        contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED,
-                ContactObject.ContactStatus.DISABLED);
-        contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED,
-                ContactObject.ContactStatus.DISABLED);
+        contactOne = new ContactObject(contactOneButton, contactOneView, ContactObject.ContactPosition.OPENED, ContactObject.ContactStatus.DISABLED);
+        contactTwo = new ContactObject(contactTwoButton, contactTwoView, ContactObject.ContactPosition.OPENED, ContactObject.ContactStatus.DISABLED);
 
         //Настройка кнопок для задания номера схемы
         setupConnectionSchemesButtons(windingOneGroupButton);
@@ -294,58 +262,127 @@ public class _7_DifProtectionScreenController {
         //Метод для блокировок кнопок пока не нажата первая кнопка
         disableOrEnablePhaseButtons();
 
-
 //ТЕСТОВЫЕ ФУНКЦИИ
         //Настройка индикаторов контактов
         blinkingIndicator();
 
-        //метод по изменению цвета линии
-        phaseAButton.setOnAction(_ -> changeColorPhaseLine(phaseAButton, phaseA1Image, phaseA2Image, linePhaseA1, linePhaseA2));
-        phaseBButton.setOnAction(_ -> changeColorPhaseLine(phaseBButton, phaseB1Image, phaseB2Image, linePhaseB1, linePhaseB2));
-        phaseCButton.setOnAction(_ -> changeColorPhaseLine(phaseCButton, phaseC1Image, phaseC2Image, linePhaseC1, linePhaseC2));
 
-        //Метод по изменению положения КЗ и земли
-        shortCircuitLocationButton.setOnAction(_ -> changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton,
-                imageShortCircuit, imageGround));
-
-
-        startButton.setOnAction(event -> {
-            try {
-                goToStartScreen(event);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
 //тестовая функция по блокировке кнопок при возвращении из 100 формы
         // Проверяем, откуда был выполнен переход
-        if (isFromCheckingStartConditions()) {
+        if (InterfaceElementsLogic.isFromCheckingStartConditions()) {
             workForms();
+        }
+
+
+//Измененные методы с FXML
+        //методы по переходу на другие формы
+        startButton.setOnAction(this::goToStartScreen);
+        toMenuButton.setOnAction(this::goToMenu);
+
+        //Методы выбора обмоток Трансформатора
+        windingOneConnection.setOnAction(event -> setPictureForWindingOne());
+        windingTwoConnection.setOnAction(event -> setPictureForWindingTwo());
+
+        // Методы по смене положения контактов
+        contactOneButton.setOnAction(event -> setPictureForContactOne());
+        contactTwoButton.setOnAction(event -> setPictureForContactTwo());
+
+        // Метод по очистке экрана
+        cleanButton.setOnAction(event -> clearAllButton());
+
+        // Метод для кнопки выбора питающей обмотки
+        feedingWindingButton.setOnAction(this::changeFeedWind);
+
+
+
+        phaseA = new PhaseLines(linePhaseA1, linePhaseA2, phaseA1Image, phaseA2Image, Color.BLACK, Color.RED, 5.0, 8.0);
+        phaseB = new PhaseLines(linePhaseB1, linePhaseB2, phaseB1Image, phaseB2Image, Color.BLACK, Color.RED, 5.0, 8.0);
+        phaseC = new PhaseLines(linePhaseC1, linePhaseC2, phaseC1Image, phaseC2Image, Color.BLACK, Color.RED, 5.0, 8.0);
+        shortCircuitLocationButton.setOnAction(this::handleShortCircuitLocation);
+        phaseAButton.setOnAction(this::handlePhaseAButton);
+    }
+
+
+
+    // Обработчик для кнопки фазы A
+    private void handlePhaseAButton(ActionEvent event) {
+        boolean isSelected = phaseAButton.isSelected();
+
+        // Обновляем стиль линий
+        updateLineStyle(linePhaseA1, isSelected);
+        updateLineStyle(linePhaseA2, isSelected);
+
+        // Обновляем видимость стрелок
+        phaseA1Image.setVisible(isSelected);
+        phaseA2Image.setVisible(isSelected);
+    }
+
+    // Обработчик для кнопки перемещения молнии
+    private void handleShortCircuitLocation(ActionEvent event) {
+        currentShortCircuitPosition = (currentShortCircuitPosition + 1) % 3;
+
+        switch(currentShortCircuitPosition) {
+            case 0 -> setShortCircuitPosition(41, 121, 180, 19, 547);  // Слева
+            case 1 -> setShortCircuitPosition(860, 121, 0, 887, 547);  // Справа
+            case 2 -> setShortCircuitPosition(464, 222, 180, 449, 497); // Центр
         }
     }
 
-    @FXML
-    public void goToMainScreen(ActionEvent event) throws IOException {
-        switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+//--- Вспомогательные методы ---//
+
+    // Устанавливает стиль для линии
+    private void updateLineStyle(Line line, boolean isSelected) {
+        line.setStroke(isSelected ? Color.RED : Color.BLACK);
+        line.setStrokeWidth(isSelected ? 3.0 : 1.0);
     }
 
-//    @FXML
-    public void goToStartScreen(ActionEvent event) throws IOException {
+    // Устанавливает позицию молнии и земли
+    private void setShortCircuitPosition(double scX, double scY, double rotate,
+                                         double groundX, double groundY) {
+        imageShortCircuit.setLayoutX(scX);
+        imageShortCircuit.setLayoutY(scY);
+        imageShortCircuit.setRotate(rotate);
+        imageGround.setLayoutX(groundX);
+        imageGround.setLayoutY(groundY);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Методы переходов на другие формы
+    // Переход в старт
+    public void goToStartScreen(ActionEvent event) {
         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
         Buffer.setPreviousPage("7.DifProtection.fxml");
     }
 
-    @FXML
+    //Переход в меню
+    private void goToMenu(ActionEvent event) {
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+    }
+
+    //Метод по смене обмоток трансформатора
     public void setPictureForWindingOne() {
         windingOneStatus = commonMethodForPositionPicturesButtons(windingOneView, windingOneStatus, starConnection, deltaConnection);
     }
 
-    @FXML
+    //Метод по смене цвета индикатора при наведении мыши
+
     public void setPictureForWindingTwo() {
         windingTwoStatus = commonMethodForPositionPicturesButtons(windingTwoView, windingTwoStatus, starConnection, deltaConnection);
     }
 
-    //Методы для настройки кнопок выбора контактов
-    @FXML
     public void setPictureForContactOne() {
         contactOne.setEnabled();
         switch (contactOne.getContactPosition()) {
@@ -354,7 +391,6 @@ public class _7_DifProtectionScreenController {
         }
     }
 
-    @FXML
     public void setPictureForContactTwo() {
         contactTwo.setEnabled();
         switch (contactTwo.getContactPosition()) {
@@ -363,8 +399,6 @@ public class _7_DifProtectionScreenController {
         }
     }
 
-    //Метод по смене цвета индикатора при наведении мыши
-    @FXML
     public void blinkingIndicator() {
         indicatorContactOne.setOnMouseEntered(_ -> indicatorContactOne.setFill(Color.RED));
         indicatorContactOne.setOnMouseExited(_ -> indicatorContactOne.setFill(Color.GREEN));
@@ -374,38 +408,32 @@ public class _7_DifProtectionScreenController {
     }
 
     //Метод для кнопки по смене питающей обмотки
-    @FXML
-    public void changeFeedWind(ActionEvent event){
+    public void changeFeedWind(ActionEvent event) {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
         if (toggleButton.getUserData() == null) {
             toggleButton.setUserData("activated");
         }
-        changeFeedingWinding(feedingWindingButton, feedingOne, feedingTwo);
+        changeFeedingWinding(feedingWindingButton, windingOne, windingTwo);
     }
 
     //Метод по очистке всего введенного
-    @FXML
-    public void clearAllButton(){
+    public void clearAllButton() {
         clearAll(mainPane);
     }
 
     //Метод по очистке окна
-    private void clearAll(Node node){
+    private void clearAll(Node node) {
         //Очищаем текстовые поля TextField
         if (node instanceof TextInputControl) {
             ((TextInputControl) node).clear();
         }
 
         //Очищаем кнопки (ToggleButton) в дефолтное состояние
-        else if (node instanceof ToggleButton toggleButton){
+        else if (node instanceof ToggleButton toggleButton) {
             toggleButton.setUserData(null);
             toggleButton.setSelected(false);
-            changeFeedingWinding(feedingWindingButton, feedingOne, feedingTwo);
-            changeColorPhaseLine(phaseAButton, phaseA1Image, phaseA2Image, linePhaseA1, linePhaseA2);
-            changeColorPhaseLine(phaseBButton, phaseB1Image, phaseB2Image, linePhaseB1, linePhaseB2);
-            changeColorPhaseLine(phaseCButton, phaseC1Image, phaseC2Image, linePhaseC1, linePhaseC2);
+            changeFeedingWinding(feedingWindingButton, windingOne, windingTwo);
             ground();
-            changeShortCircuitLocation(feedingWindingButton, shortCircuitLocationButton, imageShortCircuit, imageGround);
         }
 
         //рекурсивный метод для очистки
@@ -444,90 +472,16 @@ public class _7_DifProtectionScreenController {
         if (toggleButton.isSelected()) {
             circle1.setStroke(Color.GREEN);
             circle2.setStroke(Color.BLUE);
-        } else{
+        } else {
             circle1.setStroke(Color.BLUE);
             circle2.setStroke(Color.GREEN);
-       }
+        }
     }
 
     //Метод выделяющий цветом выбранную линию.
-    private void changeColorPhaseLine(ToggleButton toggleButton, ImageView imageView1, ImageView imageView2, Line line1, Line line2) {
-        commonMethodForRightSideButtons(toggleButton);
-        imageView1.setImage(arrows);
-        imageView2.setImage(arrows);
-        if (toggleButton.isSelected()) {
-            imageView1.setVisible(true);
-            imageView2.setVisible(true);
-
-            line1.setStroke(Color.RED);
-            line1.setStrokeWidth(8.0);
-            line2.setStroke(Color.RED);
-            line2.setStrokeWidth(8.0);
-        } else{
-            imageView1.setVisible(false);
-            imageView2.setVisible(false);
-
-            line1.setStroke(Color.BLACK);
-            line1.setStrokeWidth(5.0);
-            line2.setStroke(Color.BLACK);
-            line2.setStrokeWidth(5.0);
-        }
-    }
-
-    //метод для выбора КЗ.
-    private void changeShortCircuitLocation(ToggleButton button1, ToggleButton button2, ImageView imageView1, ImageView imageView2) {
-        commonMethodForRightSideButtons(button2, "ВНУТРЕННЕЕ КЗ", "ВНЕШНЕЕ КЗ");
-        imageView1.setVisible(true);
-        if (button1.getUserData() == null){
-            imageView1.setVisible(false);
-            button2.setText("");
-            setupRightSideButtons(button2);
-        }
-        if (!button1.isSelected() && !button2.isSelected()) {
-            // Слева: F1, F2
-            //Смена расположения молнии
-            imageView1.setImage(shortCircuitYellow);
-            imageView1.setLayoutX(41);
-            imageView1.setLayoutY(121);
-            imageView1.setRotate(180);
-            //смена расположения земли
-            imageView2.setLayoutX(19);
-            imageView2.setLayoutY(547);
-            //смена направления стрелочек
-            phaseA1Image.setRotate(0);
-            phaseB1Image.setRotate(0);
-            phaseC1Image.setRotate(0);
-        } else if (button1.isSelected() && !button2.isSelected()) {
-            // Справа: T1, F2
-            //Смена расположения молнии
-            imageView1.setImage(shortCircuitYellow);
-            imageView1.setLayoutX(860);
-            imageView1.setLayoutY(121);
-            imageView1.setRotate(0);
-            //смена направления стрелочек
-            imageView2.setLayoutX(887);
-            imageView2.setLayoutY(547);
-            //смена направления стрелочек
-            phaseA2Image.setRotate(180);
-            phaseB2Image.setRotate(180);
-            phaseC2Image.setRotate(180);
-        } else {
-            // По центру: T1, T2 или F1, T2
-            imageView1.setImage(shortCircuitYellow);
-            imageView1.setLayoutX(464);
-            imageView1.setLayoutY(222);
-            imageView1.setRotate(180);
-            //смена расположения земли
-            imageView2.setLayoutX(449);
-            imageView2.setLayoutY(497);
-            //смена направления стрелочек
-            phaseA1Image.setRotate(180);
-            phaseB1Image.setRotate(180);
-            phaseC1Image.setRotate(180);
-            phaseA2Image.setRotate(0);
-            phaseB2Image.setRotate(0);
-            phaseC2Image.setRotate(0);
-        }
+    private void changeColorPhaseLine(ToggleButton button, PhaseLines phase) {
+        commonMethodForRightSideButtons(button);
+        phase.setSelected(button.isSelected());
     }
 
     //Метод по отображению значка земли по нажатию кнопки
@@ -539,37 +493,27 @@ public class _7_DifProtectionScreenController {
 
     //метод для настройки кнопок в правой части окна сценария диф.защиты
     public void setupRightSideButtons(ToggleButton button) {
-        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
-                button);
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK, 3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0, button);
     }
 
     //метод для изменения выделения кнопок в правой части окна сценария диф.защиты
     public void changeColorRightSideButtons(ToggleButton button) {
-        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.ORANGE,
-                3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
-                button);
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.ORANGE, 3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0, button);
     }
 
     //Метод для настройки параметров текстового поля с названием объекта
     public void setupObjectNameField(TextField textField, String prompt) {
-        InterfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.BLACK, 20, 0, textField,
-                prompt);
+        InterfaceElementsSettings.textFieldSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK, 3, 17, 15, ApplicationConstants.colours.BLACK, 20, 0, textField, prompt);
     }
 
     //Метод для настройки кнопок соединения обмоток и контактов
     public void setupConnectionSchemesButtons(Button button, ImageView imageView, int width, int height) {
-        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.WHITE, 0,
-                imageView, null, button, width, height, false);
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK, 3, 17, 15, ApplicationConstants.colours.WHITE, 0, imageView, null, button, width, height, false);
     }
 
     //Метод для настройки кнопок номеров групп
     public void setupConnectionSchemesButtons(Button button) {
-        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.BLACK, 42,
-                0, button);
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK, 3, 17, 15, ApplicationConstants.colours.BLACK, 42, 0, button);
     }
 
     //Метод для блокировок кнопок в начале работы
@@ -618,8 +562,7 @@ public class _7_DifProtectionScreenController {
      * @param imageIfTrue  картинка в первом положении
      * @param imageIfFalse картинка во втором положении
      */
-    private boolean commonMethodForPositionPicturesButtons(ImageView imageView, boolean status, Image imageIfTrue,
-                                                           Image imageIfFalse) {
+    private boolean commonMethodForPositionPicturesButtons(ImageView imageView, boolean status, Image imageIfTrue, Image imageIfFalse) {
         imageView.setVisible(true);
         if (status) {
             imageView.setImage(imageIfTrue);
@@ -653,8 +596,7 @@ public class _7_DifProtectionScreenController {
      * @param textIfSelected    текст на кнопке при нажатом положении
      * @param textIfNotSelected текст на кнопке при отжатом положении
      */
-    private void commonMethodForRightSideButtons(ToggleButton toggleButton, String textIfSelected,
-                                                 String textIfNotSelected) {
+    private void commonMethodForRightSideButtons(ToggleButton toggleButton, String textIfSelected, String textIfNotSelected) {
         if (toggleButton.isSelected()) {
             toggleButton.setText(textIfSelected);
             setupRightSideButtons(toggleButton);
@@ -663,21 +605,6 @@ public class _7_DifProtectionScreenController {
             changeColorRightSideButtons(toggleButton);
         }
     }
-
-    //Тестовый метод для проверки работы кнопки
-    public void testClick() {
-        System.out.println("Кнопка работает");
-    }
-
-
-
-
-    
-    
-    
-
-
-
 
     /**
      * Блок методов определяющий работу формы после перехода из формы проверок.
@@ -692,27 +619,24 @@ public class _7_DifProtectionScreenController {
         startLightingAnimation();
         // Создаем задержку на 5 секунд
         PauseTransition pause = new PauseTransition(Duration.seconds(5));
-        pause.setOnFinished(_ -> {stopLightningAnimation(); lockAll(false);});
+        pause.setOnFinished(_ -> {
+            stopLightningAnimation();
+            lockAll(false);
+        });
         pause.play();
-
-
     }
 
     //Общий метод по обходу всех элементов и блокировки их.
     private void lockAll(boolean lock) {
-        InterfaceElementsLogic.walk(
-                mainPane,
-                lock,
-                (node, shouldDisable) -> {
-                    if (node instanceof Control) {
-                        ((Control) node).setDisable(shouldDisable);
-                    }
-                },
-                node -> "startButton".equals(node.getId()));
+        InterfaceElementsLogic.walk(mainPane, lock, (node, shouldDisable) -> {
+            if (node instanceof Control) {
+                ((Control) node).setDisable(shouldDisable);
+            }
+        }, node -> "startButton".equals(node.getId()));
 
 
         //Метод по изменению названий кнопок
-        if (lock){
+        if (lock) {
             toMenuButton.setText("");
             startButton.setText("СТОП");
             cleanButton.setText("");
@@ -732,10 +656,7 @@ public class _7_DifProtectionScreenController {
     //Тестовая функция по анимации картинок
     private void startLightingAnimation() {
         // Создаем Timeline для смены картинок каждые 0.5 секунд
-        timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), _ -> imageShortCircuit.setImage(shortCircuitYellow)),
-                new KeyFrame(Duration.seconds(0.3), _ -> imageShortCircuit.setImage(shortCircuitRed)),
-                new KeyFrame(Duration.seconds(0.6), _ -> imageShortCircuit.setImage(shortCircuitYellow)));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0), _ -> imageShortCircuit.setImage(shortCircuitYellow)), new KeyFrame(Duration.seconds(0.3), _ -> imageShortCircuit.setImage(shortCircuitRed)), new KeyFrame(Duration.seconds(0.6), _ -> imageShortCircuit.setImage(shortCircuitYellow)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
@@ -747,4 +668,8 @@ public class _7_DifProtectionScreenController {
         }
     }
 
+    //Тестовый метод для проверки работы кнопки
+    public void testClick() {
+        System.out.println("Кнопка работает");
+    }
 }
