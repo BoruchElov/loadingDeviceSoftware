@@ -227,7 +227,33 @@ public class InterfaceElementsSettings {
 
 
     }
+    public static void buttonSettings(ApplicationConstants.basicColours colourOfBackground,
+                                      ApplicationConstants.basicColours colourOfBorder,
+                                      int borderWidth, int backgroundRadius,
+                                      int borderRadius, ApplicationConstants.basicColours colourOfText,
+                                      int fontSize, ButtonBase button) {
 
+        String backgroundColour = setColour(colourOfBackground);
+        String borderColour = setColour(colourOfBorder);
+
+        String widthOfBorder = setIntToText(borderWidth);
+        String radiusOfBackground = setIntToText(backgroundRadius);
+        String radiusOfBorder = setIntToText(borderRadius);
+
+        String textColour = setColour(colourOfText);
+        String sizeOfFont = setIntToText(fontSize);
+
+        button.setStyle("-fx-background-color:" + backgroundColour + // Цвет фона
+                "-fx-border-color:" + borderColour + // Цвет границы
+                "-fx-border-width:" + widthOfBorder + // Ширина границы
+                "-fx-background-radius:" + radiusOfBackground + // Закругление фона
+                "-fx-border-radius:" + radiusOfBorder + // Закругление границы
+                "-fx-text-fill:" + textColour +   // Цвет текста
+                "-fx-font-size:" + sizeOfFont +        // Размер текста
+                "-fx-font-family: " + ApplicationConstants.FONT_NAME + "; "   // Шрифт текста
+        );
+    }
+    //TODO Удалить после рефакторинга
     /**
      * <p>Данная версия метода <code>buttonSettings</code> предназначена для настройки объектов типа <code>Button</code>
      * и <code>ToggleButton</code> в случае, если на кнопке необходимо расположить только текст.</p>
@@ -441,6 +467,17 @@ public class InterfaceElementsSettings {
                 default -> ApplicationConstants.WHITE_WORD;
             } + "; ";
         }
+    }
+
+    public static String setColour(ApplicationConstants.basicColours colours) {
+            return " " + switch (colours) {
+                case WHITE -> ApplicationConstants.White;
+                case BLACK -> ApplicationConstants.Black;
+                case GREEN -> ApplicationConstants.Green;
+                case GRAY -> ApplicationConstants.Gray;
+                case BLUE -> ApplicationConstants.Blue;
+                case RED -> ApplicationConstants.Red;
+            } + "; ";
     }
 
     /**

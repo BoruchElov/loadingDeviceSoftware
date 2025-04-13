@@ -31,10 +31,22 @@ public class ApplicationConstants {
         BLACK, BLUE, LIGHT_BLUE, WHITE, ORANGE
     }
 
+    public enum basicColours {
+        WHITE, BLACK, GREEN, GRAY, BLUE, RED
+    }
+
+    public static final String White = "FFFFFF";
+    public static String Black = "000000";
+    public static String Green = "6AB74D";
+    public static String Gray = "CBCCCB";
+    public static String Blue = "005286";
+    public static String Red = "D9232A";
+
     //Размеры окна приложения
     public static final int APPLICATION_WINDOW_LENGTH = 1280;
     public static final int APPLICATION_WINDOW_HEIGHT = 800;
 
+    //TODO Убрать после рефакторинга
     //Константы для цветов интерфейса
     public static final String BLACK_HEX = "#221E1F";
     public static final String BLUE_HEX = "#0F5D9C";
