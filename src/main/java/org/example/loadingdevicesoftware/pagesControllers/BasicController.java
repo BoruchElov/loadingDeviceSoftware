@@ -33,7 +33,7 @@ class BasicController {
 
     @FXML
     public void initialize() {
-        menuButton = new BasicButton(BasicButton.Presets.CLEAR);
+        menuButton.setup();
         menuButton.setOnAction(event -> {
             try {
                 toMenu(event);

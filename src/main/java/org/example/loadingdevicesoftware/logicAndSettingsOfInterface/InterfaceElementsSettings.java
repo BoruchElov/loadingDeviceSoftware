@@ -240,7 +240,8 @@ public class InterfaceElementsSettings {
         String radiusOfBackground = setIntToText(backgroundRadius);
         String radiusOfBorder = setIntToText(borderRadius);
 
-        String textColour = setColour(colourOfText);
+        //String textColour = setColour(colourOfText);
+        String textColour = " black;";
         String sizeOfFont = setIntToText(fontSize);
 
         button.setStyle("-fx-background-color:" + backgroundColour + // Цвет фона

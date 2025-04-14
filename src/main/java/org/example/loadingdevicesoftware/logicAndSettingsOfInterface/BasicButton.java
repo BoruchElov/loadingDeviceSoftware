@@ -28,14 +28,14 @@ public class BasicButton extends Button {
         super();
     }
 
-    public BasicButton(String text, ApplicationConstants.basicColours backgroundColor,
+    /*public BasicButton(String text, ApplicationConstants.basicColours backgroundColor,
                        int width, int height) {
         super();
         setText(text);
         String color = InterfaceElementsSettings.setColour(backgroundColor);
         setStyle("-fx-background-color: " + backgroundColor);
         setPrefSize(width, height);
-    }
+    }*/
 
     public BasicButton(Presets preset) {
         super();
@@ -67,6 +67,15 @@ public class BasicButton extends Button {
             case MEDIUM -> new int[]{1, 0};
             case LARGE -> new int[]{210, 64};
         };
+    }
+
+    public void setup() {
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.basicColours.GRAY, ApplicationConstants.basicColours.BLACK,
+                50, 0, 0, ApplicationConstants.basicColours.BLACK,
+                12, this);
+        setText("ОЧИСТИТЬ");
+        setMeasures(Size.LARGE);
+        setPrefSize(measures[0], measures[1]);
     }
 
 
