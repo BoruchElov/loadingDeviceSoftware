@@ -35,16 +35,20 @@ public class ApplicationConstants {
         WHITE, BLACK, GREEN, GRAY, BLUE, RED
     }
 
-    public static final String White = "FFFFFF";
-    public static String Black = "000000";
-    public static String Green = "6AB74D";
-    public static String Gray = "CBCCCB";
-    public static String Blue = "005286";
-    public static String Red = "D9232A";
+    public static final String White = "#FFFFFF";
+    public static String Black = "#000000";
+    public static String Green = "#6AB74D";
+    public static String Gray = "#CBCCCB";
+    public static String Blue = "#005286";
+    public static String Red = "#D9232A";
 
     //Размеры окна приложения
     public static final int APPLICATION_WINDOW_LENGTH = 1280;
     public static final int APPLICATION_WINDOW_HEIGHT = 800;
+
+    //Размеры кнопок {ширина, высота}
+    public static final int[] SMALL_MEASURES = new int[]{60, 70};
+    public static final int[] NORMAL_MEASURES = new int[]{200, 70};
 
     //TODO Убрать после рефакторинга
     //Константы для цветов интерфейса
@@ -57,6 +61,8 @@ public class ApplicationConstants {
     public static final String WHITE_WORD = "white";
     //Константы для текста
     public static final String FONT_NAME = "Myriad Pro";
+    //Текст на новых кнопках
+    public static final String NEW_FONT_NAME = "PF Din Text Cond Pro";
     //Шрифт для сохранения файла
     public static final Font EXPORT_FONT;
     static {
@@ -84,4 +90,6 @@ public class ApplicationConstants {
     public static final Image NORMALLY_OPENED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/иконкаНормРазомкКонт.png")).toExternalForm());
 
+    public static final Image NEW_BACKGROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/New_Background.png")).toExternalForm());
 }

@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import lombok.Getter;
 import lombok.Setter;
 
+
 public class BasicButton extends Button {
 
     @Getter
@@ -17,7 +18,7 @@ public class BasicButton extends Button {
     }
 
     private enum Size {
-        SMALL, MEDIUM, LARGE
+        SMALL, NORMAL
     }
 
     public enum Presets {
@@ -28,34 +29,38 @@ public class BasicButton extends Button {
         super();
     }
 
-    /*public BasicButton(String text, ApplicationConstants.basicColours backgroundColor,
-                       int width, int height) {
-        super();
-        setText(text);
-        String color = InterfaceElementsSettings.setColour(backgroundColor);
-        setStyle("-fx-background-color: " + backgroundColor);
-        setPrefSize(width, height);
-    }*/
-
-    public BasicButton(Presets preset) {
-        super();
+    public void setup (Presets preset) {
         switch (preset) {
             case CLEAR:
-                InterfaceElementsSettings.buttonSettings(ApplicationConstants.basicColours.GRAY, ApplicationConstants.basicColours.BLACK,
-                        1, 0, 0, ApplicationConstants.basicColours.BLACK,
-                        12, this);
+                InterfaceElementsSettings.buttonSettings(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE,
+                        2, 0, 0, ApplicationConstants.basicColours.WHITE,
+                        28, true, this);
                 setText("ОЧИСТИТЬ");
-                setMeasures(Size.LARGE);
+                setMeasures(Size.NORMAL);
+                setPrefSize(measures[0], measures[1]);
                 break;
             case SAVE:
             case CONTINUE:
             case FINISH:
                 break;
             case MENU:
+                InterfaceElementsSettings.buttonSettings(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE,
+                        2, 0, 0, ApplicationConstants.basicColours.WHITE,
+                        28, true, this);
+                setText("МЕНЮ");
+                setMeasures(Size.NORMAL);
+                setPrefSize(measures[0], measures[1]);
+                break;
             case STOP:
             case START:
+                InterfaceElementsSettings.buttonSettings(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE,
+                        2, 0, 0, ApplicationConstants.basicColours.WHITE,
+                        28, true, this);
+                setText("ПУСК");
+                setMeasures(Size.NORMAL);
+                setPrefSize(measures[0], measures[1]);
+                break;
             case CANCEL:
-                setMeasures(Size.MEDIUM);
                 break;
         }
         setPrefSize(measures[0], measures[1]);
@@ -63,20 +68,17 @@ public class BasicButton extends Button {
 
     private void setMeasures(Size size) {
         measures = switch (size) {
-            case SMALL -> new int[]{0, 1};
-            case MEDIUM -> new int[]{1, 0};
-            case LARGE -> new int[]{210, 64};
+            case SMALL -> ApplicationConstants.SMALL_MEASURES;
+            case NORMAL -> ApplicationConstants.NORMAL_MEASURES;
         };
     }
 
     public void setup() {
-        InterfaceElementsSettings.buttonSettings(ApplicationConstants.basicColours.GRAY, ApplicationConstants.basicColours.BLACK,
-                50, 0, 0, ApplicationConstants.basicColours.BLACK,
-                12, this);
+        InterfaceElementsSettings.buttonSettings(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE,
+                2, 0, 0, ApplicationConstants.basicColours.WHITE,
+                24, true, this);
         setText("ОЧИСТИТЬ");
-        setMeasures(Size.LARGE);
+        setMeasures(Size.NORMAL);
         setPrefSize(measures[0], measures[1]);
     }
-
-
 }

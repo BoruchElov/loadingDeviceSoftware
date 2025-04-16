@@ -231,27 +231,28 @@ public class InterfaceElementsSettings {
                                       ApplicationConstants.basicColours colourOfBorder,
                                       int borderWidth, int backgroundRadius,
                                       int borderRadius, ApplicationConstants.basicColours colourOfText,
-                                      int fontSize, ButtonBase button) {
+                                      int fontSize, boolean isBold, ButtonBase button) {
 
-        String backgroundColour = setColour(colourOfBackground);
-        String borderColour = setColour(colourOfBorder);
+        String backgroundColour = setColours(colourOfBackground, true);
+        String borderColour = setColours(colourOfBorder, true);
 
         String widthOfBorder = setIntToText(borderWidth);
         String radiusOfBackground = setIntToText(backgroundRadius);
         String radiusOfBorder = setIntToText(borderRadius);
+        String boldText = (isBold) ? "-fx-font-weight: bold;" : "";
 
-        //String textColour = setColour(colourOfText);
-        String textColour = " black;";
+        String textColour = setColours(colourOfText, false);
         String sizeOfFont = setIntToText(fontSize);
 
         button.setStyle("-fx-background-color:" + backgroundColour + // Цвет фона
-                "-fx-border-color:" + borderColour + // Цвет границы
+                "-fx-border-color: " + borderColour + // Цвет границы
                 "-fx-border-width:" + widthOfBorder + // Ширина границы
                 "-fx-background-radius:" + radiusOfBackground + // Закругление фона
                 "-fx-border-radius:" + radiusOfBorder + // Закругление границы
                 "-fx-text-fill:" + textColour +   // Цвет текста
                 "-fx-font-size:" + sizeOfFont +        // Размер текста
-                "-fx-font-family: " + ApplicationConstants.FONT_NAME + "; "   // Шрифт текста
+                "-fx-font-family: " + ApplicationConstants.NEW_FONT_NAME + "; " + // Шрифт текста
+                boldText
         );
     }
     //TODO Удалить после рефакторинга
@@ -470,7 +471,8 @@ public class InterfaceElementsSettings {
         }
     }
 
-    public static String setColour(ApplicationConstants.basicColours colours) {
+    public static String setColours(ApplicationConstants.basicColours colours, boolean isHex) {
+        if (isHex) {
             return " " + switch (colours) {
                 case WHITE -> ApplicationConstants.White;
                 case BLACK -> ApplicationConstants.Black;
@@ -479,6 +481,12 @@ public class InterfaceElementsSettings {
                 case BLUE -> ApplicationConstants.Blue;
                 case RED -> ApplicationConstants.Red;
             } + "; ";
+        } else {
+            return " " + switch (colours) {
+                case BLACK -> ApplicationConstants.BLACK_WORD;
+                default -> ApplicationConstants.WHITE_WORD;
+            } + "; ";
+        }
     }
 
     /**
