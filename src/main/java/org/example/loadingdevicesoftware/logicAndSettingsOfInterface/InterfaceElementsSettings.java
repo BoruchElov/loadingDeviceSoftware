@@ -255,6 +255,15 @@ public class InterfaceElementsSettings {
                 boldText
         );
     }
+    public static void buttonSettings(ApplicationConstants.basicColours colourOfBackground, ButtonBase button,
+                                      String text, boolean toDisable) {
+
+        String backgroundColour = setColours(colourOfBackground, true);
+        button.setStyle("-fx-background-color:" + backgroundColour);
+
+        button.setText(text);
+        button.setDisable(toDisable);
+    }
     //TODO Удалить после рефакторинга
     /**
      * <p>Данная версия метода <code>buttonSettings</code> предназначена для настройки объектов типа <code>Button</code>

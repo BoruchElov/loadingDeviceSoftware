@@ -68,6 +68,7 @@ class BasicController {
         });
         startButton.setup(BasicButton.Presets.START);
         clearButton.setup(BasicButton.Presets.CLEAR);
+        clearButton.setDisable(true);
 
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
         dateTimeText.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME, FontWeight.BOLD, 30));
