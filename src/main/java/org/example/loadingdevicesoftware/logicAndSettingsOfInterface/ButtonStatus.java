@@ -24,14 +24,9 @@ public class ButtonStatus {
     private ApplicationConstants.basicColours[] colours;
     private String[] texts;
 
-    public ButtonStatus(ApplicationConstants.basicColours colourNormal, String textNormal,
-                        ApplicationConstants.basicColours colourLocked, String textLocked,
-                        ApplicationConstants.basicColours colourEnabled, String textEnabled,
-                        ApplicationConstants.basicColours colourWarning, String textWarning,
-                        ApplicationConstants.basicColours colourDefault, String textDefault) {
+    public ButtonStatus(String textNormal, String textLocked, String textEnabled, String textWarning,
+                        String textDefault) {
 
-        colours = new ApplicationConstants.basicColours[]{colourNormal, colourLocked, colourEnabled,
-                colourWarning, colourDefault};
         texts = new String[]{textNormal, textLocked, textEnabled, textWarning, textDefault};
 
     }
@@ -40,19 +35,29 @@ public class ButtonStatus {
         this.status = status;
         switch (status) {
             case NORMAL:
-                InterfaceElementsSettings.buttonSettings(colours[0], button, texts[0], false);
+                button.getStyleClass().addAll("button-common", "button-low-normal");
+                button.setText(texts[0]);
+                button.setDisable(false);
                 break;
             case LOCKED:
-                InterfaceElementsSettings.buttonSettings(colours[1], button, texts[1], true);
+                button.getStyleClass().addAll("button-common", "button-low-locked");
+                button.setText(texts[1]);
+                button.setDisable(true);
                 break;
             case ENABLED:
-                InterfaceElementsSettings.buttonSettings(colours[2], button, texts[2], false);
+                button.getStyleClass().addAll("button-common", "button-low-enabled");
+                button.setText(texts[2]);
+                button.setDisable(false);
                 break;
             case WARNING:
-                InterfaceElementsSettings.buttonSettings(colours[3], button, texts[3], false);
+                button.getStyleClass().addAll("button-common", "button-low-warning");
+                button.setText(texts[3]);
+                button.setDisable(false);
                 break;
             case DEFAULT:
-                InterfaceElementsSettings.buttonSettings(colours[4], button, texts[4], false);
+                button.getStyleClass().addAll("button-common", "button-low-default");
+                button.setText(texts[4]);
+                button.setDisable(false);
                 break;
         }
     }

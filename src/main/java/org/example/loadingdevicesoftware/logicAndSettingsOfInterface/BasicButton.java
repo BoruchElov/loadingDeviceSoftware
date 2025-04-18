@@ -39,8 +39,17 @@ public class BasicButton extends Button {
         setMeasures(buttonSize);
         setPrefSize(measures[0], measures[1]);
         setText(text);
-        actualStatus = new ButtonStatus(colours[0], texts[0], colours[1], texts[1], colours[2], texts[2],
-                colours[3], texts[3], colours[4], texts[4]);
+        actualStatus = new ButtonStatus(texts[0], texts[1], texts[2], texts[3], texts[4]);
+    }
+
+    public void setup (String normalStyle, String lockedStyle, String enabledStyle, String warningStyle, String defaultStyle,
+                       String normalText, String lockedText, String enabledText, String warningText, String defaultText,
+                       Size buttonSize) {
+
+        /*setMeasures(buttonSize);
+        setPrefSize(measures[0], measures[1]);*/
+        setText(defaultText);
+
     }
 
     public void setup(Presets preset) {
@@ -49,67 +58,35 @@ public class BasicButton extends Button {
         switch (preset) {
             case CLEAR:
                 text = "ОЧИСТИТЬ";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
             case SAVE:
                 text = "СОХРАНИТЬ";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
             case CONTINUE:
                 text = "ПРОДОЛЖИТЬ";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
             case FINISH:
                 text = "ЗАКОНЧИТЬ";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
             case MENU:
                 text = "МЕНЮ";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
             case STOP:
                 text = "ОСТАНОВИТЬ";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
             case START:
                 text = "ПУСК";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
             case CANCEL:
                 text = "ОТМЕНА";
-                setup(ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.WHITE, 2, Size.NORMAL,
-                        ApplicationConstants.basicColours.WHITE, 28, true, text, new ApplicationConstants.basicColours[]{
-                                ApplicationConstants.basicColours.BLUE, ApplicationConstants.basicColours.BLUE,
-                                ApplicationConstants.basicColours.GREEN, ApplicationConstants.basicColours.RED,
-                                ApplicationConstants.basicColours.BLUE}, new String[]{text, text, text, text, text});
+
                 break;
         }
     }

@@ -21,6 +21,7 @@ public class ApplicationFile extends Application {
                 getResource("test.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), ApplicationConstants.APPLICATION_WINDOW_LENGTH,
                 ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
+        scene.getStylesheets().add(ApplicationFile.class.getResource("applicationStyle.css").toExternalForm());
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().
                 getResource("/images/control-system.png")).toExternalForm()));
         stage.setResizable(false);
