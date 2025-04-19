@@ -67,8 +67,10 @@ class BasicController {
             }
         });
         startButton.setup(BasicButton.Presets.START);
+        startButton.changeActualStatus(BasicButton.Status.WARNING);
+        menuButton.changeActualStatus(BasicButton.Status.LOCKED);
         clearButton.setup(BasicButton.Presets.CLEAR);
-        clearButton.setDisable(true);
+        clearButton.setOnAction(event -> {clearAll(anchorPane);});
 
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
         dateTimeText.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME, FontWeight.BOLD, 30));
@@ -79,21 +81,11 @@ class BasicController {
 
     //Метод по очистке окна
     private void clearAll(Node node) {
-        //Очищаем текстовые поля TextField
-        if (node instanceof TextInputControl) {
-            ((TextInputControl) node).clear();
-        }
-
-        //Очищаем кнопки (ToggleButton) в дефолтное состояние
-        else if (node instanceof ToggleButton toggleButton) {
-            toggleButton.setUserData(null);
-            toggleButton.setSelected(false);
-        }
-
-        //рекурсивный метод для очистки
-        else if (node instanceof Pane) {
+        if (node instanceof Pane) {
             for (Node child : ((Pane) node).getChildren()) {
-                clearAll(child);
+                if (child instanceof BasicButton button && child != clearButton) {
+                    button.changeActualStatus(BasicButton.Status.DEFAULT);
+                }
             }
         }
     }

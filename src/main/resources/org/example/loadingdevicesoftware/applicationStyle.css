@@ -1,37 +1,69 @@
 .button-common {
-    -fx-border-color: #FFFFFF;
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
     -fx-font-family: "PF Din Text Cond Pro";
+    -fx-font-weight: bold;
+}
+.button-common:disabled {
+    -fx-opacity: 1.0;
+}
+.button-low-default {
+    -fx-border-color: #FFFFFF;
     -fx-pref-width: 200px; /* Желаемая ширина */
     -fx-pref-height: 70px; /* Желаемая высота */
     -fx-min-width: 200px; /* Минимальная ширина */
     -fx-min-height: 70px; /* Минимальная высота */
     -fx-max-width: 200px;
     -fx-max-height: 70px;
-}
-.button-low-default {
     -fx-background-color: #005286;
     -fx-font-size: 28;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-normal {
+    -fx-border-color: #FFFFFF;
+    -fx-pref-width: 200px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 200px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 200px;
+    -fx-max-height: 70px;
     -fx-background-color: #005286;
     -fx-font-size: 28;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-enabled {
+    -fx-border-color: #FFFFFF;
+    -fx-pref-width: 200px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 200px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 200px;
+    -fx-max-height: 70px;
     -fx-background-color: #6AB74D;
     -fx-font-size: 28;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-warning {
+    -fx-border-color: #FFFFFF;
+    -fx-pref-width: 200px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 200px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 200px;
+    -fx-max-height: 70px;
     -fx-background-color: #D9232A;
     -fx-font-size: 28;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-locked {
+    -fx-border-color: #FFFFFF;
+    -fx-pref-width: 200px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 200px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 200px;
+    -fx-max-height: 70px;
     -fx-background-color: #CBCCCB;
     -fx-font-size: 28;
     -fx-text-fill: #FFFFFF;

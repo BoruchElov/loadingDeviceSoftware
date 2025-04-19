@@ -11,8 +11,7 @@ public class BasicButton extends Button {
     private String state;
 
     ButtonStatus actualStatus;
-
-    private int[] measures;
+    ButtonPosition position;
 
     public enum Status {
         NORMAL, LOCKED, ENABLED, WARNING, DEFAULT
@@ -30,26 +29,12 @@ public class BasicButton extends Button {
         super();
     }
 
-    public void setup(ApplicationConstants.basicColours colourOfBackground, ApplicationConstants.basicColours colourOfBorder,
-                      int widthOfBorder, Size buttonSize, ApplicationConstants.basicColours colourOfText, int sizeOfFont,
-                      boolean isTextBold, String text, ApplicationConstants.basicColours[] colours, String[] texts) {
-        InterfaceElementsSettings.buttonSettings(colourOfBackground, colourOfBorder,
-                widthOfBorder, 0, 0, colourOfText,
-                sizeOfFont, isTextBold, this);
-        setMeasures(buttonSize);
-        setPrefSize(measures[0], measures[1]);
-        setText(text);
-        actualStatus = new ButtonStatus(texts[0], texts[1], texts[2], texts[3], texts[4]);
-    }
-
     public void setup (String normalStyle, String lockedStyle, String enabledStyle, String warningStyle, String defaultStyle,
-                       String normalText, String lockedText, String enabledText, String warningText, String defaultText,
-                       Size buttonSize) {
-
-        /*setMeasures(buttonSize);
-        setPrefSize(measures[0], measures[1]);*/
+                       String normalText, String lockedText, String enabledText, String warningText, String defaultText) {
+        actualStatus = new ButtonStatus(normalText, lockedText, enabledText, warningText, defaultText, normalStyle,
+                lockedStyle, enabledStyle, warningStyle, defaultStyle);
         setText(defaultText);
-
+        changeActualStatus(Status.DEFAULT);
     }
 
     public void setup(Presets preset) {
@@ -58,35 +43,43 @@ public class BasicButton extends Button {
         switch (preset) {
             case CLEAR:
                 text = "ОЧИСТИТЬ";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
             case SAVE:
                 text = "СОХРАНИТЬ";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
             case CONTINUE:
                 text = "ПРОДОЛЖИТЬ";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
             case FINISH:
                 text = "ЗАКОНЧИТЬ";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
             case MENU:
                 text = "МЕНЮ";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
             case STOP:
                 text = "ОСТАНОВИТЬ";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
             case START:
                 text = "ПУСК";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
             case CANCEL:
                 text = "ОТМЕНА";
-
+                setup("button-low-normal", "button-low-locked", "button-low-enabled",
+                        "button-low-warning", "button-low-default", text, text, text, text, text);
                 break;
         }
     }
@@ -95,10 +88,11 @@ public class BasicButton extends Button {
         actualStatus.setStatus(status, this);
     }
 
-    private void setMeasures(Size size) {
-        measures = switch (size) {
-            case SMALL -> ApplicationConstants.SMALL_MEASURES;
-            case NORMAL -> ApplicationConstants.NORMAL_MEASURES;
-        };
+    public void setupPositions(int positions, String basicStyle, String[] styles, String[] texts) {
+        position = new ButtonPosition(positions, basicStyle, styles, texts);
+    }
+
+    public void changePosition(int position) {
+        this.position.setActualPosition(position, this);
     }
 }

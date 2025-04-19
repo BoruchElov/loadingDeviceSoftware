@@ -53,7 +53,7 @@ public class DateTimeUpdater implements Runnable {
     }
 
     private void updateDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy   HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy        HH:mm");
         dateTimeProperty.set(LocalDateTime.now().format(formatter));
     }
 }
