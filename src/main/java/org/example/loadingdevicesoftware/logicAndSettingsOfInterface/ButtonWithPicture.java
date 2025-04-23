@@ -38,7 +38,7 @@ public class ButtonWithPicture extends BasicButton {
         setupButton(imageView, objectPosition.getImages()[actualPosition], backup);
     }
 
-    public void changeStatus(Status status) {
+    public void setActualStatus(Status status) {
         ObjectStatus.StatusOfObject newStatus = ObjectStatus.StatusOfObject.values()[status.ordinal()];
         objectStatus.setStatus(newStatus, this);
     }

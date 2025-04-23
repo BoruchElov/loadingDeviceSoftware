@@ -82,17 +82,19 @@ public class ObjectStatus {
         if (object instanceof ButtonWithPicture button) {
             actualPosition = button.objectPosition.getActualPosition();
             button.changePosition(actualPosition);
-        } else if (object instanceof TextField) {
-            object.getStyleClass().addAll("text-field", "text-input");
         }
         this.status = status.name();
         switch (status) {
             case NORMAL:
-                object.getStyleClass().addAll(basicStyle, styles[0]);
+                if (!(object instanceof SimpleTextField)) {
+                    object.getStyleClass().addAll(basicStyle, styles[0]);
+                }
                 object.setDisable(false);
                 break;
             case LOCKED:
-                object.getStyleClass().addAll(basicStyle, styles[1]);
+                if (!(object instanceof SimpleTextField)) {
+                    object.getStyleClass().addAll(basicStyle, styles[1]);
+                }
                 object.setDisable(true);
                 break;
         }

@@ -76,6 +76,18 @@
     -fx-border-color: #000000;
     -fx-border-width: 2;
     -fx-background-color: #FFFFFF;
+}
+.text-field {
+    -fx-border-width: 2;
+    -fx-border-color: #000000;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-font-family: "PF Din Text Cond Pro";
+    -fx-font-size: 24;
+    -fx-text-alignment: center;
+    -fx-text-fill: #000000;
+    -fx-background-color: #FFFFFF;
+
 
 }
 

@@ -9,10 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 
@@ -79,15 +76,42 @@ class BasicController {
 
     }
 
-    //Метод по очистке окна
-    private void clearAll(Node node) {
+    //Метод по очистке всех элементов окна приложения
+    private void clearAll (Node node) {
         if (node instanceof Pane) {
             for (Node child : ((Pane) node).getChildren()) {
                 if (child instanceof SimpleButton button && child != clearButton) {
                     button.setActualStatus(SimpleButton.Status.NORMAL);
+                    button.changePosition(0);
+                }
+                if (child instanceof SimpleTextField textField) {
+                    textField.clear();
+                }
+                if (child instanceof ButtonWithPicture button) {
+                    button.setActualStatus(ButtonWithPicture.Status.NORMAL);
+                    button.changePosition(0);
                 }
             }
         }
     }
+
+    //Метод по очистке всех элементов окна приложения
+    public void lockAll (Node node) {
+        if (node instanceof Pane) {
+            for (Node child : ((Pane) node).getChildren()) {
+                if (child instanceof SimpleButton button && child != clearButton) {
+                    button.setActualStatus(SimpleButton.Status.LOCKED);
+                }
+                if (child instanceof SimpleTextField textField) {
+                    textField.setActualStatus(SimpleTextField.Status.LOCKED);
+                }
+                if (child instanceof ButtonWithPicture button) {
+                    button.setActualStatus(ButtonWithPicture.Status.LOCKED);
+                }
+            }
+        }
+    }
+
+
 
 }
