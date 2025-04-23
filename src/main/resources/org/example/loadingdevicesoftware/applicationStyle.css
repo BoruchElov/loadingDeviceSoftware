@@ -68,4 +68,14 @@
     -fx-font-size: 28;
     -fx-text-fill: #FFFFFF;
 }
+.image-button {
+    -fx-content-display: graphic-only;
+    -fx-padding: 0px;
+    -fx-background-radius: 0px;
+    -fx-text-alignment: right;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+    -fx-background-color: #FFFFFF;
+
+}
 

@@ -2,8 +2,6 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -12,7 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.BasicButton;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
 
@@ -27,21 +25,21 @@ class BasicController {
     @FXML
     Text dateTimeText;
     @FXML
-    BasicButton clearButton;
+    SimpleButton clearButton;
     @FXML
-    BasicButton saveButton;
+    SimpleButton saveButton;
     @FXML
-    BasicButton menuButton;
+    SimpleButton menuButton;
     @FXML
-    BasicButton startButton;
+    SimpleButton startButton;
     @FXML
-    BasicButton cancelButton;
+    SimpleButton cancelButton;
     @FXML
-    BasicButton stopButton;
+    SimpleButton stopButton;
     @FXML
-    BasicButton continueButton;
+    SimpleButton continueButton;
     @FXML
-    BasicButton finishButton;
+    SimpleButton finishButton;
 
 
     @FXML
@@ -58,7 +56,7 @@ class BasicController {
         AnchorPane.setTopAnchor(clearButton, 695.0);
         AnchorPane.setLeftAnchor(clearButton, 770.0);
         //Визуальная настройка и привязка метода для кнопки МЕНЮ
-        menuButton.setup(BasicButton.Presets.MENU);
+        menuButton.setup(SimpleButton.Presets.MENU);
         menuButton.setOnAction(event -> {
             try {
                 InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
@@ -66,10 +64,11 @@ class BasicController {
                 throw new RuntimeException(e);
             }
         });
-        startButton.setup(BasicButton.Presets.START);
-        startButton.changeActualStatus(BasicButton.Status.WARNING);
-        menuButton.changeActualStatus(BasicButton.Status.LOCKED);
-        clearButton.setup(BasicButton.Presets.CLEAR);
+        startButton.setup(SimpleButton.Presets.START);
+        startButton.setActualStatus(SimpleButton.Status.WARNING);
+        menuButton.setActualStatus(SimpleButton.Status.LOCKED);
+        clearButton.setup(SimpleButton.Presets.CLEAR);
+        clearButton.setActualStatus(SimpleButton.Status.NORMAL);
         clearButton.setOnAction(event -> {clearAll(anchorPane);});
 
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
@@ -77,14 +76,15 @@ class BasicController {
         dateTimeText.setFill(Color.WHITE);
         AnchorPane.setTopAnchor(dateTimeText, 708.0);
         AnchorPane.setLeftAnchor(dateTimeText, 380.0);
+
     }
 
     //Метод по очистке окна
     private void clearAll(Node node) {
         if (node instanceof Pane) {
             for (Node child : ((Pane) node).getChildren()) {
-                if (child instanceof BasicButton button && child != clearButton) {
-                    button.changeActualStatus(BasicButton.Status.DEFAULT);
+                if (child instanceof SimpleButton button && child != clearButton) {
+                    button.setActualStatus(SimpleButton.Status.NORMAL);
                 }
             }
         }
