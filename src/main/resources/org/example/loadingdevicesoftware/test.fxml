@@ -8,13 +8,26 @@
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton?>
 <?import javafx.scene.text.Text?>
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture?>
+<?import javafx.scene.shape.Circle?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers.testController">
    <children>
       <SimpleButton fx:id="menuButton" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" text="Button" />
       <SimpleButton fx:id="startButton" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" text="Button" />
       <SimpleButton fx:id="clearButton" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" text="Button" />
       <ImageView fx:id="imageView" fitHeight="409.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
-      <ButtonWithPicture fx:id="buttonWithPicture" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" text="Button" />
+      <Circle fx:id="circleA1" />
+      <Circle fx:id="circleA2" />
+      <Circle fx:id="circleB1" />
+      <Circle fx:id="circleB2" />
+      <Circle fx:id="circleC1" />
+      <Circle fx:id="circleC2" />
       <Text fx:id = "dateTimeText"/>
+      <Text fx:id = "inverterA1"/>
+      <Text fx:id = "inverterB1"/>
+      <Text fx:id = "inverterC1"/>
+      <Text fx:id = "inverterA2"/>
+      <Text fx:id = "inverterB2"/>
+      <Text fx:id = "inverterC2"/>
+
    </children>
 </AnchorPane>

@@ -3,7 +3,7 @@ package org.example.loadingdevicesoftware.pagesControllers;
 import javafx.fxml.FXML;
 
 
-public class testController extends BasicController{
+public class testController extends ScreensController {
 
 
     @FXML

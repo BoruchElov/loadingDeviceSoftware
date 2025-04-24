@@ -3,7 +3,7 @@
     -fx-background-radius: 0;
     -fx-border-radius: 0;
     -fx-font-family: "PF Din Text Cond Pro";
-    -fx-font-weight: bold;
+    -fx-font-weight: 500;
 }
 .button-common:disabled {
     -fx-opacity: 1.0;
@@ -17,7 +17,7 @@
     -fx-max-width: 200px;
     -fx-max-height: 70px;
     -fx-background-color: #005286;
-    -fx-font-size: 28;
+    -fx-font-size: 36;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-normal {
@@ -29,7 +29,7 @@
     -fx-max-width: 200px;
     -fx-max-height: 70px;
     -fx-background-color: #005286;
-    -fx-font-size: 28;
+    -fx-font-size: 36;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-enabled {
@@ -41,7 +41,7 @@
     -fx-max-width: 200px;
     -fx-max-height: 70px;
     -fx-background-color: #6AB74D;
-    -fx-font-size: 28;
+    -fx-font-size: 36;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-warning {
@@ -53,7 +53,7 @@
     -fx-max-width: 200px;
     -fx-max-height: 70px;
     -fx-background-color: #D9232A;
-    -fx-font-size: 28;
+    -fx-font-size: 36;
     -fx-text-fill: #FFFFFF;
 }
 .button-low-locked {
@@ -65,7 +65,7 @@
     -fx-max-width: 200px;
     -fx-max-height: 70px;
     -fx-background-color: #CBCCCB;
-    -fx-font-size: 28;
+    -fx-font-size: 36;
     -fx-text-fill: #FFFFFF;
 }
 .image-button {
@@ -76,18 +76,5 @@
     -fx-border-color: #000000;
     -fx-border-width: 2;
     -fx-background-color: #FFFFFF;
-}
-.text-field {
-    -fx-border-width: 2;
-    -fx-border-color: #000000;
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-    -fx-font-family: "PF Din Text Cond Pro";
-    -fx-font-size: 24;
-    -fx-text-alignment: center;
-    -fx-text-fill: #000000;
-    -fx-background-color: #FFFFFF;
-
-
 }
 

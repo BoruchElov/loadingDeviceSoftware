@@ -14,48 +14,55 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 
-class BasicController {
+class ScreensController extends BasicController {
 
     @FXML
-    Circle circleA1;
+    SimpleButton clearButton;
     @FXML
-    Circle circleA2;
+    SimpleButton saveButton;
     @FXML
-    Circle circleB1;
+    SimpleButton menuButton;
     @FXML
-    Circle circleB2;
+    SimpleButton startButton;
     @FXML
-    Circle circleC1;
+    SimpleButton cancelButton;
     @FXML
-    Circle circleC2;
-
+    SimpleButton stopButton;
     @FXML
-    AnchorPane anchorPane;
+    SimpleButton continueButton;
     @FXML
-    ImageView imageView;
-    @FXML
-    Text dateTimeText;
-    @FXML
-    Text inverterA1;
-    @FXML
-    Text inverterB1;
-    @FXML
-    Text inverterC1;
-    @FXML
-    Text inverterA2;
-    @FXML
-    Text inverterB2;
-    @FXML
-    Text inverterC2;
+    SimpleButton finishButton;
 
 
     @FXML
     public void initialize() {
+        super.initialize();
         anchorPane.setPrefSize(1280,800);
         imageView.setFitHeight(800);
         imageView.setFitWidth(1280);
         imageView.toBack();
         imageView.setImage(ApplicationConstants.NEW_BACKGROUND);
+        AnchorPane.setTopAnchor(menuButton, 695.0);
+        AnchorPane.setLeftAnchor(menuButton, 50.0);
+        AnchorPane.setTopAnchor(startButton, 695.0);
+        AnchorPane.setLeftAnchor(startButton, 1030.0);
+        AnchorPane.setTopAnchor(clearButton, 695.0);
+        AnchorPane.setLeftAnchor(clearButton, 770.0);
+        //Визуальная настройка и привязка метода для кнопки МЕНЮ
+        menuButton.setup(SimpleButton.Presets.MENU);
+        menuButton.setOnAction(event -> {
+            try {
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        startButton.setup(SimpleButton.Presets.START);
+        startButton.setActualStatus(SimpleButton.Status.WARNING);
+        menuButton.setActualStatus(SimpleButton.Status.LOCKED);
+        clearButton.setup(SimpleButton.Presets.CLEAR);
+        clearButton.setActualStatus(SimpleButton.Status.NORMAL);
+        clearButton.setOnAction(event -> {clearAll(anchorPane);});
 
         Text[] texts = new Text[]{inverterA1, inverterB1, inverterC1, inverterA2, inverterB2, inverterC2};
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
@@ -115,6 +122,42 @@ class BasicController {
         circleC2.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleC2, 77.5);
         AnchorPane.setLeftAnchor(circleC2, 472.5);
+    }
+
+    //Метод по очистке всех элементов окна приложения
+    private void clearAll (Node node) {
+        if (node instanceof Pane) {
+            for (Node child : ((Pane) node).getChildren()) {
+                if (child instanceof SimpleButton button && child != clearButton) {
+                    button.setActualStatus(SimpleButton.Status.NORMAL);
+                    button.changePosition(0);
+                }
+                if (child instanceof SimpleTextField textField) {
+                    textField.clear();
+                }
+                if (child instanceof ButtonWithPicture button) {
+                    button.setActualStatus(ButtonWithPicture.Status.NORMAL);
+                    button.changePosition(0);
+                }
+            }
+        }
+    }
+
+    //Метод по очистке всех элементов окна приложения
+    public void lockAll (Node node) {
+        if (node instanceof Pane) {
+            for (Node child : ((Pane) node).getChildren()) {
+                if (child instanceof SimpleButton button && child != clearButton) {
+                    button.setActualStatus(SimpleButton.Status.LOCKED);
+                }
+                if (child instanceof SimpleTextField textField) {
+                    textField.setActualStatus(SimpleTextField.Status.LOCKED);
+                }
+                if (child instanceof ButtonWithPicture button) {
+                    button.setActualStatus(ButtonWithPicture.Status.LOCKED);
+                }
+            }
+        }
     }
 
 

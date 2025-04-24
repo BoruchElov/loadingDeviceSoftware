@@ -251,7 +251,7 @@ public class InterfaceElementsSettings {
                 "-fx-border-radius:" + radiusOfBorder + // Закругление границы
                 "-fx-text-fill:" + textColour +   // Цвет текста
                 "-fx-font-size:" + sizeOfFont +        // Размер текста
-                "-fx-font-family: " + ApplicationConstants.NEW_FONT_NAME + "; " + // Шрифт текста
+                "-fx-font-family: " + ApplicationConstants.NEW_FONT_NAME_REGULAR + "; " + // Шрифт текста
                 boldText
         );
     }

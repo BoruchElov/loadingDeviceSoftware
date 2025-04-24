@@ -62,7 +62,7 @@ public class ApplicationConstants {
     //Константы для текста
     public static final String FONT_NAME = "Myriad Pro";
     //Текст на новых кнопках
-    public static final String NEW_FONT_NAME = "PF Din Text Cond Pro";
+    public static final String NEW_FONT_NAME_REGULAR = "PF Din Text Cond Pro";
     //Шрифт для сохранения файла
     public static final Font EXPORT_FONT;
     static {

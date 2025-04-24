@@ -13,7 +13,7 @@ public class SimpleTextField extends TextField {
     }
     //measures[0] - ширина, measures[1]
     private int[] measures;
-    private final String STYLE = "text-field";
+    private final String STYLE = "text";
     Sizes size;
     String defaultText;
 
