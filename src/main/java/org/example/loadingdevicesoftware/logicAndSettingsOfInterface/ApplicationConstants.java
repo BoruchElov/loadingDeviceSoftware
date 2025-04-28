@@ -34,7 +34,6 @@ public class ApplicationConstants {
     public enum basicColours {
         WHITE, BLACK, GREEN, GRAY, BLUE, RED
     }
-
     public static final String White = "#FFFFFF";
     public static String Black = "#000000";
     public static String Green = "#6AB74D";
