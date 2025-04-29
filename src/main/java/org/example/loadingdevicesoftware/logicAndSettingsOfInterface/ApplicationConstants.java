@@ -25,7 +25,6 @@ public class ApplicationConstants {
      * <li><b>WHITE</b> (белый)</li>
      * <ul>
      */
-
     //TODO Убрать после рефакторинга
     public enum colours {
         BLACK, BLUE, LIGHT_BLUE, WHITE, ORANGE

@@ -62,7 +62,8 @@ class BasicController {
         dateTimeText.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.MEDIUM, 36));
         dateTimeText.setFill(Color.WHITE);
         for (Text text : texts) {
-            text.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.NORMAL, 24));
+            //text.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.NORMAL, 24));
+            text.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
             text.setFill(Color.WHITE);
         }
         inverterA1.setText("МОДУЛЬ А1");

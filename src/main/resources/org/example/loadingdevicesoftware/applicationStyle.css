@@ -1,16 +1,7 @@
-@font-face {
-    font-family: "Font";
-    src: url('PFDinTextCondPro.ttf');
-}
-.root {
-    -fx-font-family: "Font";
-    -fx-font-size: 36;
-}
 .button-common {
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
-    -fx-font-family: inherit;
     -fx-font-weight: 500;
 }
 .button-common:disabled {
