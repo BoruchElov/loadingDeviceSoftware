@@ -1,10 +1,8 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -12,7 +10,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
-import java.io.IOException;
 
 class BasicController {
 
@@ -59,11 +56,11 @@ class BasicController {
 
         Text[] texts = new Text[]{inverterA1, inverterB1, inverterC1, inverterA2, inverterB2, inverterC2};
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
-        dateTimeText.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.MEDIUM, 36));
+        dateTimeText.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         dateTimeText.setFill(Color.WHITE);
         for (Text text : texts) {
             //text.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.NORMAL, 24));
-            text.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+            text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
             text.setFill(Color.WHITE);
         }
         inverterA1.setText("МОДУЛЬ А1");

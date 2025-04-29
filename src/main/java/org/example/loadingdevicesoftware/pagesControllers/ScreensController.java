@@ -58,18 +58,20 @@ class ScreensController extends BasicController {
             }
         });
         startButton.setup(SimpleButton.Presets.START);
-        startButton.setActualStatus(SimpleButton.Status.WARNING);
+        startButton.changePosition(1);
         menuButton.setActualStatus(SimpleButton.Status.LOCKED);
+        menuButton.changePosition(2);
         clearButton.setup(SimpleButton.Presets.CLEAR);
-        clearButton.setActualStatus(SimpleButton.Status.NORMAL);
         clearButton.setOnAction(event -> {clearAll(anchorPane);});
 
         Text[] texts = new Text[]{inverterA1, inverterB1, inverterC1, inverterA2, inverterB2, inverterC2};
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
-        dateTimeText.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.MEDIUM, 36));
+        Font dateFont = FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE);
+        dateTimeText.fontProperty().set(dateFont);
         dateTimeText.setFill(Color.WHITE);
+        Font moduleFont = FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL);
         for (Text text : texts) {
-            text.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.NORMAL, 24));
+            text.fontProperty().set(moduleFont);
             text.setFill(Color.WHITE);
         }
         inverterA1.setText("МОДУЛЬ А1");

@@ -16,27 +16,23 @@ public class Position {
     @Getter
     private Image[] images;
 
-    private final String basicStyle;
-
-    public Position(String basicStyle, String[] styles, String[] texts) {
+    public Position(String[] styles, String[] texts) {
         positions = styles.length;
         this.styles = styles;
         this.texts = texts;
-        this.basicStyle = basicStyle;
     }
 
-    public Position(String basicStyle, String[] styles, Image[] images) {
+    public Position(String[] styles, Image[] images) {
         positions = styles.length;
         this.styles = styles;
         this.images = images;
-        this.basicStyle = basicStyle;
     }
 
     public void setActualPosition(int actualPosition, Button button) {
         this.actualPosition = actualPosition;
         button.getStyleClass().clear();
         button.getStyleClass().add("button");
-        button.getStyleClass().addAll(basicStyle, styles[actualPosition]);
+        button.getStyleClass().add(styles[actualPosition]);
         button.setText(texts[actualPosition]);
     }
 
@@ -44,7 +40,7 @@ public class Position {
         this.actualPosition = actualPosition;
         button.getStyleClass().clear();
         button.getStyleClass().add("button");
-        button.getStyleClass().addAll(basicStyle, styles[actualPosition]);
+        button.getStyleClass().add(styles[actualPosition]);
         imageView.setImage(images[actualPosition]);
     }
 

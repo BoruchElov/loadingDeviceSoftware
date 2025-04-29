@@ -6,9 +6,7 @@ public class BasicButton extends Button {
 
     Position objectPosition;
 
-    ObjectStatus objectStatus;
-
-    public final String basicStyle = "button-common";
+    ObjectStatus objectStatus = new ObjectStatus();
 
     public void changePosition(int position) {
         objectPosition.setActualPosition(position, this);

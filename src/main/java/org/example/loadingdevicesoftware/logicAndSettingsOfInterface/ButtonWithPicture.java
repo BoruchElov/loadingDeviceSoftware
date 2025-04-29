@@ -23,10 +23,9 @@ public class ButtonWithPicture extends BasicButton {
 
     private Sizes backup;
 
-    public void setup (ImageView imageView, Sizes size, String styleNormal, String styleLocked, String[] positionsStyles,
+    public void setup (ImageView imageView, Sizes size, String[] positionsStyles,
                        Image[] positionsImages) {
         this.imageView = imageView;
-        objectStatus = new ObjectStatus(styleNormal, styleLocked, basicStyle);
         setupPositions(positionsStyles, positionsImages);
         setupButton(imageView, positionsImages[0], size);
         backup = size;
@@ -52,7 +51,7 @@ public class ButtonWithPicture extends BasicButton {
     }
 
     private void setupPositions(String[] styles, Image[] images) {
-        objectPosition = new Position(basicStyle, styles, images);
+        objectPosition = new Position(styles, images);
     }
 
     private void setSizes(Sizes size) {
