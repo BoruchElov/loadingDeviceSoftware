@@ -39,6 +39,8 @@ public class Position {
     public void setActualPosition(int actualPosition, Button button, ImageView imageView) {
         this.actualPosition = actualPosition;
         button.getStyleClass().clear();
+        imageView.getStyleClass().clear();
+        imageView.getStyleClass().add("image");
         button.getStyleClass().add("button");
         button.getStyleClass().add(styles[actualPosition]);
         imageView.setImage(images[actualPosition]);

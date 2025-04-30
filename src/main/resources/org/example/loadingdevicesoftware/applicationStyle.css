@@ -62,4 +62,25 @@
 .image-button:disabled {
     -fx-opacity: 1.0;
 }
+.image-button-main {
+    -fx-content-display: top;  /* Размещаем текст под изображением */
+    -fx-alignment: center;         /* Выравнивание по центру */
+    -fx-padding: 2px;             /* Небольшой отступ */
+    -fx-background-radius: 0px;
+    -fx-wrap-text: true;
+    -fx-line-spacing: -5px;
+    -fx-text-alignment: center;   /* Выравнивание текста по центру */
+    -fx-border-color: #000000;
+    -fx-border-width: 2px;
+    -fx-background-color: #FFFFFF;
+    -fx-graphic-text-gap: 5px;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+.image-button-main .graphic {
+    -fx-alignment: top-center;
+}
+.image-button:disabled {
+    -fx-opacity: 1.0;
+}
 

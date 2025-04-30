@@ -90,4 +90,26 @@ public class ApplicationConstants {
 
     public static final Image NEW_BACKGROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/New_Background.png")).toExternalForm());
+    public static final Image NEW_BASE_BACKGROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Base_Background.png")).toExternalForm());
+
+    //Иконки главного экрана
+    public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/settings.png")).toExternalForm());
+    public static final Image SWITCHER_TEST = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/switcher.png")).toExternalForm());
+    public static final Image RELAY_PROTECTION = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/relay.png")).toExternalForm());
+    public static final Image EVENT_LOGGER = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/event.png")).toExternalForm());
+    public static final Image MEASUREMENT_TRANSFORMER = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/transformer.png")).toExternalForm());
+    public static final Image COMTRADE = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/comtrade.png")).toExternalForm());
+    public static final Image DIFFERENTIAL_PROTECTION = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/differential.png")).toExternalForm());
+    public static final Image HAND_CONTROL = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/hand.png")).toExternalForm());
+    public static final Image DEBUGGER = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/debugger.png")).toExternalForm());
 }

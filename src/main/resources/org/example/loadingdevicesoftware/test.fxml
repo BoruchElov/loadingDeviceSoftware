@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton?>
 <?import javafx.scene.text.Text?>
-<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture?>
 <?import javafx.scene.shape.Circle?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers.testController">
    <children>
-      <SimpleButton fx:id="menuButton" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" text="Button" />
-      <SimpleButton fx:id="startButton" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" text="Button" />
-      <SimpleButton fx:id="clearButton" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" text="Button" />
-      <ImageView fx:id="imageView" fitHeight="409.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
+      <SimpleButton fx:id="menuButton"/>
+      <SimpleButton fx:id="startButton"/>
+      <SimpleButton fx:id="clearButton"/>
+      <ImageView fx:id="imageView"/>
       <Circle fx:id="circleA1" />
       <Circle fx:id="circleA2" />
       <Circle fx:id="circleB1" />

@@ -48,18 +48,19 @@ class BasicController {
 
     @FXML
     public void initialize() {
+        //Настройка области для расположения элементов и установка на неё фонового изображения
         anchorPane.setPrefSize(1280,800);
         imageView.setFitHeight(800);
         imageView.setFitWidth(1280);
         imageView.toBack();
         imageView.setImage(ApplicationConstants.NEW_BACKGROUND);
 
+        //Создание текстовых элементов: названий модулей и строки даты-времени
         Text[] texts = new Text[]{inverterA1, inverterB1, inverterC1, inverterA2, inverterB2, inverterC2};
         dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
         dateTimeText.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         dateTimeText.setFill(Color.WHITE);
         for (Text text : texts) {
-            //text.fontProperty().set(Font.font(ApplicationConstants.NEW_FONT_NAME_REGULAR, FontWeight.NORMAL, 24));
             text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
             text.setFill(Color.WHITE);
         }
@@ -84,6 +85,7 @@ class BasicController {
         AnchorPane.setTopAnchor(dateTimeText, 714.0);
         AnchorPane.setLeftAnchor(dateTimeText, 385.0);
 
+        //Настройка кругов статусов инверторов
         circleA1.setRadius(10);
         circleA1.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleA1, 37.5);
