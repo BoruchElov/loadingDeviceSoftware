@@ -14,7 +14,6 @@ import java.io.File;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -44,9 +43,12 @@ public class InterfaceElementsLogic {
         Parent root = FXMLLoader.load(Objects.requireNonNull(ApplicationFile.class.
                 getResource(fxmlFilePath)));
 
+        Scene scene = new Scene(root, ApplicationConstants.APPLICATION_WINDOW_WIDTH,
+                ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
+        scene.getStylesheets().add(ApplicationFile.class.
+                getResource("/org/example/loadingdevicesoftware/applicationStyle.css").toExternalForm());
         // Устанавливаем новую сцену
-        stage.setScene(new Scene(root, ApplicationConstants.APPLICATION_WINDOW_LENGTH,
-                ApplicationConstants.APPLICATION_WINDOW_HEIGHT));
+        stage.setScene(scene);
         stage.show();
     }
 

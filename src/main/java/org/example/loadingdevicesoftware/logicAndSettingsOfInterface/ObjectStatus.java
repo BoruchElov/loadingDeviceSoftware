@@ -36,6 +36,10 @@ public class ObjectStatus {
             actualPosition = button.objectPosition.getActualPosition();
             button.changePosition(actualPosition);
         }
+        if (object instanceof SimpleImageView imageView) {
+            actualPosition = imageView.objectPosition.getActualPosition();
+            imageView.changePosition(actualPosition);
+        }
         this.status = status.name();
         switch (status) {
             case NORMAL:

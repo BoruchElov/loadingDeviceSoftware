@@ -2,7 +2,10 @@ package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import javafx.scene.control.TextField;
 
-public class SimpleTextField extends TextField {
+public class SimpleTextField extends TextField implements Changeable {
+
+    @Override
+    public void changePosition(int position) {clear();}
 
     public enum Status {
         NORMAL, LOCKED
@@ -11,13 +14,13 @@ public class SimpleTextField extends TextField {
     public enum Sizes {
         SMALL, MEDIUM, LARGE
     }
-    //measures[0] - ширина, measures[1]
+    //measures[0] - ширина, measures[1] - высота
     private int[] measures;
-    private final String STYLE = "text";
+    private final String STYLE = "text-object";
     Sizes size;
     String defaultText;
 
-    ObjectStatus objectStatus;
+    ObjectStatus objectStatus = new ObjectStatus();
 
     public SimpleTextField() {
         super();
@@ -26,23 +29,23 @@ public class SimpleTextField extends TextField {
     public void setup (String defaultText, Sizes size) {
         getStyleClass().add(STYLE);
         setMeasures(size);
-        setWidth(measures[0]);
-        setHeight(measures[1]);
+        setPrefWidth(measures[0]);
+        setPrefHeight(measures[1]);
         setPromptText(defaultText);
         this.size = size;
         this.defaultText = defaultText;
     }
 
-    public void setActualStatus(Status status) {
+    public void setActualStatus(Changeable.Status status) {
         ObjectStatus.StatusOfObject newStatus = ObjectStatus.StatusOfObject.values()[status.ordinal()];
         objectStatus.setStatus(newStatus, this);
     }
 
     private void setMeasures(Sizes size) {
         measures = switch (size) {
-            case SMALL -> new int[]{50, 50};
-            case MEDIUM -> new int[]{80, 50};
-            case LARGE -> new int[]{336, 50};
+            case SMALL -> new int[]{52, 52};
+            case MEDIUM -> new int[]{80, 52};
+            case LARGE -> new int[]{336, 52};
         };
     }
 

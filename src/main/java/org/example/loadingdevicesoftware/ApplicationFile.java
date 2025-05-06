@@ -19,7 +19,7 @@ public class ApplicationFile extends Application {
                 getResource("0.baseWindow.fxml"));
         /*FXMLLoader fxmlLoader = new FXMLLoader(ApplicationFile.class.
                 getResource("test.fxml"));*/
-        Scene scene = new Scene(fxmlLoader.load(), ApplicationConstants.APPLICATION_WINDOW_LENGTH,
+        Scene scene = new Scene(fxmlLoader.load(), ApplicationConstants.APPLICATION_WINDOW_WIDTH,
                 ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
         scene.getStylesheets().add(ApplicationFile.class.getResource("/org/example/loadingdevicesoftware/applicationStyle.css").toExternalForm());
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().

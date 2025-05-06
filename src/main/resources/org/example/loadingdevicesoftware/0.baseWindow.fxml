@@ -7,7 +7,8 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.shape.Circle?>
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture?>
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers.mainScreenController">
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" stylesheets="/org/example/loadingdevicesoftware/applicationStyle.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._0_MainScreenController">
    <children>
       <ButtonWithPicture fx:id="settingsButton"/>
       <ButtonWithPicture fx:id="switcherTestButton"/>

@@ -48,12 +48,11 @@ class BasicController {
 
     @FXML
     public void initialize() {
-        //Настройка области для расположения элементов и установка на неё фонового изображения
-        anchorPane.setPrefSize(1280,800);
-        imageView.setFitHeight(800);
-        imageView.setFitWidth(1280);
+        //Настройка области для расположения элементов и создание ImageView для расположения фонового изображения
+        anchorPane.setPrefSize(ApplicationConstants.APPLICATION_WINDOW_WIDTH, ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
+        imageView.setFitHeight(ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
+        imageView.setFitWidth(ApplicationConstants.APPLICATION_WINDOW_WIDTH);
         imageView.toBack();
-        imageView.setImage(ApplicationConstants.NEW_BACKGROUND);
 
         //Создание текстовых элементов: названий модулей и строки даты-времени
         Text[] texts = new Text[]{inverterA1, inverterB1, inverterC1, inverterA2, inverterB2, inverterC2};

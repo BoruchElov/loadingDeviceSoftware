@@ -1,42 +1,45 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
-
 import java.io.IOException;
+import java.util.Arrays;
 
 class ScreensController extends BasicController {
+
+    boolean[] flags = new boolean[3];
 
     @FXML
     SimpleButton clearButton;
     @FXML
-    SimpleButton saveButton;
-    @FXML
     SimpleButton menuButton;
     @FXML
     SimpleButton startButton;
+
     @FXML
-    SimpleButton cancelButton;
+    SimpleTextField nameTextField;
     @FXML
-    SimpleButton stopButton;
-    @FXML
-    SimpleButton continueButton;
-    @FXML
-    SimpleButton finishButton;
+    SimpleTextField objectTextField;
 
 
     @FXML
     public void initialize() {
         super.initialize();
+        Arrays.fill(flags, false);
+        imageView.setImage(ApplicationConstants.NEW_BACKGROUND);
+        //Настройка текстовых полей для ввода ФИО и названия объекта
+        objectTextField.setup("Название объекта", SimpleTextField.Sizes.LARGE);
+        objectTextField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+        nameTextField.setup("Ф.И.О. исполнителя", SimpleTextField.Sizes.LARGE);
+        nameTextField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+        AnchorPane.setLeftAnchor(objectTextField, 50.0);
+        AnchorPane.setTopAnchor(objectTextField, 540.);
+        AnchorPane.setLeftAnchor(nameTextField, 50.0);
+        AnchorPane.setTopAnchor(nameTextField, 600.);
         //Настройка положения кнопок в нижней части приложения
         AnchorPane.setTopAnchor(menuButton, 695.0);
         AnchorPane.setLeftAnchor(menuButton, 50.0);
@@ -46,6 +49,7 @@ class ScreensController extends BasicController {
         AnchorPane.setLeftAnchor(clearButton, 770.0);
         //Визуальная настройка и привязка метода для кнопки МЕНЮ
         menuButton.setup(SimpleButton.Presets.MENU);
+        menuButton.setActualStatus(Changeable.Status.NORMAL);
         menuButton.setOnAction(event -> {
             try {
                 InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
@@ -54,42 +58,45 @@ class ScreensController extends BasicController {
             }
         });
         startButton.setup(SimpleButton.Presets.START);
-        menuButton.setActualStatus(SimpleButton.Status.NORMAL);
+        startButton.setActualStatus(Changeable.Status.NORMAL);
         clearButton.setup(SimpleButton.Presets.CLEAR);
-        clearButton.setOnAction(event -> {clearAll(anchorPane);});
+        clearButton.setActualStatus(Changeable.Status.NORMAL);
+        clearButton.setOnAction(event -> {clearAll(anchorPane, this);});
     }
 
     //Метод по очистке всех элементов окна приложения
-    private void clearAll (Node node) {
+    private void clearAll (Node node, Object controller) {
         if (node instanceof Pane) {
             for (Node child : ((Pane) node).getChildren()) {
-                if (child instanceof SimpleButton button && child != clearButton) {
-                    button.setActualStatus(SimpleButton.Status.NORMAL);
-                    button.changePosition(0);
+                if (child instanceof Changeable changeable) {
+                    changeable.setActualStatus(Changeable.Status.NORMAL);
+                    changeable.changePosition(0);
                 }
-                if (child instanceof SimpleTextField textField) {
-                    textField.clear();
-                }
-                if (child instanceof ButtonWithPicture button) {
-                    button.setActualStatus(ButtonWithPicture.Status.NORMAL);
-                    button.changePosition(0);
+            }
+            Arrays.fill(flags, false);
+            if (controller instanceof Configurable object) {
+                object.changeConfiguration(new ActionEvent());
+            }
+        }
+    }
+
+    //Метод по блокировке всех элементов окна приложения
+    public void lockAll (Node node) {
+        if (node instanceof Pane) {
+            for (Node child : ((Pane) node).getChildren()) {
+                if (child instanceof Changeable changeable) {
+                    changeable.setActualStatus(Changeable.Status.LOCKED);
                 }
             }
         }
     }
 
-    //Метод по очистке всех элементов окна приложения
-    public void lockAll (Node node) {
+    //Метод по разблокировке всех элементов окна приложения
+    public void unlockAll (Node node) {
         if (node instanceof Pane) {
             for (Node child : ((Pane) node).getChildren()) {
-                if (child instanceof SimpleButton button && child != clearButton) {
-                    button.setActualStatus(SimpleButton.Status.LOCKED);
-                }
-                if (child instanceof SimpleTextField textField) {
-                    textField.setActualStatus(SimpleTextField.Status.LOCKED);
-                }
-                if (child instanceof ButtonWithPicture button) {
-                    button.setActualStatus(ButtonWithPicture.Status.LOCKED);
+                if (child instanceof Changeable changeable) {
+                    changeable.setActualStatus(Changeable.Status.NORMAL);
                 }
             }
         }

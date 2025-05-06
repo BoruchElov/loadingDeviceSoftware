@@ -41,7 +41,7 @@ public class ApplicationConstants {
     public static String Red = "#D9232A";
 
     //Размеры окна приложения
-    public static final int APPLICATION_WINDOW_LENGTH = 1280;
+    public static final int APPLICATION_WINDOW_WIDTH = 1280;
     public static final int APPLICATION_WINDOW_HEIGHT = 800;
 
     //Размеры кнопок {ширина, высота}
@@ -92,6 +92,14 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/New_Background.png")).toExternalForm());
     public static final Image NEW_BASE_BACKGROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Base_Background.png")).toExternalForm());
+    public static final Image SINGLE_PHASE_SWITCH = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Single_Phase_Switch.png")).toExternalForm());
+    public static final Image THREE_PHASE_SWITCH = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Three_Phase_Switch.png")).toExternalForm());
+    public static final Image OPENED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Opened_Contact.png")).toExternalForm());
+    public static final Image CLOSED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Closed_Contact.png")).toExternalForm());
 
     //Иконки главного экрана
     public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.

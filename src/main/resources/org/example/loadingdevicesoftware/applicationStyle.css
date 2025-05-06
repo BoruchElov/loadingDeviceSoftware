@@ -83,4 +83,53 @@
 .image-button:disabled {
     -fx-opacity: 1.0;
 }
+.text-object {
+    -fx-border-color: #000000;
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.text-object:disabled {
+    -fx-opacity: 1.0;
+}
+.imageview-base {
+    -fx-padding: 0px;
+    -fx-alignment: center;
+}
+.phase-button {
+    -fx-border-color: #000000;
+    -fx-pref-width: 200px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 200px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 200px;
+    -fx-max-height: 70px;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #6AB74D;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+.phase-button:disabled {
+    -fx-background-color: #CBCCCB;
+    -fx-opacity: 1.0;
+}
+.contacts-imageview {
+    -fx-alignment: center;         /* Выравнивание по центру */
+    -fx-padding: 0px;             /* Небольшой отступ */
+    -fx-max-height: 50px;
+    -fx-max-width: 50px;
+    -fx-background-radius: 0px;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-background-color: #FFFFFF;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+.contacts-imageview:disabled {
+    -fx-opacity: 1.0;
+}
 

@@ -3,7 +3,7 @@ package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class ButtonWithPicture extends BasicButton {
+public class ButtonWithPicture extends BasicButton implements Changeable {
 
     ImageView imageView;
 
@@ -16,7 +16,7 @@ public class ButtonWithPicture extends BasicButton {
     }
 
     public enum ImagViewSizes {
-        SMALL, MEDIUM, LARGE
+        SMALLEST, SMALL, MEDIUM, LARGE
     }
     //sizes[0] - ширина, sizes[1] - высота
     private int[] sizes;
@@ -34,7 +34,7 @@ public class ButtonWithPicture extends BasicButton {
     public void setup (ImageView imageView, ButtonSizes size, ImagViewSizes ivSize, String[] positionsStyles,
                        Image[] positionsImages) {
         this.imageView = imageView;
-        setupPositions(positionsStyles, positionsImages);
+        objectPosition = new Position(positionsStyles, positionsImages);
         setupButton(imageView, positionsImages[0], size, ivSize);
         backup = size;
         backupIV = ivSize;
@@ -47,7 +47,8 @@ public class ButtonWithPicture extends BasicButton {
         setupButton(imageView, objectPosition.getImages()[actualPosition], backup, backupIV);
     }
 
-    public void setActualStatus(Status status) {
+    @Override
+    public void setActualStatus(Changeable.Status status) {
         ObjectStatus.StatusOfObject newStatus = ObjectStatus.StatusOfObject.values()[status.ordinal()];
         objectStatus.setStatus(newStatus, this);
     }
@@ -63,10 +64,6 @@ public class ButtonWithPicture extends BasicButton {
         setGraphic(imageView);
     }
 
-    private void setupPositions(String[] styles, Image[] images) {
-        objectPosition = new Position(styles, images);
-    }
-
     private void setSizes(ButtonSizes size) {
         sizes = switch (size) {
             case SMALL -> new int[] { 50, 50 };
@@ -76,6 +73,7 @@ public class ButtonWithPicture extends BasicButton {
 
     private void setSizes(ImagViewSizes size) {
         imageViewSizes = switch (size) {
+            case SMALLEST -> new int[] { 50, 50 };
             case SMALL -> new int[] { 105, 105 };
             case MEDIUM -> new int[] { 110, 110 };
             case LARGE -> new int[] { 120, 120 };
