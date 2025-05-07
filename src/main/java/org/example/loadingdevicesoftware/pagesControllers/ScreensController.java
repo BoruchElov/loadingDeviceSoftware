@@ -4,8 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -61,47 +61,42 @@ class ScreensController extends BasicController {
         startButton.setActualStatus(Changeable.Status.NORMAL);
         clearButton.setup(SimpleButton.Presets.CLEAR);
         clearButton.setActualStatus(Changeable.Status.NORMAL);
-        clearButton.setOnAction(event -> {clearAll(anchorPane, this);});
+        clearButton.setOnAction(event -> {
+            clearAll(this);
+        });
     }
 
     //Метод по очистке всех элементов окна приложения
-    private void clearAll (Node node, Object controller) {
-        if (node instanceof Pane) {
-            for (Node child : ((Pane) node).getChildren()) {
-                if (child instanceof Changeable changeable) {
-                    changeable.setActualStatus(Changeable.Status.NORMAL);
-                    changeable.changePosition(0);
-                }
+    private void clearAll(Object controller) {
+        for (Node child : this.anchorPane.getChildren()) {
+            if (child instanceof Changeable changeable) {
+                changeable.setActualStatus(Changeable.Status.NORMAL);
+                changeable.changePosition(0);
             }
-            Arrays.fill(flags, false);
-            if (controller instanceof Configurable object) {
-                object.changeConfiguration(new ActionEvent());
-            }
+        }
+        Arrays.fill(flags, false);
+        if (controller instanceof Configurable object) {
+            object.changeConfiguration(new ActionEvent());
         }
     }
 
     //Метод по блокировке всех элементов окна приложения
-    public void lockAll (Node node) {
-        if (node instanceof Pane) {
-            for (Node child : ((Pane) node).getChildren()) {
-                if (child instanceof Changeable changeable) {
-                    changeable.setActualStatus(Changeable.Status.LOCKED);
-                }
+    public void lockAll() {
+        for (Node child : (this.anchorPane.getChildren())) {
+            if (child instanceof Changeable changeable) {
+                changeable.setActualStatus(Changeable.Status.LOCKED);
             }
         }
     }
 
     //Метод по разблокировке всех элементов окна приложения
-    public void unlockAll (Node node) {
-        if (node instanceof Pane) {
-            for (Node child : ((Pane) node).getChildren()) {
-                if (child instanceof Changeable changeable) {
-                    changeable.setActualStatus(Changeable.Status.NORMAL);
-                }
+    public void unlockAll() {
+        for (Node child : (this.anchorPane.getChildren())) {
+            if (child instanceof Changeable changeable) {
+                changeable.setActualStatus(Changeable.Status.NORMAL);
             }
         }
     }
-
 
 
 }

@@ -10,6 +10,7 @@
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleTextField?>
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleImageView?>
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture?>
+<?import javafx.scene.canvas.Canvas?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._2_TestOfSwitcher3XScreenController">
    <children>
       <SimpleButton fx:id="menuButton"/>
@@ -33,6 +34,10 @@
       <Circle fx:id="circleB2" />
       <Circle fx:id="circleC1" />
       <Circle fx:id="circleC2" />
+      <Circle fx:id="contactOneOne"/>
+      <Circle fx:id="contactOneTwo"/>
+      <Circle fx:id="contactTwoOne"/>
+      <Circle fx:id="contactTwoTwo"/>
       <Text fx:id = "dateTimeText"/>
       <Text fx:id = "inverterA1"/>
       <Text fx:id = "inverterB1"/>
@@ -44,6 +49,13 @@
       <Text fx:id="contacts"/>
       <Text fx:id="time"/>
       <Text fx:id="current"/>
+      <Text fx:id="phaseA1"/>
+      <Text fx:id="phaseB1"/>
+      <Text fx:id="phaseC1"/>
+      <Text fx:id="contactOne"/>
+      <Text fx:id="contactTwo"/>
+      <Text fx:id="one"/>
+      <Text fx:id="two"/>
 
    </children>
 </AnchorPane>

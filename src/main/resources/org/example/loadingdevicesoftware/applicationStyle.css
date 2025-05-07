@@ -132,4 +132,9 @@
 .contacts-imageview:disabled {
     -fx-opacity: 1.0;
 }
+.circles {
+    -fx-fill: #CBCCCB;              /* Заливка (фон) */
+    -fx-stroke: #000000;           /* Цвет границы */
+    -fx-stroke-width: 2px;         /* Толщина границы */
+}
 

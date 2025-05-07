@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
@@ -33,6 +34,21 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
     Text current;
 
     @FXML
+    Text phaseA1;
+    @FXML
+    Text phaseB1;
+    @FXML
+    Text phaseC1;
+    @FXML
+    Text contactOne;
+    @FXML
+    Text contactTwo;
+    @FXML
+    Text one;
+    @FXML
+    Text two;
+
+    @FXML
     SimpleImageView switcher;
 
     @FXML
@@ -42,6 +58,15 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
     ButtonWithPicture contactOneButton;
     @FXML
     ButtonWithPicture contactTwoButton;
+
+    @FXML
+    Circle contactOneOne;
+    @FXML
+    Circle contactOneTwo;
+    @FXML
+    Circle contactTwoOne;
+    @FXML
+    Circle contactTwoTwo;
 
     @FXML
     public void initialize() {
@@ -73,8 +98,10 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
         AnchorPane.setLeftAnchor(contactTwoTime, 300.);
 
         //Настройка простых текстовых элементов
-        Text[] text = new Text[]{numberOfPhases, contacts, time, current};
-        String[] texts = new String[]{"Количество фаз", "КОНТАКТЫ", "tсраб, с", "I, А"};
+        Text[] text = new Text[]{numberOfPhases, contacts, time, current, phaseA1, phaseB1, phaseC1, contactOne,
+                contactTwo, one, two};
+        String[] texts = new String[]{"Количество фаз", "КОНТАКТЫ", "tсраб, с", "I, А", "А1", "В1", "С1", "Контакт 1",
+                "Контакт 2", "1", "2"};
         for (int i = 0; i < text.length; i++) {
             if (text[i].equals(numberOfPhases)) {
                 text[i].setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
@@ -88,9 +115,38 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
             }
             text[i].setText(texts[i]);
         }
+        AnchorPane.setTopAnchor(phaseA1, 270.);
+        AnchorPane.setLeftAnchor(phaseA1, 593.);
+        AnchorPane.setTopAnchor(phaseB1, 270.);
+        AnchorPane.setLeftAnchor(phaseB1, 664.);
+        AnchorPane.setTopAnchor(phaseC1, 270.);
+        AnchorPane.setLeftAnchor(phaseC1, 735.);
+        AnchorPane.setTopAnchor(contactOne, 570.);
+        AnchorPane.setLeftAnchor(contactOne, 573.);
+        AnchorPane.setTopAnchor(contactTwo, 570.);
+        AnchorPane.setLeftAnchor(contactTwo, 694.);
+        AnchorPane.setTopAnchor(one, 150.);
+        AnchorPane.setLeftAnchor(one, 220.);
+        AnchorPane.setTopAnchor(two, 150.);
+        AnchorPane.setLeftAnchor(two, 322.);
         AnchorPane.setTopAnchor(contacts, 190.);
         AnchorPane.setTopAnchor(time, 260.);
         AnchorPane.setTopAnchor(current, 410.);
+        //Настройка кругов
+        Circle[] circles = new Circle[]{contactOneOne, contactOneTwo, contactTwoOne, contactTwoTwo};
+        for (Circle circle : circles) {
+            circle.setRadius(10.);
+            circle.getStyleClass().add("circles");
+        }
+        AnchorPane.setTopAnchor(contactOneOne, 189.);
+        AnchorPane.setLeftAnchor(contactOneOne, 165.);
+        AnchorPane.setTopAnchor(contactTwoOne, 189.);
+        AnchorPane.setLeftAnchor(contactTwoOne, 265.);
+        AnchorPane.setTopAnchor(contactOneTwo, 539.);
+        AnchorPane.setLeftAnchor(contactOneTwo, 606.);
+        AnchorPane.setTopAnchor(contactTwoTwo, 539.);
+        AnchorPane.setLeftAnchor(contactTwoTwo, 726.);
+        //Настройка ImageView с изображением выключателя
         switcher.setup(new String[]{"", ""},
                 new Image[]{ApplicationConstants.THREE_PHASE_SWITCH, ApplicationConstants.SINGLE_PHASE_SWITCH},
                 new double[][]{{250, 250}, {68, 221}});
@@ -128,18 +184,28 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
                     switcher.changePosition(1);
                     phaseBCurrent.clear();
                     phaseBCurrent.setActualStatus(Changeable.Status.LOCKED);
+                    phaseBCurrent.setPromptText("");
                     phaseCCurrent.clear();
                     phaseCCurrent.setActualStatus(Changeable.Status.LOCKED);
+                    phaseCCurrent.setPromptText("");
                     AnchorPane.setTopAnchor(switcher, 290.);
                     AnchorPane.setLeftAnchor(switcher, 642.);
+                    phaseA1.setText("");
+                    phaseB1.setText("А1");
+                    phaseC1.setText("");
                     flags[0] = false;
                 } else {
                     phaseButton.changePosition(2);
                     switcher.changePosition(0);
                     phaseBCurrent.setActualStatus(Changeable.Status.NORMAL);
+                    phaseBCurrent.setPromptText("0");
                     phaseCCurrent.setActualStatus(Changeable.Status.NORMAL);
+                    phaseCCurrent.setPromptText("0");
                     AnchorPane.setTopAnchor(switcher, 290.);
                     AnchorPane.setLeftAnchor(switcher, 550.);
+                    phaseA1.setText("А1");
+                    phaseB1.setText("В1");
+                    phaseC1.setText("С1");
                     flags[0] = true;
                 }
                 break;
@@ -162,6 +228,11 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
                 }
                 break;
             case null, default:
+                phaseA1.setText("А1");
+                phaseB1.setText("В1");
+                phaseC1.setText("С1");
+                phaseBCurrent.setPromptText("0");
+                phaseCCurrent.setPromptText("0");
                 AnchorPane.setTopAnchor(switcher, 290.);
                 AnchorPane.setLeftAnchor(switcher, 550.);
                 break;
