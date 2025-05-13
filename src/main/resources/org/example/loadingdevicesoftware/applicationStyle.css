@@ -137,4 +137,9 @@
     -fx-stroke: #000000;           /* Цвет границы */
     -fx-stroke-width: 2px;         /* Толщина границы */
 }
+.transformer {
+    -fx-fill: transparent;
+    -fx-stroke: #000000;
+    -fx-stroke-width: 4px;
+}
 

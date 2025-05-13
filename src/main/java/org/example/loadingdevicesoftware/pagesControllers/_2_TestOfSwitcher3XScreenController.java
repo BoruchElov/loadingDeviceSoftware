@@ -228,6 +228,8 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
                 }
                 break;
             case null, default:
+                contactOneTime.setActualStatus(Changeable.Status.LOCKED);
+                contactTwoTime.setActualStatus(Changeable.Status.LOCKED);
                 phaseA1.setText("А1");
                 phaseB1.setText("В1");
                 phaseC1.setText("С1");
