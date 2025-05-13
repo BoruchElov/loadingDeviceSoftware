@@ -142,4 +142,14 @@
     -fx-stroke: #000000;
     -fx-stroke-width: 4px;
 }
+transformer-red {
+    -fx-fill: transparent;
+    -fx-stroke: #D9232A;
+    -fx-stroke-width: 4px;
+}
+transformer-green {
+    -fx-fill: transparent;
+    -fx-stroke: #6AB74D;
+    -fx-stroke-width: 4px;
+}
 

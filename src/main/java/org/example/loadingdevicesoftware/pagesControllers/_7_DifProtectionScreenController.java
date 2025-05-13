@@ -1,8 +1,8 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
-
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -25,58 +25,89 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     Line phaseBTwoLine;
     @FXML
     Line phaseCTwoLine;
-    
+    @FXML
+    Line leftBusLine;
+    @FXML
+    Line rightBusLine;
+
 
     @FXML
     public void initialize() {
         super.initialize();
 
-        windingOne.setRadius(100.);
-        windingTwo.setRadius(100.);
-
-        AnchorPane.setTopAnchor(windingOne, 300.);
-        AnchorPane.setTopAnchor(windingTwo, 300.);
-        AnchorPane.setLeftAnchor(windingOne, 280.);
-        AnchorPane.setLeftAnchor(windingTwo, 450.);
-        windingOne.getStyleClass().add("transformer");
-        windingTwo.getStyleClass().add("transformer");
-
-        phaseAOneLine.setStartX(0.);
-        phaseAOneLine.setEndX(100.);
-        AnchorPane.setTopAnchor(phaseAOneLine, 345.);
-        AnchorPane.setLeftAnchor(phaseAOneLine, 195.);
-        phaseAOneLine.getStyleClass().add("transformer");
-
-        phaseBOneLine.setStartX(0.);
-        phaseBOneLine.setEndX(85.);
-        AnchorPane.setTopAnchor(phaseBOneLine, 400.);
-        AnchorPane.setLeftAnchor(phaseBOneLine, 195.);
-        phaseBOneLine.getStyleClass().add("transformer");
-
-        phaseCOneLine.setStartX(0.);
-        phaseCOneLine.setEndX(100.);
-        AnchorPane.setTopAnchor(phaseCOneLine, 455.);
-        AnchorPane.setLeftAnchor(phaseCOneLine, 195.);
-        phaseCOneLine.getStyleClass().add("transformer");
-
-        phaseATwoLine.setStartX(0.);
-        phaseATwoLine.setEndX(100.);
-        AnchorPane.setTopAnchor(phaseATwoLine, 345.);
-        AnchorPane.setLeftAnchor(phaseATwoLine, 635.);
-        phaseATwoLine.getStyleClass().add("transformer");
-
-        phaseBTwoLine.setStartX(0.);
-        phaseBTwoLine.setEndX(85.);
-        AnchorPane.setTopAnchor(phaseBTwoLine, 400.);
-        AnchorPane.setLeftAnchor(phaseBTwoLine, 650.);
-        phaseBTwoLine.getStyleClass().add("transformer");
-
-        phaseCTwoLine.setStartX(0.);
-        phaseCTwoLine.setEndX(100.);
-        AnchorPane.setTopAnchor(phaseCTwoLine, 455.);
-        AnchorPane.setLeftAnchor(phaseCTwoLine, 635.);
-        phaseCTwoLine.getStyleClass().add("transformer");
-
+        for (Node node : anchorPane.getChildren()) {
+            switch (node) {
+                case Circle c when c == windingOne -> {
+                    AnchorPane.setTopAnchor(c, 300.);
+                    AnchorPane.setLeftAnchor(c, 280.);
+                    c.setRadius(100.);
+                    c.getStyleClass().add("transformer");
+                }
+                case Circle c when c == windingTwo -> {
+                    AnchorPane.setTopAnchor(c, 300.);
+                    AnchorPane.setLeftAnchor(c, 450.);
+                    c.setRadius(100.);
+                    c.getStyleClass().add("transformer");
+                }
+                case Line line when line == phaseAOneLine -> {
+                    line.setStartX(0.);
+                    line.setEndX(100.);
+                    AnchorPane.setTopAnchor(line, 345.);
+                    AnchorPane.setLeftAnchor(line, 195.);
+                    line.getStyleClass().add("transformer");
+                }
+                case Line line when line == phaseBOneLine -> {
+                    line.setStartX(0.);
+                    line.setEndX(85.);
+                    AnchorPane.setTopAnchor(line, 400.);
+                    AnchorPane.setLeftAnchor(line, 195.);
+                    line.getStyleClass().add("transformer");
+                }
+                case Line line when line == phaseCOneLine -> {
+                    line.setStartX(0.);
+                    line.setEndX(100.);
+                    AnchorPane.setTopAnchor(line, 455.);
+                    AnchorPane.setLeftAnchor(line, 195.);
+                    line.getStyleClass().add("transformer");
+                }
+                case Line line when line == phaseATwoLine -> {
+                    line.setStartX(0.);
+                    line.setEndX(100.);
+                    AnchorPane.setTopAnchor(line, 345.);
+                    AnchorPane.setLeftAnchor(line, 635.);
+                    line.getStyleClass().add("transformer");
+                }
+                case Line line when line == phaseBTwoLine -> {
+                    line.setStartX(0.);
+                    line.setEndX(85.);
+                    AnchorPane.setTopAnchor(line, 400.);
+                    AnchorPane.setLeftAnchor(line, 650.);
+                    line.getStyleClass().add("transformer");
+                }
+                case Line line when line == phaseCTwoLine -> {
+                    line.setStartX(0.);
+                    line.setEndX(100.);
+                    AnchorPane.setTopAnchor(line, 455.);
+                    AnchorPane.setLeftAnchor(line, 635.);
+                    line.getStyleClass().add("transformer");
+                }
+                case Line line when line == leftBusLine -> {
+                    line.setStartY(0.);
+                    line.setEndY(170.);
+                    AnchorPane.setTopAnchor(line, 315.);
+                    AnchorPane.setLeftAnchor(line, 195.);
+                    line.getStyleClass().add("transformer");
+                }
+                case Line line when line == rightBusLine -> {
+                    line.setStartY(0.);
+                    line.setEndY(170.);
+                    AnchorPane.setTopAnchor(line, 315.);
+                    AnchorPane.setLeftAnchor(line, 735.);
+                    line.getStyleClass().add("transformer");
+                }
+                default -> {}
+            }
+        }
     }
 
     @Override

@@ -41,5 +41,7 @@
         <Line fx:id="phaseATwoLine"/>
         <Line fx:id="phaseBTwoLine"/>
         <Line fx:id="phaseCTwoLine"/>
+        <Line fx:id="leftBusLine"/>
+        <Line fx:id="rightBusLine"/>
     </children>
 </AnchorPane>
