@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 class ScreensController extends BasicController {
 
-    boolean[] flags = new boolean[3];
+    boolean[] flags;
 
     @FXML
     SimpleButton clearButton;
@@ -29,6 +29,13 @@ class ScreensController extends BasicController {
     @FXML
     public void initialize() {
         super.initialize();
+        int i = 0;
+        for (Node node : anchorPane.getChildren()) {
+            if (node instanceof SimpleButton || node instanceof ButtonWithPicture) {
+                i++;
+            }
+        }
+        flags = new boolean[i];
         Arrays.fill(flags, false);
         imageView.setImage(ApplicationConstants.NEW_BACKGROUND);
         //Настройка текстовых полей для ввода ФИО и названия объекта

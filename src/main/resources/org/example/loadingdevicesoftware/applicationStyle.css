@@ -152,4 +152,65 @@ transformer-green {
     -fx-stroke: #6AB74D;
     -fx-stroke-width: 4px;
 }
+.dif-protection-button-one {
+    -fx-border-color: #000000;
+    -fx-pref-width: 200px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 200px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 200px;
+    -fx-max-height: 70px;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #6AB74D;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0px;
+}
+.dif-protection-button-one:disabled {
+    -fx-opacity: 1.0;
+}
+.dif-protection-button-two {
+    -fx-border-color: #000000;
+    -fx-pref-width: 60px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 60px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 60px;
+    -fx-max-height: 70px;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #005286;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0px;
+}
+.dif-protection-button-two:disabled {
+    -fx-opacity: 1.0;
+}
+.dif-protection-button-two-second {
+    -fx-border-color: #000000;
+    -fx-pref-width: 60px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 60px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 60px;
+    -fx-max-height: 70px;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #6AB74D;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0px;
+}
+.dif-protection-button-two:disabled {
+    -fx-opacity: 1.0;
+}
+
 

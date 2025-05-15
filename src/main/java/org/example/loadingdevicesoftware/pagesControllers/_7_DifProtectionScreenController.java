@@ -99,6 +99,18 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     SimpleTextField phaseCTwoCurrent;
     @FXML
     SimpleTextField phaseCTwoAngle;
+    @FXML
+    SimpleButton feedingWindingButton;
+    @FXML
+    SimpleButton faultLocationButton;
+    @FXML
+    SimpleButton phaseAButton;
+    @FXML
+    SimpleButton phaseBButton;
+    @FXML
+    SimpleButton phaseCButton;
+    @FXML
+    SimpleButton groundButton;
 
 
     @FXML
@@ -380,6 +392,62 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                         default -> {}
                     }
                 }
+                case SimpleButton button when button == feedingWindingButton || button == faultLocationButton ||
+                        button == phaseAButton || button == phaseBButton || button == phaseCButton ||
+                        button == groundButton -> {
+                    switch (button) {
+                        case SimpleButton button1 when button1 == feedingWindingButton -> {
+                            button1.setOnAction(this::changeConfiguration);
+                            button1.setup(new String[]{"dif-protection-button-one", "dif-protection-button-one",
+                            "dif-protection-button-one"}, new String[]{"", "I", "II"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(button1, 215.);
+                            AnchorPane.setLeftAnchor(button1, 1005.);
+                        }
+                        case SimpleButton button1 when button1 == faultLocationButton -> {
+                            button1.setOnAction(this::changeConfiguration);
+                            button1.setup(new String[]{"dif-protection-button-one", "dif-protection-button-one",
+                                            "dif-protection-button-one"}, new String[]{"", "Внутреннее", "Внешнее"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(button1, 390.);
+                            AnchorPane.setLeftAnchor(button1, 1005.);
+                        }
+                        case SimpleButton button1 when button1 == phaseAButton -> {
+                            button1.setOnAction(this::changeConfiguration);
+                            button1.setup(new String[]{"dif-protection-button-two", "dif-protection-button-two-second"},
+                                    new String[]{"A", "A"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(button1, 565.);
+                            AnchorPane.setLeftAnchor(button1, 955.);
+                        }
+                        case SimpleButton button1 when button1 == phaseBButton -> {
+                            button1.setOnAction(this::changeConfiguration);
+                            button1.setup(new String[]{"dif-protection-button-two", "dif-protection-button-two-second"},
+                                    new String[]{"B", "B"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(button1, 565.);
+                            AnchorPane.setLeftAnchor(button1, 1035.);
+                        }
+                        case SimpleButton button1 when button1 == phaseCButton -> {
+                            button1.setOnAction(this::changeConfiguration);
+                            button1.setup(new String[]{"dif-protection-button-two", "dif-protection-button-two-second"},
+                                    new String[]{"C", "C"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(button1, 565.);
+                            AnchorPane.setLeftAnchor(button1, 1115.);
+                        }
+                        case SimpleButton button1 when button1 == groundButton -> {
+                            button1.setOnAction(this::changeConfiguration);
+                            button1.setup(new String[]{"dif-protection-button-two", "dif-protection-button-two-second"},
+                                    new String[]{"G", "G"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(button1, 565.);
+                            AnchorPane.setLeftAnchor(button1, 1195.);
+                        }
+
+                        default -> {}
+                    }
+                }
                 default -> {}
             }
         }
@@ -390,20 +458,74 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
         switch (event.getSource()) {
             case ButtonWithPicture button when button == contactOneButton:
                 if (flags[1]) {
-                    contactOneButton.changePosition(2);
+                    button.changePosition(2);
                     flags[1] = false;
                 } else {
-                    contactOneButton.changePosition(1);
+                    button.changePosition(1);
                     flags[1] = true;
                 }
                 break;
             case ButtonWithPicture button when button == contactTwoButton:
                 if (flags[2]) {
-                    contactTwoButton.changePosition(2);
+                    button.changePosition(2);
                     flags[2] = false;
                 } else {
-                    contactTwoButton.changePosition(1);
+                    button.changePosition(1);
                     flags[2] = true;
+                }
+                break;
+            case SimpleButton button when button == feedingWindingButton:
+                if (flags[3]) {
+                    button.changePosition(2);
+                    flags[3] = false;
+                } else {
+                    button.changePosition(1);
+                    flags[3] = true;
+                }
+                break;
+            case SimpleButton button when button == faultLocationButton:
+                if (flags[4]) {
+                    button.changePosition(2);
+                    flags[4] = false;
+                } else {
+                    button.changePosition(1);
+                    flags[4] = true;
+                }
+                break;
+            case SimpleButton button when button == phaseAButton:
+                if (flags[5]) {
+                    button.changePosition(0);
+                    flags[5] = false;
+                } else {
+                    button.changePosition(1);
+                    flags[5] = true;
+                }
+                break;
+            case SimpleButton button when button == phaseBButton:
+                if (flags[6]) {
+                    button.changePosition(0);
+                    flags[6] = false;
+                } else {
+                    button.changePosition(1);
+                    flags[6] = true;
+                }
+                break;
+            case SimpleButton button when button == phaseCButton:
+                if (flags[7]) {
+                    button.changePosition(0);
+                    flags[7] = false;
+                } else {
+                    button.changePosition(1);
+                    flags[7] = true;
+                }
+                break;
+            case SimpleButton button when button == groundButton:
+                if (flags[8]) {
+                    button.changePosition(0);
+                    flags[8] = false;
+                } else {
+                    button.changePosition(1);
+                    flags[8] = true;
                 }
                 break;
             case null, default:

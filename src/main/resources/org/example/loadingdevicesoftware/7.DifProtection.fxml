@@ -17,6 +17,12 @@
         <SimpleButton fx:id="menuButton"/>
         <SimpleButton fx:id="startButton"/>
         <SimpleButton fx:id="clearButton"/>
+        <SimpleButton fx:id="feedingWindingButton"/>
+        <SimpleButton fx:id="faultLocationButton"/>
+        <SimpleButton fx:id="phaseAButton"/>
+        <SimpleButton fx:id="phaseBButton"/>
+        <SimpleButton fx:id="phaseCButton"/>
+        <SimpleButton fx:id="groundButton"/>
         <ButtonWithPicture fx:id="contactOneButton"/>
         <ButtonWithPicture fx:id="contactTwoButton"/>
         <SimpleTextField fx:id="nameTextField"/>
