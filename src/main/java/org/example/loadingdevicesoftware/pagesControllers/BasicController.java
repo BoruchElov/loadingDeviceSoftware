@@ -8,6 +8,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import lombok.Getter;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 
@@ -26,7 +27,7 @@ class BasicController {
     @FXML
     Circle circleC2;
 
-    @FXML
+    @FXML @Getter
     AnchorPane anchorPane;
     @FXML
     ImageView imageView;

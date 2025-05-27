@@ -9,10 +9,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Buffer;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsSettings;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -82,7 +79,8 @@ public class _101_deviceWorkingScreenControl {
     @FXML
     //Метод для перехода на экран сценария диф.защиты
     public void goToPreviousPage (ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), Buffer.getPreviousPage());
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
+
     }
 
 

@@ -6,10 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FontManager;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
 
@@ -37,6 +34,7 @@ public class _0_MainScreenController extends BasicController{
     @FXML
     public void initialize() {
         super.initialize();
+        PagesBuffer.clear();
         imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
         //Создание шрифта для кнопок
         Font buttonsFont = FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL);

@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -116,7 +117,6 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     @FXML
     public void initialize() {
         super.initialize();
-
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
                 case Circle c when c == windingOne -> {
@@ -258,7 +258,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setTopAnchor(text1, 430.);
                             AnchorPane.setLeftAnchor(text1, 705.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 case Text text when text == feedingWinding || text == faultLocation || text == brokenPhases -> {
@@ -280,13 +281,14 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setTopAnchor(text1, 501.);
                             AnchorPane.setLeftAnchor(text1, 968.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 case Circle c when c == contactOneOne || c == contactTwoOne -> {
                     c.setRadius(10.);
                     c.getStyleClass().add("circles");
-                    switch(c) {
+                    switch (c) {
                         case Circle c1 when c1 == contactOneOne -> {
                             AnchorPane.setTopAnchor(c1, 189.);
                             AnchorPane.setLeftAnchor(c1, 165.);
@@ -295,7 +297,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setTopAnchor(c1, 189.);
                             AnchorPane.setLeftAnchor(c1, 265.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 case SimpleTextField textField when textField == phaseAOneCurrent || textField == phaseAOneAngle ||
@@ -372,7 +375,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 760.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 case ButtonWithPicture button when button == contactOneButton || button == contactTwoButton -> {
@@ -389,7 +393,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setTopAnchor(button1, 177.);
                             AnchorPane.setLeftAnchor(button1, 300.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 case SimpleButton button when button == feedingWindingButton || button == faultLocationButton ||
@@ -399,7 +404,7 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                         case SimpleButton button1 when button1 == feedingWindingButton -> {
                             button1.setOnAction(this::changeConfiguration);
                             button1.setup(new String[]{"dif-protection-button-one", "dif-protection-button-one",
-                            "dif-protection-button-one"}, new String[]{"", "I", "II"},
+                                            "dif-protection-button-one"}, new String[]{"", "I", "II"},
                                     FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
                             AnchorPane.setTopAnchor(button1, 215.);
                             AnchorPane.setLeftAnchor(button1, 1005.);
@@ -445,12 +450,15 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(button1, 1195.);
                         }
 
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
-                default -> {}
+                default -> {
+                }
             }
         }
+        restoreState();
     }
 
     @Override

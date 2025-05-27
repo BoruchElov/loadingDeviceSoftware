@@ -181,7 +181,7 @@ public class _100_checkingStartConditionsScreenController {
     @FXML
     //Метод для перехода на экран сценария диф.защиты
     public void goToPreviousPage(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), Buffer.getPreviousPage());
+        InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
     }
 
     // это чтобы вернуть как было все

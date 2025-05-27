@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 class ScreensController extends BasicController {
@@ -66,6 +67,14 @@ class ScreensController extends BasicController {
         });
         startButton.setup(SimpleButton.Presets.START);
         startButton.setActualStatus(Changeable.Status.NORMAL);
+        startButton.setOnAction(event -> {
+            try {
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                PagesBuffer.savePage(this);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         clearButton.setup(SimpleButton.Presets.CLEAR);
         clearButton.setActualStatus(Changeable.Status.NORMAL);
         clearButton.setOnAction(event -> {
@@ -102,6 +111,27 @@ class ScreensController extends BasicController {
             if (child instanceof Changeable changeable) {
                 changeable.setActualStatus(Changeable.Status.NORMAL);
             }
+        }
+    }
+
+    public void restoreState() {
+        if (PagesBuffer.fxmlName != null) {
+            ArrayList<String> timeList = PagesBuffer.buffer;
+            ArrayList<Node> elements = new ArrayList<>();
+            for (Node node : anchorPane.getChildren()) {
+                if (node instanceof SimpleTextField || node instanceof SimpleButton
+                        || node instanceof ButtonWithPicture || node instanceof SimpleImageView) {
+                    elements.add(node);
+                }
+            }
+            for (int i = 0; i < timeList.size(); i++) {
+                Node node = elements.get(i);
+                if (node instanceof SimpleTextField textField) textField.setText(timeList.get(i));
+                if (node instanceof SimpleButton button) button.changePosition(Integer.parseInt(timeList.get(i)));
+                if (node instanceof ButtonWithPicture button) button.changePosition(Integer.parseInt(timeList.get(i)));
+                if (node instanceof SimpleImageView image) image.changePosition(Integer.parseInt(timeList.get(i)));
+            }
+            PagesBuffer.buffer.clear();
         }
     }
 
