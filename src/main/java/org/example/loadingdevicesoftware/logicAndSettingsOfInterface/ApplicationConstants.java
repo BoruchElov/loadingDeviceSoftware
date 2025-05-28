@@ -98,7 +98,8 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/Closed_Contact.png")).toExternalForm());
     public static final Image INVERTER_IMAGE = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Inverter.png")).toExternalForm());
-
+    public static final Image BACKGROUND_BLUE = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Background_Blue.png")).toExternalForm());
     //Иконки главного экрана
     public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/settings.png")).toExternalForm());

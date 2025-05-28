@@ -14,6 +14,7 @@
 }
 .button-low-normal:disabled {
     -fx-opacity: 1.0;
+    -fx-background-color: #CBCCCB;
 }
 .button-low-enabled {
     -fx-border-color: #FFFFFF;
