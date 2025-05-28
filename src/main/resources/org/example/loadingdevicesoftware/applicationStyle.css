@@ -212,5 +212,22 @@ transformer-green {
 .dif-protection-button-two:disabled {
     -fx-opacity: 1.0;
 }
+.comtrade-button {
+    -fx-border-color: #000000;
+    -fx-pref-width: 300px; /* Желаемая ширина */
+    -fx-pref-height: 70px; /* Желаемая высота */
+    -fx-min-width: 300px; /* Минимальная ширина */
+    -fx-min-height: 70px; /* Минимальная высота */
+    -fx-max-width: 300px;
+    -fx-max-height: 70px;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0px;
+}
 
 

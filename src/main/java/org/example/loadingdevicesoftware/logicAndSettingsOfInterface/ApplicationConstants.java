@@ -44,10 +44,6 @@ public class ApplicationConstants {
     public static final int APPLICATION_WINDOW_WIDTH = 1280;
     public static final int APPLICATION_WINDOW_HEIGHT = 800;
 
-    //Размеры кнопок {ширина, высота}
-    public static final int[] SMALL_MEASURES = new int[]{60, 70};
-    public static final int[] NORMAL_MEASURES = new int[]{200, 70};
-
     //TODO Убрать после рефакторинга
     //Константы для цветов интерфейса
     public static final String BLACK_HEX = "#221E1F";
@@ -100,6 +96,8 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/Opened_Contact.png")).toExternalForm());
     public static final Image CLOSED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Closed_Contact.png")).toExternalForm());
+    public static final Image INVERTER_IMAGE = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Inverter.png")).toExternalForm());
 
     //Иконки главного экрана
     public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.
