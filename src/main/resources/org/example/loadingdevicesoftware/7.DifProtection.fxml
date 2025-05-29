@@ -81,5 +81,13 @@
         <Line fx:id="phaseCTwoLine"/>
         <Line fx:id="leftBusLine"/>
         <Line fx:id="rightBusLine"/>
+        <SimpleImageView fx:id="phaseAOneArrow"/>
+        <SimpleImageView fx:id="phaseBOneArrow"/>
+        <SimpleImageView fx:id="phaseCOneArrow"/>
+        <SimpleImageView fx:id="phaseATwoArrow"/>
+        <SimpleImageView fx:id="phaseBTwoArrow"/>
+        <SimpleImageView fx:id="phaseCTwoArrow"/>
+        <SimpleImageView fx:id="ground"/>
+        <SimpleImageView fx:id="lightning"/>
     </children>
 </AnchorPane>

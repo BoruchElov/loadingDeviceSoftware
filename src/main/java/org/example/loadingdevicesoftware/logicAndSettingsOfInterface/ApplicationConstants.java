@@ -100,6 +100,13 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/Inverter.png")).toExternalForm());
     public static final Image BACKGROUND_BLUE = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Background_Blue.png")).toExternalForm());
+    public static final Image CHECK_SUCCESSFUL = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/CHECK_SUCCESS.png")).toExternalForm());
+    public static final Image ARROW_LEFT = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Arrow_to_Left.png")).toExternalForm());
+    public static final Image GROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Ground_Picture.png")).toExternalForm());
+
     //Иконки главного экрана
     public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/settings.png")).toExternalForm());

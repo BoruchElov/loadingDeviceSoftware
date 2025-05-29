@@ -3,6 +3,7 @@ package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class Position {
     @Getter
     private Image[] images;
     private double[][] sizes;
+    private double[][] location;
 
     public Position(String[] styles, String[] texts) {
         positions = styles.length;
@@ -34,6 +36,13 @@ public class Position {
         this.styles = styles;
         this.images = images;
         this.sizes = sizes;
+    }
+    public Position(String[] styles, Image[] images, double[][] sizes, double[][] location) {
+        positions = styles.length;
+        this.styles = styles;
+        this.images = images;
+        this.sizes = sizes;
+        this.location = location;
     }
 
     public void setActualPosition(int actualPosition, Button button) {
@@ -62,5 +71,9 @@ public class Position {
         imageView.setFitWidth(sizes[actualPosition][0]);
         imageView.setFitHeight(sizes[actualPosition][1]);
         imageView.setImage(images[actualPosition]);
+        /*if (location != null) {
+            AnchorPane.setLeftAnchor(imageView, location[actualPosition][0]);
+            AnchorPane.setTopAnchor(imageView, location[actualPosition][1]);
+        }*/
     }
 }

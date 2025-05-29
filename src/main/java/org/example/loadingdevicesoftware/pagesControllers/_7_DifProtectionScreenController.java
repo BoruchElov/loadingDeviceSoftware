@@ -113,6 +113,22 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     @FXML
     SimpleButton groundButton;
 
+    @FXML
+    SimpleImageView phaseAOneArrow;
+    @FXML
+    SimpleImageView phaseBOneArrow;
+    @FXML
+    SimpleImageView phaseCOneArrow;
+    @FXML
+    SimpleImageView phaseATwoArrow;
+    @FXML
+    SimpleImageView phaseBTwoArrow;
+    @FXML
+    SimpleImageView phaseCTwoArrow;
+    @FXML
+    SimpleImageView ground;
+    @FXML
+    SimpleImageView lightning;
 
     @FXML
     public void initialize() {
@@ -261,6 +277,12 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                         default -> {
                         }
                     }
+                }
+                case SimpleImageView imageView when imageView == ground -> {
+                    imageView.setup(new String[]{"",""}, new Image[]{null, ApplicationConstants.GROUND},
+                            new double[][]{{45.,55.},{45.,55.}});
+                    AnchorPane.setTopAnchor(imageView, 457.);
+                    AnchorPane.setLeftAnchor(imageView, 444.);
                 }
                 case Text text when text == feedingWinding || text == faultLocation || text == brokenPhases -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
@@ -530,9 +552,11 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
             case SimpleButton button when button == groundButton:
                 if (flags[8]) {
                     button.changePosition(0);
+                    ground.changePosition(0);
                     flags[8] = false;
                 } else {
                     button.changePosition(1);
+                    ground.changePosition(1);
                     flags[8] = true;
                 }
                 break;

@@ -4,12 +4,19 @@
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton?>
 <?import javafx.scene.text.Text?>
 
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleImageView?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._101_deviceWorkingScreenControl">
    <children>
       <SimpleButton fx:id="menuButton"/>
       <SimpleButton fx:id="startButton"/>
       <SimpleButton fx:id="cancelButton"/>
       <ImageView fx:id="imageView"/>
+      <SimpleImageView fx:id="checkOneImage"/>
+      <SimpleImageView fx:id="checkTwoImage"/>
+      <SimpleImageView fx:id="checkThreeImage"/>
+      <SimpleImageView fx:id="checkFourImage"/>
+      <SimpleImageView fx:id="checkFiveImage"/>
+      <SimpleImageView fx:id="checkSixImage"/>
       <Text fx:id = "dateTimeText"/>
       <Text fx:id="headerText"/>
       <Text fx:id="checkOne"/>
