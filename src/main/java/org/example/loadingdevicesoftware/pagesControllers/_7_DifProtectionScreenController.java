@@ -1,6 +1,5 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -112,7 +111,14 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     SimpleButton phaseCButton;
     @FXML
     SimpleButton groundButton;
-
+    @FXML
+    SimpleButton connectionTypeOne;
+    @FXML
+    SimpleButton groupTypeOne;
+    @FXML
+    SimpleButton connectionTypeTwo;
+    @FXML
+    SimpleButton groupTypeTwo;
     @FXML
     SimpleImageView phaseAOneArrow;
     @FXML
@@ -135,6 +141,54 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
         super.initialize();
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
+                case SimpleButton button when button == connectionTypeOne || button == connectionTypeTwo ||
+                        button == groupTypeOne || button == groupTypeTwo -> {
+                    button.setOnAction(this::changeConfiguration);
+                    switch (button) {
+                        case SimpleButton button1 when button1 == connectionTypeOne:
+                            button.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group"},
+                                    new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
+                                    FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+                            button.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(button1, 377.);
+                            AnchorPane.setLeftAnchor(button1, 305.);
+                            break;
+                        case SimpleButton button1 when button1 == connectionTypeTwo:
+                            button1.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group"},
+                                    new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
+                                    FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+                            button1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(button1, 377.);
+                            AnchorPane.setLeftAnchor(button1, 500.);
+                            break;
+                        case SimpleButton button1 when button1 == groupTypeOne:
+                            button1.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group"},
+                                    new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
+                                    FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+                            button1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(button1, 377.);
+                            AnchorPane.setLeftAnchor(button1, 380.);
+                            break;
+                        case SimpleButton button1 when button1 == groupTypeTwo:
+                            button1.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group", "button-group",
+                                            "button-group", "button-group", "button-group", "button-group"},
+                                    new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
+                                    FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+                            button1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(button1, 377.);
+                            AnchorPane.setLeftAnchor(button1, 575.);
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 case Circle c when c == windingOne -> {
                     AnchorPane.setTopAnchor(c, 300.);
                     AnchorPane.setLeftAnchor(c, 280.);
@@ -151,56 +205,56 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                     line.setStartX(0.);
                     line.setEndX(100.);
                     AnchorPane.setTopAnchor(line, 345.);
-                    AnchorPane.setLeftAnchor(line, 195.);
+                    AnchorPane.setLeftAnchor(line, 193.);
                     line.getStyleClass().add("transformer");
                 }
                 case Line line when line == phaseBOneLine -> {
                     line.setStartX(0.);
                     line.setEndX(85.);
                     AnchorPane.setTopAnchor(line, 400.);
-                    AnchorPane.setLeftAnchor(line, 195.);
+                    AnchorPane.setLeftAnchor(line, 193.);
                     line.getStyleClass().add("transformer");
                 }
                 case Line line when line == phaseCOneLine -> {
                     line.setStartX(0.);
                     line.setEndX(100.);
                     AnchorPane.setTopAnchor(line, 455.);
-                    AnchorPane.setLeftAnchor(line, 195.);
+                    AnchorPane.setLeftAnchor(line, 193.);
                     line.getStyleClass().add("transformer");
                 }
                 case Line line when line == phaseATwoLine -> {
                     line.setStartX(0.);
                     line.setEndX(100.);
                     AnchorPane.setTopAnchor(line, 345.);
-                    AnchorPane.setLeftAnchor(line, 635.);
+                    AnchorPane.setLeftAnchor(line, 636.);
                     line.getStyleClass().add("transformer");
                 }
                 case Line line when line == phaseBTwoLine -> {
                     line.setStartX(0.);
                     line.setEndX(85.);
                     AnchorPane.setTopAnchor(line, 400.);
-                    AnchorPane.setLeftAnchor(line, 650.);
+                    AnchorPane.setLeftAnchor(line, 651.);
                     line.getStyleClass().add("transformer");
                 }
                 case Line line when line == phaseCTwoLine -> {
                     line.setStartX(0.);
                     line.setEndX(100.);
                     AnchorPane.setTopAnchor(line, 455.);
-                    AnchorPane.setLeftAnchor(line, 635.);
+                    AnchorPane.setLeftAnchor(line, 636.);
                     line.getStyleClass().add("transformer");
                 }
                 case Line line when line == leftBusLine -> {
                     line.setStartY(0.);
                     line.setEndY(170.);
                     AnchorPane.setTopAnchor(line, 315.);
-                    AnchorPane.setLeftAnchor(line, 195.);
+                    AnchorPane.setLeftAnchor(line, 193.);
                     line.getStyleClass().add("transformer");
                 }
                 case Line line when line == rightBusLine -> {
                     line.setStartY(0.);
                     line.setEndY(170.);
                     AnchorPane.setTopAnchor(line, 315.);
-                    AnchorPane.setLeftAnchor(line, 735.);
+                    AnchorPane.setLeftAnchor(line, 737.);
                     line.getStyleClass().add("transformer");
                 }
                 case Text text when text == contacts || text == one || text == two || text == currentOne ||
@@ -279,10 +333,32 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                     }
                 }
                 case SimpleImageView imageView when imageView == ground -> {
-                    imageView.setup(new String[]{"",""}, new Image[]{null, ApplicationConstants.GROUND},
-                            new double[][]{{45.,55.},{45.,55.}});
+                    imageView.setup(new String[]{"", ""}, new Image[]{null, ApplicationConstants.GROUND},
+                            new double[][]{{45., 55.}, {45., 55.}});
                     AnchorPane.setTopAnchor(imageView, 457.);
                     AnchorPane.setLeftAnchor(imageView, 444.);
+                }
+                case SimpleImageView imageView when imageView == lightning -> {
+                    imageView.setup(new String[]{"", ""}, new Image[]{null, ApplicationConstants.LIGHTNING},
+                            new double[][]{{35., 70.}, {35., 70.}});
+                }
+                case SimpleImageView imageView when imageView == phaseAOneArrow || imageView == phaseBOneArrow
+                        || imageView == phaseCOneArrow || imageView == phaseATwoArrow || imageView == phaseBTwoArrow
+                        || imageView == phaseCTwoArrow -> {
+                    imageView.setup(new String[]{"", "", ""}, new Image[]{null, ApplicationConstants.ARROW_LEFT,
+                            ApplicationConstants.ARROW_RIGHT}, new double[][]{{40., 20.}, {40., 20.}, {40., 20.}});
+                    AnchorPane.setLeftAnchor(phaseAOneArrow, 235.);
+                    AnchorPane.setTopAnchor(phaseAOneArrow, 320.);
+                    AnchorPane.setLeftAnchor(phaseBOneArrow, 235.);
+                    AnchorPane.setTopAnchor(phaseBOneArrow, 375.);
+                    AnchorPane.setLeftAnchor(phaseCOneArrow, 235.);
+                    AnchorPane.setTopAnchor(phaseCOneArrow, 430.);
+                    AnchorPane.setLeftAnchor(phaseATwoArrow, 657.);
+                    AnchorPane.setTopAnchor(phaseATwoArrow, 320.);
+                    AnchorPane.setLeftAnchor(phaseBTwoArrow, 657.);
+                    AnchorPane.setTopAnchor(phaseBTwoArrow, 375.);
+                    AnchorPane.setLeftAnchor(phaseCTwoArrow, 657.);
+                    AnchorPane.setTopAnchor(phaseCTwoArrow, 430.);
                 }
                 case Text text when text == feedingWinding || text == faultLocation || text == brokenPhases -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
@@ -419,6 +495,7 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                         }
                     }
                 }
+
                 case SimpleButton button when button == feedingWindingButton || button == faultLocationButton ||
                         button == phaseAButton || button == phaseBButton || button == phaseCButton ||
                         button == groundButton -> {
@@ -481,6 +558,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
             }
         }
         restoreState();
+        changeFigure();
+
     }
 
     @Override
@@ -560,6 +639,18 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                     flags[8] = true;
                 }
                 break;
+            case SimpleButton button when button == connectionTypeOne:
+                button.changePosition(2);
+                break;
+            case SimpleButton button when button == connectionTypeTwo:
+                button.changePosition(2);
+                break;
+            case SimpleButton button when button == groupTypeOne:
+                button.changePosition(2);
+                break;
+            case SimpleButton button when button == groupTypeTwo:
+                button.changePosition(2);
+                break;
             case null, default:
                 phaseAOneAngle.setActualStatus(Changeable.Status.LOCKED);
                 phaseBOneAngle.setActualStatus(Changeable.Status.LOCKED);
@@ -567,6 +658,124 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                 phaseATwoAngle.setActualStatus(Changeable.Status.LOCKED);
                 phaseBTwoAngle.setActualStatus(Changeable.Status.LOCKED);
                 phaseCTwoAngle.setActualStatus(Changeable.Status.LOCKED);
+                break;
+        }
+        changeFigure();
+    }
+
+    private void changeFigure() {
+        for (Node node : anchorPane.getChildren()) {
+            switch (node) {
+                case SimpleButton button when button == faultLocationButton:
+                    switch (button.getObjectPosition().getActualPosition()) {
+                        case 0:
+                            lightning.changePosition(0);
+                            phaseAOneArrow.changePosition(0);
+                            phaseBOneArrow.changePosition(0);
+                            phaseCOneArrow.changePosition(0);
+                            phaseATwoArrow.changePosition(0);
+                            phaseBTwoArrow.changePosition(0);
+                            phaseCTwoArrow.changePosition(0);
+                            break;
+                        case 1:
+                            lightning.changePosition(1);
+                            AnchorPane.setTopAnchor(lightning, 245.);
+                            AnchorPane.setLeftAnchor(lightning, 455.);
+
+                            phaseAOneArrow.changePosition(phaseAButton.getObjectPosition().getActualPosition() > 0 ? 2 : 0);
+                            phaseBOneArrow.changePosition(phaseBButton.getObjectPosition().getActualPosition() > 0 ? 2 : 0);
+                            phaseCOneArrow.changePosition(phaseCButton.getObjectPosition().getActualPosition() > 0 ? 2 : 0);
+                            phaseATwoArrow.changePosition(phaseAButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            phaseBTwoArrow.changePosition(phaseBButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            phaseCTwoArrow.changePosition(phaseCButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            break;
+                        case 2:
+                            lightning.changePosition(1);
+                            AnchorPane.setTopAnchor(lightning, 245.);
+                            AnchorPane.setLeftAnchor(lightning, 185.);
+
+                            phaseAOneArrow.changePosition(phaseAButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            phaseBOneArrow.changePosition(phaseBButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            phaseCOneArrow.changePosition(phaseCButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            phaseATwoArrow.changePosition(phaseAButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            phaseBTwoArrow.changePosition(phaseBButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            phaseCTwoArrow.changePosition(phaseCButton.getObjectPosition().getActualPosition() > 0 ? 1 : 0);
+                            break;
+                    }
+                    break;
+                case SimpleButton button when button == feedingWindingButton:
+                    windingOne.getStyleClass().clear();
+                    windingTwo.getStyleClass().clear();
+                    switch (button.getObjectPosition().getActualPosition()) {
+                        case 0:
+                            windingOne.getStyleClass().add("transformer");
+                            windingTwo.getStyleClass().add("transformer");
+                            break;
+                        case 1:
+                            windingOne.getStyleClass().add("transformer-green");
+                            windingTwo.getStyleClass().add("transformer");
+                            break;
+                        case 2:
+                            windingOne.getStyleClass().add("transformer");
+                            windingTwo.getStyleClass().add("transformer-green");
+                            break;
+                    }
+                    break;
+                case SimpleButton button when button == phaseAButton:
+                    phaseAOneLine.getStyleClass().clear();
+                    phaseATwoLine.getStyleClass().clear();
+                    switch (button.getObjectPosition().getActualPosition()) {
+                        case 0:
+                            phaseAOneLine.getStyleClass().add("transformer");
+                            phaseATwoLine.getStyleClass().add("transformer");
+                            break;
+                        case 1:
+                            phaseAOneLine.getStyleClass().add("transformer-red");
+                            phaseATwoLine.getStyleClass().add("transformer-red");
+                            break;
+                    }
+                    break;
+                case SimpleButton button when button == phaseBButton:
+                    phaseBOneLine.getStyleClass().clear();
+                    phaseBTwoLine.getStyleClass().clear();
+                    switch (button.getObjectPosition().getActualPosition()) {
+                        case 0:
+                            phaseBOneLine.getStyleClass().add("transformer");
+                            phaseBTwoLine.getStyleClass().add("transformer");
+                            break;
+                        case 1:
+                            phaseBOneLine.getStyleClass().add("transformer-red");
+                            phaseBTwoLine.getStyleClass().add("transformer-red");
+                            break;
+                    }
+                    break;
+                case SimpleButton button when button == phaseCButton:
+                    phaseCOneLine.getStyleClass().clear();
+                    phaseCTwoLine.getStyleClass().clear();
+                    switch (button.getObjectPosition().getActualPosition()) {
+                        case 0:
+                            phaseCOneLine.getStyleClass().add("transformer");
+                            phaseCTwoLine.getStyleClass().add("transformer");
+                            break;
+                        case 1:
+                            phaseCOneLine.getStyleClass().add("transformer-red");
+                            phaseCTwoLine.getStyleClass().add("transformer-red");
+                            break;
+                    }
+                    break;
+                case null, default:
+                    break;
+            }
+        }
+        switch (feedingWindingButton.getObjectPosition().getActualPosition()) {
+            case 0:
+            default:
+                break;
+            case 1:
+                windingOne.toFront();
+                break;
+            case 2:
+                windingTwo.toFront();
                 break;
         }
     }

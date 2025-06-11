@@ -23,6 +23,10 @@
         <SimpleButton fx:id="phaseBButton"/>
         <SimpleButton fx:id="phaseCButton"/>
         <SimpleButton fx:id="groundButton"/>
+        <SimpleButton fx:id="connectionTypeOne"/>
+        <SimpleButton fx:id="groupTypeOne"/>
+        <SimpleButton fx:id="connectionTypeTwo"/>
+        <SimpleButton fx:id="groupTypeTwo"/>
         <ButtonWithPicture fx:id="contactOneButton"/>
         <ButtonWithPicture fx:id="contactTwoButton"/>
         <SimpleTextField fx:id="nameTextField"/>
@@ -69,8 +73,6 @@
         <Text fx:id="bTwo"/>
         <Text fx:id="cOne"/>
         <Text fx:id="cTwo"/>
-        <Circle fx:id="windingOne"/>
-        <Circle fx:id="windingTwo"/>
         <Circle fx:id="contactOneOne"/>
         <Circle fx:id="contactTwoOne"/>
         <Line fx:id="phaseAOneLine"/>
@@ -81,6 +83,8 @@
         <Line fx:id="phaseCTwoLine"/>
         <Line fx:id="leftBusLine"/>
         <Line fx:id="rightBusLine"/>
+        <Circle fx:id="windingOne"/>
+        <Circle fx:id="windingTwo"/>
         <SimpleImageView fx:id="phaseAOneArrow"/>
         <SimpleImageView fx:id="phaseBOneArrow"/>
         <SimpleImageView fx:id="phaseCOneArrow"/>

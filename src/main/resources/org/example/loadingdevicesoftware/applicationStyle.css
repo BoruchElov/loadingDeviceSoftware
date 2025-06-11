@@ -141,17 +141,17 @@
 .transformer {
     -fx-fill: transparent;
     -fx-stroke: #000000;
-    -fx-stroke-width: 4px;
+    -fx-stroke-width: 5px;
 }
-transformer-red {
+.transformer-red {
     -fx-fill: transparent;
     -fx-stroke: #D9232A;
-    -fx-stroke-width: 4px;
+    -fx-stroke-width: 6px;
 }
-transformer-green {
+.transformer-green {
     -fx-fill: transparent;
     -fx-stroke: #6AB74D;
-    -fx-stroke-width: 4px;
+    -fx-stroke-width: 8px;
 }
 .dif-protection-button-one {
     -fx-border-color: #000000;
@@ -221,6 +221,23 @@ transformer-green {
     -fx-min-height: 70px; /* Минимальная высота */
     -fx-max-width: 300px;
     -fx-max-height: 70px;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0px;
+}
+.button-group {
+    -fx-border-color: #000000;
+    -fx-pref-width: 50px; /* Желаемая ширина */
+    -fx-pref-height: 50px; /* Желаемая высота */
+    -fx-min-width: 50px; /* Минимальная ширина */
+    -fx-min-height: 50px; /* Минимальная высота */
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #000000;
     -fx-border-width: 1;
