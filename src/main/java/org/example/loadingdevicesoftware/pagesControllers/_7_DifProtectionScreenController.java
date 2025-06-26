@@ -136,6 +136,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     @FXML
     SimpleImageView lightning;
 
+    private int[] options = new int[]{0,0,0,0};
+
     @FXML
     public void initialize() {
         super.initialize();
@@ -145,48 +147,39 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                         button == groupTypeOne || button == groupTypeTwo -> {
                     button.setOnAction(this::changeConfiguration);
                     switch (button) {
-                        case SimpleButton button1 when button1 == connectionTypeOne:
-                            button.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
-                                            "button-group", "button-group", "button-group", "button-group", "button-group",
-                                            "button-group", "button-group", "button-group", "button-group"},
-                                    new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
+                        case SimpleButton button1 when button1 == connectionTypeOne -> {
+                            button1.setup(new String[]{"button-group", "button-group", "button-group"},
+                                    new String[]{"", "d", "Y"},
                                     FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
-                            button.setOnAction(this::changeConfiguration);
                             AnchorPane.setTopAnchor(button1, 377.);
                             AnchorPane.setLeftAnchor(button1, 305.);
-                            break;
-                        case SimpleButton button1 when button1 == connectionTypeTwo:
-                            button1.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
-                                            "button-group", "button-group", "button-group", "button-group", "button-group",
-                                            "button-group", "button-group", "button-group", "button-group"},
-                                    new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
+                        }
+                        case SimpleButton button1 when button1 == connectionTypeTwo -> {
+                            button1.setup(new String[]{"button-group", "button-group", "button-group"},
+                                    new String[]{"", "d", "Y"},
                                     FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
-                            button1.setOnAction(this::changeConfiguration);
                             AnchorPane.setTopAnchor(button1, 377.);
                             AnchorPane.setLeftAnchor(button1, 500.);
-                            break;
-                        case SimpleButton button1 when button1 == groupTypeOne:
+                        }
+                        case SimpleButton button1 when button1 == groupTypeOne -> {
                             button1.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
                                             "button-group", "button-group", "button-group", "button-group", "button-group",
                                             "button-group", "button-group", "button-group", "button-group"},
                                     new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
                                     FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
-                            button1.setOnAction(this::changeConfiguration);
                             AnchorPane.setTopAnchor(button1, 377.);
                             AnchorPane.setLeftAnchor(button1, 380.);
-                            break;
-                        case SimpleButton button1 when button1 == groupTypeTwo:
+                        }
+                        case SimpleButton button1 when button1 == groupTypeTwo -> {
                             button1.setup(new String[]{"button-group", "button-group", "button-group", "button-group",
                                             "button-group", "button-group", "button-group", "button-group", "button-group",
                                             "button-group", "button-group", "button-group", "button-group"},
                                     new String[]{"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
                                     FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
-                            button1.setOnAction(this::changeConfiguration);
                             AnchorPane.setTopAnchor(button1, 377.);
                             AnchorPane.setLeftAnchor(button1, 575.);
-                            break;
-                        default:
-                            break;
+                        }
+                        default -> {}
                     }
                 }
                 case Circle c when c == windingOne -> {
@@ -557,6 +550,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                 }
             }
         }
+        connectionTypeOne.toFront();
+        groupTypeOne.toFront();
+        connectionTypeTwo.toFront();
+        groupTypeTwo.toFront();
         restoreState();
         changeFigure();
 
@@ -640,16 +637,16 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                 }
                 break;
             case SimpleButton button when button == connectionTypeOne:
-                button.changePosition(2);
+                button.changePosition(options[0] > 1 ? options[0] = 1 : ++options[0]);
                 break;
             case SimpleButton button when button == connectionTypeTwo:
-                button.changePosition(2);
+                button.changePosition(options[1] > 1 ? options[1] = 1 : ++options[1]);
                 break;
             case SimpleButton button when button == groupTypeOne:
-                button.changePosition(2);
+                button.changePosition(options[2] > 11 ? options[2] = 1 : ++options[2]);
                 break;
             case SimpleButton button when button == groupTypeTwo:
-                button.changePosition(2);
+                button.changePosition(options[3] > 11 ? options[3] = 1 : ++options[3]);
                 break;
             case null, default:
                 phaseAOneAngle.setActualStatus(Changeable.Status.LOCKED);
@@ -778,5 +775,9 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                 windingTwo.toFront();
                 break;
         }
+        connectionTypeOne.toFront();
+        groupTypeOne.toFront();
+        connectionTypeTwo.toFront();
+        groupTypeTwo.toFront();
     }
 }
