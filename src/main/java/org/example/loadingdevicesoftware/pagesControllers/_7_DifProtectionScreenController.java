@@ -136,7 +136,7 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     @FXML
     SimpleImageView lightning;
 
-    private int[] options = new int[]{0,0,0,0};
+    private int[] options = new int[]{0, 0, 0, 0};
 
     @FXML
     public void initialize() {
@@ -179,7 +179,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setTopAnchor(button1, 377.);
                             AnchorPane.setLeftAnchor(button1, 575.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 case Circle c when c == windingOne -> {
@@ -284,7 +285,7 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                         case Text text1 when text1 == phaseOne -> {
                             text1.setText("fi, град");
                             AnchorPane.setTopAnchor(text1, 280.);
-                            AnchorPane.setLeftAnchor(text1, 115.);
+                            AnchorPane.setLeftAnchor(text1, 111.);
                         }
                         case Text text1 when text1 == phaseTwo -> {
                             text1.setText("fi, град");
@@ -406,10 +407,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseAOneAngle -> {
-                            textField1.setup("0", SimpleTextField.Sizes.SMALL);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 310.);
-                            AnchorPane.setLeftAnchor(textField1, 120.);
+                            AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBOneCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
@@ -417,10 +418,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBOneAngle -> {
-                            textField1.setup("0", SimpleTextField.Sizes.SMALL);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 372.);
-                            AnchorPane.setLeftAnchor(textField1, 120.);
+                            AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCOneCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
@@ -428,10 +429,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCOneAngle -> {
-                            textField1.setup("0", SimpleTextField.Sizes.SMALL);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 434.);
-                            AnchorPane.setLeftAnchor(textField1, 120.);
+                            AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseATwoCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
@@ -439,10 +440,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseATwoAngle -> {
-                            textField1.setup("0", SimpleTextField.Sizes.SMALL);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 310.);
-                            AnchorPane.setLeftAnchor(textField1, 760.);
+                            AnchorPane.setLeftAnchor(textField1, 750.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBTwoCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
@@ -450,10 +451,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBTwoAngle -> {
-                            textField1.setup("0", SimpleTextField.Sizes.SMALL);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 372.);
-                            AnchorPane.setLeftAnchor(textField1, 760.);
+                            AnchorPane.setLeftAnchor(textField1, 750.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCTwoCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
@@ -461,10 +462,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCTwoAngle -> {
-                            textField1.setup("0", SimpleTextField.Sizes.SMALL);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 434.);
-                            AnchorPane.setLeftAnchor(textField1, 760.);
+                            AnchorPane.setLeftAnchor(textField1, 750.);
                         }
                         default -> {
                         }
@@ -650,14 +651,33 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                 break;
             case null, default:
                 phaseAOneAngle.setActualStatus(Changeable.Status.LOCKED);
+                phaseAOneAngle.setText("");
                 phaseBOneAngle.setActualStatus(Changeable.Status.LOCKED);
+                phaseBOneAngle.setText("");
                 phaseCOneAngle.setActualStatus(Changeable.Status.LOCKED);
+                phaseCOneAngle.setText("");
                 phaseATwoAngle.setActualStatus(Changeable.Status.LOCKED);
+                phaseATwoAngle.setText("");
                 phaseBTwoAngle.setActualStatus(Changeable.Status.LOCKED);
+                phaseBTwoAngle.setText("");
                 phaseCTwoAngle.setActualStatus(Changeable.Status.LOCKED);
+                phaseCTwoAngle.setText("");
                 break;
         }
         changeFigure();
+
+        if (feedingWindingButton.getObjectPosition().getActualPosition() != 0 && faultLocationButton.
+                getObjectPosition().getActualPosition() != 0 && connectionTypeOne.getObjectPosition().getActualPosition() != 0
+        && groupTypeOne.getObjectPosition().getActualPosition() != 0 && connectionTypeTwo.getObjectPosition().getActualPosition() != 0
+        && groupTypeTwo.getObjectPosition().getActualPosition() != 0) {
+            String[] buffer = PhasesAnalyzer.getPhases(formCode());
+            phaseAOneAngle.setText(buffer[0]);
+            phaseBOneAngle.setText(buffer[1]);
+            phaseCOneAngle.setText(buffer[2]);
+            phaseATwoAngle.setText(buffer[3]);
+            phaseBTwoAngle.setText(buffer[4]);
+            phaseCTwoAngle.setText(buffer[5]);
+        }
     }
 
     private void changeFigure() {
@@ -779,5 +799,20 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
         groupTypeOne.toFront();
         connectionTypeTwo.toFront();
         groupTypeTwo.toFront();
+    }
+
+    private int[] formCode() {
+        int elementZero = connectionTypeOne.getObjectPosition().getActualPosition();
+        int elementOne = groupTypeOne.getObjectPosition().getActualPosition();
+        int elementTwo = connectionTypeTwo.getObjectPosition().getActualPosition();
+        int elementThree = groupTypeTwo.getObjectPosition().getActualPosition();
+        int elementFour = phaseAButton.getObjectPosition().getActualPosition();
+        int elementFive = phaseBButton.getObjectPosition().getActualPosition();
+        int elementSix = phaseCButton.getObjectPosition().getActualPosition();
+        int elementSeven = ground.getObjectPosition().getActualPosition();
+        int elementEight = feedingWindingButton.getObjectPosition().getActualPosition();
+        int elementNine = faultLocationButton.getObjectPosition().getActualPosition();
+        return new int[]{elementZero, elementOne, elementTwo, elementThree, elementFour,
+                elementFive, elementSix, elementSeven, elementEight, elementNine};
     }
 }

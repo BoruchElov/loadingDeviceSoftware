@@ -6,6 +6,7 @@ import com.lowagie.text.pdf.BaseFont;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -130,4 +131,6 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/hand.png")).toExternalForm());
     public static final Image DEBUGGER = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/debugger.png")).toExternalForm());
+
+
 }

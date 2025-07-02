@@ -44,7 +44,7 @@ public class SimpleTextField extends TextField implements Changeable {
     private void setMeasures(Sizes size) {
         measures = switch (size) {
             case SMALL -> new int[]{52, 52};
-            case MEDIUM -> new int[]{80, 52};
+            case MEDIUM -> new int[]{75, 52};
             case LARGE -> new int[]{336, 52};
         };
     }
