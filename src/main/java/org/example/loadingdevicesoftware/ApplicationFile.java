@@ -17,11 +17,9 @@ public class ApplicationFile extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationFile.class.
                 getResource("0.baseWindow.fxml"));
-        /*FXMLLoader fxmlLoader = new FXMLLoader(ApplicationFile.class.
-                getResource("test.fxml"));*/
         Scene scene = new Scene(fxmlLoader.load(), ApplicationConstants.APPLICATION_WINDOW_WIDTH,
                 ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
-        scene.getStylesheets().add(ApplicationFile.class.getResource("/org/example/loadingdevicesoftware/applicationStyle.css").toExternalForm());
+        scene.getStylesheets().add(ApplicationFile.class.getResource("applicationStyle.css").toExternalForm());
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().
                 getResource("/images/control-system.png")).toExternalForm()));
         stage.setResizable(false);
