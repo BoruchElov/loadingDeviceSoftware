@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class _101_deviceWorkingScreenControl {
 
@@ -104,6 +103,7 @@ public class _101_deviceWorkingScreenControl {
                     button.setup(SimpleButton.Presets.START);
                     button.setOnAction(event -> {
                         try {
+                            Buffer.setFlagForDifProtection(true);
                             InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -151,8 +151,8 @@ public class _101_deviceWorkingScreenControl {
                 case SimpleImageView imageView when imageView == checkOneImage || imageView == checkTwoImage ||
                         imageView == checkThreeImage || imageView == checkFourImage || imageView == checkFiveImage ||
                         imageView == checkSixImage:
-                    imageView.setup(new String[]{"", ""}, new Image[]{null, ApplicationConstants.CHECK_SUCCESSFUL},
-                            new double[][]{{50., 51.}, {50., 51.}});
+                    imageView.setup(new String[]{"", "", ""}, new Image[]{null, ApplicationConstants.CHECK_SUCCESSFUL,
+                            ApplicationConstants.CHECK_FAILED}, new double[][]{{50., 51.}, {50., 51.},{50., 51.}});
                     double[] position = switch (imageView) {
                         case SimpleImageView imageView1 when imageView1 == checkOneImage -> new double[]{1070., 210.};
                         case SimpleImageView imageView1 when imageView1 == checkTwoImage -> new double[]{1070., 276.};
@@ -172,9 +172,6 @@ public class _101_deviceWorkingScreenControl {
             }
         }
         Platform.runLater(this::requestForResults);
-        cancelButton.setActualStatus(Changeable.Status.NORMAL);
-        cancelButton.changePosition(0);
-        startButton.changePosition(1);
     }
 
     private void requestForResults() {
@@ -190,11 +187,22 @@ public class _101_deviceWorkingScreenControl {
             // Обработка результата
             if (result.isPresent()) {
                 checkFlags[i] = result.get();
-                checks.get(i).changePosition(1);
+                checks.get(i).changePosition(checkFlags[i] ? 1 : 2);
             } else {
                 // Если пользователь отменил ввод
                 checkFlags[i] = false; // Значение по умолчанию
+                checks.get(i).changePosition(2);
             }
+        }
+        boolean isAllowedToContinue = true;
+        for (boolean element : checkFlags) {
+            if (!element) {isAllowedToContinue = false; break;}
+        }
+        if (isAllowedToContinue) {
+            cancelButton.setActualStatus(Changeable.Status.NORMAL);
+            cancelButton.changePosition(0);
+            startButton.setActualStatus(Changeable.Status.NORMAL);
+            startButton.changePosition(1);
         }
     }
 

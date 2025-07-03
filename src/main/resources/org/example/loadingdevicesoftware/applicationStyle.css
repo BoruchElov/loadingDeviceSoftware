@@ -138,6 +138,11 @@
     -fx-stroke: #000000;           /* Цвет границы */
     -fx-stroke-width: 2px;         /* Толщина границы */
 }
+.circles-two {
+    -fx-fill: #6AB74D;              /* Заливка (фон) */
+    -fx-stroke: #000000;           /* Цвет границы */
+    -fx-stroke-width: 2px;         /* Толщина границы */
+}
 .transformer {
     -fx-fill: transparent;
     -fx-stroke: #000000;
@@ -210,7 +215,7 @@
     -fx-border-insets: 0;
     -fx-padding: 0px;
 }
-.dif-protection-button-two:disabled {
+.dif-protection-button-two-second:disabled {
     -fx-opacity: 1.0;
 }
 .comtrade-button {
@@ -246,6 +251,9 @@
     -fx-background-insets: 0;
     -fx-border-insets: 0;
     -fx-padding: 0px;
+}
+.button-group:disabled {
+    -fx-opacity: 1.0;
 }
 
 

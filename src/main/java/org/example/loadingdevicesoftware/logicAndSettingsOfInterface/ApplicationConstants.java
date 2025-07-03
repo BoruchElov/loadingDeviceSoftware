@@ -103,6 +103,8 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/Background_Blue.png")).toExternalForm());
     public static final Image CHECK_SUCCESSFUL = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/CHECK_SUCCESS.png")).toExternalForm());
+    public static final Image CHECK_FAILED = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/CHECK_FAILED.png")).toExternalForm());
     public static final Image ARROW_LEFT = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Arrow_to_Left.png")).toExternalForm());
     public static final Image ARROW_RIGHT = new Image(Objects.requireNonNull(ApplicationConstants.class.
@@ -111,6 +113,8 @@ public class ApplicationConstants {
             getResource("/screen/BasePictures/Ground_Picture.png")).toExternalForm());
     public static final Image LIGHTNING = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Lightning.png")).toExternalForm());
+    public static final Image LIGHTNING_RED = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/Lightning_Red.png")).toExternalForm());
 
     //Иконки главного экрана
     public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.

@@ -9,6 +9,8 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 class ScreensController extends BasicController {
 
@@ -83,7 +85,7 @@ class ScreensController extends BasicController {
     }
 
     //Метод по очистке всех элементов окна приложения
-    private void clearAll(Object controller) {
+    public void clearAll(Object controller) {
         for (Node child : this.anchorPane.getChildren()) {
             if (child instanceof Changeable changeable) {
                 changeable.setActualStatus(Changeable.Status.NORMAL);
@@ -97,19 +99,37 @@ class ScreensController extends BasicController {
     }
 
     //Метод по блокировке всех элементов окна приложения
-    public void lockAll() {
-        for (Node child : (this.anchorPane.getChildren())) {
+    public void lockAll(Node... excludedNodes) {
+        // Создаем множество для быстрой проверки исключений
+        Set<Node> excludedSet = new HashSet<>(Arrays.asList(excludedNodes));
+
+        for (Node child : this.anchorPane.getChildren()) {
             if (child instanceof Changeable changeable) {
-                changeable.setActualStatus(Changeable.Status.LOCKED);
+                // Блокируем только если элемент НЕ в списке исключений
+                if (!excludedSet.contains(child)) {
+                    changeable.setActualStatus(Changeable.Status.LOCKED);
+                }
             }
         }
     }
 
     //Метод по разблокировке всех элементов окна приложения
-    public void unlockAll() {
-        for (Node child : (this.anchorPane.getChildren())) {
-            if (child instanceof Changeable changeable) {
-                changeable.setActualStatus(Changeable.Status.NORMAL);
+    public void unlockAll(Node... children) {
+        if (children.length == 0) {
+            for (Node child : (this.anchorPane.getChildren())) {
+                if (child instanceof Changeable changeable) {
+                    changeable.setActualStatus(Changeable.Status.NORMAL);
+                }
+            }
+        } else {
+            for (Node child : (this.anchorPane.getChildren())) {
+                if (child instanceof Changeable changeable) {
+                    for (Node child2 : children) {
+                        if (!child.equals(child2)) {
+                            changeable.setActualStatus(Changeable.Status.NORMAL);
+                        }
+                    }
+                }
             }
         }
     }

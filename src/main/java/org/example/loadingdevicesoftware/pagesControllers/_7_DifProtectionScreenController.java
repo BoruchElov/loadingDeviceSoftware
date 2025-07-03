@@ -1,9 +1,11 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -12,6 +14,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
+
+import java.io.IOException;
 
 public class _7_DifProtectionScreenController extends ScreensController implements Configurable {
 
@@ -333,8 +337,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                     AnchorPane.setLeftAnchor(imageView, 444.);
                 }
                 case SimpleImageView imageView when imageView == lightning -> {
-                    imageView.setup(new String[]{"", ""}, new Image[]{null, ApplicationConstants.LIGHTNING},
-                            new double[][]{{35., 70.}, {35., 70.}});
+                    imageView.setup(new String[]{"", "", ""}, new Image[]{null, ApplicationConstants.LIGHTNING,
+                            ApplicationConstants.LIGHTNING_RED}, new double[][]{{35., 70.}, {35., 70.}, {35., 70.}});
                 }
                 case SimpleImageView imageView when imageView == phaseAOneArrow || imageView == phaseBOneArrow
                         || imageView == phaseCOneArrow || imageView == phaseATwoArrow || imageView == phaseBTwoArrow
@@ -561,6 +565,64 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     }
 
     @Override
+    public void restoreState() {
+        super.restoreState();
+        if (Buffer.isFlagForDifProtection()) {
+            Buffer.setFlagForDifProtection(false);
+            lockAll(menuButton, clearButton, startButton);
+            clearButton.setOnAction(_ -> {
+                unlockAll();
+                clearButton.changePosition(0);
+                startButton.changePosition(0);
+                contactOneOne.getStyleClass().add("circles");
+                clearButton.setText("ОЧИСТИТЬ");
+                clearButton.setOnAction(this::clearAll);
+                startButton.setOnAction(event -> {
+                    try {
+                        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                        PagesBuffer.savePage(this);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            });
+            startButton.setOnAction(_ -> {
+                contactOneOne.getStyleClass().add("circles-two");
+                contactTwoOne.getStyleClass().add("circles-two");
+                // Простое информационное окно
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("");
+                alert.setHeaderText(null); // Необязательный заголовок
+                alert.setContentText("1. Проверка:     Выполнена\n2. Срабатывание:     Контакт 1, Контакт 2\n3. Ошибки:     Нет");
+                alert.showAndWait();
+                clearButton.changePosition(0);
+                clearButton.setText("СОХРАНИТЬ");
+                clearButton.setOnAction(_ -> {InterfaceElementsLogic.openFileManager();});
+                startButton.changePosition(0);
+                startButton.setText("ПРОДОЛЖИТЬ");
+                menuButton.setActualStatus(Changeable.Status.LOCKED);
+                startButton.setOnAction(_ -> {
+                    clearButton.setText("ОЧИСТИТЬ");
+                    clearButton.setOnAction(this::clearAll);
+                    startButton.setText("ПУСК");
+                    menuButton.setActualStatus(Changeable.Status.NORMAL);
+                    startButton.setOnAction(event -> {
+                        try {
+                            InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                            PagesBuffer.savePage(this);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                });
+            });
+            clearButton.changePosition(2);
+            clearButton.setText("ОТМЕНА");
+            startButton.changePosition(1);
+        }
+    }
+
+    @Override
     public void changeConfiguration(Event event) {
         switch (event.getSource()) {
             case ButtonWithPicture button when button == contactOneButton:
@@ -668,8 +730,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
 
         if (feedingWindingButton.getObjectPosition().getActualPosition() != 0 && faultLocationButton.
                 getObjectPosition().getActualPosition() != 0 && connectionTypeOne.getObjectPosition().getActualPosition() != 0
-        && groupTypeOne.getObjectPosition().getActualPosition() != 0 && connectionTypeTwo.getObjectPosition().getActualPosition() != 0
-        && groupTypeTwo.getObjectPosition().getActualPosition() != 0) {
+                && groupTypeOne.getObjectPosition().getActualPosition() != 0 && connectionTypeTwo.getObjectPosition().getActualPosition() != 0
+                && groupTypeTwo.getObjectPosition().getActualPosition() != 0) {
             String[] buffer = PhasesAnalyzer.getPhases(formCode());
             phaseAOneAngle.setText(buffer[0]);
             phaseBOneAngle.setText(buffer[1]);

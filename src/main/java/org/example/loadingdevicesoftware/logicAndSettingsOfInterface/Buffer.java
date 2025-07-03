@@ -9,4 +9,7 @@ public class Buffer {
     @Setter
     private static String previousPage;
 
+
+    @Getter @Setter
+    private static boolean flagForDifProtection = false;
 }
