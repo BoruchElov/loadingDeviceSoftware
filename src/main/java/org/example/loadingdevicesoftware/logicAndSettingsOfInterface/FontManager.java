@@ -13,10 +13,10 @@ public class FontManager {
     }
 
     public static final Font APP_FONT_LIGHT = Font.loadFont(FontManager.class.
-            getResource("/PFDinTextCondProLight.ttf").toExternalForm(), 14);
+            getResourceAsStream("/PFDinTextCondProLight.ttf"), 14);
 
     public static final Font APP_FONT_MEDIUM = Font.loadFont(FontManager.class.
-            getResource("/PFDinTextCondProMedium.ttf").toExternalForm(), 14);
+            getResourceAsStream("/PFDinTextCondProMedium.ttf"), 14);
 
 
     public static Font getFont(FontWeight fontWeight, FontSize fontSize) {
