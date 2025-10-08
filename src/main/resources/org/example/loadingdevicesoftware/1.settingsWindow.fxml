@@ -11,33 +11,37 @@
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleImageView?>
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._1_SettingsScreenController">
    <children>
       <SimpleButton fx:id="menuButton"/>
-      <SimpleButton fx:id="startButton"/>
       <SimpleButton fx:id="clearButton"/>
-      <SimpleButton fx:id="phaseButton"/>
-      <ButtonWithPicture fx:id="contactOneButton"/>
-      <ButtonWithPicture fx:id="contactTwoButton"/>
-      <SimpleTextField fx:id="nameTextField"/>
-      <SimpleTextField fx:id="objectTextField"/>
-      <SimpleTextField fx:id="phaseACurrent"/>
-      <SimpleTextField fx:id="phaseBCurrent"/>
-      <SimpleTextField fx:id="phaseCCurrent"/>
-      <SimpleTextField fx:id="contactOneTime"/>
-      <SimpleTextField fx:id="contactTwoTime"/>
+      <SimpleButton fx:id="saveButton"/>
       <ImageView fx:id="imageView"/>
-      <SimpleImageView fx:id="switcher"/>
+      <SimpleImageView fx:id="inverterImageViewOne"/>
+      <SimpleImageView fx:id="inverterImageViewTwo"/>
+      <SimpleImageView fx:id="inverterImageViewThree"/>
+      <SimpleImageView fx:id="inverterImageViewFour"/>
+      <SimpleImageView fx:id="inverterImageViewFive"/>
+      <SimpleImageView fx:id="inverterImageViewSix"/>
+      <ComboBox fx:id="phaseAOneComboBox"/>
+      <ComboBox fx:id="phaseATwoComboBox"/>
+      <ComboBox fx:id="phaseBOneComboBox"/>
+      <ComboBox fx:id="phaseBTwoComboBox"/>
+      <ComboBox fx:id="phaseCOneComboBox"/>
+      <ComboBox fx:id="phaseCTwoComboBox"/>
       <Circle fx:id="circleA1" />
       <Circle fx:id="circleA2" />
       <Circle fx:id="circleB1" />
       <Circle fx:id="circleB2" />
       <Circle fx:id="circleC1" />
       <Circle fx:id="circleC2" />
-      <Circle fx:id="contactOneOne"/>
-      <Circle fx:id="contactOneTwo"/>
-      <Circle fx:id="contactTwoOne"/>
-      <Circle fx:id="contactTwoTwo"/>
+      <Circle fx:id="circleAOne" />
+      <Circle fx:id="circleATwo" />
+      <Circle fx:id="circleBOne" />
+      <Circle fx:id="circleBTwo" />
+      <Circle fx:id="circleCOne" />
+      <Circle fx:id="circleCTwo" />
       <Text fx:id = "dateTimeText"/>
       <Text fx:id = "inverterA1"/>
       <Text fx:id = "inverterB1"/>
@@ -45,17 +49,11 @@
       <Text fx:id = "inverterA2"/>
       <Text fx:id = "inverterB2"/>
       <Text fx:id = "inverterC2"/>
-      <Text fx:id="numberOfPhases"/>
-      <Text fx:id="contacts"/>
-      <Text fx:id="time"/>
-      <Text fx:id="current"/>
-      <Text fx:id="phaseA1"/>
-      <Text fx:id="phaseB1"/>
-      <Text fx:id="phaseC1"/>
-      <Text fx:id="contactOne"/>
-      <Text fx:id="contactTwo"/>
-      <Text fx:id="one"/>
-      <Text fx:id="two"/>
-
+      <Text fx:id="textInverterAOne"/>
+      <Text fx:id="textInverterATwo"/>
+      <Text fx:id="textInverterBOne"/>
+      <Text fx:id="textInverterBTwo"/>
+      <Text fx:id="textInverterCOne"/>
+      <Text fx:id="textInverterCTwo"/>
    </children>
 </AnchorPane>

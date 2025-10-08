@@ -44,7 +44,7 @@ public class SimpleButton extends BasicButton implements Changeable {
                         new String[]{text, text, text}, font);
                 break;
             case SAVE:
-                text = "СОХРАНИТЬ";
+                text = "ЗАПИСАТЬ";
                 font = FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE);
                 setup(new String[]{"button-low-normal", "button-low-enabled", "button-low-warning"},
                         new String[]{text, text, text}, font);
