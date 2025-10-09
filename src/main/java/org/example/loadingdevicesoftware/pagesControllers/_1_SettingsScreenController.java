@@ -35,17 +35,17 @@ public class _1_SettingsScreenController extends BasicController {
     SimpleImageView inverterImageViewSix;
 
     @FXML
-    ComboBox<String> phaseAOneComboBox;
+    SimpleComboBox<String> phaseAOneComboBox;
     @FXML
-    ComboBox<String> phaseATwoComboBox;
+    SimpleComboBox<String> phaseATwoComboBox;
     @FXML
-    ComboBox<String> phaseBOneComboBox;
+    SimpleComboBox<String> phaseBOneComboBox;
     @FXML
-    ComboBox<String> phaseBTwoComboBox;
+    SimpleComboBox<String> phaseBTwoComboBox;
     @FXML
-    ComboBox<String> phaseCOneComboBox;
+    SimpleComboBox<String> phaseCOneComboBox;
     @FXML
-    ComboBox<String> phaseCTwoComboBox;
+    SimpleComboBox<String> phaseCTwoComboBox;
 
     @FXML
     Circle circleAOne;
@@ -72,7 +72,6 @@ public class _1_SettingsScreenController extends BasicController {
     Text textInverterCOne;
     @FXML
     Text textInverterCTwo;
-
 
 
     @FXML
@@ -111,16 +110,15 @@ public class _1_SettingsScreenController extends BasicController {
 
         Circle[] circles = new Circle[]{circleAOne, circleBOne, circleCOne, circleATwo, circleBTwo, circleCTwo};
 
-        Text[] texts = new Text[]{textInverterAOne, textInverterBOne,textInverterCOne, textInverterATwo,
-        textInverterBTwo, textInverterCTwo};
+        Text[] texts = new Text[]{textInverterAOne, textInverterBOne, textInverterCOne, textInverterATwo,
+                textInverterBTwo, textInverterCTwo};
 
         String[] phrases = new String[]{"МОДУЛЬ А1", "МОДУЛЬ В1", "МОДУЛЬ С1", "МОДУЛЬ А2", "МОДУЛЬ В2", "МОДУЛЬ С2"};
 
         for (int i = 0; i < images.length; i++) {
             images[i].setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
                     new double[][]{{150, 150}});
-            combos[i].getItems().addAll("---Не задан---");
-            combos[i].getStyleClass().add("combo-box");
+            combos[i].setPromptText("---Не задан---");
             circles[i].setFill(Color.web(ApplicationConstants.Gray));
             circles[i].setRadius(10);
             circles[i].getStyleClass().add("circles");
@@ -160,6 +158,13 @@ public class _1_SettingsScreenController extends BasicController {
     }
 
     private void clear() {
+
+        for (Node child : this.anchorPane.getChildren()) {
+            if (child instanceof SimpleComboBox<?> comboBox) {
+                comboBox.getSelectionModel().clearSelection();
+            }
+        }
+
 
     }
 }

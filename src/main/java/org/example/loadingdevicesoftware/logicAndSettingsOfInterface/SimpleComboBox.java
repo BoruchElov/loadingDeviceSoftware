@@ -1,11 +1,14 @@
 package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.text.Font;
+
+import java.util.ArrayList;
 
 /**
  * Комбобокс с едиными настройками отображения.
@@ -24,13 +27,6 @@ public class SimpleComboBox<T> extends ComboBox<T> implements Changeable {
         getStyleClass().add(STYLE);
     }
 
-    private void initialize() {
-        setCellFactory(listView -> createCell());
-        setButtonCell(createCell());
-        skinProperty().addListener((observable, oldSkin, newSkin) -> hideArrow());
-        Platform.runLater(this::hideArrow);
-    }
-
     @Override
     public void changePosition(int position) {
     }
@@ -40,11 +36,21 @@ public class SimpleComboBox<T> extends ComboBox<T> implements Changeable {
 
     }
 
+    private void initialize() {
+        setCellFactory(_ -> createCell());
+        setButtonCell(createCell());
+        skinProperty().addListener((_, _, _) -> hideArrow());
+        Platform.runLater(this::hideArrow);
+    }
+
     private ListCell<T> createCell() {
         return new ListCell<>() {
             {
                 setAlignment(Pos.CENTER);
                 setFont(font);
+                setPadding(Insets.EMPTY);
+                prefWidthProperty().bind(SimpleComboBox.this.widthProperty());
+                setMaxWidth(Double.MAX_VALUE);
             }
 
             @Override

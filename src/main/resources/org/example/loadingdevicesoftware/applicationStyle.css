@@ -9,6 +9,11 @@
     -fx-min-height: 40px; /* Минимальная высота */
     -fx-max-width: 175px;
     -fx-max-height: 40px;
+    -fx-padding: 0px;
+}
+
+.combo-box:disabled {
+    -fx-opacity: 1.0;
 }
 
 .button-low-normal {

@@ -12,6 +12,7 @@
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture?>
 
 <?import javafx.scene.control.ComboBox?>
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleComboBox?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._1_SettingsScreenController">
    <children>
       <SimpleButton fx:id="menuButton"/>
@@ -24,12 +25,12 @@
       <SimpleImageView fx:id="inverterImageViewFour"/>
       <SimpleImageView fx:id="inverterImageViewFive"/>
       <SimpleImageView fx:id="inverterImageViewSix"/>
-      <ComboBox fx:id="phaseAOneComboBox"/>
-      <ComboBox fx:id="phaseATwoComboBox"/>
-      <ComboBox fx:id="phaseBOneComboBox"/>
-      <ComboBox fx:id="phaseBTwoComboBox"/>
-      <ComboBox fx:id="phaseCOneComboBox"/>
-      <ComboBox fx:id="phaseCTwoComboBox"/>
+      <SimpleComboBox fx:id="phaseAOneComboBox"/>
+      <SimpleComboBox fx:id="phaseATwoComboBox"/>
+      <SimpleComboBox fx:id="phaseBOneComboBox"/>
+      <SimpleComboBox fx:id="phaseBTwoComboBox"/>
+      <SimpleComboBox fx:id="phaseCOneComboBox"/>
+      <SimpleComboBox fx:id="phaseCTwoComboBox"/>
       <Circle fx:id="circleA1" />
       <Circle fx:id="circleA2" />
       <Circle fx:id="circleB1" />
