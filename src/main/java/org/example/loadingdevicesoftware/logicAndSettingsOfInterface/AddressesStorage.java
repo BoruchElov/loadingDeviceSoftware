@@ -26,15 +26,14 @@ public final class AddressesStorage {
     private static final String FILE_NAME = "addresses.txt";
     private static final Path STORAGE_DIR = resolveStorageDir();
 
-    private AddressesStorage() {
-    }
+    private AddressesStorage() {}
 
     private static Path resolveStorageDir() {
         String appData = System.getenv("APPDATA");
         if (appData != null && !appData.isBlank()) {
-            return Paths.get(appData, "DebuggingSoft");
+            return Paths.get(appData, "loadingDeviceSoftware");
         }
-        return Paths.get(System.getProperty("user.home"), ".debuggingsoft");
+        return Paths.get(System.getProperty("user.home"), ".loadingdevicesoftware");
     }
 
     /**

@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class _1_SettingsScreenController extends BasicController {
@@ -83,7 +85,11 @@ public class _1_SettingsScreenController extends BasicController {
         AnchorPane.setTopAnchor(saveButton, 695.0);
         AnchorPane.setLeftAnchor(saveButton, 1030.0);
         saveButton.setOnAction(event -> {
-            save();
+            try {
+                save();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         menuButton.setup(SimpleButton.Presets.MENU);
         AnchorPane.setTopAnchor(menuButton, 695.0);
@@ -119,6 +125,7 @@ public class _1_SettingsScreenController extends BasicController {
             images[i].setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
                     new double[][]{{150, 150}});
             combos[i].setPromptText("---Не задан---");
+            combos[i].getItems().addAll("00:FF:EE:SA", "11:RR:SS:WE", "22:XX:CC:1D", "33:XX:DD:EE", "44:XX:DD:EE:FF");
             circles[i].setFill(Color.web(ApplicationConstants.Gray));
             circles[i].setRadius(10);
             circles[i].getStyleClass().add("circles");
@@ -153,18 +160,21 @@ public class _1_SettingsScreenController extends BasicController {
 
     }
 
-    private void save() {
-
+    private void save() throws IOException {
+        List<String> addressesList = new ArrayList<String>();
+        for (Node child : this.anchorPane.getChildren()) {
+            if (child instanceof SimpleComboBox<?> comboBox) {
+                addressesList.add(comboBox.getSelectionModel().getSelectedItem().toString());
+            }
+        }
+        AddressesStorage.writeAddresses(addressesList);
     }
 
     private void clear() {
-
         for (Node child : this.anchorPane.getChildren()) {
             if (child instanceof SimpleComboBox<?> comboBox) {
                 comboBox.getSelectionModel().clearSelection();
             }
         }
-
-
     }
 }
