@@ -13,10 +13,15 @@ import javafx.scene.text.Font;
 public class SimpleComboBox<T> extends ComboBox<T> implements Changeable {
 
     private final Font font = FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL);
+    private final String STYLE = "combo-box";
 
     public SimpleComboBox() {
         super();
         initialize();
+    }
+
+    public void setup() {
+        getStyleClass().add(STYLE);
     }
 
     private void initialize() {
@@ -24,6 +29,15 @@ public class SimpleComboBox<T> extends ComboBox<T> implements Changeable {
         setButtonCell(createCell());
         skinProperty().addListener((observable, oldSkin, newSkin) -> hideArrow());
         Platform.runLater(this::hideArrow);
+    }
+
+    @Override
+    public void changePosition(int position) {
+    }
+
+    @Override
+    public void setActualStatus(Status status) {
+
     }
 
     private ListCell<T> createCell() {
@@ -56,17 +70,5 @@ public class SimpleComboBox<T> extends ComboBox<T> implements Changeable {
             arrow.setVisible(false);
             arrow.setManaged(false);
         }
-    }
-
-    @Override
-    public void changePosition(int position) {
-        if (position >= 0 && position < getItems().size()) {
-            getSelectionModel().select(position);
-        }
-    }
-
-    @Override
-    public void setActualStatus(Status status) {
-        setDisable(status == Status.LOCKED);
     }
 }

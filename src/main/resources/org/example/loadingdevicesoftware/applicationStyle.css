@@ -9,7 +9,6 @@
     -fx-min-height: 40px; /* Минимальная высота */
     -fx-max-width: 175px;
     -fx-max-height: 40px;
-    -fx-font-family: 'Myriad Pro'; -fx-font-size: 18;
 }
 
 .button-low-normal {
