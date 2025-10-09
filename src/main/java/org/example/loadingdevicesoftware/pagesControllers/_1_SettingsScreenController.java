@@ -13,6 +13,7 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class _1_SettingsScreenController extends BasicController {
@@ -120,12 +121,21 @@ public class _1_SettingsScreenController extends BasicController {
                 textInverterBTwo, textInverterCTwo};
 
         String[] phrases = new String[]{"МОДУЛЬ А1", "МОДУЛЬ В1", "МОДУЛЬ С1", "МОДУЛЬ А2", "МОДУЛЬ В2", "МОДУЛЬ С2"};
+        List<String> addresses = new ArrayList<>();
+        try {
+            addresses = AddressesStorage.readAddresses();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         for (int i = 0; i < images.length; i++) {
             images[i].setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
                     new double[][]{{150, 150}});
             combos[i].setPromptText("---Не задан---");
             combos[i].getItems().addAll("00:FF:EE:SA", "11:RR:SS:WE", "22:XX:CC:1D", "33:XX:DD:EE", "44:XX:DD:EE:FF");
+            String value = addresses.get(i);
+            if (value.isEmpty()) {
+            }
             circles[i].setFill(Color.web(ApplicationConstants.Gray));
             circles[i].setRadius(10);
             circles[i].getStyleClass().add("circles");
@@ -158,13 +168,17 @@ public class _1_SettingsScreenController extends BasicController {
             }
         }
 
+
+
     }
 
     private void save() throws IOException {
         List<String> addressesList = new ArrayList<String>();
         for (Node child : this.anchorPane.getChildren()) {
             if (child instanceof SimpleComboBox<?> comboBox) {
-                addressesList.add(comboBox.getSelectionModel().getSelectedItem().toString());
+                //addressesList.add(comboBox.getSelectionModel().getSelectedItem().toString());
+                Object selectedItem = comboBox.getSelectionModel().getSelectedItem();
+                addressesList.add(selectedItem == null ? "" : selectedItem.toString());
             }
         }
         AddressesStorage.writeAddresses(addressesList);
