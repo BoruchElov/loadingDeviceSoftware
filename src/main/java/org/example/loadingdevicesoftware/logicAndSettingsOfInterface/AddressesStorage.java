@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Utility class that manages the persistent storage of inverter MAC addresses.
@@ -65,10 +66,17 @@ public final class AddressesStorage {
             return new ArrayList<>();
         }
         String data = Files.readString(file, StandardCharsets.UTF_8);
-        if (data == null || data.isBlank()) {
-            return new ArrayList<>();
+        List<String> addresses = Arrays.stream(data.split(";"))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+
+        // Если после фильтрации список пуст — значит были только ;;;;
+        if (addresses.isEmpty()) {
+            return List.of(new String[]{"00:00:00:00","00:00:00:00","00:00:00:00","00:00:00:00","00:00:00:00",
+                    "00:00:00:00"});
         }
-        return new ArrayList<>(Arrays.asList(data.split(";")));
+        return addresses;
     }
 
     /**

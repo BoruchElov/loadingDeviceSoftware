@@ -13,7 +13,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
-    private static Address myMAC = new Address(0x0912ABE1);
+
+    public static final int myMACInt = 0x0712ABE1;
+    private static Address myMAC = new Address(myMACInt);
     private SerialPort SP;
     private final Map<Integer, PacketHandler> upperLayerHandlers = new ConcurrentHashMap<>();
     private final BlockingQueue<byte[]> sendQueue = new LinkedBlockingQueue<>();
@@ -103,7 +105,16 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
     private void handlePacket(byte[] Buff) {
         Integer PacketType = Byte.toUnsignedInt(Buff[8]);
         Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
+        Address addressRCV = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
         ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();
+        if (addressRCV.toStringInHexFormat() != myMAC.toStringInHexFormat()) {
+            if (PacketType != 1) {
+                return;
+            }
+            if (Buff[9] != 1) {
+                return;
+            }
+        }
 
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);

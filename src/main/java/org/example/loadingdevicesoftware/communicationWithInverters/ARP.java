@@ -25,6 +25,9 @@ public class ARP implements PacketHandler {
     	byte TypeMsg = Buff.get();
     	switch(TypeMsg) {
     	case 1:					// Запрос на MAC адрес сервера
+            if (!ConnectionControl.isAddressKnown(AddressSource)) {
+                ConnectionControl.addAddress(AddressSource);
+            }
             System.out.println("(ARP) Запрос на MAC адрес от: " + AddressSource.toStringInHexFormat());
             bufferTX = ByteBuffer.allocate(1+1+4);
     		Buff.rewind();

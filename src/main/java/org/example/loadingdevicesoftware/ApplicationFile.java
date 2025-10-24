@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
 
@@ -26,13 +27,18 @@ public class ApplicationFile extends Application {
         stage.setTitle("Контроллер прогрузочного устройства");
         stage.setScene(scene);
         stage.show();
+
+        //Запуск соединения
+        ConnectionControl.openConnection();
     }
 
     @Override
     public void stop() throws Exception {
         // Завершаем поток даты и времени
         DateTimeUpdater.getInstance().stop();
+        ConnectionControl.closeConnection();
         super.stop();
+
     }
 
 }

@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
@@ -106,7 +107,11 @@ public class _1_SettingsScreenController extends BasicController {
         AnchorPane.setTopAnchor(clearButton, 695.0);
         AnchorPane.setLeftAnchor(clearButton, 770.0);
         clearButton.setOnAction(event -> {
-            clear();
+            try {
+                clear();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         SimpleImageView[] images = new SimpleImageView[]{inverterImageViewOne, inverterImageViewTwo,
@@ -121,7 +126,7 @@ public class _1_SettingsScreenController extends BasicController {
                 textInverterBTwo, textInverterCTwo};
 
         String[] phrases = new String[]{"МОДУЛЬ А1", "МОДУЛЬ В1", "МОДУЛЬ С1", "МОДУЛЬ А2", "МОДУЛЬ В2", "МОДУЛЬ С2"};
-        List<String> addresses = new ArrayList<>();
+        List<String> addresses;
         try {
             addresses = AddressesStorage.readAddresses();
         } catch (IOException e) {
@@ -129,13 +134,25 @@ public class _1_SettingsScreenController extends BasicController {
         }
 
         for (int i = 0; i < images.length; i++) {
+            ComboBox<String> combo = combos[i];
             images[i].setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
                     new double[][]{{150, 150}});
-            combos[i].setPromptText("---Не задан---");
-            combos[i].getItems().addAll("00:FF:EE:SA", "11:RR:SS:WE", "22:XX:CC:1D", "33:XX:DD:EE", "44:XX:DD:EE:FF");
+            combos[i].setOnShowing(event -> {
+                fillComboBoxList((ComboBox) event.getSource());
+            });
             String value = addresses.get(i);
-            if (value.isEmpty()) {
-            }
+            combos[i].setValue(value.equals("00:00:00:00") ? "--НЕ ЗАДАН--" : value);
+            combos[i].valueProperty().addListener((obs, oldVal, newVal) -> {
+                if (combo.isShowing() && newVal != null && !newVal.equals(oldVal)) {
+                    String keep = (String) newVal;
+                    combo.hide(); // важно: закрыть popup перед манипуляциями с items
+
+                    javafx.application.Platform.runLater(() -> {
+                        fillComboBoxList(combo);   // меняет items
+                        combo.setValue(keep);      // возвращаем выбранное значение на отображение
+                    });
+                }
+            });
             circles[i].setFill(Color.web(ApplicationConstants.Gray));
             circles[i].setRadius(10);
             circles[i].getStyleClass().add("circles");
@@ -169,26 +186,62 @@ public class _1_SettingsScreenController extends BasicController {
         }
 
 
-
     }
 
     private void save() throws IOException {
-        List<String> addressesList = new ArrayList<String>();
-        for (Node child : this.anchorPane.getChildren()) {
-            if (child instanceof SimpleComboBox<?> comboBox) {
-                //addressesList.add(comboBox.getSelectionModel().getSelectedItem().toString());
-                Object selectedItem = comboBox.getSelectionModel().getSelectedItem();
-                addressesList.add(selectedItem == null ? "" : selectedItem.toString());
+        List<String> addressesList = new ArrayList<>();
+        ComboBox[] combos = new ComboBox[]{phaseAOneComboBox, phaseBOneComboBox, phaseCOneComboBox, phaseATwoComboBox,
+                phaseBTwoComboBox, phaseCTwoComboBox};
+        for (ComboBox<String> combo : combos) {
+            String selectedItem = combo.getSelectionModel().getSelectedItem();
+            if (selectedItem.equals("") || selectedItem.equals("--НЕ ЗАДАН--")) {
+                selectedItem = "00:00:00:00";
             }
+            addressesList.add(selectedItem);
         }
         AddressesStorage.writeAddresses(addressesList);
     }
 
-    private void clear() {
+    private void clear() throws IOException {
         for (Node child : this.anchorPane.getChildren()) {
-            if (child instanceof SimpleComboBox<?> comboBox) {
-                comboBox.getSelectionModel().clearSelection();
+            if (child instanceof SimpleComboBox<?> genericBox) {
+                @SuppressWarnings("unchecked")
+                SimpleComboBox<String> comboBox = (SimpleComboBox<String>) genericBox;
+                comboBox.setValue("--НЕ ЗАДАН--");
             }
+
         }
+    }
+
+    private void fillComboBoxList(ComboBox<String> combo) {
+        // 1) базовый список
+        List<String> base = new ArrayList<>(ConnectionControl.getSavedAddresses());
+        base.removeIf(a -> a == null || a.isBlank() || "00:00:00:00".equals(a));
+
+        // 2) уже выбранные в других комбах
+        java.util.Set<String> selected = anchorPane.getChildren().stream()
+                .filter(n -> n instanceof SimpleComboBox<?> && n != combo)
+                .map(n -> ((SimpleComboBox<?>) n).getSelectionModel().getSelectedItem())
+                .filter(java.util.Objects::nonNull)
+                .map(Object::toString)
+                .collect(java.util.stream.Collectors.toSet());
+
+        // 3) фильтрация
+        java.util.List<String> filtered = base.stream()
+                .filter(a -> !selected.contains(a))
+                .collect(java.util.stream.Collectors.toList());
+
+        // 4) безопасное обновление items
+        if (filtered.isEmpty()) {
+            combo.getItems().clear();          // ок, пустой список допустим
+        } else {
+            combo.getItems().setAll(filtered); // нет subList-ов руками
+        }
+    }
+
+
+
+    private void clearList() {
+
     }
 }
