@@ -14,44 +14,53 @@ import java.io.IOException;
 public class _0_MainScreenController extends BasicController{
 
     @FXML
-    ButtonWithPicture settingsButton;
-    @FXML
     ButtonWithPicture switcherTestButton;
     @FXML
     ButtonWithPicture relayProtectionTestButton;
     @FXML
-    ButtonWithPicture eventLoggerButton;
-    @FXML
     ButtonWithPicture measurementTransformerTestButton;
-    @FXML
-    ButtonWithPicture comtradeButton;
     @FXML
     ButtonWithPicture differentialProtectionTestButton;
     @FXML
+    ButtonWithPicture comtradeButton;
+    @FXML
     ButtonWithPicture handControlButton;
     @FXML
+    ButtonWithPicture eventLoggerButton;
+    @FXML
+    ButtonWithPicture settingsButton;
+    @FXML
     ButtonWithPicture developmentButton;
+
+
+//    @FXML
+//    ButtonWithPicture AboutTheDeviceButton;
 
     @FXML
     public void initialize() {
         super.initialize();
         PagesBuffer.clear();
         imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
+
         //Создание шрифта для кнопок
         Font buttonsFont = FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL);
+
         //Создание массива надписей на кнопках
-        String[] buttonsTexts = new String[]{"Настройка", "Проверка автоматического выключателя", "Проверка релейной защиты",
-                "Журнал событий", "Проверка измерительного трансформатора", "COMTRADE", "Проверка дифференциальной защиты",
-                "Ручной ввод", "Отладка"};
+        String[] buttonsTexts = new String[]{"Проверка автоматического выключателя", "Проверка релейной защиты",
+                "Проверка измерительного трансформатора", "Проверка дифференциальной защиты", "COMTRADE", "Ручной ввод",
+                "Журнал событий", "Настройка", "Отладка"};
+
         //Создание массива размеров ImageView
         ButtonWithPicture.ImagViewSizes[] imageViewSizes = new ButtonWithPicture.ImagViewSizes[]{ButtonWithPicture.ImagViewSizes.LARGE,
         ButtonWithPicture.ImagViewSizes.SMALL, ButtonWithPicture.ImagViewSizes.LARGE, ButtonWithPicture.ImagViewSizes.LARGE,
         ButtonWithPicture.ImagViewSizes.MEDIUM, ButtonWithPicture.ImagViewSizes.LARGE, ButtonWithPicture.ImagViewSizes.MEDIUM,
         ButtonWithPicture.ImagViewSizes.MEDIUM, ButtonWithPicture.ImagViewSizes.LARGE};
+
         //Создание массива изображений
-        Image[] images = new Image[]{ApplicationConstants.SETTINGS, ApplicationConstants.SWITCHER_TEST, ApplicationConstants.RELAY_PROTECTION,
-        ApplicationConstants.EVENT_LOGGER, ApplicationConstants.MEASUREMENT_TRANSFORMER, ApplicationConstants.COMTRADE,
-        ApplicationConstants.DIFFERENTIAL_PROTECTION, ApplicationConstants.HAND_CONTROL, ApplicationConstants.DEBUGGER};
+        Image[] images = new Image[]{ApplicationConstants.SWITCHER_TEST, ApplicationConstants.RELAY_PROTECTION, ApplicationConstants.MEASUREMENT_TRANSFORMER,
+        ApplicationConstants.DIFFERENTIAL_PROTECTION, ApplicationConstants.COMTRADE, ApplicationConstants.HAND_CONTROL,
+        ApplicationConstants.EVENT_LOGGER, ApplicationConstants.SETTINGS, ApplicationConstants.DEBUGGER};
+
         //Настройка внешнего вида кнопок
         int j = 0;
         double topPosition  = 170.;

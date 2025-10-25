@@ -116,7 +116,4 @@ class BasicController {
         AnchorPane.setTopAnchor(circleC2, 77.5);
         AnchorPane.setLeftAnchor(circleC2, 472.5);
     }
-
-
-
 }

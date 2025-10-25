@@ -10,15 +10,19 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._0_MainScreenController">
    <children>
-      <ButtonWithPicture fx:id="settingsButton"/>
+
       <ButtonWithPicture fx:id="switcherTestButton"/>
       <ButtonWithPicture fx:id="relayProtectionTestButton"/>
-      <ButtonWithPicture fx:id="eventLoggerButton"/>
       <ButtonWithPicture fx:id="measurementTransformerTestButton"/>
-      <ButtonWithPicture fx:id="comtradeButton"/>
       <ButtonWithPicture fx:id="differentialProtectionTestButton"/>
+      <ButtonWithPicture fx:id="comtradeButton"/>
       <ButtonWithPicture fx:id="handControlButton"/>
+      <ButtonWithPicture fx:id="eventLoggerButton"/>
+      <ButtonWithPicture fx:id="settingsButton"/>
       <ButtonWithPicture fx:id="developmentButton"/>
+
+<!--      <ButtonWithPicture fx:id="AboutTheDeviceButton"/>-->
+
       <ImageView fx:id="imageView"/>
       <Circle fx:id="circleA1" />
       <Circle fx:id="circleA2" />
