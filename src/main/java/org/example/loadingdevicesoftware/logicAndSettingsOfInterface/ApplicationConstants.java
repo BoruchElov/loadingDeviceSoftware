@@ -54,6 +54,7 @@ public class ApplicationConstants {
     public static final String ORANGE_HEX = "#F9AE40";
     public static final String BLACK_WORD = "black";
     public static final String WHITE_WORD = "white";
+    public static boolean expertStatus = true;
     //Константы для текста
     public static final String FONT_NAME = "Myriad Pro";
     //Текст на новых кнопках

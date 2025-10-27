@@ -88,6 +88,10 @@ public class _1_SettingsScreenController extends BasicController {
     @FXML
     public void initialize() {
         super.initialize();
+
+        expertModeCheckBox.setSelected(ApplicationConstants.expertStatus);
+        checkBoxAction();
+
         imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
 
         saveButton.setup(SimpleButton.Presets.SAVE);
@@ -206,6 +210,7 @@ public class _1_SettingsScreenController extends BasicController {
 
     private void checkBoxAction() {
         boolean isSelected = expertModeCheckBox.isSelected();
+        ApplicationConstants.expertStatus = isSelected;
         clearButton.setDisable(isSelected);
         saveButton.setDisable(isSelected);
         ComboBox[] combos = new ComboBox[]{phaseAOneComboBox, phaseBOneComboBox, phaseCOneComboBox, phaseATwoComboBox,
