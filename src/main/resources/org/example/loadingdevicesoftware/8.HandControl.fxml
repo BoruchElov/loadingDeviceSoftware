@@ -1,320 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+
+
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Circle?>
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleTextField?>
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleImageView?>
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ButtonWithPicture?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._8_HandControlScreenController">
+
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._8_HandControlScreenController">
     <children>
+        <!--Кнопки справа-->
+        <SimpleButton fx:id="modeButton"/>
+        <SimpleButton fx:id="conditionButton"/>
+        <SimpleButton fx:id="timeModeButton"/>
 
-        <!--фоновая картинка-->
-        <ImageView fx:id="backgroundImageView" fitHeight="800.0" fitWidth="1293.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../screen/8.ручнойРежим/ручнойРежим1Форма(безКнопок).png" />
-            </image>
-        </ImageView>
+        <!--Текстовые поля для токов слева-->
+        <SimpleTextField fx:id="phaseALCurrent"/>
+        <SimpleTextField fx:id="phaseALAngle"/>
+        <SimpleTextField fx:id="phaseBLCurrent"/>
+        <SimpleTextField fx:id="phaseBLAngle"/>
+        <SimpleTextField fx:id="phaseCLCurrent"/>
+        <SimpleTextField fx:id="phaseCLAngle"/>
+        <!--справа-->
+        <SimpleTextField fx:id="phaseARCurrent"/>
+        <SimpleTextField fx:id="phaseARAngle"/>
+        <SimpleTextField fx:id="phaseBRCurrent"/>
+        <SimpleTextField fx:id="phaseBRAngle"/>
+        <SimpleTextField fx:id="phaseCRCurrent"/>
+        <SimpleTextField fx:id="phaseCRAngle"/>
 
-        <!--Ввод параметров объекта/ФИО/Токов/прочего -->
-        <TextField fx:id="objectNameTextField" layoutX="620.0" layoutY="653.0" prefHeight="43.0" prefWidth="272.0" />
-        <TextField fx:id="userNameTextField" layoutX="98.0" layoutY="653.0" prefHeight="43.0" prefWidth="272.0" />
-        <TextField fx:id="phaseA1TextField" layoutX="90.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleA1TextField" layoutX="237.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
-        <TextField fx:id="IP_A1" layoutX="125.0" layoutY="317.0" prefHeight="34.0" prefWidth="162.0" />
+        <!--Картинки инверторов-->
+        <SimpleImageView fx:id="moduleA1"/>
+        <SimpleImageView fx:id="moduleB1"/>
+        <SimpleImageView fx:id="moduleC1"/>
+        <SimpleImageView fx:id="moduleA2"/>
+        <SimpleImageView fx:id="moduleB2"/>
+        <SimpleImageView fx:id="moduleC2"/>
 
-        <TextField fx:id="phaseB1TextField" layoutX="409.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleB1TextField" layoutX="554.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
-        <TextField fx:id="IP_B1" layoutX="442.0" layoutY="317.0" prefHeight="34.0" prefWidth="162.0" />
+        <!--Кнопки контактов контакторов-->
+        <ButtonWithPicture fx:id="contactOneButton"/>
+        <ButtonWithPicture fx:id="contactTwoButton"/>
+        <!-- Кружки контаков-->
+        <Circle fx:id="contactOne"/>
+        <Circle fx:id="contactTwo"/>
 
-        <TextField fx:id="phaseC1TextField" layoutX="721.0" layoutY="249.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleC1TextField" layoutX="868.0" layoutY="249.0" prefHeight="43.0" prefWidth="51.0" />
-        <TextField fx:id="IP_C1" layoutX="758.0" layoutY="317.0" prefHeight="34.0" prefWidth="162.0" />
+        <!--Текстовые поля на форме-->
+        <Text fx:id="contacts"/>
+        <Text fx:id="one"/>
+        <Text fx:id="two"/>
+        <Text fx:id="feedingWinding"/>
+        <Text fx:id="faultLocation"/>
+        <Text fx:id="brokenPhases"/>
+        <Text fx:id="currentOne"/>
+        <Text fx:id="currentTwo"/>
+        <Text fx:id="phaseOne"/>
+        <Text fx:id="phaseTwo"/>
+        <Text fx:id="aOne"/>
+        <Text fx:id="aTwo"/>
+        <Text fx:id="bOne"/>
+        <Text fx:id="bTwo"/>
+        <Text fx:id="cOne"/>
+        <Text fx:id="cTwo"/>
 
-        <TextField fx:id="phaseA2TextField" layoutX="90.0" layoutY="510.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleA2TextField" layoutX="236.0" layoutY="510.0" prefHeight="43.0" prefWidth="51.0" />
-        <TextField fx:id="IP_A2" layoutX="125.0" layoutY="577.0" prefHeight="34.0" prefWidth="162.0" />
 
-        <TextField fx:id="phaseB2TextField" layoutX="410.0" layoutY="510.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleB2TextField" layoutX="555.0" layoutY="510.0" prefHeight="43.0" prefWidth="51.0" />
-        <TextField fx:id="IP_B2" layoutX="445.0" layoutY="577.0" prefHeight="34.0" prefWidth="162.0" />
-
-        <TextField fx:id="phaseC2TextField" layoutX="718.0" layoutY="510.0" prefHeight="43.0" prefWidth="90.0" />
-        <TextField fx:id="angleC2TextField" layoutX="865.0" layoutY="510.0" prefHeight="43.0" prefWidth="51.0" />
-        <TextField fx:id="IP_C2" layoutX="755.0" layoutY="577.0" prefHeight="34.0" prefWidth="162.0" />
-
-        <!--кнопка перехода домой-->
-        <Button fx:id="toMenuButton" contentDisplay="CENTER" layoutX="74.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="64.0" prefWidth="138.0">
-            <font>
-                <Font size="24.0" />
-            </font>
-         <graphic>
-                <ImageView fx:id="toMenuButtonImageView" fitHeight="43.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic>
-        </Button>
-        <!--кнопка перехода в старт-->
-        <Button fx:id="startButton" contentDisplay="CENTER" layoutX="1058.0" layoutY="725.0" mnemonicParsing="false" onAction="#goToStartScreen" prefHeight="64.0" prefWidth="138.0">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <graphic>
-                <ImageView fx:id="startButtonImageView" fitHeight="43.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
-            </graphic>
-        </Button>
-        <!--кнопки настройки режима-->
-        <Button fx:id="stopwatchSetting" contentDisplay="CENTER" layoutX="1016.0" layoutY="157.0" mnemonicParsing="false" onAction="#testClick" prefHeight="73.0" prefWidth="217.0">
-            <font>
-                <Font size="24.0" />
-            </font>
-         <graphic>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="НАСТРОЙКА СЕКУНДОМЕРА" textAlignment="CENTER" wrappingWidth="178.18359375">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-         </graphic>
-        </Button>
-        <Button fx:id="shutdownConditions" contentDisplay="CENTER" layoutX="1016.0" layoutY="327.0" mnemonicParsing="false" onAction="#testClick" prefHeight="73.0" prefWidth="217.0">
-            <font>
-                <Font size="24.0" />
-            </font>
-         <graphic>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="УСЛОВИЯ ОТКЛЮЧЕНИЯ" textAlignment="CENTER" wrappingWidth="172.18359375">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-         </graphic>
-        </Button>
-
-        <!--текст времени и модулей-->
-        <Text fx:id="dateTimeText" fill="WHITE" layoutX="449.0" layoutY="766.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="354.13397216796875">
-            <font>
-                <Font name="MyriadPro-Regular" size="24.0" />
-            </font>
-        </Text>
-        <Text fill="BLACK" layoutX="64.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 1 (А1)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
-            <font>
-                <Font name="MyriadPro-Regular" size="30.0" />
-            </font>
-        </Text>
-      <Text layoutX="198.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="44.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="91.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-
-        <!--инвертора -->
-        <GridPane layoutX="31.0" layoutY="19.0" prefHeight="82.0" prefWidth="164.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="40.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="124.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ А1" wrappingWidth="135.75800323486328" GridPane.columnIndex="1">
-                    <font>
-                        <Font name="MyriadPro-Regular" size="18.0" />
-                    </font>
-                </Text>
-                <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ А2" wrappingWidth="131.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="MyriadPro-Regular" size="18.0" />
-                    </font>
-                </Text>
-                <ImageView fx:id="inverterA1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="inverterA2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-                    <image>
-                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </GridPane>
-        <GridPane layoutX="229.0" layoutY="19.0" prefHeight="82.0" prefWidth="164.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="40.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="124.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ В1" wrappingWidth="128.75800323486328" GridPane.columnIndex="1">
-                    <font>
-                        <Font name="MyriadPro-Regular" size="18.0" />
-                    </font>
-                </Text>
-                <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ В2" wrappingWidth="128.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="MyriadPro-Regular" size="18.0" />
-                    </font>
-                </Text>
-                <ImageView fx:id="inverterB1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="inverterB2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-                    <image>
-                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </GridPane>
-        <GridPane layoutX="427.0" layoutY="19.0" prefHeight="82.0" prefWidth="164.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="40.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="124.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ С1" wrappingWidth="133.75800323486328" GridPane.columnIndex="1">
-                    <font>
-                        <Font name="MyriadPro-Regular" size="18.0" />
-                    </font>
-                </Text>
-                <Text fill="WHITE" onMouseClicked="#testClick" strokeType="OUTSIDE" strokeWidth="0.0" text="   МОДУЛЬ С2" wrappingWidth="130.75800323486328" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="MyriadPro-Regular" size="18.0" />
-                    </font>
-                </Text>
-                <ImageView fx:id="inverterC1Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="inverterC2Status" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-                    <image>
-                        <Image url="@../../../screen/BasePictures/иконкаЗеленыйКруг.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </GridPane>
-      <Text layoutX="517.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="363.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="410.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="828.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="674.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="721.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="197.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="43.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="90.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="516.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="362.0" layoutY="542.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="409.0" layoutY="604.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="825.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="α" wrappingWidth="30.0">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="671.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="   I" wrappingWidth="45.783203125">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="718.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="BLACK" layoutX="391.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 2 (В1)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="BLACK" layoutX="693.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 3 (С1)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="BLACK" layoutX="64.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 4 (А2)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="BLACK" layoutX="391.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 5 (В2)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="BLACK" layoutX="690.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДУЛЬ 6 (С2)" textAlignment="CENTER" wrappingWidth="235.13397216796875">
-         <font>
-            <Font name="MyriadPro-Regular" size="30.0" />
-         </font>
-      </Text>
+        <!--Объекты для наследования-->
+        <SimpleButton fx:id="menuButton"/>
+        <SimpleButton fx:id="startButton"/>
+        <SimpleButton fx:id="clearButton"/>
+        <SimpleTextField fx:id="nameTextField"/>
+        <SimpleTextField fx:id="objectTextField"/>
+        <ImageView fx:id="imageView"/>
+        <Circle fx:id="circleA1" />
+        <Circle fx:id="circleA2" />
+        <Circle fx:id="circleB1" />
+        <Circle fx:id="circleB2" />
+        <Circle fx:id="circleC1" />
+        <Circle fx:id="circleC2" />
+        <Text fx:id = "inverterA1"/>
+        <Text fx:id = "inverterB1"/>
+        <Text fx:id = "inverterC1"/>
+        <Text fx:id = "inverterA2"/>
+        <Text fx:id = "inverterB2"/>
+        <Text fx:id = "inverterC2"/>
+        <Text fx:id="time"/>
+        <Text fx:id = "dateTimeText"/>
     </children>
 </AnchorPane>

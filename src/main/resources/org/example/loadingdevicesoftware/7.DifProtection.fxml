@@ -17,49 +17,63 @@
         <SimpleButton fx:id="menuButton"/>
         <SimpleButton fx:id="startButton"/>
         <SimpleButton fx:id="clearButton"/>
+
         <SimpleButton fx:id="feedingWindingButton"/>
         <SimpleButton fx:id="faultLocationButton"/>
+
         <SimpleButton fx:id="phaseAButton"/>
         <SimpleButton fx:id="phaseBButton"/>
         <SimpleButton fx:id="phaseCButton"/>
         <SimpleButton fx:id="groundButton"/>
+
         <SimpleButton fx:id="connectionTypeOne"/>
         <SimpleButton fx:id="groupTypeOne"/>
+
         <SimpleButton fx:id="connectionTypeTwo"/>
         <SimpleButton fx:id="groupTypeTwo"/>
+
         <ButtonWithPicture fx:id="contactOneButton"/>
         <ButtonWithPicture fx:id="contactTwoButton"/>
+
         <SimpleTextField fx:id="nameTextField"/>
         <SimpleTextField fx:id="objectTextField"/>
+
         <SimpleTextField fx:id="phaseAOneCurrent"/>
         <SimpleTextField fx:id="phaseAOneAngle"/>
         <SimpleTextField fx:id="phaseBOneCurrent"/>
         <SimpleTextField fx:id="phaseBOneAngle"/>
         <SimpleTextField fx:id="phaseCOneCurrent"/>
         <SimpleTextField fx:id="phaseCOneAngle"/>
+
         <SimpleTextField fx:id="phaseATwoCurrent"/>
         <SimpleTextField fx:id="phaseATwoAngle"/>
         <SimpleTextField fx:id="phaseBTwoCurrent"/>
         <SimpleTextField fx:id="phaseBTwoAngle"/>
         <SimpleTextField fx:id="phaseCTwoCurrent"/>
         <SimpleTextField fx:id="phaseCTwoAngle"/>
+
         <ImageView fx:id="imageView"/>
+
         <Circle fx:id="circleA1" />
         <Circle fx:id="circleA2" />
         <Circle fx:id="circleB1" />
         <Circle fx:id="circleB2" />
         <Circle fx:id="circleC1" />
         <Circle fx:id="circleC2" />
+
         <Text fx:id = "dateTimeText"/>
+
         <Text fx:id = "inverterA1"/>
         <Text fx:id = "inverterB1"/>
         <Text fx:id = "inverterC1"/>
         <Text fx:id = "inverterA2"/>
         <Text fx:id = "inverterB2"/>
         <Text fx:id = "inverterC2"/>
+
         <Text fx:id="contacts"/>
         <Text fx:id="one"/>
         <Text fx:id="two"/>
+
         <Text fx:id="feedingWinding"/>
         <Text fx:id="faultLocation"/>
         <Text fx:id="brokenPhases"/>
@@ -73,8 +87,12 @@
         <Text fx:id="bTwo"/>
         <Text fx:id="cOne"/>
         <Text fx:id="cTwo"/>
+
+        <!--Внешние кружки контаков-->
         <Circle fx:id="contactOneOne"/>
         <Circle fx:id="contactTwoOne"/>
+
+        <!--Линии трансформатора-->
         <Line fx:id="phaseAOneLine"/>
         <Line fx:id="phaseBOneLine"/>
         <Line fx:id="phaseCOneLine"/>
@@ -83,8 +101,11 @@
         <Line fx:id="phaseCTwoLine"/>
         <Line fx:id="leftBusLine"/>
         <Line fx:id="rightBusLine"/>
+
+        <!--обмотки трансформатора-->
         <Circle fx:id="windingOne"/>
         <Circle fx:id="windingTwo"/>
+
         <SimpleImageView fx:id="phaseAOneArrow"/>
         <SimpleImageView fx:id="phaseBOneArrow"/>
         <SimpleImageView fx:id="phaseCOneArrow"/>
