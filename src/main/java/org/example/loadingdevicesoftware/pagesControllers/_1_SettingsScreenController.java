@@ -1,7 +1,9 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import com.lowagie.text.Anchor;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -36,6 +38,9 @@ public class _1_SettingsScreenController extends BasicController {
     SimpleImageView inverterImageViewFive;
     @FXML
     SimpleImageView inverterImageViewSix;
+
+    @FXML
+    CheckBox expertModeCheckBox;
 
     @FXML
     SimpleComboBox<String> phaseAOneComboBox;
@@ -75,6 +80,9 @@ public class _1_SettingsScreenController extends BasicController {
     Text textInverterCOne;
     @FXML
     Text textInverterCTwo;
+
+    @FXML
+    Text expertMode;
 
 
     @FXML
@@ -145,7 +153,6 @@ public class _1_SettingsScreenController extends BasicController {
                 if (combo.isShowing() && newVal != null && !newVal.equals(oldVal)) {
                     String keep = (String) newVal;
                     combo.hide(); // важно: закрыть popup перед манипуляциями с items
-
                     javafx.application.Platform.runLater(() -> {
                         fillComboBoxList(combo);   // меняет items
                         combo.setValue(keep);      // возвращаем выбранное значение на отображение
@@ -183,8 +190,29 @@ public class _1_SettingsScreenController extends BasicController {
                 AnchorPane.setLeftAnchor(texts[i], 250.0 + (i - 3) * 425.0);
             }
         }
+        expertMode.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        expertMode.setText("Режим эксперта");
+        AnchorPane.setTopAnchor(expertMode,590.);
+        AnchorPane.setLeftAnchor(expertMode,140.);
 
+        expertModeCheckBox.getStyleClass().add("check-box");
+        AnchorPane.setTopAnchor(expertModeCheckBox,577.);
+        AnchorPane.setLeftAnchor(expertModeCheckBox,65.);
+        expertModeCheckBox.setOnAction(event -> {
+            checkBoxAction();
+        });
 
+    }
+
+    private void checkBoxAction() {
+        boolean isSelected = expertModeCheckBox.isSelected();
+        clearButton.setDisable(isSelected);
+        saveButton.setDisable(isSelected);
+        ComboBox[] combos = new ComboBox[]{phaseAOneComboBox, phaseBOneComboBox, phaseCOneComboBox, phaseATwoComboBox,
+                phaseBTwoComboBox, phaseCTwoComboBox};
+        for (ComboBox comboBox : combos) {
+            comboBox.setDisable(isSelected);
+        }
     }
 
     private void save() throws IOException {
