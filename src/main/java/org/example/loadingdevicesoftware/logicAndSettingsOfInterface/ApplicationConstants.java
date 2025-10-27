@@ -98,7 +98,7 @@ public class ApplicationConstants {
     public static final Image CLOSED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Closed_Contact.png")).toExternalForm());
     public static final Image INVERTER_IMAGE = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Inverter.png")).toExternalForm());
+            getResource("/screen/BasePictures/Inverter_new.png")).toExternalForm());
     public static final Image BACKGROUND_BLUE = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Background_Blue.png")).toExternalForm());
     public static final Image CHECK_SUCCESSFUL = new Image(Objects.requireNonNull(ApplicationConstants.class.
