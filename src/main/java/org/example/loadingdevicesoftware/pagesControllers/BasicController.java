@@ -5,11 +5,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 
 class BasicController {
@@ -46,9 +49,11 @@ class BasicController {
     @FXML
     Text inverterC2;
 
-
     @FXML
     public void initialize() {
+
+        StatusService.getInstance().addListener(this::updateIndicators);
+
         //Настройка области для расположения элементов и создание ImageView для расположения фонового изображения
         anchorPane.setPrefSize(ApplicationConstants.APPLICATION_WINDOW_WIDTH, ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
         imageView.setFitHeight(ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
@@ -87,36 +92,60 @@ class BasicController {
 
         //Настройка кругов статусов инверторов
         circleA1.setRadius(10);
-        circleA1.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleA1, 37.5);
         AnchorPane.setLeftAnchor(circleA1, 52.5);
 
         circleA2.setRadius(10);
-        circleA2.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleA2, 77.5);
         AnchorPane.setLeftAnchor(circleA2, 52.5);
 
         circleB1.setRadius(10);
-        circleB1.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleB1, 37.5);
         AnchorPane.setLeftAnchor(circleB1, 262.5);
 
         circleB2.setRadius(10);
-        circleB2.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleB2, 77.5);
         AnchorPane.setLeftAnchor(circleB2, 262.5);
 
         circleC1.setRadius(10);
-        circleC1.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleC1, 37.5);
         AnchorPane.setLeftAnchor(circleC1, 472.5);
 
         circleC2.setRadius(10);
-        circleC2.setFill(Color.web(ApplicationConstants.Green));
         AnchorPane.setTopAnchor(circleC2, 77.5);
         AnchorPane.setLeftAnchor(circleC2, 472.5);
     }
 
+    private void updateIndicators(Map<String, StatusStore.OnlineStatus> snapshot) {
+        Circle[] circles = new Circle[]{circleA1, circleB1, circleC1, circleA2, circleB2, circleC2};
+        List<String> addresses;
+        try {
+            addresses  = AddressesStorage.readAddresses();
+        } catch (IOException e) {
+            for (Circle circle : circles) {
+                circle.setFill(Color.web(ApplicationConstants.Red));
+            }
+            System.err.println("Failed to read addresses: " + e.getMessage());
+            return;
+        }
+
+        for (int i = 0; i < addresses.size(); i++) {
+            if (addresses.get(i).equals("00:00:00:00")) {
+                circles[i].setFill(Color.web(ApplicationConstants.Gray));
+            } else if (!snapshot.containsKey(addresses.get(i))) {
+                circles[i].setFill(Color.web(ApplicationConstants.Red));
+            } else {
+                circles[i].setFill(Color.web(ApplicationConstants.Green));
+            }
+        }
+    }
+
+    @SneakyThrows
+    @FXML
+    private void onClose() {
+        // при закрытии окна можно отписаться
+        StatusService.getInstance().removeListener(this::updateIndicators);
+    }
 
 
 }

@@ -111,11 +111,10 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             if (PacketType != 1) {
                 return;
             }
-            if (Buff[9] != 1) {
+            if (Buff[9]  != 1 && Buff[9] != 2) {
                 return;
             }
         }
-
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);
             handler.handlePacket(adrsrc, PacketPayload);
