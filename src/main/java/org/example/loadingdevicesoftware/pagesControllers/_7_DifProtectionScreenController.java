@@ -377,8 +377,7 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                             AnchorPane.setTopAnchor(text1, 501.);
                             AnchorPane.setLeftAnchor(text1, 968.);
                         }
-                        default -> {
-                        }
+                        default -> {}
                     }
                 }
                 case Circle c when c == contactOneOne || c == contactTwoOne -> {

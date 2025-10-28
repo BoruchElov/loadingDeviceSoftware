@@ -19,9 +19,9 @@
         <!--Кнопки справа-->
         <SimpleButton fx:id="modeButton"/>
         <SimpleButton fx:id="conditionButton"/>
-        <SimpleButton fx:id="timeModeButton"/>
 
-        <!--Текстовые поля для токов слева-->
+        <!--Текстовые Поля -->
+        <!-- для токов слева-->
         <SimpleTextField fx:id="phaseALCurrent"/>
         <SimpleTextField fx:id="phaseALAngle"/>
         <SimpleTextField fx:id="phaseBLCurrent"/>
@@ -35,7 +35,15 @@
         <SimpleTextField fx:id="phaseBRAngle"/>
         <SimpleTextField fx:id="phaseCRCurrent"/>
         <SimpleTextField fx:id="phaseCRAngle"/>
+        <!--Текстовые поля для амперметра и вольтметра-->
+        <SimpleTextField fx:id="Ampermetr"/>
+        <SimpleTextField fx:id="Voltmetr"/>
+        <!--Окошко времени-->
+        <SimpleTextField fx:id="timeOutput"/>
+        <!--Для вода времени-->
+        <SimpleTextField fx:id="timeInput"/>
 
+        <!--Картинки-->
         <!--Картинки инверторов-->
         <SimpleImageView fx:id="moduleA1"/>
         <SimpleImageView fx:id="moduleB1"/>
@@ -43,31 +51,51 @@
         <SimpleImageView fx:id="moduleA2"/>
         <SimpleImageView fx:id="moduleB2"/>
         <SimpleImageView fx:id="moduleC2"/>
+        <!--картинки вольтметра и амперметра-->
+        <SimpleImageView fx:id="PicAmpermetr"/>
+        <SimpleImageView fx:id="PicVoltmetr"/>
 
         <!--Кнопки контактов контакторов-->
         <ButtonWithPicture fx:id="contactOneButton"/>
         <ButtonWithPicture fx:id="contactTwoButton"/>
-        <!-- Кружки контаков-->
+
+        <!-- Кружки-->
+        <!--кружки контактора-->
         <Circle fx:id="contactOne"/>
         <Circle fx:id="contactTwo"/>
+        <!--кружки модулей-->
+        <Circle fx:id="CiModuleA1"/>
+        <Circle fx:id="CiModuleB1"/>
+        <Circle fx:id="CiModuleC1"/>
+        <Circle fx:id="CiModuleA2"/>
+        <Circle fx:id="CiModuleB2"/>
+        <Circle fx:id="CiModuleC2"/>
 
         <!--Текстовые поля на форме-->
         <Text fx:id="contacts"/>
         <Text fx:id="one"/>
         <Text fx:id="two"/>
-        <Text fx:id="feedingWinding"/>
-        <Text fx:id="faultLocation"/>
-        <Text fx:id="brokenPhases"/>
+        <!--ток фаза над модулями-->
         <Text fx:id="currentOne"/>
         <Text fx:id="currentTwo"/>
         <Text fx:id="phaseOne"/>
         <Text fx:id="phaseTwo"/>
+        <!--фазы над модулями-->
         <Text fx:id="aOne"/>
         <Text fx:id="aTwo"/>
         <Text fx:id="bOne"/>
         <Text fx:id="bTwo"/>
         <Text fx:id="cOne"/>
         <Text fx:id="cTwo"/>
+        <!--текст справа-->
+        <Text fx:id="feedingWinding"/>
+        <Text fx:id="faultLocation"/>
+        <Text fx:id="brokenPhases"/>
+        <!--текст справа-->
+        <Text fx:id="timerText"/>
+        <!--текст ам и вм-->
+        <Text fx:id="amperText"/>
+        <Text fx:id="voltText"/>
 
 
         <!--Объекты для наследования-->

@@ -116,6 +116,12 @@ public class ApplicationConstants {
     public static final Image LIGHTNING_RED = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Lightning_Red.png")).toExternalForm());
 
+    //иконка вольтметра и амперметра
+    public static final Image AMPERMETR = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/DeviceAV.png")).toExternalForm());
+    public static final Image VOLTMETR = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/screen/BasePictures/DeviceAV.png")).toExternalForm());
+
     //Иконки главного экрана
     public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/settings.png")).toExternalForm());
