@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
+import java.util.List;
 
 public class _7_DifProtectionScreenController extends ScreensController implements Configurable {
 
@@ -597,7 +598,9 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                 alert.showAndWait();
                 clearButton.changePosition(0);
                 clearButton.setText("СОХРАНИТЬ");
-                clearButton.setOnAction(_ -> {InterfaceElementsLogic.openFileManager();});
+                clearButton.setOnAction(_ -> {
+                    InterfaceElementsLogic.openFileManager();
+                });
                 startButton.changePosition(0);
                 startButton.setText("ПРОДОЛЖИТЬ");
                 menuButton.setActualStatus(Changeable.Status.LOCKED);
@@ -877,4 +880,42 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
         return new int[]{elementZero, elementOne, elementTwo, elementThree, elementFour,
                 elementFive, elementSix, elementSeven, elementEight, elementNine};
     }
+
+    @Override
+    public boolean isChecked() {
+        Node[] nodesToCheck = new Node[]{contactOneButton, contactTwoButton, connectionTypeOne, groupTypeOne,
+                connectionTypeTwo, groupTypeTwo, feedingWindingButton, faultLocationButton, phaseAButton, phaseBButton,
+                phaseCButton, groundButton, phaseAOneCurrent, phaseBOneCurrent, phaseCOneCurrent, phaseATwoCurrent,
+                phaseBTwoCurrent, phaseCTwoCurrent,phaseAOneAngle,phaseBOneAngle,phaseCOneAngle,phaseATwoAngle,
+                phaseBTwoAngle,phaseCTwoAngle,objectTextField,nameTextField};
+        boolean result = false;
+        for (Node node : nodesToCheck) {
+            if (node instanceof ButtonWithPicture button) {
+                switch (button.getObjectPosition().getActualPosition()) {
+                    case 0:
+                        result = true;
+                        uncheckedNodes.add(button);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (node instanceof SimpleButton button) {
+                switch (button.getObjectPosition().getActualPosition()) {
+                    case 0:
+                        result = true;
+                        uncheckedNodes.add(button);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (node instanceof SimpleTextField textField){
+                if (textField.getText().isBlank()) {
+                    result = true;
+                    uncheckedNodes.add(textField);
+                }
+            }
+        }
+        return result;
+    }
+
 }

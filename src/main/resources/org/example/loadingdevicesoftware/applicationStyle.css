@@ -306,5 +306,10 @@
     -fx-opacity: 0;
 }
 
+.warning {
+    -fx-border-color: #D9232A;
+    -fx-border-width: 2;
+}
+
 
 

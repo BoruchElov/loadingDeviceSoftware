@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -7,12 +8,9 @@ import javafx.scene.layout.AnchorPane;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-class ScreensController extends BasicController {
+class ScreensController extends BasicController implements Checkable{
 
     boolean[] flags;
 
@@ -28,10 +26,14 @@ class ScreensController extends BasicController {
     @FXML
     SimpleTextField objectTextField;
 
+    //Список для хранения некорректно-заполненных элементов
+    List<Node> uncheckedNodes = new ArrayList<>();
+
 
     @FXML
     public void initialize() {
         super.initialize();
+        uncheckedNodes.clear();
         int i = 0;
         for (Node node : anchorPane.getChildren()) {
             if (node instanceof SimpleButton || node instanceof ButtonWithPicture) {
@@ -71,8 +73,24 @@ class ScreensController extends BasicController {
         startButton.setActualStatus(Changeable.Status.NORMAL);
         startButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-                PagesBuffer.savePage(this);
+                if (!isChecked()) {
+                    InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                    PagesBuffer.savePage(this);
+                }
+                else {
+                    for (Node node : uncheckedNodes) {
+                        node.getStyleClass().add("okay");
+                    }
+                    InterfaceElementsLogic.showAlert("Тестовая тревога", "Ошибка в заполнении формы!" +
+                            "\nПроверьте выделенные элементы.");
+                    for (Node node : uncheckedNodes) {
+                        List<String> copy = new ArrayList<>(node.getStyleClass());
+                        node.getStyleClass().clear();
+                        node.getStyleClass().add("warning");
+                        node.getStyleClass().addAll(copy);
+                    }
+                    uncheckedNodes.clear();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -155,5 +173,10 @@ class ScreensController extends BasicController {
         }
     }
 
+
+    @Override
+    public boolean isChecked() {
+        return true;
+    }
 
 }
