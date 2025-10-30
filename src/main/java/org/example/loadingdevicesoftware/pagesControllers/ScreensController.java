@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,9 +11,11 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.IOException;
 import java.util.*;
 
-class ScreensController extends BasicController implements Checkable{
+class ScreensController extends BasicController {
 
     boolean[] flags;
+
+    Node[] nodesToCheck;
 
     @FXML
     SimpleButton clearButton;
@@ -29,6 +32,8 @@ class ScreensController extends BasicController implements Checkable{
     //Список для хранения некорректно-заполненных элементов
     List<Node> uncheckedNodes = new ArrayList<>();
 
+    private final Map<SimpleTextField, ChangeListener<String>> fieldListeners = new HashMap<>();
+
 
     @FXML
     public void initialize() {
@@ -44,9 +49,9 @@ class ScreensController extends BasicController implements Checkable{
         Arrays.fill(flags, false);
         imageView.setImage(ApplicationConstants.NEW_BACKGROUND);
         //Настройка текстовых полей для ввода ФИО и названия объекта
-        objectTextField.setup("Название объекта", SimpleTextField.Sizes.LARGE);
+        objectTextField.setup("Название объекта", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.ALPHABETIC);
         objectTextField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
-        nameTextField.setup("Ф.И.О. исполнителя", SimpleTextField.Sizes.LARGE);
+        nameTextField.setup("Ф.И.О. исполнителя", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.ALPHABETIC);
         nameTextField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         AnchorPane.setLeftAnchor(objectTextField, 50.0);
         AnchorPane.setTopAnchor(objectTextField, 540.);
@@ -70,14 +75,16 @@ class ScreensController extends BasicController implements Checkable{
             }
         });
         startButton.setup(SimpleButton.Presets.START);
+
+
+
         startButton.setActualStatus(Changeable.Status.NORMAL);
         startButton.setOnAction(event -> {
             try {
                 if (!isChecked()) {
                     InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
                     PagesBuffer.savePage(this);
-                }
-                else {
+                } else {
                     for (Node node : uncheckedNodes) {
                         node.getStyleClass().add("okay");
                     }
@@ -88,6 +95,20 @@ class ScreensController extends BasicController implements Checkable{
                         node.getStyleClass().clear();
                         node.getStyleClass().add("warning");
                         node.getStyleClass().addAll(copy);
+                        if (node instanceof SimpleTextField field && !fieldListeners.containsKey(field)) {
+
+                            ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+                                if (field.getText().isBlank()) {
+                                    node.getStyleClass().setAll("warning");
+                                    node.getStyleClass().addAll(copy);
+                                } else {
+                                    node.getStyleClass().setAll(copy);
+                                }
+                            };
+
+                            field.textProperty().addListener(listener);
+                            fieldListeners.put(field, listener); // запоминаем слушателя
+                        }
                     }
                     uncheckedNodes.clear();
                 }
@@ -105,6 +126,13 @@ class ScreensController extends BasicController implements Checkable{
     //Метод по очистке всех элементов окна приложения
     public void clearAll(Object controller) {
         for (Node child : this.anchorPane.getChildren()) {
+            if (child instanceof SimpleTextField field) {
+                if (fieldListeners.containsKey(field)) {
+                    field.textProperty().removeListener(fieldListeners.get(field));
+                    fieldListeners.remove(field);
+                    field.getStyleClass().removeAll("warning");
+                }
+            }
             if (child instanceof Changeable changeable) {
                 changeable.setActualStatus(Changeable.Status.NORMAL);
                 changeable.changePosition(0);
@@ -173,10 +201,35 @@ class ScreensController extends BasicController implements Checkable{
         }
     }
 
-
-    @Override
     public boolean isChecked() {
-        return true;
+        boolean result = false;
+        for (Node node : nodesToCheck) {
+            if (node instanceof ButtonWithPicture button) {
+                switch (button.getObjectPosition().getActualPosition()) {
+                    case 0:
+                        result = true;
+                        uncheckedNodes.add(button);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (node instanceof SimpleButton button) {
+                switch (button.getObjectPosition().getActualPosition()) {
+                    case 0:
+                        result = true;
+                        uncheckedNodes.add(button);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (node instanceof SimpleTextField textField){
+                if (textField.getText().isBlank()) {
+                    result = true;
+                    uncheckedNodes.add(textField);
+                }
+            }
+        }
+        return result;
     }
 
 }

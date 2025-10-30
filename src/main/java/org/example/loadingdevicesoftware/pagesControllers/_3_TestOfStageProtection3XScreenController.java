@@ -75,7 +75,7 @@ public class _3_TestOfStageProtection3XScreenController extends ScreensControlle
         SimpleTextField[] textFields = new SimpleTextField[]{phaseACurrent, phaseBCurrent, phaseCCurrent};
         double topPosition = 335.;
         for (SimpleTextField textField : textFields) {
-            textField.setup("0", SimpleTextField.Sizes.MEDIUM);
+            textField.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
             textField.setAlignment(Pos.CENTER);
             textField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
             AnchorPane.setTopAnchor(textField, topPosition);
@@ -83,14 +83,14 @@ public class _3_TestOfStageProtection3XScreenController extends ScreensControlle
             AnchorPane.setLeftAnchor(textField, 200.);
         }
         //Настройка текстовых полей ввода значений временных уставок контактов
-        contactOneTime.setup("0", SimpleTextField.Sizes.SMALL);
+        contactOneTime.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
         contactOneTime.setAlignment(Pos.CENTER);
         contactOneTime.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         contactOneTime.setActualStatus(Changeable.Status.LOCKED);
         AnchorPane.setTopAnchor(contactOneTime, 250.);
         AnchorPane.setLeftAnchor(contactOneTime, 200.);
 
-        contactTwoTime.setup("0", SimpleTextField.Sizes.SMALL);
+        contactTwoTime.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
         contactTwoTime.setAlignment(Pos.CENTER);
         contactTwoTime.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         contactTwoTime.setActualStatus(Changeable.Status.LOCKED);
