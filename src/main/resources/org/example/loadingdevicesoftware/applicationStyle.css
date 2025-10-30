@@ -274,4 +274,27 @@
     -fx-opacity: 1.0;
 }
 
+.button-module-on{
+    -fx-alignment: center;         /* Выравнивание по центру */
+    -fx-padding: 0px;             /* Небольшой отступ */
+    -fx-max-height: 70px;
+    -fx-max-width: 100px;
+    -fx-background-radius: 10px;
+    -fx-border-width: 0px;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-background-color: derive(#00FF7F, 20%);
+}
+
+.button-module-off{
+    -fx-alignment: center;         /* Выравнивание по центру */
+    -fx-padding: 0px;             /* Небольшой отступ */
+    -fx-max-height: 70px;
+    -fx-max-width: 100px;
+    -fx-background-radius: 10px;
+    -fx-border-width: 0px;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-background-color: transparent;
+}
 

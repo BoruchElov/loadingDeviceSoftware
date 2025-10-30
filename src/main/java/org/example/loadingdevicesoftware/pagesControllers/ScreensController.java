@@ -14,7 +14,7 @@ import java.util.Set;
 
 class ScreensController extends BasicController {
 
-    boolean[] flags;
+    boolean[] flags;                        //Массив для хранения булевых значений для пользовательских решений
 
     @FXML
     SimpleButton clearButton;

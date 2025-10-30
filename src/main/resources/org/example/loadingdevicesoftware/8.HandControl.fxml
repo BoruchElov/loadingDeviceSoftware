@@ -17,8 +17,9 @@
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._8_HandControlScreenController">
     <children>
         <!--Кнопки справа-->
-        <SimpleButton fx:id="modeButton"/>
         <SimpleButton fx:id="conditionButton"/>
+        <!--Кнопка выбора сух/мокрый-->
+        <SimpleButton fx:id="dryWetButton"/>
 
         <!--Текстовые Поля -->
         <!-- для токов слева-->
@@ -42,15 +43,11 @@
         <SimpleTextField fx:id="timeOutput"/>
         <!--Для вода времени-->
         <SimpleTextField fx:id="timeInput"/>
+        <!--текстовое поле для ввода частоты -->
+        <SimpleTextField fx:id="frequencyInput"/>
+
 
         <!--Картинки-->
-        <!--Картинки инверторов-->
-        <SimpleImageView fx:id="moduleA1"/>
-        <SimpleImageView fx:id="moduleB1"/>
-        <SimpleImageView fx:id="moduleC1"/>
-        <SimpleImageView fx:id="moduleA2"/>
-        <SimpleImageView fx:id="moduleB2"/>
-        <SimpleImageView fx:id="moduleC2"/>
         <!--картинки вольтметра и амперметра-->
         <SimpleImageView fx:id="PicAmpermetr"/>
         <SimpleImageView fx:id="PicVoltmetr"/>
@@ -58,18 +55,19 @@
         <!--Кнопки контактов контакторов-->
         <ButtonWithPicture fx:id="contactOneButton"/>
         <ButtonWithPicture fx:id="contactTwoButton"/>
+        <!--Кнопки модулей-->
+        <ButtonWithPicture fx:id="moduleA1Button"/>
+        <ButtonWithPicture fx:id="moduleB1Button"/>
+        <ButtonWithPicture fx:id="moduleC1Button"/>
+        <ButtonWithPicture fx:id="moduleA2Button"/>
+        <ButtonWithPicture fx:id="moduleB2Button"/>
+        <ButtonWithPicture fx:id="moduleC2Button"/>
+
 
         <!-- Кружки-->
         <!--кружки контактора-->
         <Circle fx:id="contactOne"/>
         <Circle fx:id="contactTwo"/>
-        <!--кружки модулей-->
-        <Circle fx:id="CiModuleA1"/>
-        <Circle fx:id="CiModuleB1"/>
-        <Circle fx:id="CiModuleC1"/>
-        <Circle fx:id="CiModuleA2"/>
-        <Circle fx:id="CiModuleB2"/>
-        <Circle fx:id="CiModuleC2"/>
 
         <!--Текстовые поля на форме-->
         <Text fx:id="contacts"/>
@@ -88,11 +86,13 @@
         <Text fx:id="cOne"/>
         <Text fx:id="cTwo"/>
         <!--текст справа-->
-        <Text fx:id="feedingWinding"/>
-        <Text fx:id="faultLocation"/>
-        <Text fx:id="brokenPhases"/>
+        <Text fx:id="dryWetContText"/>
+        <Text fx:id="shutUpConditionText"/>
+        <Text fx:id="CurOutputTimeText"/>
         <!--текст справа-->
         <Text fx:id="timerText"/>
+        <!--текст частоты-->
+        <Text fx:id="frequencyText"/>
         <!--текст ам и вм-->
         <Text fx:id="amperText"/>
         <Text fx:id="voltText"/>

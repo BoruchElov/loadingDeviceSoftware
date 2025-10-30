@@ -12,11 +12,11 @@ public class ButtonWithPicture extends BasicButton implements Changeable {
     }
 
     public enum ButtonSizes {
-        SMALL, LARGE
+        SMALL, LARGE, KEY_MODULE_SIZE
     }
 
     public enum ImagViewSizes {
-        SMALLEST, SMALL, MEDIUM, LARGE
+        SMALLEST, SMALL, MEDIUM, LARGE, KEY_MODULE_SIZE
     }
     //sizes[0] - ширина, sizes[1] - высота
     private int[] sizes;
@@ -68,6 +68,7 @@ public class ButtonWithPicture extends BasicButton implements Changeable {
         sizes = switch (size) {
             case SMALL -> new int[] { 50, 50 };
             case LARGE -> new int[] { 200, 215 };
+            case KEY_MODULE_SIZE -> new int[] {80, 80};     //Размер для кнопки модуля
         };
     }
 
@@ -77,10 +78,7 @@ public class ButtonWithPicture extends BasicButton implements Changeable {
             case SMALL -> new int[] { 105, 105 };
             case MEDIUM -> new int[] { 110, 110 };
             case LARGE -> new int[] { 120, 120 };
+            case KEY_MODULE_SIZE -> new int[] {100, 70};     //Размер для картинки модуля
         };
     }
-
-
-
-
 }

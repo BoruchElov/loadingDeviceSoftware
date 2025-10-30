@@ -19,6 +19,7 @@ public class Position {
     private double[][] sizes;
     private double[][] location;
 
+
     public Position(String[] styles, String[] texts) {
         positions = styles.length;
         this.styles = styles;

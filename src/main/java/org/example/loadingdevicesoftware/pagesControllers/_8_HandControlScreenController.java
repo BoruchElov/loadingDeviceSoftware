@@ -51,21 +51,12 @@ public class _8_HandControlScreenController extends ScreensController implements
     //Текстовое поле для ввода времени
     @FXML
     SimpleTextField timeInput;
+    //Текстовые поля для ввода частоты
+    @FXML
+    SimpleTextField frequencyInput;
+
 
     //КАРТИНКИ
-    //Картинки модулей
-    @FXML
-    SimpleImageView moduleA1;
-    @FXML
-    SimpleImageView moduleB1;
-    @FXML
-    SimpleImageView moduleC1;
-    @FXML
-    SimpleImageView moduleA2;
-    @FXML
-    SimpleImageView moduleB2;
-    @FXML
-    SimpleImageView moduleC2;
     //Картинки ампер и вольт метров
     @FXML
     SimpleImageView PicAmpermetr;
@@ -79,6 +70,19 @@ public class _8_HandControlScreenController extends ScreensController implements
     ButtonWithPicture contactOneButton;
     @FXML
     ButtonWithPicture contactTwoButton;
+    //Кнопки модулей
+    @FXML
+    ButtonWithPicture moduleA1Button;
+    @FXML
+    ButtonWithPicture moduleB1Button;
+    @FXML
+    ButtonWithPicture moduleC1Button;
+    @FXML
+    ButtonWithPicture moduleA2Button;
+    @FXML
+    ButtonWithPicture moduleB2Button;
+    @FXML
+    ButtonWithPicture moduleC2Button;
 
     //КРУЖКИ
     //Кружки состояния контактов
@@ -86,29 +90,17 @@ public class _8_HandControlScreenController extends ScreensController implements
     Circle contactOne;
     @FXML
     Circle contactTwo;
-    // Кружки модулей
-    @FXML
-    Circle CiModuleA1;
-    @FXML
-    Circle CiModuleB1;
-    @FXML
-    Circle CiModuleC1;
-    @FXML
-    Circle CiModuleA2;
-    @FXML
-    Circle CiModuleB2;
-    @FXML
-    Circle CiModuleC2;
 
     //кнопки справа
     @FXML
-    SimpleButton modeButton;
-    @FXML
     SimpleButton conditionButton;
     @FXML
-    Text time;
+    SimpleButton dryWetButton;
+
 
     //Текстовые поля для формы
+    @FXML
+    Text time;
     //Текст над модулями
     @FXML
     Text contacts;
@@ -139,14 +131,17 @@ public class _8_HandControlScreenController extends ScreensController implements
     Text cTwo;
     //Текст справа
     @FXML
-    Text feedingWinding;
+    Text dryWetContText;
     @FXML
-    Text faultLocation;
+    Text shutUpConditionText;
     @FXML
-    Text brokenPhases;
+    Text CurOutputTimeText;
     //Текст для времени
     @FXML
     Text timerText;
+    //Текст ввода частоты
+    @FXML
+    Text frequencyText;
     //Текст ам и вм
     @FXML
     Text amperText;
@@ -160,23 +155,22 @@ public class _8_HandControlScreenController extends ScreensController implements
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
                 //НАСТРОЙКИ КНОПОК
-                case SimpleButton button when button == modeButton || button == conditionButton -> {
+                case SimpleButton button when  button == conditionButton || button == dryWetButton -> {
                     button.setOnAction(this::changeConfiguration);
                     switch (button) {
-                        //Настройка внешнего вида и расположения кнопки изменения режима
-                        case SimpleButton bt1 when bt1 == modeButton -> {
-                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "1", "3"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
-                            AnchorPane.setTopAnchor(button, 210.);
-                            AnchorPane.setLeftAnchor(button, 1005.);
-                        }
                         //Настройка внешнего вида и расположения кнопки условия отключения
                         case SimpleButton bt1 when bt1 == conditionButton -> {
                             bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "t/сраб", "контакт"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
-                            AnchorPane.setTopAnchor(button, 385.);
+                            AnchorPane.setTopAnchor(button, 225.);
                             AnchorPane.setLeftAnchor(button, 1005.);
                         }
-                        default -> {
+                        //Кнопка выбора сухого или мокрого контакта
+                        case SimpleButton bt1 when bt1 == dryWetButton -> {
+                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "сухой", "мокрый"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(button, 400.);
+                            AnchorPane.setLeftAnchor(button, 1005.);
                         }
+                        default ->{}
                     }
                 }
                 //НАСТРОЙКА ТЕКСТОВЫХ ПОЛЕЙ
@@ -184,7 +178,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                         || textField == phaseALAngle || textField == phaseBLAngle || textField == phaseCLAngle
                         || textField == phaseARCurrent || textField == phaseBRCurrent || textField == phaseCRCurrent
                         || textField == phaseARAngle || textField == phaseBRAngle || textField == phaseCRAngle || textField == timeInput
-                        || textField == timeOutput || textField == Ampermetr || textField == Voltmetr-> {
+                        || textField == timeOutput || textField == Ampermetr || textField == Voltmetr || textField == frequencyInput
+                        -> {
                     // Переменные для настройки размеров
                     Double Y1 = 314.;           //Высота первого уровня текстовых полей
                     Double Y2 = Y1+60;          //Второй уровень
@@ -194,7 +189,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                     Double X2 = X1 + 85;
                     Double X3 = 780.;
                     Double X4 = X3 + 85;
-
+                    textField.setEditable(false);   //Блокировка всех текстовых полей
                     switch (textField) {
                         //Текстовые поля модулей слева
                         case SimpleTextField tf1 when tf1 == phaseALCurrent -> {
@@ -262,109 +257,58 @@ public class _8_HandControlScreenController extends ScreensController implements
                         case SimpleTextField tf1 when tf1 == Ampermetr -> {
                             tf1.setup("", SimpleTextField.Sizes.MEDIUM);
                             AnchorPane.setTopAnchor(tf1, 590.);
-                            AnchorPane.setLeftAnchor(tf1, 560.);
-                            tf1.setEditable(false);
+                            AnchorPane.setLeftAnchor(tf1, 485.);
                         }
                         case SimpleTextField tf1 when tf1 == Voltmetr -> {
                             tf1.setup("", SimpleTextField.Sizes.MEDIUM);
                             AnchorPane.setTopAnchor(tf1, 590.);
-                            AnchorPane.setLeftAnchor(tf1, 760.);
-                            tf1.setEditable(false);
-                        }
+                            AnchorPane.setLeftAnchor(tf1, 650.);
+                                }
                         //Настройка внешнего вида и расположения кнопки вывода времени отключения
                         case SimpleTextField tf1 when tf1 == timeOutput -> {
                             tf1.setup("", SimpleTextField.Sizes.SMALL);
-                            AnchorPane.setTopAnchor(tf1,  177.);
-                            AnchorPane.setLeftAnchor(tf1, 750.);
-                            tf1.setEditable(false);
+                            AnchorPane.setTopAnchor(tf1,  590.);
+                            AnchorPane.setLeftAnchor(tf1, 825.);
+                        } // Ввод частоты модулей
+                        case SimpleTextField tf1 when tf1 == frequencyInput -> {
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            AnchorPane.setTopAnchor(tf1, 177.);
+                            AnchorPane.setLeftAnchor(tf1, 670.);
+                            tf1.setEditable(true);
                         }
                         //Настройка внешнего вида и расположения кнопки ввода времени отключения
                         case SimpleTextField tf1 when tf1 == timeInput -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM);
-                            AnchorPane.setTopAnchor(tf1, 560.);
+                            tf1.setup("0.01-3600", SimpleTextField.Sizes.LARGE);
+                            AnchorPane.setTopAnchor(tf1, 580.);
                             AnchorPane.setLeftAnchor(tf1, 1005.);
                             tf1.setPrefSize(200., 67.);
+                            tf1.setEditable(true);
                         }
                         default -> {
                         }
                     }
                 }
                 //НАСТРОЙКА ИЗОБРАЖЕНИЙ
-                case SimpleImageView imageView when imageView == moduleA1 || imageView == moduleB1 || imageView == moduleC1
-                        || imageView == moduleA2 || imageView == moduleB2 || imageView == moduleC2 ||  imageView == PicAmpermetr
-                        ||  imageView == PicVoltmetr-> {
-                    // Переменные для настройки размеров
-                    Double k = 110.;            //Размер картинки инверторов
-
-                    Double Y1 = 240.;           //Высота первого уровня текстовых полей
-                    Double Y2 = 330.;           //Второй уровень
-                    Double Y3 = 420.;           //Третий уровень
-
-                    Double X1 = 350.;           //Отступ по горизонтали для текстовых полей
-                    Double X2 = 490.;
-
+                case SimpleImageView imageView when imageView == PicAmpermetr ||  imageView == PicVoltmetr-> {
                     switch (imageView) {
-                        //Изображение инвертора
-                        case SimpleImageView iv1 when iv1 == moduleA1 -> {
-                            imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
-                                    new double[][]{{k, k}});
-                            AnchorPane.setTopAnchor(imageView, Y1);
-                            AnchorPane.setLeftAnchor(imageView, X1);
-                        }
-                        case SimpleImageView iv1 when iv1 == moduleB1 -> {
-                            imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
-                                    new double[][]{{k, k}});
-                            AnchorPane.setTopAnchor(imageView, Y2);
-                            AnchorPane.setLeftAnchor(imageView, X1 );
-                        }
-                        case SimpleImageView iv1 when iv1 == moduleC1 -> {
-                            imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
-                                    new double[][]{{k, k}});
-                            AnchorPane.setTopAnchor(imageView, Y3);
-                            AnchorPane.setLeftAnchor(imageView, X1);
-                        }
-                        case SimpleImageView iv1 when iv1 == moduleA2 -> {
-                            imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE},
-                                    new double[][]{{k, k}});
-                            AnchorPane.setTopAnchor(imageView, Y1);
-                            AnchorPane.setLeftAnchor(imageView, X2);
-                        }
-                        case SimpleImageView iv1 when iv1 == moduleB2 -> {
-                            imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE}, new double[][]{{k, k}});
-                            AnchorPane.setTopAnchor(imageView, Y2 );
-                            AnchorPane.setLeftAnchor(imageView, X2 );
-                        }
-                        case SimpleImageView iv1 when iv1 == moduleC2 -> {
-                            imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE}, new double[][]{{k, k}});
-                            AnchorPane.setTopAnchor(imageView, Y3);
-                            AnchorPane.setLeftAnchor(imageView, X2);
-                        }
                         //Картинки вольт и ампер метров
                         case SimpleImageView iv1 when iv1 == PicAmpermetr -> {
                             imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.AMPERMETR}, new double[][]{{60., 60.}});
                             AnchorPane.setTopAnchor(imageView, 585.);
-                            AnchorPane.setLeftAnchor(imageView, 680.);
+                            AnchorPane.setLeftAnchor(imageView, 400.);
                         }
                         case SimpleImageView iv1 when iv1 == PicVoltmetr -> {
                             imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.VOLTMETR}, new double[][]{{60., 60.}});
                             AnchorPane.setTopAnchor(imageView, 585.);
-                            AnchorPane.setLeftAnchor(imageView, 480.);
+                            AnchorPane.setLeftAnchor(imageView, 580.);
                         }
                         default -> {}
                     }
                 }
                 // НАСТРОЙКА КРУЖКОВ
-                case Circle c when c == contactOne || c == contactTwo || c == CiModuleA1 || c == CiModuleB1 || c == CiModuleC1
-                        || c == CiModuleA2 || c == CiModuleB2 || c == CiModuleC2-> {
+                case Circle c when c == contactOne || c == contactTwo -> {
                     c.setRadius(10.);
                     c.getStyleClass().add("circles");
-                    Double Y1 = 285.;           //Первый уровень
-                    Double Y2 = 375.;           //Второй уровень
-                    Double Y3 = 465.;           //Третий уровень
-
-                    Double X1 = 195.;           //Отступ по горизонтали для кружочков Модуль 1
-                    Double X2 = 615.;           //Модуль 2
-
                     switch (c) {
                         //кружки контактора
                         case Circle c1 when c1 == contactOne -> {
@@ -375,36 +319,11 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(c1, 189.);
                             AnchorPane.setLeftAnchor(c1, 265.);
                         }
-                        //кружки модулей
-                        case Circle c1 when c1 == CiModuleA1 -> {
-                            AnchorPane.setTopAnchor(c1, Y1);
-                            AnchorPane.setLeftAnchor(c1, X1);
-                        }
-                        case Circle c1 when c1 == CiModuleB1 -> {
-                            AnchorPane.setTopAnchor(c1, Y2);
-                            AnchorPane.setLeftAnchor(c1, X1);
-                        }
-                        case Circle c1 when c1 == CiModuleC1 -> {
-                            AnchorPane.setTopAnchor(c1, Y3);
-                            AnchorPane.setLeftAnchor(c1, X1);
-                        }
-                        case Circle c1 when c1 == CiModuleA2 -> {
-                            AnchorPane.setTopAnchor(c1, Y1);
-                            AnchorPane.setLeftAnchor(c1, X2);
-                        }
-                        case Circle c1 when c1 == CiModuleB2 -> {
-                            AnchorPane.setTopAnchor(c1, Y2);
-                            AnchorPane.setLeftAnchor(c1, X2);
-                        }
-                        case Circle c1 when c1 == CiModuleC2 -> {
-                            AnchorPane.setTopAnchor(c1, Y3);
-                            AnchorPane.setLeftAnchor(c1, X2);
-                        }
                         default -> {}
                     }
                 }
                 // НАСТРОЙКА КНОПОК КОНТАКТОРА
-                case ButtonWithPicture button when button == contactOneButton || button == contactTwoButton -> {
+                case ButtonWithPicture button when button == contactOneButton || button == contactTwoButton  -> {
                     button.setup(new ImageView(), ButtonWithPicture.ButtonSizes.SMALL, ButtonWithPicture.ImagViewSizes.SMALLEST,
                             new String[]{"contacts-imageview", "contacts-imageview", "contacts-imageview"},
                             new Image[]{null, ApplicationConstants.OPENED_CONTACT, ApplicationConstants.CLOSED_CONTACT});
@@ -418,15 +337,80 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(button1, 177.);
                             AnchorPane.setLeftAnchor(button1, 300.);
                         }
-
                         default -> {}
                     }
                 }
+
+                case ButtonWithPicture button when button == moduleA1Button || button == moduleB1Button || button == moduleC1Button
+                        || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button -> {
+                    // Переменные для настройки размеров
+                    Double k = 110.;            //Размер картинки инверторов
+
+                    Double Y1 = 260.;           //Высота первого уровня текстовых полей
+                    Double Y2 = 345.;           //Второй уровень
+                    Double Y3 = 430.;           //Третий уровень
+
+                    Double X1 = 360.;           //Отступ по горизонтали для текстовых полей
+                    Double X2 = 510.;
+                    switch (button) {
+                        case ButtonWithPicture bt1 when bt1 == moduleA1Button -> {
+                            bt1.setup(new ImageView(), ButtonWithPicture.ButtonSizes.KEY_MODULE_SIZE, ButtonWithPicture.ImagViewSizes.KEY_MODULE_SIZE,
+                                    new String[]{"button-module-off", "button-module-on"},
+                                    new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
+                            bt1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(bt1, Y1);
+                            AnchorPane.setLeftAnchor(bt1, X1);
+                        }
+                        case ButtonWithPicture bt1 when bt1 == moduleB1Button -> {
+                            bt1.setup(new ImageView(), ButtonWithPicture.ButtonSizes.KEY_MODULE_SIZE, ButtonWithPicture.ImagViewSizes.KEY_MODULE_SIZE,
+                                    new String[]{"button-module-off", "button-module-on"},
+                                    new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
+                            bt1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(bt1, Y2);
+                            AnchorPane.setLeftAnchor(bt1, X1);
+                        }
+                        case ButtonWithPicture bt1 when bt1 == moduleC1Button -> {
+                            bt1.setup(new ImageView(), ButtonWithPicture.ButtonSizes.KEY_MODULE_SIZE, ButtonWithPicture.ImagViewSizes.KEY_MODULE_SIZE,
+                                    new String[]{"button-module-off", "button-module-on"},
+                                    new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
+                            bt1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(bt1, Y3);
+                            AnchorPane.setLeftAnchor(bt1, X1);
+                        }
+                        case ButtonWithPicture bt1 when bt1 == moduleA2Button -> {
+                            bt1.setup(new ImageView(), ButtonWithPicture.ButtonSizes.KEY_MODULE_SIZE, ButtonWithPicture.ImagViewSizes.KEY_MODULE_SIZE,
+                                    new String[]{"button-module-off", "button-module-on"},
+                                    new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
+                            bt1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(bt1, Y1);
+                            AnchorPane.setLeftAnchor(bt1, X2);
+                        }
+                        case ButtonWithPicture bt1 when bt1 == moduleB2Button -> {
+                            bt1.setup(new ImageView(), ButtonWithPicture.ButtonSizes.KEY_MODULE_SIZE, ButtonWithPicture.ImagViewSizes.KEY_MODULE_SIZE,
+                                    new String[]{"button-module-off", "button-module-on"},
+                                    new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
+                            bt1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(bt1, Y2);
+                            AnchorPane.setLeftAnchor(bt1, X2);
+                        }
+                        case ButtonWithPicture bt1 when bt1 == moduleC2Button -> {
+                            bt1.setup(new ImageView(), ButtonWithPicture.ButtonSizes.KEY_MODULE_SIZE, ButtonWithPicture.ImagViewSizes.KEY_MODULE_SIZE,
+                                    new String[]{"button-module-off", "button-module-on"},
+                                    new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
+                            bt1.setOnAction(this::changeConfiguration);
+                            AnchorPane.setTopAnchor(bt1, Y3);
+                            AnchorPane.setLeftAnchor(bt1, X2);
+                        }
+                        default -> {}
+                    }
+                }
+
                 //ТЕКСТОВЫЕ ПОЛЯ НА ФОРМЕ
                 case Text text when text == contacts || text == one || text == two || text == currentOne ||
                         text == currentTwo || text == phaseOne || text == phaseTwo || text == aOne ||
                         text == aTwo || text == bOne || text == bTwo || text == cOne || text == cTwo ||
-                        text == timerText || text == amperText || text == voltText -> {
+                        text == timerText || text == amperText || text == voltText || text == frequencyText
+                        -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     text.setFill(Color.BLACK);
 
@@ -509,45 +493,49 @@ public class _8_HandControlScreenController extends ScreensController implements
                         //Окно tсраб.
                         case Text text1 when text1 == timerText -> {
                             text1.setText("tсраб.");
+                            AnchorPane.setTopAnchor(text1, 555.);
+                            AnchorPane.setLeftAnchor(text1, 825.);
+                        }
+                        //Окно frequency.
+                        case Text text1 when text1 == frequencyText -> {
+                            text1.setText("частота");
                             AnchorPane.setTopAnchor(text1, 190.);
-                            AnchorPane.setLeftAnchor(text1, 690.);
+                            AnchorPane.setLeftAnchor(text1, 590.);
                         }
                         //текст для АМ и ВМ
                         case Text text1 when text1 == amperText -> {
                             text1.setText("I, A");
-                            AnchorPane.setTopAnchor(text1, 550.);
-                            AnchorPane.setLeftAnchor(text1, 495.);
+                            AnchorPane.setTopAnchor(text1, 555.);
+                            AnchorPane.setLeftAnchor(text1, 410.);
                         }
                         case Text text1 when text1 == voltText -> {
                             text1.setText("U, В");
-                            AnchorPane.setTopAnchor(text1, 550.);
-                            AnchorPane.setLeftAnchor(text1, 690.);
+                            AnchorPane.setTopAnchor(text1, 555.);
+                            AnchorPane.setLeftAnchor(text1, 590.);
                         }
                         default -> {}
                     }
                 }
                 //Текст для меню справа
-                case Text text when text == feedingWinding || text == faultLocation || text == brokenPhases -> {
+                case Text text when text == shutUpConditionText || text == CurOutputTimeText
+                        || text == dryWetContText-> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
                     text.setFill(Color.WHITE);
                     switch (text) {
-
-                        case Text text1 when text1 == feedingWinding -> {
-                            text1.setText("Режим");
-                            AnchorPane.setTopAnchor(text1, 160.);
-                            AnchorPane.setLeftAnchor(text1, 1060.);
-
-                        }
-                        case Text text1 when text1 == faultLocation -> {
+                        case Text text1 when text1 == shutUpConditionText -> {
                             text1.setText("Условия отключения");
-                            AnchorPane.setTopAnchor(text1, 335.);
-                            AnchorPane.setLeftAnchor(text1, 975.);
-
+                            AnchorPane.setTopAnchor(text1, 180.);
+                            AnchorPane.setLeftAnchor(text1, 980.);
                         }
-                        case Text text1 when text1 == brokenPhases -> {
-                            text1.setText("Время, с");
-                            AnchorPane.setTopAnchor(text1, 505.);
-                            AnchorPane.setLeftAnchor(text1, 1045.);
+                        case Text text1 when text1 == dryWetContText -> {
+                            text1.setText("Тип контактов");
+                            AnchorPane.setTopAnchor(text1, 350.);
+                            AnchorPane.setLeftAnchor(text1, 1025.);
+                        }
+                        case Text text1 when text1 == CurOutputTimeText -> {
+                            text1.setText("Время выдачи, с");
+                            AnchorPane.setTopAnchor(text1, 525.);
+                            AnchorPane.setLeftAnchor(text1, 990.);
                         }
                         default -> {}
                     }
@@ -561,31 +549,23 @@ public class _8_HandControlScreenController extends ScreensController implements
     @Override
     public void changeConfiguration(Event event) {
         switch (event.getSource()) {
-            //Изменение кнопки "Режим"
-            case SimpleButton button when button == modeButton:
-                fun_change_contact(button);
+            //Изменение кнопок справа в меню
+            case SimpleButton button when button ==  conditionButton || button == dryWetButton:
+                funChangeButtonMenu(button);
                 break;
-            case SimpleButton button when button == conditionButton:
-                fun_change_contact(button);
+            //Управление контактами
+            case ButtonWithPicture button when button == contactOneButton || button == contactTwoButton:
+                funChangeModeContact(button);
                 break;
-                //Управление контактами
-            case ButtonWithPicture button when button == contactOneButton:
-                if (flags[1]) {
-                    button.changePosition(2);
-                    flags[1] = false;
-                } else {
-                    button.changePosition(1);
-                    flags[1] = true;
-                }
+            case ButtonWithPicture button when button == moduleA1Button || button == moduleB1Button || button == moduleC1Button
+                    || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button :
+                funOnOffModule(button);
                 break;
-            case ButtonWithPicture button when button == contactTwoButton:
-                if (flags[2]) {
-                    button.changePosition(2);
-                    flags[2] = false;
-                } else {
-                    button.changePosition(1);
-                    flags[2] = true;
-                }
+            case SimpleTextField stf when stf == phaseALCurrent || stf == phaseALAngle || stf == phaseBLCurrent
+                        || stf == phaseBLAngle || stf == phaseCLCurrent || stf == phaseCLAngle || stf == phaseARCurrent
+                        || stf == phaseARAngle || stf == phaseBRCurrent || stf == phaseBRAngle || stf == phaseCRCurrent
+                        || stf == phaseCRAngle:
+                funUnlockTextField();
                 break;
             case null, default:
                 break;
@@ -593,7 +573,7 @@ public class _8_HandControlScreenController extends ScreensController implements
     }
 
     //Функция по смене состояния контактов NC/NO
-    public void fun_change_contact(SimpleButton button) {
+    public void funChangeButtonMenu(SimpleButton button) {
         if (flags[0]) {
             button.changePosition(1);
             flags[0] = false;
@@ -602,7 +582,73 @@ public class _8_HandControlScreenController extends ScreensController implements
             flags[0] = true;
         }
     }
+    //Функция выбора и активации инвертора
+    public void funChangeModeContact(ButtonWithPicture button) {
+        if (flags[1]) {
+            button.changePosition(0);
+            flags[1] = false;
+        } else {
+            button.changePosition(1);
+            flags[1] = true;
+        }
+    }
+//    Функция по активации модуля
+    public void funOnOffModule(ButtonWithPicture button) {
+        int index = 0;
+        SimpleTextField stf1 = null;
+        SimpleTextField stf2 = null;
+        switch(button) {
+            case ButtonWithPicture button1 when button1 == moduleA1Button:
+                index = 2;
+                stf1 = phaseALCurrent;
+                stf2 = phaseALAngle;
+                break;
+            case ButtonWithPicture button1 when button1 == moduleB1Button:
+                index = 3;
+                stf1 = phaseBLCurrent;
+                stf2 = phaseBLAngle;
+                break;
+            case ButtonWithPicture button1 when button1 == moduleC1Button:
+                index = 4;
+                stf1 = phaseCLCurrent;
+                stf2 = phaseCLAngle;
+                break;
+            case ButtonWithPicture button1 when button1 == moduleA2Button:
+                index = 5;
+                stf1 = phaseARCurrent;
+                stf2 = phaseARAngle;
+                break;
+            case ButtonWithPicture button1 when button1 == moduleB2Button:
+                index = 6;
+                stf1 = phaseBRCurrent;
+                stf2 = phaseBRAngle;
+                break;
+            case ButtonWithPicture button1 when button1 == moduleC2Button:
+                index = 7;
+                stf1 = phaseCRCurrent;
+                stf2 = phaseCRAngle;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + button);
+        }
+        if (flags[index]) {
+            button.changePosition(0);
+            flags[index] = false;
+            stf1.setEditable(false);
+            stf2.setEditable(false);
+            stf1.clear();
+            stf2.clear();
+        } else {
+            button.changePosition(1);
+            flags[index] = true;
+            stf1.setEditable(true);
+            stf2.setEditable(true);
 
+        }
+    }
 
+    public void funUnlockTextField(){
+
+    }
 }
 
