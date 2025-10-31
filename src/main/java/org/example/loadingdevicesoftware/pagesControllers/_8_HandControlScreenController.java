@@ -158,7 +158,7 @@ public class _8_HandControlScreenController extends ScreensController implements
 
         nodesToCheck = new Node[]{phaseALCurrent,phaseALAngle,phaseBLCurrent,phaseBLAngle,phaseCLCurrent,phaseCLAngle,
         phaseARCurrent,phaseARAngle,phaseBRCurrent,phaseBRAngle,phaseCRCurrent,phaseCRAngle, timeInput,frequencyInput,
-        contactOneButton,contactTwoButton,conditionButton,dryWetButton};
+        contactOneButton,contactTwoButton,conditionButton,dryWetButton,objectTextField,nameTextField};
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
