@@ -51,6 +51,7 @@ public final class AddressesStorage {
                     Files.copy(in, file, StandardCopyOption.REPLACE_EXISTING);
                 } else {
                     Files.createFile(file);
+                    Files.write(file, Arrays.asList(";",";",";",";",";"));
                 }
             }
         }

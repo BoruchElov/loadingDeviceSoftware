@@ -5,6 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -50,6 +55,41 @@ public class InterfaceElementsLogic {
         // Устанавливаем новую сцену
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    public static void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle("");
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+
+        Label label = new Label(message);
+        label.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+        label.setTextFill(Color.WHITE);
+
+        Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.setText("ЗАКРЫТЬ");
+        okButton.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.NORMAL));
+        okButton.setTextFill(Color.WHITE);
+        okButton.setStyle("-fx-border-color: #FFFFFF;\n" +
+                "    -fx-pref-width: 130px; /* Желаемая ширина */\n" +
+                "    -fx-pref-height: 50px; /* Желаемая высота */\n" +
+                "    -fx-min-width: 130px; /* Минимальная ширина */\n" +
+                "    -fx-min-height: 50px; /* Минимальная высота */\n" +
+                "    -fx-max-width: 130px;\n" +
+                "    -fx-max-height: 50px;\n" +
+                "    -fx-background-color: #005286;\n" +
+                "    -fx-text-fill: #FFFFFF;\n" +
+                "    -fx-border-width: 2;\n" +
+                "    -fx-background-radius: 0;\n" +
+                "    -fx-border-radius: 0;");
+
+        alert.getDialogPane().setContent(label);
+        alert.getDialogPane().setStyle("-fx-background-color: #005286; -fx-padding: 0;" +
+                "-fx-pref-width: 500; -fx-pref-height: 180;");
+        alert.showAndWait();
     }
 
     @FXML

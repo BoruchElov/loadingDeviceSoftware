@@ -1,7 +1,8 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,6 +17,8 @@ import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class _7_DifProtectionScreenController extends ScreensController implements Configurable {
 
@@ -145,6 +148,13 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     @FXML
     public void initialize() {
         super.initialize();
+
+        nodesToCheck = new Node[]{contactOneButton, contactTwoButton, connectionTypeOne, groupTypeOne,
+                connectionTypeTwo, groupTypeTwo, feedingWindingButton, faultLocationButton, phaseAOneCurrent,
+                phaseBOneCurrent, phaseCOneCurrent, phaseATwoCurrent, phaseAButton, phaseBButton, phaseCButton,
+                groundButton, phaseBTwoCurrent, phaseCTwoCurrent,phaseAOneAngle,phaseBOneAngle,phaseCOneAngle,
+                phaseATwoAngle, phaseBTwoAngle,phaseCTwoAngle,objectTextField,nameTextField};
+
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
                 case SimpleButton button when button == connectionTypeOne || button == connectionTypeTwo ||
@@ -405,67 +415,67 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                     textField.setAlignment(Pos.CENTER);
                     switch (textField) {
                         case SimpleTextField textField1 when textField1 == phaseAOneCurrent -> {
-                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseAOneAngle -> {
-                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBOneCurrent -> {
-                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBOneAngle -> {
-                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCOneCurrent -> {
-                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCOneAngle -> {
-                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseATwoCurrent -> {
-                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseATwoAngle -> {
-                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 750.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBTwoCurrent -> {
-                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBTwoAngle -> {
-                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 750.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCTwoCurrent -> {
-                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCTwoAngle -> {
-                            textField1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 750.);
@@ -596,7 +606,9 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                 alert.showAndWait();
                 clearButton.changePosition(0);
                 clearButton.setText("СОХРАНИТЬ");
-                clearButton.setOnAction(_ -> {InterfaceElementsLogic.openFileManager();});
+                clearButton.setOnAction(_ -> {
+                    InterfaceElementsLogic.openFileManager();
+                });
                 startButton.changePosition(0);
                 startButton.setText("ПРОДОЛЖИТЬ");
                 menuButton.setActualStatus(Changeable.Status.LOCKED);
@@ -618,6 +630,44 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
             clearButton.changePosition(2);
             clearButton.setText("ОТМЕНА");
             startButton.changePosition(1);
+        }
+    }
+
+    @Override
+    public void addElementsListeners() {
+        super.addElementsListeners();
+        for (Node node : uncheckedNodes) {
+            List<String> copy = new ArrayList<>(node.getStyleClass());
+            node.getStyleClass().clear();
+            node.getStyleClass().add("warning");
+            node.getStyleClass().addAll(copy);
+            if (node instanceof SimpleButton button && !listeners.containsKey(button)) {
+                if (button.equals(phaseAButton) || button.equals(phaseBButton) || button.equals(phaseCButton)
+                        || button.equals(groundButton)) {
+                    EventHandler<ActionEvent> handler = event -> {
+
+                        this.changeConfiguration(event);
+                        SimpleButton[] phaseButtons = new SimpleButton[]{phaseAButton,phaseBButton,phaseCButton,
+                                groundButton};
+                        int n = 0;
+                        for (SimpleButton button1 : phaseButtons) {
+                            n += button1.getObjectPosition().getActualPosition() == 0 ? 0 : 1;
+                        }
+                        if (n > 2) {
+                            for (SimpleButton button1 : phaseButtons) {
+                                if (button1.getObjectPosition().getActualPosition() == 0) {
+                                    node.getStyleClass().setAll("warning");
+                                }
+                            }
+                        } else {
+                            node.getStyleClass().setAll(copy);
+                        }
+
+                    };
+                    button.setOnAction(handler);
+                    listeners.put(node, handler);
+                }
+            }
         }
     }
 
@@ -876,4 +926,5 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
         return new int[]{elementZero, elementOne, elementTwo, elementThree, elementFour,
                 elementFive, elementSix, elementSeven, elementEight, elementNine};
     }
+
 }

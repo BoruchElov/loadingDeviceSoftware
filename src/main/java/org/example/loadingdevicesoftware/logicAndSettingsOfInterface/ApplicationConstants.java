@@ -54,6 +54,7 @@ public class ApplicationConstants {
     public static final String ORANGE_HEX = "#F9AE40";
     public static final String BLACK_WORD = "black";
     public static final String WHITE_WORD = "white";
+    public static boolean expertStatus = true;
     //Константы для текста
     public static final String FONT_NAME = "Myriad Pro";
     //Текст на новых кнопках
@@ -98,7 +99,7 @@ public class ApplicationConstants {
     public static final Image CLOSED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Closed_Contact.png")).toExternalForm());
     public static final Image INVERTER_IMAGE = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Inverter.png")).toExternalForm());
+            getResource("/screen/BasePictures/Inverter_new.png")).toExternalForm());
     public static final Image BACKGROUND_BLUE = new Image(Objects.requireNonNull(ApplicationConstants.class.
             getResource("/screen/BasePictures/Background_Blue.png")).toExternalForm());
     public static final Image CHECK_SUCCESSFUL = new Image(Objects.requireNonNull(ApplicationConstants.class.

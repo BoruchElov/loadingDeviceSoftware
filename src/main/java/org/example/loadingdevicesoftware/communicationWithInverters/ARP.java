@@ -1,5 +1,7 @@
 package org.example.loadingdevicesoftware.communicationWithInverters;
 
+import org.example.loadingdevicesoftware.pagesControllers.StatusService;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class ARP implements PacketHandler {
             break;
     	case 2:
             System.out.println("(ARP) Запрос на PING от: " + AddressSource.toStringInHexFormat());
+            StatusService.getInstance().onStatusMessage(AddressSource.toStringInHexFormat());
             onPing(AddressSource);						// Обновляем список подключенных устройств
     		bufferTX = ByteBuffer.allocate(1+1);
     		Buff.rewind();
