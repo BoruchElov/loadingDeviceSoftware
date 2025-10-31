@@ -155,6 +155,11 @@ public class _8_HandControlScreenController extends ScreensController implements
     @FXML
     public void initialize() {
         super.initialize();
+
+        nodesToCheck = new Node[]{phaseALCurrent,phaseALAngle,phaseBLCurrent,phaseBLAngle,phaseCLCurrent,phaseCLAngle,
+        phaseARCurrent,phaseARAngle,phaseBRCurrent,phaseBRAngle,phaseCRCurrent,phaseCRAngle, timeInput,frequencyInput,
+        contactOneButton,contactTwoButton,conditionButton,dryWetButton};
+
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
                 //НАСТРОЙКИ КНОПОК
