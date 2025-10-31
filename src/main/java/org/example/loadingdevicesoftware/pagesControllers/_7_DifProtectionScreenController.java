@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.SET_SCENARIO_PARAMETRS;
+import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.START_SCENARIO;
+
 public class _7_DifProtectionScreenController extends ScreensController implements Configurable {
 
     @FXML
@@ -570,7 +573,6 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
         groupTypeTwo.toFront();
         restoreState();
         changeFigure();
-
     }
 
     @Override
@@ -598,6 +600,10 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
             startButton.setOnAction(_ -> {
                 contactOneOne.getStyleClass().add("circles-two");
                 contactTwoOne.getStyleClass().add("circles-two");
+
+                SET_SCENARIO_PARAMETRS();                       //отправка уставок инвертору
+                START_SCENARIO();                               //старт сценария
+
                 // Простое информационное окно
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("");

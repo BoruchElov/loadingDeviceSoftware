@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.*;
+
 public class _101_deviceWorkingScreenControl {
 
     private boolean[] checkFlags = new boolean[6];
@@ -90,6 +92,7 @@ public class _101_deviceWorkingScreenControl {
                     button.setup(SimpleButton.Presets.CANCEL);
                     button.setOnAction(event -> {
                         try {
+                            STOP_SCENARIO();
                             InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -104,6 +107,7 @@ public class _101_deviceWorkingScreenControl {
                     button.setOnAction(event -> {
                         try {
                             Buffer.setFlagForDifProtection(true);
+
                             InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
                         } catch (IOException e) {
                             throw new RuntimeException(e);

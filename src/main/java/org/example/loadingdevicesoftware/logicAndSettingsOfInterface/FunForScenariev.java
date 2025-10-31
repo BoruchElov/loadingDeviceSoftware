@@ -61,25 +61,22 @@ public class FunForScenariev {
         /**Данная функция передает инвертору все параметры для его работы и переводит его в режим ожидания старта сценария.
          * После принятия данных инвертор отдаст данные по готовности к работе
          */
-        public boolean SET_SCENARIO_PARAMETRS(){
-            System.out.println("SET_SCENARIO_PARAMETRS");
-            return true;
+        public static void SET_SCENARIO_PARAMETRS(){
+            System.out.println("\nSET_SCENARIO_PARAMETRS");
         }
 
         /**Запускает сценарий выбранной формы
          *
          */
-        public boolean START_SCENARIO() {
-            System.out.println("START_SCENARIO");
-            return true;
+        public static void START_SCENARIO() {
+            System.out.println("\nSTART_SCENARIO");
         }
 
         /**Принудительно останавливает сценарий
          *
          */
-        public boolean STOP_SCENARIO () {
-            System.out.println("STOP_SCENARIO ");
-            return true;
+        public static void STOP_SCENARIO () {
+            System.out.println("\nSTOP_SCENARIO ");
         }
 
         /**запрашивает данные у инвертора о токах на выводах, напряжении на выводах, углах токов, времени,
