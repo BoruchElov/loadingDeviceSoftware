@@ -1,6 +1,7 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceDialog;
@@ -14,6 +15,7 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.*;
@@ -105,13 +107,7 @@ public class _101_deviceWorkingScreenControl {
                     AnchorPane.setLeftAnchor(button, 1030.0);
                     button.setup(SimpleButton.Presets.START);
                     button.setOnAction(event -> {
-                        try {
-                            Buffer.setFlagForDifProtection(true);
-
-                            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        handleStartButtonAction(event);                     //Функция для смены состояния флага
                     });
                     button.setActualStatus(Changeable.Status.LOCKED);
                     break;
@@ -210,4 +206,41 @@ public class _101_deviceWorkingScreenControl {
         }
     }
 
+    //Функция для перехода к форме запуска
+    private void handleStartButtonAction(ActionEvent event) {
+        String fxmlName = PagesBuffer.fxmlName;
+        try {
+            setFlagForCurrentPage(fxmlName);                                                            // Устанавливаем соответствующий флаг перед переходом
+            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);         // Выполняем переход
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to switch scene from: " + fxmlName, e);
+        }
+    }
+
+    //Вспомогательная функция для установки флага на форме, что пройдены проверки
+    private void setFlagForCurrentPage(String fxmlName) {
+//        resetAllFlags();                                            // Сбрасываем все флаги
+        Map<String, Runnable> flagSetters = Map.of(                 // Маппинг FXML на соответствующие методы установки флагов
+                "1.Switcher.fxml", () -> Buffer.setFlagForSwitcherPage(true),
+                "1.TestOfSwitcher3X.fxml", () -> Buffer.setFlagForProtectionPage(true),
+                "2.TestOfStageProtection3X.fxml", () -> Buffer.setFlagForTransformerPage(true),
+                "3.TestOfMeasurementTransformer.fxml", () -> Buffer.setFlagForComTradePage(true),
+                "4.DifProtection.fxml", () -> Buffer.setFlagForDifProtection(true),
+                "5.ComTrade.fxml", () -> Buffer.setFlagForComTradePage(true),
+                "6.HandControl.fxml", () -> Buffer.setFlagForHandControlPage(true)
+        );
+        Runnable flagSetter = flagSetters.get(fxmlName);                // Выполняем установку флага если нашли маппинг
+        if (flagSetter != null) {flagSetter.run();}
+        else {System.err.println("No flag mapping for FXML: " + fxmlName); }
+    }
+
+    //Вспомогательная функция для очистки всех флагов
+    private void resetAllFlags() {
+        Buffer.setFlagForSwitcherPage(false);
+        Buffer.setFlagForProtectionPage(false);
+        Buffer.setFlagForTransformerPage(false);
+        Buffer.setFlagForComTradePage(false);
+        Buffer.setFlagForDifProtection(false);
+        Buffer.setFlagForHandControlPage(false);
+    }
 }

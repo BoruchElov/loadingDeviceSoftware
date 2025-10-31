@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 
-public class _2_TestOfSwitcher3XScreenController extends ScreensController implements Configurable {
+public class _1_TestOfSwitcher3XScreenController extends ScreensController implements Configurable {
 
     @FXML
     SimpleTextField phaseACurrent;

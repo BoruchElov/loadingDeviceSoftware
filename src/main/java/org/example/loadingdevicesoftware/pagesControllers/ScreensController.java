@@ -79,15 +79,14 @@ class ScreensController extends BasicController {
             }
         });
         startButton.setup(SimpleButton.Presets.START);
-
-
-
         startButton.setActualStatus(Changeable.Status.NORMAL);
         startButton.setOnAction(event -> {
             try {
                 if (!isChecked()) {
+
                     InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
                     PagesBuffer.savePage(this);
+                    Check_Condition_Start();                //Функция проверки условий пуска
                 } else {
                     for (Node node : uncheckedNodes) {
                         node.getStyleClass().add("okay");

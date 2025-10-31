@@ -2,8 +2,8 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.DirectionalLight;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -12,10 +12,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
+import java.io.IOException;
+
+import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.SET_SCENARIO_PARAMETRS;
+import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.START_SCENARIO;
 
 
-
-public class _8_HandControlScreenController extends ScreensController implements Configurable {
+public class _6_HandControlScreenController extends ScreensController implements Configurable {
     //ТЕКСТОВЫЕ ПОЛЯ
     //текстовые поля для токов и углов слева
     @FXML
@@ -156,9 +159,11 @@ public class _8_HandControlScreenController extends ScreensController implements
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new Node[]{phaseALCurrent,phaseALAngle,phaseBLCurrent,phaseBLAngle,phaseCLCurrent,phaseCLAngle,
-        phaseARCurrent,phaseARAngle,phaseBRCurrent,phaseBRAngle,phaseCRCurrent,phaseCRAngle, timeInput,frequencyInput,
-        contactOneButton,contactTwoButton,conditionButton,dryWetButton,objectTextField,nameTextField};
+//        nodesToCheck = new Node[]{phaseALCurrent,phaseALAngle,phaseBLCurrent,phaseBLAngle,phaseCLCurrent,phaseCLAngle,
+//        phaseARCurrent,phaseARAngle,phaseBRCurrent,phaseBRAngle,phaseCRCurrent,phaseCRAngle, timeInput,frequencyInput,
+//        contactOneButton,contactTwoButton,conditionButton,dryWetButton,objectTextField,nameTextField};
+
+        nodesToCheck = new Node[]{nameTextField};
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
@@ -551,6 +556,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                 default -> {}
             }
         }
+        restoreState();
         AnchorPane.setTopAnchor(time, 260.);
     }
     //Функция для отображения активности элементов на форме
@@ -656,8 +662,75 @@ public class _8_HandControlScreenController extends ScreensController implements
         }
     }
 
-    public void funUnlockTextField(){
+    public void funUnlockTextField(){}
 
+    //функция по изменению формы после проверки
+    @Override
+    public void restoreState() {
+        super.restoreState();
+        if (Buffer.isFlagForHandControlPage()) {    // Проверка флага. Если изменился, то форма меняется
+            Buffer.setFlagForDifProtection(false);
+            lockAll(menuButton, clearButton, startButton);
+
+            //Настройка кнопки очистки формы
+            clearButton.setOnAction(_ -> {
+                unlockAll();
+                clearButton.changePosition(0);
+                startButton.changePosition(0);
+                contactOne.getStyleClass().add("circles");
+                clearButton.setText("ОЧИСТИТЬ");
+                clearButton.setOnAction(this::clearAll);
+                startButton.setOnAction(event -> {
+                    try {
+                        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                        PagesBuffer.savePage(this);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            });
+
+            //Настройка кнопки старта формы
+            startButton.setOnAction(_ -> {
+                contactOne.getStyleClass().add("circles-two");
+                contactTwo.getStyleClass().add("circles-two");
+
+                SET_SCENARIO_PARAMETRS();                       //отправка уставок инвертору
+                START_SCENARIO();                               //старт сценария
+
+                // Простое информационное окно
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("");
+                alert.setHeaderText(null); // Необязательный заголовок
+                alert.setContentText("1. Проверка:     Выполнена\n2. Срабатывание:     Контакт 1, Контакт 2\n3. Ошибки:     Нет");
+                alert.showAndWait();
+                clearButton.changePosition(0);
+                clearButton.setText("СОХРАНИТЬ");
+                clearButton.setOnAction(_ -> {
+                    InterfaceElementsLogic.openFileManager();
+                });
+                startButton.changePosition(0);
+                startButton.setText("ПРОДОЛЖИТЬ");
+                menuButton.setActualStatus(Changeable.Status.LOCKED);
+                startButton.setOnAction(_ -> {
+                    clearButton.setText("ОЧИСТИТЬ");
+                    clearButton.setOnAction(this::clearAll);
+                    startButton.setText("ПУСК");
+                    menuButton.setActualStatus(Changeable.Status.NORMAL);
+                    startButton.setOnAction(event -> {
+                        try {
+                            InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                            PagesBuffer.savePage(this);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                });
+            });
+            clearButton.changePosition(2);
+            clearButton.setText("ОТМЕНА");
+            startButton.changePosition(1);
+        }
     }
 }
 

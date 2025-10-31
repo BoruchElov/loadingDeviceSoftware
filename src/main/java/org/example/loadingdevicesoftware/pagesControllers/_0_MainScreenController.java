@@ -90,7 +90,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Настройка"
         settingsButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "1.settingsWindow.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "8.settingsWindow.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -98,7 +98,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Проверка автоматического выключателя"
         switcherTestButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "2.TestOfSwitcher3X.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "1.TestOfSwitcher3X.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -106,7 +106,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Проверка релейной защиты"
         relayProtectionTestButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "3.TestOfStageProtection3X.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "2.TestOfStageProtection3X.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -114,7 +114,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Журнал событий"
         eventLoggerButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "4.EventLogger.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.EventLogger.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -122,7 +122,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Проверка измерительного трансформатора"
         measurementTransformerTestButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "5.TestOfMeasurementTransformer.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "3.TestOfMeasurementTransformer.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -130,7 +130,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Comtrade"
         comtradeButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "6.ComTrade.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "5.ComTrade.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -138,7 +138,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Проверка дифференциальной защиты"
         differentialProtectionTestButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "7.DifProtection.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "4.DifProtection.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -146,7 +146,7 @@ public class _0_MainScreenController extends BasicController{
         //Привязка метода к кнопке "Ручной ввод"
         handControlButton.setOnAction(event -> {
             try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "8.HandControl.fxml");
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "6.HandControl.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

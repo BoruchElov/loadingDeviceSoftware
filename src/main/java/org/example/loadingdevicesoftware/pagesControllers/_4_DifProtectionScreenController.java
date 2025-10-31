@@ -23,7 +23,7 @@ import java.util.List;
 import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.SET_SCENARIO_PARAMETRS;
 import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.START_SCENARIO;
 
-public class _7_DifProtectionScreenController extends ScreensController implements Configurable {
+public class _4_DifProtectionScreenController extends ScreensController implements Configurable {
 
     @FXML
     Circle windingOne;
@@ -152,11 +152,13 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new Node[]{contactOneButton, contactTwoButton, connectionTypeOne, groupTypeOne,
-                connectionTypeTwo, groupTypeTwo, feedingWindingButton, faultLocationButton, phaseAOneCurrent,
-                phaseBOneCurrent, phaseCOneCurrent, phaseATwoCurrent, phaseAButton, phaseBButton, phaseCButton,
-                groundButton, phaseBTwoCurrent, phaseCTwoCurrent,phaseAOneAngle,phaseBOneAngle,phaseCOneAngle,
-                phaseATwoAngle, phaseBTwoAngle,phaseCTwoAngle,objectTextField,nameTextField};
+//        nodesToCheck = new Node[]{contactOneButton, contactTwoButton, connectionTypeOne, groupTypeOne,
+//                connectionTypeTwo, groupTypeTwo, feedingWindingButton, faultLocationButton, phaseAOneCurrent,
+//                phaseBOneCurrent, phaseCOneCurrent, phaseATwoCurrent, phaseAButton, phaseBButton, phaseCButton,
+//                groundButton, phaseBTwoCurrent, phaseCTwoCurrent,phaseAOneAngle,phaseBOneAngle,phaseCOneAngle,
+//                phaseATwoAngle, phaseBTwoAngle,phaseCTwoAngle,objectTextField,nameTextField};
+
+        nodesToCheck = new Node[]{nameTextField};
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
@@ -581,6 +583,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
         if (Buffer.isFlagForDifProtection()) {
             Buffer.setFlagForDifProtection(false);
             lockAll(menuButton, clearButton, startButton);
+
+            //Настройка кнопки очистки формы
             clearButton.setOnAction(_ -> {
                 unlockAll();
                 clearButton.changePosition(0);
@@ -597,6 +601,8 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
                     }
                 });
             });
+
+            //Настройка кнопки старта формы
             startButton.setOnAction(_ -> {
                 contactOneOne.getStyleClass().add("circles-two");
                 contactTwoOne.getStyleClass().add("circles-two");
