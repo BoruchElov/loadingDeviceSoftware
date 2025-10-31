@@ -33,9 +33,6 @@ class ScreensController extends BasicController {
 
     //Список для хранения некорректно-заполненных элементов
     List<Node> uncheckedNodes = new ArrayList<>();
-
-    private final Map<SimpleTextField, ChangeListener<String>> fieldListeners = new HashMap<>();
-
     Map<Node,Object> listeners = new HashMap<>();
 
 
@@ -112,9 +109,9 @@ class ScreensController extends BasicController {
     public void clearAll(Object controller) {
         for (Node child : this.anchorPane.getChildren()) {
             if (child instanceof SimpleTextField field) {
-                if (fieldListeners.containsKey(field)) {
-                    field.textProperty().removeListener(fieldListeners.get(field));
-                    fieldListeners.remove(field);
+                if (listeners.containsKey(field)) {
+                    field.textProperty().removeListener((ChangeListener<? super String>) listeners.get(field));
+                    listeners.remove(field);
                     field.getStyleClass().removeAll("warning");
                 }
             }

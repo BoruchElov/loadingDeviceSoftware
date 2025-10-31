@@ -155,6 +155,9 @@ public class _8_HandControlScreenController extends ScreensController implements
     @FXML
     public void initialize() {
         super.initialize();
+
+        nodesToCheck = new Node[]{frequencyInput};
+
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
                 //НАСТРОЙКИ КНОПОК
