@@ -1,7 +1,12 @@
 package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Tooltip;
+import javafx.util.converter.DoubleStringConverter;
+
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class SimpleTextField extends TextField implements Changeable {
 
@@ -10,10 +15,24 @@ public class SimpleTextField extends TextField implements Changeable {
      * Класс для задания типа ожидаемого значения: буквенного или числового
      */
     public enum typeOfValue {
-        ALPHABETIC, DIGIT
+        ALPHABETIC, DIGIT, ORDINARY
+    }
+
+    enum numberOfDecimals {
+        TWO, THREE
     }
 
     typeOfValue type;
+    numberOfDecimals decimals = numberOfDecimals.TWO;
+
+    private double MAX = 3000.;
+    private double MIN = 1.;
+
+    public void setLimits(double MIN, double MAX, numberOfDecimals decimals) {
+        this.MIN = MIN;
+        this.MAX = MAX;
+        this.decimals = decimals;
+    }
 
     @Override
     public void changePosition(int position) {clear();}
@@ -49,12 +68,34 @@ public class SimpleTextField extends TextField implements Changeable {
                 });
                 break;
                 case DIGIT:
-                    this.textProperty().addListener((observable, oldValue, newValue) -> {
-                        if (!newValue.matches("\\d*")) { // допускаются только цифры
-                            this.setText(newValue.replaceAll("\\D", ""));
+                    Pattern decimalPattern = switch (decimals) {
+                        case TWO -> Pattern.compile("\\d*(\\.\\d{0,2})?");
+                        case THREE -> Pattern.compile("\\d+(\\.\\d{0,3})?");
+                    };
+                    UnaryOperator<TextFormatter.Change> filter = change -> {
+                        String newText = change.getControlNewText();
+                        if (decimalPattern.matcher(newText).matches()) {
+                            return change;
+                        }
+                        return null;
+                    };
+                    TextFormatter<Double> formatter = new TextFormatter<>(
+                            new DoubleStringConverter(),
+                            0.0,
+                            filter
+                    );
+                    this.setTextFormatter(formatter);
+                    formatter.valueProperty().addListener((obs, oldVal, newVal) -> {
+                        if (newVal == null) return;
+                        if (newVal < MIN || newVal > MAX) {
+                            this.setText(oldVal.toString());
+                            //this.setStyle("-fx-border-color: red;");
                         }
                     });
                     break;
+            case ORDINARY:
+                break;
+
         }
         getStyleClass().add(STYLE);
         setMeasures(size);
@@ -81,7 +122,8 @@ public class SimpleTextField extends TextField implements Changeable {
     private Tooltip createTooltip() {
         String tooltipText = switch (type) {
             case ALPHABETIC -> "Данное поле принимает только текст";
-            case DIGIT -> "Данное поле принимает только числа";
+            case DIGIT -> "Данное поле принимает только числа в диапазоне от " + MIN + " до " + MAX;
+            case ORDINARY -> "Данное поле принимает как текст, так и числа, спецсимволы";
         };
         Tooltip tooltip = new Tooltip(tooltipText);
         tooltip.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));

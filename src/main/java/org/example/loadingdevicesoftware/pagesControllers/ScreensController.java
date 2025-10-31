@@ -50,9 +50,9 @@ class ScreensController extends BasicController {
         Arrays.fill(flags, false);
         imageView.setImage(ApplicationConstants.NEW_BACKGROUND);
         //Настройка текстовых полей для ввода ФИО и названия объекта
-        objectTextField.setup("Название объекта", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.ALPHABETIC);
+        objectTextField.setup("Название объекта", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.ORDINARY);
         objectTextField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
-        nameTextField.setup("Ф.И.О. исполнителя", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.ALPHABETIC);
+        nameTextField.setup("Ф.И.О. исполнителя", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.ORDINARY);
         nameTextField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         AnchorPane.setLeftAnchor(objectTextField, 50.0);
         AnchorPane.setTopAnchor(objectTextField, 540.);
@@ -82,17 +82,22 @@ class ScreensController extends BasicController {
         startButton.setActualStatus(Changeable.Status.NORMAL);
         startButton.setOnAction(event -> {
             try {
-                if (!isChecked()) {
+                if (false) {
+                    if (!isChecked()) {
+                        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                        PagesBuffer.savePage(this);
+                    } else {
+                        for (Node node : uncheckedNodes) {
+                            node.getStyleClass().add("okay");
+                        }
+                        InterfaceElementsLogic.showAlert("Тестовая тревога", "Ошибка в заполнении формы!" +
+                                "\nПроверьте выделенные элементы.");
+                        addElementsListeners();
+                        uncheckedNodes.clear();
+                    }
+                } else {
                     InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
                     PagesBuffer.savePage(this);
-                } else {
-                    for (Node node : uncheckedNodes) {
-                        node.getStyleClass().add("okay");
-                    }
-                    InterfaceElementsLogic.showAlert("Тестовая тревога", "Ошибка в заполнении формы!" +
-                            "\nПроверьте выделенные элементы.");
-                    addElementsListeners();
-                    uncheckedNodes.clear();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
