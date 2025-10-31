@@ -1,7 +1,6 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -33,6 +32,8 @@ class ScreensController extends BasicController {
     List<Node> uncheckedNodes = new ArrayList<>();
 
     private final Map<SimpleTextField, ChangeListener<String>> fieldListeners = new HashMap<>();
+
+    Map<Node,Object> listeners = new HashMap<>();
 
 
     @FXML
@@ -90,26 +91,7 @@ class ScreensController extends BasicController {
                     }
                     InterfaceElementsLogic.showAlert("Тестовая тревога", "Ошибка в заполнении формы!" +
                             "\nПроверьте выделенные элементы.");
-                    for (Node node : uncheckedNodes) {
-                        List<String> copy = new ArrayList<>(node.getStyleClass());
-                        node.getStyleClass().clear();
-                        node.getStyleClass().add("warning");
-                        node.getStyleClass().addAll(copy);
-                        if (node instanceof SimpleTextField field && !fieldListeners.containsKey(field)) {
-
-                            ChangeListener<String> listener = (observable, oldValue, newValue) -> {
-                                if (field.getText().isBlank()) {
-                                    node.getStyleClass().setAll("warning");
-                                    node.getStyleClass().addAll(copy);
-                                } else {
-                                    node.getStyleClass().setAll(copy);
-                                }
-                            };
-
-                            field.textProperty().addListener(listener);
-                            fieldListeners.put(field, listener); // запоминаем слушателя
-                        }
-                    }
+                    addElementsListeners();
                     uncheckedNodes.clear();
                 }
             } catch (IOException e) {
@@ -201,7 +183,34 @@ class ScreensController extends BasicController {
         }
     }
 
-    public boolean isChecked() {
+    public void addElementsListeners() {
+        for (Node node : uncheckedNodes) {
+            List<String> copy = new ArrayList<>(node.getStyleClass());
+            node.getStyleClass().clear();
+            node.getStyleClass().add("warning");
+            node.getStyleClass().addAll(copy);
+            if (node instanceof SimpleTextField field && !listeners.containsKey(field)) {
+                ChangeListener<String> textListener = (observable, oldValue, newValue) -> {
+                    if (field.getText().isBlank()) {
+                        node.getStyleClass().setAll("warning");
+                        node.getStyleClass().addAll(copy);
+                    } else {
+                        node.getStyleClass().setAll(copy);
+                    }
+                };
+                field.textProperty().addListener(textListener);
+                listeners.put(node, textListener);
+            }
+        }
+    }
+
+    /**
+     * Метод для проверки заполнения требуемых элементов. Проходится по массиву заданных элементов и, в зависимости от
+     * состояния элемента, добавляет его в список непроверенных. Помимо этого, если хоть один элемент проверку не прошёл,
+     * метод возвращает флаг true.
+     * @return true, если хоть один из нужных элементов находится не в том состоянии
+     */
+    private boolean isChecked() {
         boolean result = false;
         for (Node node : nodesToCheck) {
             if (node instanceof ButtonWithPicture button) {
