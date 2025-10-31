@@ -58,6 +58,7 @@ public class PagesBuffer {
         return switch (controllerName) {
             case "_2_TestOfSwitcher3XScreenController" -> switcherPage.getAnchorPane().getChildren();
             case "_7_DifProtectionScreenController" -> difPage.getAnchorPane().getChildren();
+            case "_8_HandControlScreenController" -> difPage.getAnchorPane().getChildren();
             case null, default -> throw new IllegalStateException("Unexpected value: ");
         };
     }
@@ -66,6 +67,7 @@ public class PagesBuffer {
         return switch (className) {
             case "_2_TestOfSwitcher3XScreenController" -> "2.TestOfSwitcher3X.fxml";
             case "_7_DifProtectionScreenController" -> "7.DifProtection.fxml";
+            case "_8_HandControlScreenController" -> "8.HandControl.fxml";
             case null, default -> throw new IllegalStateException("Unexpected value: ");
         };
     }

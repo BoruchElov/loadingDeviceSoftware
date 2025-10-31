@@ -12,6 +12,8 @@ import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 
+
+
 public class _8_HandControlScreenController extends ScreensController implements Configurable {
     //ТЕКСТОВЫЕ ПОЛЯ
     //текстовые поля для токов и углов слева
@@ -567,6 +569,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                         || stf == phaseCRAngle:
                 funUnlockTextField();
                 break;
+                //Определение поведения кнопки ПУСК
             case null, default:
                 break;
         }

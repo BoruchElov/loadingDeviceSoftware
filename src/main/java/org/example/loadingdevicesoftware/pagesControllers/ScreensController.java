@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.Check_Condition_Start;
+
+
 class ScreensController extends BasicController {
 
     boolean[] flags;                        //Массив для хранения булевых значений для пользовательских решений
@@ -73,6 +76,8 @@ class ScreensController extends BasicController {
             try {
                 InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
                 PagesBuffer.savePage(this);
+
+                Check_Condition_Start();            //метод запускающий все проверки TODO:p1 Необходимо исправить всю логику проверки и как у нас обновляется орма
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
