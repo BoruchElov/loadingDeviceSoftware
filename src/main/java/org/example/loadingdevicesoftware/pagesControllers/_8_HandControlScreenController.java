@@ -2,6 +2,7 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.DirectionalLight;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -195,92 +196,92 @@ public class _8_HandControlScreenController extends ScreensController implements
                     switch (textField) {
                         //Текстовые поля модулей слева
                         case SimpleTextField tf1 when tf1 == phaseALCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseALAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL);
+                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL);
+                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL);
+                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         //Текстовые поля справа
                         case SimpleTextField tf1 when tf1 == phaseARCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseARAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL);
+                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL);
+                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL);
+                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         //Амперметр и вольтметр
                         case SimpleTextField tf1 when tf1 == Ampermetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 590.);
                             AnchorPane.setLeftAnchor(tf1, 485.);
                         }
                         case SimpleTextField tf1 when tf1 == Voltmetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 590.);
                             AnchorPane.setLeftAnchor(tf1, 650.);
                                 }
                         //Настройка внешнего вида и расположения кнопки вывода времени отключения
                         case SimpleTextField tf1 when tf1 == timeOutput -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL);
+                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1,  590.);
                             AnchorPane.setLeftAnchor(tf1, 825.);
                         } // Ввод частоты модулей
                         case SimpleTextField tf1 when tf1 == frequencyInput -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 177.);
                             AnchorPane.setLeftAnchor(tf1, 670.);
                             tf1.setEditable(true);
                         }
                         //Настройка внешнего вида и расположения кнопки ввода времени отключения
                         case SimpleTextField tf1 when tf1 == timeInput -> {
-                            tf1.setup("0.01-3600", SimpleTextField.Sizes.LARGE);
+                            tf1.setup("0.01-3600", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 580.);
                             AnchorPane.setLeftAnchor(tf1, 1005.);
                             tf1.setPrefSize(200., 67.);
