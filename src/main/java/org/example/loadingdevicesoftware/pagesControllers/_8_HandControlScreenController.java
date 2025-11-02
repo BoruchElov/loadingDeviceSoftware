@@ -2,7 +2,6 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.DirectionalLight;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -199,63 +198,69 @@ public class _8_HandControlScreenController extends ScreensController implements
                     switch (textField) {
                         //Текстовые поля модулей слева
                         case SimpleTextField tf1 when tf1 == phaseALCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseALAngle -> {
+                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
                             tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         //Текстовые поля справа
                         case SimpleTextField tf1 when tf1 == phaseARCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseARAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRCurrent -> {
-                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRAngle -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }

@@ -3,6 +3,7 @@ package org.example.loadingdevicesoftware.pagesControllers;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -71,6 +72,10 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
     @FXML
     public void initialize() {
         super.initialize();
+
+        nodesToCheck = new Node[]{phaseACurrent, phaseBCurrent, phaseCCurrent, contactOneTime, contactTwoTime,
+                phaseButton, contactOneButton, contactTwoButton, nameTextField, objectTextField};
+
         //Настройка текстовых полей ввода значений токов
         SimpleTextField[] textFields = new SimpleTextField[]{phaseACurrent, phaseBCurrent, phaseCCurrent};
         double topPosition = 335.;
