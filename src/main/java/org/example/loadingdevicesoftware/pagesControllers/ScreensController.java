@@ -215,7 +215,7 @@ class ScreensController extends BasicController {
      * метод возвращает флаг true.
      * @return true, если хоть один из нужных элементов находится не в том состоянии
      */
-    private boolean isChecked() {
+    public boolean isChecked() {
         boolean result = false;
         for (Node node : nodesToCheck) {
             if (node instanceof ButtonWithPicture button) {

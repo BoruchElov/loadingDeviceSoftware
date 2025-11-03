@@ -2,6 +2,7 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,9 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
-
+import java.util.ArrayList;
 
 
 public class _8_HandControlScreenController extends ScreensController implements Configurable {
@@ -155,7 +157,8 @@ public class _8_HandControlScreenController extends ScreensController implements
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new Node[]{frequencyInput};
+        nodesToCheck = new Node[]{frequencyInput,timeInput,nameTextField,objectTextField,contactOneButton,
+                contactTwoButton,conditionButton,dryWetButton};
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
@@ -165,13 +168,13 @@ public class _8_HandControlScreenController extends ScreensController implements
                     switch (button) {
                         //Настройка внешнего вида и расположения кнопки условия отключения
                         case SimpleButton bt1 when bt1 == conditionButton -> {
-                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "t/сраб", "контакт"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "t/сраб", "Контакт"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
                             AnchorPane.setTopAnchor(button, 225.);
                             AnchorPane.setLeftAnchor(button, 1005.);
                         }
                         //Кнопка выбора сухого или мокрого контакта
                         case SimpleButton bt1 when bt1 == dryWetButton -> {
-                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "сухой", "мокрый"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "Сухой", "Мокрый"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
                             AnchorPane.setTopAnchor(button, 400.);
                             AnchorPane.setLeftAnchor(button, 1005.);
                         }
@@ -185,112 +188,116 @@ public class _8_HandControlScreenController extends ScreensController implements
                         || textField == phaseARAngle || textField == phaseBRAngle || textField == phaseCRAngle || textField == timeInput
                         || textField == timeOutput || textField == Ampermetr || textField == Voltmetr || textField == frequencyInput
                         -> {
+                    textField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+                    textField.setAlignment(Pos.CENTER);
                     // Переменные для настройки размеров
-                    Double Y1 = 314.;           //Высота первого уровня текстовых полей
-                    Double Y2 = Y1+60;          //Второй уровень
-                    Double Y3 = Y2+60;          //Третий уровень
+                    Double Y1 = 273.;           //Высота первого уровня текстовых полей
+                    Double Y2 = Y1+90;          //Второй уровень
+                    Double Y3 = Y2+90;          //Третий уровень
 
-                    Double X1 = 10.;            //Отступ по горизонтали для текстовых полей
-                    Double X2 = X1 + 85;
-                    Double X3 = 780.;
-                    Double X4 = X3 + 85;
+                    Double X1 = 50.;            //Отступ по горизонтали для текстовых полей
+                    Double X2 = X1 + 110;
+                    Double X3 = 720.;
+                    Double X4 = X3 + 110;
                     textField.setEditable(false);   //Блокировка всех текстовых полей
                     switch (textField) {
                         //Текстовые поля модулей слева
                         case SimpleTextField tf1 when tf1 == phaseALCurrent -> {
-                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseALAngle -> {
                             tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
-                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLCurrent -> {
-                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLAngle -> {
                             tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
-                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLCurrent -> {
-                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLAngle -> {
                             tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
-                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         //Текстовые поля справа
                         case SimpleTextField tf1 when tf1 == phaseARCurrent -> {
-                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseARAngle -> {
                             tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
-                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRCurrent -> {
-                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRAngle -> {
                             tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
-                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRCurrent -> {
-                            tf1.setup("1", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRAngle -> {
                             tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
-                            tf1.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         //Амперметр и вольтметр
                         case SimpleTextField tf1 when tf1 == Ampermetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 590.);
-                            AnchorPane.setLeftAnchor(tf1, 485.);
+                            AnchorPane.setLeftAnchor(tf1, 610.);
                         }
                         case SimpleTextField tf1 when tf1 == Voltmetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 590.);
-                            AnchorPane.setLeftAnchor(tf1, 650.);
+                            AnchorPane.setLeftAnchor(tf1, 805.);
                                 }
                         //Настройка внешнего вида и расположения кнопки вывода времени отключения
                         case SimpleTextField tf1 when tf1 == timeOutput -> {
-                            tf1.setup("", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
-                            AnchorPane.setTopAnchor(tf1,  590.);
-                            AnchorPane.setLeftAnchor(tf1, 825.);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            AnchorPane.setTopAnchor(tf1,  177.);
+                            AnchorPane.setLeftAnchor(tf1, 830.);
                         } // Ввод частоты модулей
                         case SimpleTextField tf1 when tf1 == frequencyInput -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 177.);
-                            AnchorPane.setLeftAnchor(tf1, 670.);
+                            AnchorPane.setLeftAnchor(tf1, 640.);
                             tf1.setEditable(true);
                         }
                         //Настройка внешнего вида и расположения кнопки ввода времени отключения
                         case SimpleTextField tf1 when tf1 == timeInput -> {
-                            tf1.setup("0.01-3600", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.DIGIT);
-                            AnchorPane.setTopAnchor(tf1, 580.);
+                            tf1.setLimits(0.01,3600., SimpleTextField.numberOfDecimals.THREE);
+                            tf1.setup("0.01", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            AnchorPane.setTopAnchor(tf1, 575.);
                             AnchorPane.setLeftAnchor(tf1, 1005.);
                             tf1.setPrefSize(200., 67.);
                             tf1.setEditable(true);
@@ -306,12 +313,12 @@ public class _8_HandControlScreenController extends ScreensController implements
                         case SimpleImageView iv1 when iv1 == PicAmpermetr -> {
                             imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.AMPERMETR}, new double[][]{{60., 60.}});
                             AnchorPane.setTopAnchor(imageView, 585.);
-                            AnchorPane.setLeftAnchor(imageView, 400.);
+                            AnchorPane.setLeftAnchor(imageView, 533.);
                         }
                         case SimpleImageView iv1 when iv1 == PicVoltmetr -> {
                             imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.VOLTMETR}, new double[][]{{60., 60.}});
                             AnchorPane.setTopAnchor(imageView, 585.);
-                            AnchorPane.setLeftAnchor(imageView, 580.);
+                            AnchorPane.setLeftAnchor(imageView, 730.);
                         }
                         default -> {}
                     }
@@ -361,8 +368,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                     Double Y2 = 345.;           //Второй уровень
                     Double Y3 = 430.;           //Третий уровень
 
-                    Double X1 = 360.;           //Отступ по горизонтали для текстовых полей
-                    Double X2 = 510.;
+                    Double X1 = 380.;           //Отступ по горизонтали для текстовых полей
+                    Double X2 = 490.;
                     switch (button) {
                         case ButtonWithPicture bt1 when bt1 == moduleA1Button -> {
                             bt1.setup(new ImageView(), ButtonWithPicture.ButtonSizes.KEY_MODULE_SIZE, ButtonWithPicture.ImagViewSizes.KEY_MODULE_SIZE,
@@ -428,12 +435,12 @@ public class _8_HandControlScreenController extends ScreensController implements
                     Double n = 605.;
                     Double k = 110.;
 
-                    Double Y1 = 285.;           //Первый уровень
-                    Double Y2 = 375.;           //Второй уровень
+                    Double Y1 = 292.;           //Первый уровень
+                    Double Y2 = 380.;           //Второй уровень
                     Double Y3 = 465.;           //Третий уровень
 
-                    Double X1 = 230.;           //Отступ по горизонтали для текста Модуль 1
-                    Double X2 = 650.;           //Модуль 2
+                    Double X1 = 260.;           //Отступ по горизонтали для текста Модуль 1
+                    Double X2 = 590.;           //Модуль 2
 
                     switch (text) {
                         case Text text1 when text1 == contacts -> {
@@ -453,23 +460,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                         }
                         case Text text1 when text1 == currentOne -> {
                             text1.setText("I, A");
-                            AnchorPane.setTopAnchor(text1, 280.);
-                            AnchorPane.setLeftAnchor(text1, 35.);
+                            AnchorPane.setTopAnchor(text1, 240.);
+                            AnchorPane.setLeftAnchor(text1, 79.);
                         }
                         case Text text1 when text1 == currentTwo -> {
                             text1.setText("I, A");
-                            AnchorPane.setTopAnchor(text1, 280.);
-                            AnchorPane.setLeftAnchor(text1, 800.);
+                            AnchorPane.setTopAnchor(text1, 240.);
+                            AnchorPane.setLeftAnchor(text1, 758.);
                         }
                         case Text text1 when text1 == phaseOne -> {
                             text1.setText("fi, град");
-                            AnchorPane.setTopAnchor(text1, 280.);
-                            AnchorPane.setLeftAnchor(text1, 90.);
+                            AnchorPane.setTopAnchor(text1, 240.);
+                            AnchorPane.setLeftAnchor(text1, 167.);
                         }
                         case Text text1 when text1 == phaseTwo -> {
                             text1.setText("fi, град");
-                            AnchorPane.setTopAnchor(text1, 280.);
-                            AnchorPane.setLeftAnchor(text1, 855.);
+                            AnchorPane.setTopAnchor(text1, 240.);
+                            AnchorPane.setLeftAnchor(text1, 835.);
                         }//Текст для модулей
                         case Text text1 when text1 == aOne -> {
                             text1.setText("МОДУЛЬ A1");
@@ -504,25 +511,25 @@ public class _8_HandControlScreenController extends ScreensController implements
                         //Окно tсраб.
                         case Text text1 when text1 == timerText -> {
                             text1.setText("tсраб.");
-                            AnchorPane.setTopAnchor(text1, 555.);
-                            AnchorPane.setLeftAnchor(text1, 825.);
+                            AnchorPane.setTopAnchor(text1, 190.);
+                            AnchorPane.setLeftAnchor(text1, 760.);
                         }
                         //Окно frequency.
                         case Text text1 when text1 == frequencyText -> {
-                            text1.setText("частота");
+                            text1.setText("Частота");
                             AnchorPane.setTopAnchor(text1, 190.);
-                            AnchorPane.setLeftAnchor(text1, 590.);
+                            AnchorPane.setLeftAnchor(text1, 555.);
                         }
                         //текст для АМ и ВМ
                         case Text text1 when text1 == amperText -> {
                             text1.setText("I, A");
                             AnchorPane.setTopAnchor(text1, 555.);
-                            AnchorPane.setLeftAnchor(text1, 410.);
+                            AnchorPane.setLeftAnchor(text1, 548.);
                         }
                         case Text text1 when text1 == voltText -> {
                             text1.setText("U, В");
                             AnchorPane.setTopAnchor(text1, 555.);
-                            AnchorPane.setLeftAnchor(text1, 590.);
+                            AnchorPane.setLeftAnchor(text1, 743.);
                         }
                         default -> {}
                     }
@@ -535,18 +542,20 @@ public class _8_HandControlScreenController extends ScreensController implements
                     switch (text) {
                         case Text text1 when text1 == shutUpConditionText -> {
                             text1.setText("Условия отключения");
-                            AnchorPane.setTopAnchor(text1, 180.);
-                            AnchorPane.setLeftAnchor(text1, 980.);
+                            text1.setWrappingWidth(160.);
+                            text1.setTextAlignment(TextAlignment.CENTER);
+                            AnchorPane.setTopAnchor(text1, 143.);
+                            AnchorPane.setLeftAnchor(text1, 1025.);
                         }
                         case Text text1 when text1 == dryWetContText -> {
                             text1.setText("Тип контактов");
-                            AnchorPane.setTopAnchor(text1, 350.);
-                            AnchorPane.setLeftAnchor(text1, 1025.);
+                            AnchorPane.setTopAnchor(text1, 337.);
+                            AnchorPane.setLeftAnchor(text1, 1012.);
                         }
                         case Text text1 when text1 == CurOutputTimeText -> {
                             text1.setText("Время выдачи, с");
-                            AnchorPane.setTopAnchor(text1, 525.);
-                            AnchorPane.setLeftAnchor(text1, 990.);
+                            AnchorPane.setTopAnchor(text1, 512.);
+                            AnchorPane.setLeftAnchor(text1, 1000.);
                         }
                         default -> {}
                     }
@@ -571,12 +580,7 @@ public class _8_HandControlScreenController extends ScreensController implements
             case ButtonWithPicture button when button == moduleA1Button || button == moduleB1Button || button == moduleC1Button
                     || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button :
                 funOnOffModule(button);
-                break;
-            case SimpleTextField stf when stf == phaseALCurrent || stf == phaseALAngle || stf == phaseBLCurrent
-                        || stf == phaseBLAngle || stf == phaseCLCurrent || stf == phaseCLAngle || stf == phaseARCurrent
-                        || stf == phaseARAngle || stf == phaseBRCurrent || stf == phaseBRAngle || stf == phaseCRCurrent
-                        || stf == phaseCRAngle:
-                funUnlockTextField();
+                //analyzeModuleButtons();
                 break;
                 //Определение поведения кнопки ПУСК
             case null, default:
@@ -648,8 +652,6 @@ public class _8_HandControlScreenController extends ScreensController implements
             flags[index] = false;
             stf1.setEditable(false);
             stf2.setEditable(false);
-            stf1.clear();
-            stf2.clear();
         } else {
             button.changePosition(1);
             flags[index] = true;
@@ -659,8 +661,42 @@ public class _8_HandControlScreenController extends ScreensController implements
         }
     }
 
-    public void funUnlockTextField(){
+    private void analyzeModuleButtons() {
+        ArrayList<Node> dynamicUncheckedNodes = new ArrayList<>(uncheckedNodes);
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,
+        moduleA2Button,moduleB2Button,moduleC2Button};
+        SimpleTextField[][] fields = new SimpleTextField[][]{{phaseALCurrent, phaseALAngle}, {phaseBLCurrent, phaseBLAngle},
+                {phaseCLCurrent, phaseCLAngle}, {phaseARCurrent, phaseARAngle}, {phaseBRCurrent, phaseBRAngle},
+                {phaseCRCurrent, phaseCRAngle}};
+        boolean flag = true;
+        for (int i = 0; i < buttons.length; i++) {
+            if (buttons[i].getObjectPosition().getActualPosition() == 0) {
+                if (dynamicUncheckedNodes.contains(fields[i][0]) && dynamicUncheckedNodes.contains(fields[i][1])) {
+                    dynamicUncheckedNodes.remove(fields[i][0]);
+                    dynamicUncheckedNodes.remove(fields[i][1]);
+                }
+            } else {
+                if (!dynamicUncheckedNodes.contains(fields[i][0]) && !dynamicUncheckedNodes.contains(fields[i][1])) {
+                    dynamicUncheckedNodes.add(fields[i][0]);
+                    dynamicUncheckedNodes.add(fields[i][1]);
+                }
+                flag = false;
+            }
+        }
+        if (flag) {
+            if (!dynamicUncheckedNodes.contains(fields[0][0]) && !dynamicUncheckedNodes.contains(fields[0][1])) {
+                dynamicUncheckedNodes.add(fields[0][0]);
+                dynamicUncheckedNodes.add(fields[0][1]);
+            }
+        }
 
+        uncheckedNodes = dynamicUncheckedNodes;
+    }
+
+    @Override
+    public boolean isChecked() {
+        analyzeModuleButtons();
+        return super.isChecked();
     }
 }
 

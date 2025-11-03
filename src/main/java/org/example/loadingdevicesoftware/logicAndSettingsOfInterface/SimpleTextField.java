@@ -45,7 +45,7 @@ public class SimpleTextField extends TextField implements Changeable {
     }
 
     public enum Sizes {
-        SMALL, MEDIUM, LARGE
+        SMALL, MEDIUM, MEDIUM_ONE, LARGE
     }
 
     //measures[0] - ширина, measures[1] - высота
@@ -74,8 +74,8 @@ public class SimpleTextField extends TextField implements Changeable {
             case DIGIT:
                 Pattern decimalPattern = switch (decimals) {
                     case INT -> Pattern.compile("-?\\d*");
-                    case TWO -> Pattern.compile("\\d*(\\.\\d{0,2})?");
-                    case THREE -> Pattern.compile("\\d+(\\.\\d{0,3})?");
+                    case TWO -> Pattern.compile("-?\\d*(\\.\\d{0,2})?");
+                    case THREE -> Pattern.compile("-?\\d*(\\.\\d{0,3})?");
                 };
                 UnaryOperator<TextFormatter.Change> filter = change -> {
                     String newText = change.getControlNewText();
@@ -102,13 +102,13 @@ public class SimpleTextField extends TextField implements Changeable {
                     case TWO, THREE:
                         TextFormatter<Double> formatterFloat = new TextFormatter<>(
                                 new DoubleStringConverter(),
-                                MIN, filter
+                                null, filter
                         );
                         this.setTextFormatter(formatterFloat);
                         formatterFloat.valueProperty().addListener((obs, oldVal, newVal) -> {
                             if (newVal == null) return;
                             if (newVal < MIN || newVal > MAX) {
-                                this.setText(oldVal > MIN ? oldVal.toString() : String.valueOf(MIN));
+                                formatterFloat.setValue(oldVal);
                             }
                         });
                         break;
@@ -136,6 +136,7 @@ public class SimpleTextField extends TextField implements Changeable {
         measures = switch (size) {
             case SMALL -> new int[]{52, 52};
             case MEDIUM -> new int[]{75, 52};
+            case MEDIUM_ONE -> new int[]{100, 52};
             case LARGE -> new int[]{336, 52};
         };
     }

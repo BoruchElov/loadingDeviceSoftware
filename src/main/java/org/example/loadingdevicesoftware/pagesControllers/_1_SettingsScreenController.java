@@ -211,12 +211,12 @@ public class _1_SettingsScreenController extends BasicController {
     private void checkBoxAction() {
         boolean isSelected = expertModeCheckBox.isSelected();
         ApplicationConstants.expertStatus = isSelected;
-        clearButton.setDisable(isSelected);
-        saveButton.setDisable(isSelected);
+        clearButton.setDisable(!isSelected);
+        saveButton.setDisable(!isSelected);
         ComboBox[] combos = new ComboBox[]{phaseAOneComboBox, phaseBOneComboBox, phaseCOneComboBox, phaseATwoComboBox,
                 phaseBTwoComboBox, phaseCTwoComboBox};
         for (ComboBox comboBox : combos) {
-            comboBox.setDisable(isSelected);
+            comboBox.setDisable(!isSelected);
         }
     }
 

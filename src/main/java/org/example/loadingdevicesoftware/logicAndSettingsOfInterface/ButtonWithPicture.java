@@ -68,7 +68,7 @@ public class ButtonWithPicture extends BasicButton implements Changeable {
         sizes = switch (size) {
             case SMALL -> new int[] { 50, 50 };
             case LARGE -> new int[] { 200, 215 };
-            case KEY_MODULE_SIZE -> new int[] {80, 80};     //Размер для кнопки модуля
+            case KEY_MODULE_SIZE -> new int[] {90, 90};     //Размер для кнопки модуля
         };
     }
 
@@ -78,7 +78,7 @@ public class ButtonWithPicture extends BasicButton implements Changeable {
             case SMALL -> new int[] { 105, 105 };
             case MEDIUM -> new int[] { 110, 110 };
             case LARGE -> new int[] { 120, 120 };
-            case KEY_MODULE_SIZE -> new int[] {100, 70};     //Размер для картинки модуля
+            case KEY_MODULE_SIZE -> new int[] {90, 90};     //Размер для картинки модуля
         };
     }
 }
