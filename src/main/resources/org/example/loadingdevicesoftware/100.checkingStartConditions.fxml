@@ -16,7 +16,6 @@
       <SimpleImageView fx:id="checkThreeImage"/>
       <SimpleImageView fx:id="checkFourImage"/>
       <SimpleImageView fx:id="checkFiveImage"/>
-      <SimpleImageView fx:id="checkSixImage"/>
       <Text fx:id = "dateTimeText"/>
       <Text fx:id="headerText"/>
       <Text fx:id="checkOne"/>
@@ -24,6 +23,5 @@
       <Text fx:id="checkThree"/>
       <Text fx:id="checkFour"/>
       <Text fx:id="checkFive"/>
-      <Text fx:id="checkSix"/>
    </children>
 </AnchorPane>

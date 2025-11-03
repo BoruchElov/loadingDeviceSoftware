@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class _101_deviceWorkingScreenControl {
 
-    private boolean[] checkFlags = new boolean[6];
+    private boolean[] checkFlags = new boolean[5];
 
     @FXML
     Text headerText;
@@ -32,8 +32,6 @@ public class _101_deviceWorkingScreenControl {
     Text checkFour;
     @FXML
     Text checkFive;
-    @FXML
-    Text checkSix;
 
     @FXML
     AnchorPane anchorPane;
@@ -61,10 +59,8 @@ public class _101_deviceWorkingScreenControl {
     SimpleImageView checkFourImage;
     @FXML
     SimpleImageView checkFiveImage;
-    @FXML
-    SimpleImageView checkSixImage;
-    
-    ArrayList<SimpleImageView> checks = new ArrayList<>(6);
+
+    ArrayList<SimpleImageView> checks = new ArrayList<>(5);
 
     @FXML
     public void initialize() {
@@ -124,24 +120,22 @@ public class _101_deviceWorkingScreenControl {
                     });
                     break;
                 case Text text when text == headerText || text == checkOne || text == checkTwo || text == checkThree ||
-                        text == checkFour || text == checkFive || text == checkSix:
+                        text == checkFour || text == checkFive:
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
                     text.setFill(Color.WHITE);
                     Object[] params = switch (text) {
                         case Text textOne when textOne == headerText ->
                                 new Object[]{"Проверка условий пуска", 480., 150.};
                         case Text textOne when textOne == checkOne ->
-                                new Object[]{"1. Проверка параметров формы", 80., 230.};
+                                new Object[]{"1. Проверка настройки модулей", 80., 215.};
                         case Text textOne when textOne == checkTwo ->
-                                new Object[]{"2. Проверка настройки модулей", 80., 296.};
+                                new Object[]{"2. Проверка питания модулей", 80., 298.75};
                         case Text textOne when textOne == checkThree ->
-                                new Object[]{"3. Проверка питания модулей", 80., 362.};
+                                new Object[]{"3. Проверка синхронизации", 80., 382.5};
                         case Text textOne when textOne == checkFour ->
-                                new Object[]{"4. Проверка синхронизации", 80., 428.};
+                                new Object[]{"4. Проверка диапазона тока", 80., 466.25};
                         case Text textOne when textOne == checkFive ->
-                                new Object[]{"5. Проверка диапазона тока", 80., 494.};
-                        case Text textOne when textOne == checkSix ->
-                                new Object[]{"6. Проверка сопротивления силовых контактов", 80., 560.};
+                                new Object[]{"5. Проверка сопротивления силовых контактов", 80., 550.};
                         default -> null;
                     };
                     text.setText((String) params[0]);
@@ -149,17 +143,15 @@ public class _101_deviceWorkingScreenControl {
                     AnchorPane.setTopAnchor(text, (double) params[2]);
                     break;
                 case SimpleImageView imageView when imageView == checkOneImage || imageView == checkTwoImage ||
-                        imageView == checkThreeImage || imageView == checkFourImage || imageView == checkFiveImage ||
-                        imageView == checkSixImage:
+                        imageView == checkThreeImage || imageView == checkFourImage || imageView == checkFiveImage:
                     imageView.setup(new String[]{"", "", ""}, new Image[]{null, ApplicationConstants.CHECK_SUCCESSFUL,
                             ApplicationConstants.CHECK_FAILED}, new double[][]{{50., 51.}, {50., 51.},{50., 51.}});
                     double[] position = switch (imageView) {
                         case SimpleImageView imageView1 when imageView1 == checkOneImage -> new double[]{1070., 210.};
-                        case SimpleImageView imageView1 when imageView1 == checkTwoImage -> new double[]{1070., 276.};
-                        case SimpleImageView imageView1 when imageView1 == checkThreeImage -> new double[]{1070., 342.};
-                        case SimpleImageView imageView1 when imageView1 == checkFourImage -> new double[]{1070., 408.};
-                        case SimpleImageView imageView1 when imageView1 == checkFiveImage -> new double[]{1070., 474.};
-                        case SimpleImageView imageView1 when imageView1 == checkSixImage -> new double[]{1070., 540.};
+                        case SimpleImageView imageView1 when imageView1 == checkTwoImage -> new double[]{1070., 293.75};
+                        case SimpleImageView imageView1 when imageView1 == checkThreeImage -> new double[]{1070., 377.5};
+                        case SimpleImageView imageView1 when imageView1 == checkFourImage -> new double[]{1070., 461.25};
+                        case SimpleImageView imageView1 when imageView1 == checkFiveImage -> new double[]{1070., 545.};
                         default -> null;
                     };
                     AnchorPane.setLeftAnchor(imageView, position[0]);

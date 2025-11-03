@@ -82,7 +82,7 @@ class ScreensController extends BasicController {
         startButton.setActualStatus(Changeable.Status.NORMAL);
         startButton.setOnAction(event -> {
             try {
-                if (true) {
+                if (false) {
                     if (!isChecked()) {
                         InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
                         PagesBuffer.savePage(this);
