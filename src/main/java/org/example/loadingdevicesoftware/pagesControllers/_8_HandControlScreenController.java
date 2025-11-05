@@ -582,6 +582,17 @@ public class _8_HandControlScreenController extends ScreensController implements
                 funOnOffModule(button);
                 //analyzeModuleButtons();
                 break;
+            case SimpleButton button when button == startButton:
+                CheckingManager.clearVariableAddresses();
+                ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,
+                        moduleA2Button,moduleB2Button,moduleC2Button};
+                String[] moduleNames = new String[]{"moduleA1","moduleB1","moduleC1","moduleA2","moduleB2","moduleC2"};
+                for (int i = 0; i < buttons.length; i++) {
+                    if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                        CheckingManager.addVariableAddress(moduleNames[i]);
+                    }
+                }
+                break;
                 //Определение поведения кнопки ПУСК
             case null, default:
                 break;

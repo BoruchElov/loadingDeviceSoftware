@@ -58,7 +58,7 @@ public class InterfaceElementsLogic {
     }
 
     @FXML
-    public static void showAlert(String title, String message) {
+    public static void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setTitle("");

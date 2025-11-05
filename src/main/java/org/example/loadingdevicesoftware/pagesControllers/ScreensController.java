@@ -90,7 +90,7 @@ class ScreensController extends BasicController {
                         for (Node node : uncheckedNodes) {
                             node.getStyleClass().add("okay");
                         }
-                        InterfaceElementsLogic.showAlert("Тестовая тревога", "Ошибка в заполнении формы!" +
+                        InterfaceElementsLogic.showAlert("Ошибка в заполнении формы!" +
                                 "\nПроверьте выделенные элементы.");
                         addElementsListeners();
                         uncheckedNodes.clear();
