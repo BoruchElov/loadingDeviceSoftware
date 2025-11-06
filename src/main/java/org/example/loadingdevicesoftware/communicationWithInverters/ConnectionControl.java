@@ -21,11 +21,14 @@ public class ConnectionControl {
     private static final String COM = "COM5";
 
     //Порядок адресов: А1, В1, С1, А2, В2, С2
-    @Getter
     private static final AtomicReference<Address>[] invertersAddresses = new AtomicReference[]{new AtomicReference<>(new Address(0)),
             new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
             new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
             new AtomicReference<>(new Address(0))};
+
+    public static Address getInvertersAddress(int index) {
+        return invertersAddresses[index].get();
+    }
 
     /*static {
         List<String> addresses;

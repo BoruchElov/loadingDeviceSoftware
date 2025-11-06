@@ -14,11 +14,11 @@ import java.util.concurrent.ExecutionException;
  */
 public class Inverters implements PacketHandler {
 
-    private final cMAC tabletAddress;
+    private static cMAC tabletAddress;
     private static final ConcurrentHashMap<Address, CompletableFuture<ByteBuffer>> pendingResponses = new ConcurrentHashMap<>();
     private byte[] lastResponse;
 
-    private final ConcurrentHashMap<String, byte[]> responses = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, byte[]> responses = new ConcurrentHashMap<>();
 
     /**
      * Класс-конструктор.
@@ -27,7 +27,7 @@ public class Inverters implements PacketHandler {
      * @param tabletAddress адрес планшета
      */
     public Inverters(cMAC tabletAddress) {
-        this.tabletAddress = tabletAddress;
+        Inverters.tabletAddress = tabletAddress;
     }
 
     /**
@@ -37,11 +37,11 @@ public class Inverters implements PacketHandler {
      * @param command вид управляющей команды
      * @param arguments аргументы команды
      */
-    public void sendCommandToInverter(Address inverterAddress, Commands command, String arguments) throws ExecutionException, InterruptedException {
+    public static void sendCommandToInverter(Address inverterAddress, Commands command, String arguments) throws ExecutionException, InterruptedException {
         saveLastResponse(inverterAddress, command, Commands.callFunction(tabletAddress, inverterAddress, command, arguments));
     }
 
-    public void saveLastResponse(Address inverterAddress, Commands command, byte[] bytes) {
+    public static void saveLastResponse(Address inverterAddress, Commands command, byte[] bytes) {
         responses.put(inverterAddress.getValue() + ":" + command.name(), bytes);
     }
 
