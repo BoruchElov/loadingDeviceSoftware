@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CheckingManager {
 
-    private CheckingManager() {
-    }
+    private CheckingManager() {}
+
+    private static final ExecutorService executor = Executors.newFixedThreadPool(2);
 
     public enum Scenarios {
         THREE_PHASE_SWITCHER, SINGLE_PHASE_SWITCHER, MEASUREMENT_TRANSFORMER, COMTRADE, DIFFERENTIAL_PROTECTION,
@@ -43,6 +46,16 @@ public class CheckingManager {
     }
     /// /////////////////////////////////////////////////////////////////////////
 
+    public static void startCheckingsThread(Scenarios scenario) {
+        executor.submit(() -> startCheck(scenario));
+    }
+
+    public static void stopCheckingsThread() {
+        if (!executor.isShutdown()) {
+            executor.shutdownNow();
+        }
+    }
+
 
     //TODO Доработать тексты сообщений: добавить больше полезной информации (конкретные проблемные адреса, модули)
 
@@ -51,7 +64,7 @@ public class CheckingManager {
      *
      * @param scenario - заданный сценарий
      */
-    public static void startCheck(Scenarios scenario) {
+    private static void startCheck(Scenarios scenario) {
         CheckingManager.scenario = scenario;
         try {
             firstCheck = settingsCheck();

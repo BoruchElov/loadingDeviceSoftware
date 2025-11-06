@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.communicationWithInverters;
 
+import lombok.Getter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.AddressesStorage;
@@ -20,6 +21,7 @@ public class ConnectionControl {
     private static final String COM = "COM5";
 
     //Порядок адресов: А1, В1, С1, А2, В2, С2
+    @Getter
     private static final AtomicReference<Address>[] invertersAddresses = new AtomicReference[]{new AtomicReference<>(new Address(0)),
             new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
             new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
@@ -63,7 +65,7 @@ public class ConnectionControl {
 
     public static void fillAddress(List<String>Addresses) {
         for (int i = 0; i < Addresses.size(); i++) {
-            if (invertersAddresses[i].get().getValue() == 0) {
+            if (Addresses.get(i).equals("00:00:00:00")) {
                 continue;
             }
             invertersAddresses[i] = new AtomicReference<>(new Address(toIntFromHexString(Addresses.get(i))));
