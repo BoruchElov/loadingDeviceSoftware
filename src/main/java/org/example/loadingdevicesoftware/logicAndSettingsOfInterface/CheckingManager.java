@@ -149,12 +149,15 @@ public class CheckingManager {
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
-        /// //Место под отправку сообщений
         for (Address address : addressesStorage.values()) {
             try {
                 Inverters.sendCommandToInverter(address, Commands.MODBUS,"0");
+                String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,Commands.MODBUS),
+                        ConnectionControl.ExpectedValue.NUMBER);
+                voltages.add(Double.parseDouble(voltage));
             } catch (Exception e) {
                 System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
+                return false;
             }
         }
         for (Double voltage : voltages) {
@@ -170,10 +173,33 @@ public class CheckingManager {
     }
 
     public static boolean currentRangeCheck() {
-        return true;
+        return false;
     }
 
     public static boolean resistanceCheck() {
+        for (Address address : addressesStorage.values()) {
+            try {
+                Commands command = Commands.SET_RESISTANCE_CHECK;
+                Inverters.sendCommandToInverter(address,command,"0");
+                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,Commands.MODBUS),
+                        ConnectionControl.ExpectedValue.PHRASE);
+                if (!response.equals("SET_RESISTANCE_CHECK_OK()")) {
+                    System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
+                    return false;
+                }
+                command = Commands.START_RESISTANCE_CHECK;
+                Inverters.sendCommandToInverter(address,command,"0");
+                response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,Commands.MODBUS),
+                        ConnectionControl.ExpectedValue.PHRASE);
+                if (!response.equals("START_RESISTANCE_CHECK_OK()")) {
+                    System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
+                    return false;
+                }
+            } catch (Exception e) {
+                System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
+                return false;
+            }
+        }
         return true;
     }
 

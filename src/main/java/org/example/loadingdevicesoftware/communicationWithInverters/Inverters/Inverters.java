@@ -45,7 +45,7 @@ public class Inverters implements PacketHandler {
         responses.put(inverterAddress.getValue() + ":" + command.name(), bytes);
     }
 
-    public byte[] getLastResponse(Address inverterAddress, Commands command) {
+    public static byte[] getLastResponse(Address inverterAddress, Commands command) {
         return responses.get(inverterAddress.getValue() + ":" + command.name());
     }
 

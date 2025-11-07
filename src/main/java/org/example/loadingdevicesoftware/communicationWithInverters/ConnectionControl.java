@@ -6,6 +6,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.In
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.AddressesStorage;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -111,7 +112,11 @@ public class ConnectionControl {
     }
 
     public static String analyzeResponse(byte[] input, ExpectedValue expectedValue) {
-     return "";
+        String message = new String(input, 8, input.length - 8, StandardCharsets.UTF_8);
+        return switch (expectedValue) {
+            case NUMBER -> message.substring(message.indexOf('(') + 1, message.indexOf(')'));
+            case PHRASE -> message;
+        };
     }
     
 }
