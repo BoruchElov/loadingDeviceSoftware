@@ -168,7 +168,7 @@ class ScreensController extends BasicController {
     }
 
     public void restoreState() {
-        if (PagesBuffer.fxmlName != null) {
+        if (PagesBuffer.getFxmlName() != null) {
             ArrayList<String> timeList = PagesBuffer.buffer;
             ArrayList<Node> elements = new ArrayList<>();
             for (Node node : anchorPane.getChildren()) {

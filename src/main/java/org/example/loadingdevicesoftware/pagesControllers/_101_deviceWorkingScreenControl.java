@@ -3,7 +3,6 @@ package org.example.loadingdevicesoftware.pagesControllers;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -14,11 +13,16 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 
 public class _101_deviceWorkingScreenControl {
 
     private boolean[] checkFlags = new boolean[5];
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
 
     @FXML
     Text headerText;
@@ -86,7 +90,8 @@ public class _101_deviceWorkingScreenControl {
                     button.setup(SimpleButton.Presets.CANCEL);
                     button.setOnAction(event -> {
                         try {
-                            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
+                            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.getFxmlName());
+                            onClose();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -100,7 +105,8 @@ public class _101_deviceWorkingScreenControl {
                     button.setOnAction(event -> {
                         try {
                             Buffer.setFlagForDifProtection(true);
-                            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.fxmlName);
+                            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.getFxmlName());
+                            onClose();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -114,6 +120,7 @@ public class _101_deviceWorkingScreenControl {
                     button.setOnAction(event -> {
                         try {
                             InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+                            onClose();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -145,12 +152,14 @@ public class _101_deviceWorkingScreenControl {
                 case SimpleImageView imageView when imageView == checkOneImage || imageView == checkTwoImage ||
                         imageView == checkThreeImage || imageView == checkFourImage || imageView == checkFiveImage:
                     imageView.setup(new String[]{"", "", ""}, new Image[]{null, ApplicationConstants.CHECK_SUCCESSFUL,
-                            ApplicationConstants.CHECK_FAILED}, new double[][]{{50., 51.}, {50., 51.},{50., 51.}});
+                            ApplicationConstants.CHECK_FAILED}, new double[][]{{50., 51.}, {50., 51.}, {50., 51.}});
                     double[] position = switch (imageView) {
                         case SimpleImageView imageView1 when imageView1 == checkOneImage -> new double[]{1070., 210.};
                         case SimpleImageView imageView1 when imageView1 == checkTwoImage -> new double[]{1070., 293.75};
-                        case SimpleImageView imageView1 when imageView1 == checkThreeImage -> new double[]{1070., 377.5};
-                        case SimpleImageView imageView1 when imageView1 == checkFourImage -> new double[]{1070., 461.25};
+                        case SimpleImageView imageView1 when imageView1 == checkThreeImage ->
+                                new double[]{1070., 377.5};
+                        case SimpleImageView imageView1 when imageView1 == checkFourImage ->
+                                new double[]{1070., 461.25};
                         case SimpleImageView imageView1 when imageView1 == checkFiveImage -> new double[]{1070., 545.};
                         default -> null;
                     };
@@ -166,36 +175,81 @@ public class _101_deviceWorkingScreenControl {
         Platform.runLater(this::requestForResults);
     }
 
+    //TODO добавить логику для уточнения числа фаз для сценариев релейной защиты и выключателя
+    //TODO Доработать тексты сообщений: добавить больше полезной информации (конкретные проблемные адреса, модули)
     private void requestForResults() {
-        for (int i = 0; i < checkFlags.length; i++) {
-            ChoiceDialog<Boolean> dialog = new ChoiceDialog<>(true, true, false);
-            dialog.setTitle("Результат проверки");
-            dialog.setHeaderText("Проверка " + (i + 1));
-            dialog.setContentText("Выберите результат:");
+        CheckingManager.Scenarios actualScenario = switch (PagesBuffer.getFxmlName()) {
+            case "2.TestOfSwitcher3X.fxml" -> CheckingManager.Scenarios.THREE_PHASE_SWITCHER;
+            case "3.TestOfStageProtection3X.fxml" -> CheckingManager.Scenarios.THREE_PHASE_PROTECTION;
+            case "5.TestOfMeasurementTransformerScreen.fxml" -> CheckingManager.Scenarios.MEASUREMENT_TRANSFORMER;
+            case "6.ComTradeScreen.fxml" -> CheckingManager.Scenarios.COMTRADE;
+            case "7.DifProtection.fxml" -> CheckingManager.Scenarios.DIFFERENTIAL_PROTECTION;
+            case "8.HandControl.fxml" -> CheckingManager.Scenarios.HAND_CONTROL;
+            default -> throw new IllegalStateException("Unexpected value: " + PagesBuffer.getFxmlName());
+        };
 
-            // Ожидаем выбора пользователя
-            Optional<Boolean> result = dialog.showAndWait();
+        disableButtons(true);// блокируем кнопки
 
-            // Обработка результата
-            if (result.isPresent()) {
-                checkFlags[i] = result.get();
-                checks.get(i).changePosition(checkFlags[i] ? 1 : 2);
-            } else {
-                // Если пользователь отменил ввод
-                checkFlags[i] = false; // Значение по умолчанию
-                checks.get(i).changePosition(2);
-            }
-        }
-        boolean isAllowedToContinue = true;
-        for (boolean element : checkFlags) {
-            if (!element) {isAllowedToContinue = false; break;}
-        }
-        if (isAllowedToContinue) {
-            cancelButton.setActualStatus(Changeable.Status.NORMAL);
-            cancelButton.changePosition(0);
-            startButton.setActualStatus(Changeable.Status.NORMAL);
-            startButton.changePosition(1);
-        }
+        executor.submit(() -> {
+            if (!runCheck(1, () -> {
+                        try {
+                            return CheckingManager.settingsCheck(actualScenario);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    },
+                    "Ошибка настройки!\nКоличество настроенных модулей не соответствует выбранному сценарию.")) return;
+
+            if (!runCheck(2, CheckingManager::powerCheck,
+                    "Ошибка проверки питания!\nНедостаточное количество модулей получают питание")) return;
+
+            if (!runCheck(3, CheckingManager::synchronizationCheck,
+                    "Ошибка проверки синхронизации!\nМодули не синхронизированы")) return;
+
+            if (!runCheck(4, CheckingManager::currentRangeCheck,
+                    "Ошибка проверки диапазона тока!")) return;
+
+            runCheck(5, CheckingManager::resistanceCheck,
+                    "Ошибка проверки сопротивления!");
+            finishChecks();
+
+        });
     }
+
+    private void disableButtons(boolean disable) {
+        Platform.runLater(() -> {
+            startButton.setDisable(disable);
+            cancelButton.setDisable(disable);
+            menuButton.setDisable(disable);
+        });
+    }
+
+    private void finishChecks() {
+        Platform.runLater(() -> {
+            disableButtons(false);
+        });
+    }
+
+    private void updateIndicator(int index, boolean success) {
+        SimpleImageView indicator = checks.get(index - 1);
+        indicator.setImage(success
+                ? ApplicationConstants.CHECK_SUCCESSFUL
+                : ApplicationConstants.CHECK_FAILED);
+    }
+
+    private void onClose() {
+        executor.shutdownNow();
+    }
+
+    private boolean runCheck(int index, Supplier<Boolean> check, String errorMessage) {
+        boolean result = check.get();
+        Platform.runLater(() -> updateIndicator(index, result));
+        if (!result) {
+            Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage));
+            finishChecks();
+        }
+        return result;
+    }
+
 
 }

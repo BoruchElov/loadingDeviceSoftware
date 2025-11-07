@@ -23,7 +23,7 @@ public class CheckingManager {
 
     public enum Scenarios {
         THREE_PHASE_SWITCHER, SINGLE_PHASE_SWITCHER, MEASUREMENT_TRANSFORMER, COMTRADE, DIFFERENTIAL_PROTECTION,
-        HAND_CONTROL
+        HAND_CONTROL, SINGLE_PHASE_PROTECTION,THREE_PHASE_PROTECTION
     }
 
     private static final HashMap<String, Address> addressesStorage = new HashMap<>();
@@ -51,58 +51,6 @@ public class CheckingManager {
 
     /// /////////////////////////////////////////////////////////////////////////
 
-    public static void startCheckingsThread(Scenarios scenario) {
-        executor.submit(() -> startCheck(scenario));
-    }
-
-    public static void stopCheckingsThread() {
-        if (!executor.isShutdown()) {
-            executor.shutdownNow();
-        }
-    }
-
-
-    //TODO Доработать тексты сообщений: добавить больше полезной информации (конкретные проблемные адреса, модули)
-
-    /**
-     * Метод для запуска последовательности проверок, в зависимости от сценария.
-     *
-     * @param scenario - заданный сценарий
-     */
-    private static void startCheck(Scenarios scenario) {
-        CheckingManager.scenario = scenario;
-        try {
-            firstCheck = settingsCheck();
-            if (!firstCheck) {
-                InterfaceElementsLogic.showAlert("Ошибка настройки!\nКоличество настроенных модулей не соответствует выбранному сценарию.");
-                return;
-            }
-        } catch (IOException e) {
-            System.err.println("Ошибка при чтении файла адресов!");
-        }
-        secondCheck = powerCheck();
-        if (!secondCheck) {
-            InterfaceElementsLogic.showAlert("Ошибка проверки питания!\nНедостаточное количество модулей получают питание");
-            return;
-        }
-        thirdCheck = synchronizationCheck();
-        if (!thirdCheck) {
-            InterfaceElementsLogic.showAlert("Ошибка проверки синхронизации!\nМодули не синхронизированы");
-            return;
-        }
-        fourthCheck = currentRangeCheck();
-        if (!fourthCheck) {
-            InterfaceElementsLogic.showAlert("Ошибка проверки диапазона тока!");
-            return;
-        }
-        fifthCheck = resistanceCheck();
-        if (!fifthCheck) {
-            InterfaceElementsLogic.showAlert("Ошибка проверки сопротивления!");
-            return;
-        }
-
-    }
-
     /**
      * Метод для реализации проверки настройки модулей.
      * Для всех сценариев, кроме ручного ввода, она работает следующим образом:
@@ -122,11 +70,11 @@ public class CheckingManager {
      * @throws IOException
      */
 
-    private static boolean settingsCheck() throws IOException {
+    public static boolean settingsCheck(Scenarios scenario) throws IOException {
         List<String> addressesList = AddressesStorage.readAddresses();
         boolean result = false;
         switch (scenario) {
-            case SINGLE_PHASE_SWITCHER:
+            case SINGLE_PHASE_SWITCHER, SINGLE_PHASE_PROTECTION:
                 if (!addressesList.isEmpty()) {
                     result = !Objects.equals(addressesList.getFirst(), "00:00:00:00");
                     if (result) {
@@ -137,7 +85,7 @@ public class CheckingManager {
                     }
                 }
                 break;
-            case THREE_PHASE_SWITCHER, MEASUREMENT_TRANSFORMER, COMTRADE:
+            case THREE_PHASE_SWITCHER, MEASUREMENT_TRANSFORMER, COMTRADE, THREE_PHASE_PROTECTION:
                 if (addressesList.size() >= 3) {
                     result = (!Objects.equals(addressesList.getFirst(), "00:00:00:00")) &&
                             (!Objects.equals(addressesList.get(1), "00:00:00:00")) &&
@@ -196,7 +144,7 @@ public class CheckingManager {
      * TODO добавить анализ ответа для получения значения напряжения
      * @return false, если хотя бы один модуль не прошёл проверку
      */
-    private static boolean powerCheck() {
+    public static boolean powerCheck() {
         double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
@@ -217,16 +165,16 @@ public class CheckingManager {
         return true;
     }
 
-    private static boolean synchronizationCheck() {
+    public static boolean synchronizationCheck() {
         return true;
     }
 
-    private static boolean currentRangeCheck() {
-        return false;
+    public static boolean currentRangeCheck() {
+        return true;
     }
 
-    private static boolean resistanceCheck() {
-        return false;
+    public static boolean resistanceCheck() {
+        return true;
     }
 
 }

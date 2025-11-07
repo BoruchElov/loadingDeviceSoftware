@@ -105,5 +105,13 @@ public class ConnectionControl {
             }
         }
     }
+
+    public enum ExpectedValue {
+        NUMBER, PHRASE
+    }
+
+    public static String analyzeResponse(byte[] input, ExpectedValue expectedValue) {
+     return "";
+    }
     
 }

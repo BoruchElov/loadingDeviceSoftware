@@ -2,6 +2,7 @@ package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import lombok.Getter;
 import org.example.loadingdevicesoftware.pagesControllers.*;
 
 import java.util.ArrayList;
@@ -16,8 +17,9 @@ public class PagesBuffer {
     public static _8_HandControlScreenController handControlPage;
     public static _9_DeBuggerScreenController deBugPage;
 
-    public static String fxmlName;
-    public static String controllerName;
+    @Getter
+    private static String fxmlName;
+    private static String controllerName;
 
     public static ArrayList<String> buffer = new ArrayList<>();
 
@@ -66,6 +68,9 @@ public class PagesBuffer {
     private static String getProperName(String className) {
         return switch (className) {
             case "_2_TestOfSwitcher3XScreenController" -> "2.TestOfSwitcher3X.fxml";
+            case "_3_TestOfStageProtection3XScreenController" -> "3.TestOfStageProtection3X.fxml";
+            case "_5_TestOfMeasurementTransformerScreenController" -> "5.TestOfMeasurementTransformerScreen.fxml";
+            case "_6_ComTradeScreenController" -> "6.ComTradeScreen.fxml";
             case "_7_DifProtectionScreenController" -> "7.DifProtection.fxml";
             case "_8_HandControlScreenController" -> "8.HandControl.fxml";
             case null, default -> throw new IllegalStateException("Unexpected value: ");
