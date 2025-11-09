@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import lombok.Setter;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
@@ -35,6 +36,11 @@ class ScreensController extends BasicController {
     List<Node> uncheckedNodes = new ArrayList<>();
     Map<Node,Object> listeners = new HashMap<>();
 
+    /**
+     * Статический флаг, разрешающий или запрещающий старт сценария.
+     */
+    @Setter
+    private static boolean isAllowedToStartScenario = false;
 
     @FXML
     public void initialize() {
@@ -102,6 +108,12 @@ class ScreensController extends BasicController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            if (isAllowedToStartScenario) {
+                isAllowedToStartScenario = false;
+                launchScenario();
+            }
+
         });
         clearButton.setup(SimpleButton.Presets.CLEAR);
         clearButton.setActualStatus(Changeable.Status.NORMAL);
@@ -246,4 +258,7 @@ class ScreensController extends BasicController {
         return result;
     }
 
+    public void launchScenario() {
+
+    }
 }

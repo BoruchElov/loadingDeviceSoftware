@@ -599,6 +599,14 @@ public class _8_HandControlScreenController extends ScreensController implements
         }
     }
 
+    /**
+     * Метод для реализации логики сценария. Переопределяет метод родительского класса ScreensController.
+     */
+    @Override
+    public void launchScenario() {
+
+    }
+
     //Функция по смене состояния контактов NC/NO
     public void funChangeButtonMenu(SimpleButton button) {
         if (flags[0]) {

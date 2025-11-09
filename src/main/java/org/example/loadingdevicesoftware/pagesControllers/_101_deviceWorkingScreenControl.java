@@ -212,6 +212,7 @@ public class _101_deviceWorkingScreenControl {
             runCheck(5, CheckingManager::resistanceCheck,
                     "Ошибка проверки сопротивления!");
             finishChecks();
+            ScreensController.setAllowedToStartScenario(true);
 
         });
     }
