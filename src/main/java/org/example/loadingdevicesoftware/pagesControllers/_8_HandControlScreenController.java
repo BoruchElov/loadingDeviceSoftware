@@ -157,13 +157,13 @@ public class _8_HandControlScreenController extends ScreensController implements
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new Node[]{frequencyInput,timeInput,nameTextField,objectTextField,contactOneButton,
-                contactTwoButton,conditionButton,dryWetButton};
+        nodesToCheck = new Node[]{frequencyInput, timeInput, nameTextField, objectTextField, contactOneButton,
+                contactTwoButton, conditionButton, dryWetButton};
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
                 //НАСТРОЙКИ КНОПОК
-                case SimpleButton button when  button == conditionButton || button == dryWetButton -> {
+                case SimpleButton button when button == conditionButton || button == dryWetButton -> {
                     button.setOnAction(this::changeConfiguration);
                     switch (button) {
                         //Настройка внешнего вида и расположения кнопки условия отключения
@@ -178,7 +178,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(button, 400.);
                             AnchorPane.setLeftAnchor(button, 1005.);
                         }
-                        default ->{}
+                        default -> {
+                        }
                     }
                 }
                 //НАСТРОЙКА ТЕКСТОВЫХ ПОЛЕЙ
@@ -186,14 +187,13 @@ public class _8_HandControlScreenController extends ScreensController implements
                         || textField == phaseALAngle || textField == phaseBLAngle || textField == phaseCLAngle
                         || textField == phaseARCurrent || textField == phaseBRCurrent || textField == phaseCRCurrent
                         || textField == phaseARAngle || textField == phaseBRAngle || textField == phaseCRAngle || textField == timeInput
-                        || textField == timeOutput || textField == Ampermetr || textField == Voltmetr || textField == frequencyInput
-                        -> {
+                        || textField == timeOutput || textField == Ampermetr || textField == Voltmetr || textField == frequencyInput -> {
                     textField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     textField.setAlignment(Pos.CENTER);
                     // Переменные для настройки размеров
                     Double Y1 = 273.;           //Высота первого уровня текстовых полей
-                    Double Y2 = Y1+90;          //Второй уровень
-                    Double Y3 = Y2+90;          //Третий уровень
+                    Double Y2 = Y1 + 90;          //Второй уровень
+                    Double Y3 = Y2 + 90;          //Третий уровень
 
                     Double X1 = 50.;            //Отступ по горизонтали для текстовых полей
                     Double X2 = X1 + 110;
@@ -208,7 +208,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseALAngle -> {
-                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X2);
@@ -219,7 +219,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLAngle -> {
-                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X2);
@@ -230,7 +230,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLAngle -> {
-                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X2);
@@ -242,7 +242,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseARAngle -> {
-                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X4);
@@ -253,7 +253,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRAngle -> {
-                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X4);
@@ -264,7 +264,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRAngle -> {
-                            tf1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X4);
@@ -279,11 +279,11 @@ public class _8_HandControlScreenController extends ScreensController implements
                             tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 590.);
                             AnchorPane.setLeftAnchor(tf1, 805.);
-                                }
+                        }
                         //Настройка внешнего вида и расположения кнопки вывода времени отключения
                         case SimpleTextField tf1 when tf1 == timeOutput -> {
                             tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
-                            AnchorPane.setTopAnchor(tf1,  177.);
+                            AnchorPane.setTopAnchor(tf1, 177.);
                             AnchorPane.setLeftAnchor(tf1, 830.);
                         } // Ввод частоты модулей
                         case SimpleTextField tf1 when tf1 == frequencyInput -> {
@@ -294,7 +294,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                         }
                         //Настройка внешнего вида и расположения кнопки ввода времени отключения
                         case SimpleTextField tf1 when tf1 == timeInput -> {
-                            tf1.setLimits(0.01,3600., SimpleTextField.numberOfDecimals.THREE);
+                            tf1.setLimits(0.01, 3600., SimpleTextField.numberOfDecimals.THREE);
                             tf1.setup("0.01", SimpleTextField.Sizes.LARGE, SimpleTextField.typeOfValue.DIGIT);
                             tf1.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
                             AnchorPane.setTopAnchor(tf1, 575.);
@@ -307,7 +307,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                     }
                 }
                 //НАСТРОЙКА ИЗОБРАЖЕНИЙ
-                case SimpleImageView imageView when imageView == PicAmpermetr ||  imageView == PicVoltmetr-> {
+                case SimpleImageView imageView when imageView == PicAmpermetr || imageView == PicVoltmetr -> {
                     switch (imageView) {
                         //Картинки вольт и ампер метров
                         case SimpleImageView iv1 when iv1 == PicAmpermetr -> {
@@ -320,7 +320,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(imageView, 585.);
                             AnchorPane.setLeftAnchor(imageView, 730.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 // НАСТРОЙКА КРУЖКОВ
@@ -337,11 +338,12 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(c1, 189.);
                             AnchorPane.setLeftAnchor(c1, 265.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 // НАСТРОЙКА КНОПОК КОНТАКТОРА
-                case ButtonWithPicture button when button == contactOneButton || button == contactTwoButton  -> {
+                case ButtonWithPicture button when button == contactOneButton || button == contactTwoButton -> {
                     button.setup(new ImageView(), ButtonWithPicture.ButtonSizes.SMALL, ButtonWithPicture.ImagViewSizes.SMALLEST,
                             new String[]{"contacts-imageview", "contacts-imageview", "contacts-imageview"},
                             new Image[]{null, ApplicationConstants.OPENED_CONTACT, ApplicationConstants.CLOSED_CONTACT});
@@ -355,7 +357,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(button1, 177.);
                             AnchorPane.setLeftAnchor(button1, 300.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
 
@@ -419,7 +422,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(bt1, Y3);
                             AnchorPane.setLeftAnchor(bt1, X2);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
 
@@ -427,8 +431,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                 case Text text when text == contacts || text == one || text == two || text == currentOne ||
                         text == currentTwo || text == phaseOne || text == phaseTwo || text == aOne ||
                         text == aTwo || text == bOne || text == bTwo || text == cOne || text == cTwo ||
-                        text == timerText || text == amperText || text == voltText || text == frequencyText
-                        -> {
+                        text == timerText || text == amperText || text == voltText || text == frequencyText -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     text.setFill(Color.BLACK);
 
@@ -531,12 +534,13 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(text1, 555.);
                             AnchorPane.setLeftAnchor(text1, 743.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 //Текст для меню справа
                 case Text text when text == shutUpConditionText || text == CurOutputTimeText
-                        || text == dryWetContText-> {
+                        || text == dryWetContText -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
                     text.setFill(Color.WHITE);
                     switch (text) {
@@ -557,20 +561,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                             AnchorPane.setTopAnchor(text1, 512.);
                             AnchorPane.setLeftAnchor(text1, 1000.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
-                default -> {}
+                default -> {
+                }
             }
         }
         AnchorPane.setTopAnchor(time, 260.);
     }
+
     //Функция для отображения активности элементов на форме
     @Override
     public void changeConfiguration(Event event) {
         switch (event.getSource()) {
             //Изменение кнопок справа в меню
-            case SimpleButton button when button ==  conditionButton || button == dryWetButton:
+            case SimpleButton button when button == conditionButton || button == dryWetButton:
                 funChangeButtonMenu(button);
                 break;
             //Управление контактами
@@ -578,22 +585,11 @@ public class _8_HandControlScreenController extends ScreensController implements
                 funChangeModeContact(button);
                 break;
             case ButtonWithPicture button when button == moduleA1Button || button == moduleB1Button || button == moduleC1Button
-                    || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button :
+                    || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button:
                 funOnOffModule(button);
                 //analyzeModuleButtons();
                 break;
-            case SimpleButton button when button == startButton:
-                CheckingManager.clearVariableAddresses();
-                ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,
-                        moduleA2Button,moduleB2Button,moduleC2Button};
-                String[] moduleNames = new String[]{"moduleA1","moduleB1","moduleC1","moduleA2","moduleB2","moduleC2"};
-                for (int i = 0; i < buttons.length; i++) {
-                    if (buttons[i].getObjectPosition().getActualPosition() != 0) {
-                        CheckingManager.addVariableAddress(moduleNames[i]);
-                    }
-                }
-                break;
-                //Определение поведения кнопки ПУСК
+            //Определение поведения кнопки ПУСК
             case null, default:
                 break;
         }
@@ -614,10 +610,10 @@ public class _8_HandControlScreenController extends ScreensController implements
             CheckingManager.setFormParameters(new ArrayList<>());
         }
         ArrayList buffer = CheckingManager.getFormParameters();
-        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,moduleA2Button,
-                moduleB2Button,moduleC2Button};
-        SimpleTextField[] dataFields = new SimpleTextField[]{phaseALCurrent,phaseALAngle,phaseBLCurrent,phaseBLAngle,
-        phaseCLCurrent,phaseCLAngle,phaseARCurrent,phaseARAngle,phaseBRCurrent,phaseBRAngle,phaseCRCurrent,phaseCRAngle};
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
+                moduleB2Button, moduleC2Button};
+        SimpleTextField[] dataFields = new SimpleTextField[]{phaseALCurrent, phaseALAngle, phaseBLCurrent, phaseBLAngle,
+                phaseCLCurrent, phaseCLAngle, phaseARCurrent, phaseARAngle, phaseBRCurrent, phaseBRAngle, phaseCRCurrent, phaseCRAngle};
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
                 buffer.add(Double.parseDouble(dataFields[i * 2].getText()));
@@ -637,6 +633,7 @@ public class _8_HandControlScreenController extends ScreensController implements
             flags[0] = true;
         }
     }
+
     //Функция выбора и активации инвертора
     public void funChangeModeContact(ButtonWithPicture button) {
         if (flags[1]) {
@@ -647,12 +644,13 @@ public class _8_HandControlScreenController extends ScreensController implements
             flags[1] = true;
         }
     }
-//    Функция по активации модуля
+
+    //    Функция по активации модуля
     public void funOnOffModule(ButtonWithPicture button) {
         int index = 0;
         SimpleTextField stf1 = null;
         SimpleTextField stf2 = null;
-        switch(button) {
+        switch (button) {
             case ButtonWithPicture button1 when button1 == moduleA1Button:
                 index = 2;
                 stf1 = phaseALCurrent;
@@ -702,8 +700,8 @@ public class _8_HandControlScreenController extends ScreensController implements
 
     private void analyzeModuleButtons() {
         ArrayList<Node> dynamicUncheckedNodes = new ArrayList<>(uncheckedNodes);
-        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,
-        moduleA2Button,moduleB2Button,moduleC2Button};
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button,
+                moduleA2Button, moduleB2Button, moduleC2Button};
         SimpleTextField[][] fields = new SimpleTextField[][]{{phaseALCurrent, phaseALAngle}, {phaseBLCurrent, phaseBLAngle},
                 {phaseCLCurrent, phaseCLAngle}, {phaseARCurrent, phaseARAngle}, {phaseBRCurrent, phaseBRAngle},
                 {phaseCRCurrent, phaseCRAngle}};
@@ -733,9 +731,21 @@ public class _8_HandControlScreenController extends ScreensController implements
     }
 
     @Override
-    public boolean isChecked() {
+    public boolean isThereSomethingToCheck() {
         analyzeModuleButtons();
-        return super.isChecked();
+        boolean flag = super.isThereSomethingToCheck();
+        if (!flag) {
+            CheckingManager.clearVariableAddresses();
+            ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,
+                    moduleA2Button,moduleB2Button,moduleC2Button};
+            String[] moduleNames = new String[]{"moduleA1","moduleB1","moduleC1","moduleA2","moduleB2","moduleC2"};
+            for (int i = 0; i < buttons.length; i++) {
+                if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                    CheckingManager.addVariableAddress(moduleNames[i]);
+                }
+            }
+        }
+        return flag;
     }
 }
 

@@ -12,8 +12,6 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.IOException;
 import java.util.*;
 
-import static org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FunForScenariev.Check_Condition_Start;
-
 
 class ScreensController extends BasicController {
 
@@ -159,8 +157,8 @@ class ScreensController extends BasicController {
      */
     public void startButtonAction(Event event) {
         try {
-            if (false) {
-                if (!isChecked()) {
+            if (true) {
+                if (!isThereSomethingToCheck()) {
                     InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
                     PagesBuffer.savePage(this);
                 } else {
@@ -234,7 +232,7 @@ class ScreensController extends BasicController {
      * метод возвращает флаг true.
      * @return true, если хоть один из нужных элементов находится не в том состоянии
      */
-    public boolean isChecked() {
+    public boolean isThereSomethingToCheck() {
         boolean result = false;
         for (Node node : nodesToCheck) {
             if (node instanceof ButtonWithPicture button) {

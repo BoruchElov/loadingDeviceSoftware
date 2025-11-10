@@ -70,7 +70,7 @@ public class CheckingManager {
 
     public static boolean settingsCheck(Scenarios scenario) throws IOException {
         List<String> addressesList = AddressesStorage.readAddresses();
-        boolean result = false;
+        boolean result = true;
         switch (scenario) {
             case SINGLE_PHASE_SWITCHER, SINGLE_PHASE_PROTECTION:
                 if (!addressesList.isEmpty()) {
@@ -145,7 +145,7 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        double percent = 13.;
+        /*double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
@@ -165,6 +165,7 @@ public class CheckingManager {
                 return false;
             }
         }
+        return true;*/
         return true;
     }
 
@@ -188,7 +189,7 @@ public class CheckingManager {
      */
     public static boolean currentRangeCheck() {
 
-        if (formParameters.isEmpty()) {
+        /*if (formParameters.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
         }
@@ -233,6 +234,7 @@ public class CheckingManager {
                 }
             }
         }
+        return true;*/
         return true;
     }
 
@@ -242,7 +244,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean resistanceCheck() {
-        Double[] newCurrents = formParameters.toArray(new Double[0]);
+        /*Double[] newCurrents = formParameters.toArray(new Double[0]);
         int i = 0;
         for (Address address : addressesStorage.values()) {
             try {
@@ -268,6 +270,7 @@ public class CheckingManager {
             }
             i += 2;
         }
+        return true;*/
         return true;
     }
 

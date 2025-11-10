@@ -29,7 +29,7 @@ public class ApplicationFile extends Application {
         stage.show();
 
         //Запуск соединения
-        //ConnectionControl.openConnection();
+        ConnectionControl.openConnection();
     }
 
     @Override
