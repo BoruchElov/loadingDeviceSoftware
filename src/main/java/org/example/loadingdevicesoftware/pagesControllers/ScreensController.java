@@ -2,6 +2,7 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -86,35 +87,7 @@ class ScreensController extends BasicController {
 
 
         startButton.setActualStatus(Changeable.Status.NORMAL);
-        startButton.setOnAction(event -> {
-            try {
-                if (false) {
-                    if (!isChecked()) {
-                        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-                        PagesBuffer.savePage(this);
-                    } else {
-                        for (Node node : uncheckedNodes) {
-                            node.getStyleClass().add("okay");
-                        }
-                        InterfaceElementsLogic.showAlert("Ошибка в заполнении формы!" +
-                                "\nПроверьте выделенные элементы.");
-                        addElementsListeners();
-                        uncheckedNodes.clear();
-                    }
-                } else {
-                    InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-                    PagesBuffer.savePage(this);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (isAllowedToStartScenario) {
-                isAllowedToStartScenario = false;
-                launchScenario();
-            }
-
-        });
+        startButton.setOnAction(event -> {startButtonAction(event);});
         clearButton.setup(SimpleButton.Presets.CLEAR);
         clearButton.setActualStatus(Changeable.Status.NORMAL);
         clearButton.setOnAction(event -> {
@@ -176,6 +149,40 @@ class ScreensController extends BasicController {
                     }
                 }
             }
+        }
+    }
+
+
+     /**
+     * Метод для задания действий при нажатии кнопки "Пуск"
+     * @param event
+     */
+    public void startButtonAction(Event event) {
+        try {
+            if (false) {
+                if (!isChecked()) {
+                    InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                    PagesBuffer.savePage(this);
+                } else {
+                    for (Node node : uncheckedNodes) {
+                        node.getStyleClass().add("okay");
+                    }
+                    InterfaceElementsLogic.showAlert("Ошибка в заполнении формы!" +
+                            "\nПроверьте выделенные элементы.");
+                    addElementsListeners();
+                    uncheckedNodes.clear();
+                }
+            } else {
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                PagesBuffer.savePage(this);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (isAllowedToStartScenario) {
+            isAllowedToStartScenario = false;
+            launchScenario();
         }
     }
 

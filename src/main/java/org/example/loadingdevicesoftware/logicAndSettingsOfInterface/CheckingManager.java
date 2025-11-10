@@ -1,16 +1,14 @@
 package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,16 +17,16 @@ public class CheckingManager {
     private CheckingManager() {
     }
 
-    private static final ExecutorService executor = Executors.newFixedThreadPool(2);
-
     public enum Scenarios {
         THREE_PHASE_SWITCHER, SINGLE_PHASE_SWITCHER, MEASUREMENT_TRANSFORMER, COMTRADE, DIFFERENTIAL_PROTECTION,
-        HAND_CONTROL, SINGLE_PHASE_PROTECTION,THREE_PHASE_PROTECTION
+        HAND_CONTROL, SINGLE_PHASE_PROTECTION, THREE_PHASE_PROTECTION
     }
 
-    private static final HashMap<String, Address> addressesStorage = new HashMap<>();
+    @Setter
+    @Getter
+    private static ArrayList<Double> formParameters = new ArrayList<>();
 
-    private static Scenarios scenario;
+    private static final HashMap<String, Address> addressesStorage = new HashMap<>();
 
     @Getter
     private static boolean firstCheck = false, secondCheck = false, thirdCheck = false, fourthCheck = false, fifthCheck = false;
@@ -62,7 +60,7 @@ public class CheckingManager {
      * В случае сценария ручного ввода, из формы вызывается статический список variableAddressesStorage, заполняемый
      * именами модулей, выбранных на форме. Их количество переменно и может не равняться 1, 3 или 6, поэтому я вынес
      * его в отдельную проверку. Далее, проверяется, задан ли соответствующий адрес в форме настроек.
-     *
+     * <p>
      * Также в данном методе осуществляется заполнение списка нужных для проверок адресов. Оно срабатывает только при
      * успешном прохождении проверки.
      *
@@ -139,9 +137,11 @@ public class CheckingManager {
         return result;
     }
 
-    /** В данном методе осуществляется последовательная проверка каждого модуля на необходимый уровень напряжения
+    /**
+     * В данном методе осуществляется последовательная проверка каждого модуля на необходимый уровень напряжения
      * на стороне постоянного тока. Он должен иметь отклонение не более 13% от 380*sqrt(2).
      * TODO добавить анализ ответа для получения значения напряжения
+     *
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
@@ -151,8 +151,8 @@ public class CheckingManager {
         ArrayList<Double> voltages = new ArrayList<>();
         for (Address address : addressesStorage.values()) {
             try {
-                Inverters.sendCommandToInverter(address, Commands.MODBUS,"0");
-                String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,Commands.MODBUS),
+                Inverters.sendCommandToInverter(address, Commands.MODBUS, "0");
+                String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, Commands.MODBUS),
                         ConnectionControl.ExpectedValue.NUMBER);
                 voltages.add(Double.parseDouble(voltage));
             } catch (Exception e) {
@@ -168,28 +168,95 @@ public class CheckingManager {
         return true;
     }
 
+
+    /**
+     * Метод для реализации проверки синхронизации. Пока что заглушка.
+     * TODO дополнить, как только появится работающая реализация алгоритма синхронизации.
+     *
+     * @return
+     */
     public static boolean synchronizationCheck() {
         return true;
     }
 
+
+    /**
+     * Метод для реализации проверки диапазона тока. Если заданный пользователем ток не попадает в диапазон, определённый
+     * выключателем, проверка не проходит.
+     *
+     * @return
+     */
     public static boolean currentRangeCheck() {
-        return false;
+
+        if (formParameters.isEmpty()) {
+            System.err.println("Ошибка! Не переданы параметры из формы.");
+            return false;
+        }
+
+        ArrayList<Integer> responses = new ArrayList<>();
+
+        try {
+            for (Address address : addressesStorage.values()) {
+                Inverters.sendCommandToInverter(address, Commands.CHECK_SWITCH_POS, "");
+                int response = Integer.parseInt(ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
+                        Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
+                responses.add(response);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Ошибка! Получено некорректное положение выключателя.");
+        }
+
+        if (!responses.isEmpty()) {
+            Integer[] newResponses = responses.toArray(new Integer[0]);
+            Double[] newCurrents = formParameters.toArray(new Double[0]);
+            for (int i = 0; i < newResponses.length; i++) {
+                switch (newResponses[i].intValue()) {
+                    case 1:
+                        if (newCurrents[2 * i] < 1. || newCurrents[2 * i] > 40.) {
+                            return false;
+                        }
+                        break;
+                    case 2:
+                        if (newCurrents[2 * i] < 40. || newCurrents[2 * i] > 400.) {
+                            return false;
+                        }
+                        break;
+                    case 3:
+                        if (newCurrents[2 * i] < 400. || newCurrents[2 * i] > 3000.) {
+                            return false;
+                        }
+                        break;
+                    default:
+                        System.err.println("Некорректный диапазон");
+                        return false;
+                }
+            }
+        }
+        return true;
     }
 
+    /**
+     * Метод для реализации проверки сопротивления.
+     *
+     * @return
+     */
     public static boolean resistanceCheck() {
+        Double[] newCurrents = formParameters.toArray(new Double[0]);
+        int i = 0;
         for (Address address : addressesStorage.values()) {
             try {
                 Commands command = Commands.SET_RESISTANCE_CHECK;
-                Inverters.sendCommandToInverter(address,command,"0");
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,Commands.MODBUS),
+                Inverters.sendCommandToInverter(address, command, String.valueOf(newCurrents[i]));
+                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.PHRASE);
                 if (!response.equals("SET_RESISTANCE_CHECK_OK()")) {
                     System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
                     return false;
                 }
                 command = Commands.START_RESISTANCE_CHECK;
-                Inverters.sendCommandToInverter(address,command,"0");
-                response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,Commands.MODBUS),
+                Inverters.sendCommandToInverter(address, command, "");
+                response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.PHRASE);
                 if (!response.equals("START_RESISTANCE_CHECK_OK()")) {
                     System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
@@ -199,6 +266,7 @@ public class CheckingManager {
                 System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
                 return false;
             }
+            i += 2;
         }
         return true;
     }

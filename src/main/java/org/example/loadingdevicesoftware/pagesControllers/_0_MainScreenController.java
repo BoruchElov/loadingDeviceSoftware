@@ -39,6 +39,7 @@ public class _0_MainScreenController extends BasicController{
     @FXML
     public void initialize() {
         super.initialize();
+        ScreensController.setAllowedToStartScenario(false);
         PagesBuffer.clear();
         imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
 

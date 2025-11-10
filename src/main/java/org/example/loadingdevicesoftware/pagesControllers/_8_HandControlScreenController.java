@@ -607,6 +607,26 @@ public class _8_HandControlScreenController extends ScreensController implements
 
     }
 
+    @Override
+    public void startButtonAction(Event event) {
+        super.startButtonAction(event);
+        if (!CheckingManager.getFormParameters().isEmpty()) {
+            CheckingManager.setFormParameters(new ArrayList<>());
+        }
+        ArrayList buffer = CheckingManager.getFormParameters();
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,moduleA2Button,
+                moduleB2Button,moduleC2Button};
+        SimpleTextField[] dataFields = new SimpleTextField[]{phaseALCurrent,phaseALAngle,phaseBLCurrent,phaseBLAngle,
+        phaseCLCurrent,phaseCLAngle,phaseARCurrent,phaseARAngle,phaseBRCurrent,phaseBRAngle,phaseCRCurrent,phaseCRAngle};
+        for (int i = 0; i < buttons.length; i++) {
+            if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                buffer.add(Double.parseDouble(dataFields[i * 2].getText()));
+                buffer.add(Double.parseDouble(dataFields[i * 2 + 1].getText()));
+            }
+        }
+
+    }
+
     //Функция по смене состояния контактов NC/NO
     public void funChangeButtonMenu(SimpleButton button) {
         if (flags[0]) {

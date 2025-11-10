@@ -68,6 +68,7 @@ public class _101_deviceWorkingScreenControl {
 
     @FXML
     public void initialize() {
+        ScreensController.setAllowedToStartScenario(false);
         Arrays.fill(checkFlags, false);
         //Настройка области для расположения элементов и создание ImageView для расположения фонового изображения
         anchorPane.setPrefSize(ApplicationConstants.APPLICATION_WINDOW_WIDTH, ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
@@ -240,6 +241,9 @@ public class _101_deviceWorkingScreenControl {
 
     private void onClose() {
         executor.shutdownNow();
+        if (!CheckingManager.getFormParameters().isEmpty()) {
+            CheckingManager.setFormParameters(new ArrayList<>());
+        }
     }
 
     private boolean runCheck(int index, Supplier<Boolean> check, String errorMessage) {
