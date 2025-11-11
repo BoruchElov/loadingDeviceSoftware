@@ -145,13 +145,13 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        /*double percent = 13.;
+        double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
         for (Address address : addressesStorage.values()) {
             try {
-                Inverters.sendCommandToInverter(address, Commands.MODBUS, "0");
+                Inverters.sendCommandToInverter(address, Commands.MODBUS, "03,0000,0001");
                 String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, Commands.MODBUS),
                         ConnectionControl.ExpectedValue.NUMBER);
                 voltages.add(Double.parseDouble(voltage));
@@ -165,8 +165,8 @@ public class CheckingManager {
                 return false;
             }
         }
-        return true;*/
         return true;
+        //return true;
     }
 
 
