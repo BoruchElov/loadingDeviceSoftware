@@ -128,7 +128,14 @@ public class CheckingManager {
                         if (Objects.equals(addressesList.get(map.get(module)), "00:00:00:00")) {
                             result = false;
                         } else {
-                            addressesStorage.put(module, ConnectionControl.getInvertersAddress(map.get(module)));
+                            Address address = ConnectionControl.getInvertersAddress(map.get(module));
+                            for (int i = 0; i < 6; i++) {
+                                address = ConnectionControl.getInvertersAddress(i);
+                                if (addressesList.get(map.get(module)).equals(address.toStringInHexFormat())) {
+                                    break;
+                                }
+                            }
+                            addressesStorage.put(module, address);
                         }
                     }
                 }
@@ -151,12 +158,13 @@ public class CheckingManager {
         ArrayList<Double> voltages = new ArrayList<>();
         for (Address address : addressesStorage.values()) {
             try {
-                Inverters.sendCommandToInverter(address, Commands.MODBUS, "03,0000,0001");
+                Inverters.sendCommandToInverter(address, Commands.MODBUS, "03,0000,0002");
                 String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, Commands.MODBUS),
                         ConnectionControl.ExpectedValue.NUMBER);
+                System.out.println(voltage);
                 voltages.add(Double.parseDouble(voltage));
             } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
+                System.err.println("Ошибка при отправке команды инвертору " + address.toStringInHexFormat());
                 return false;
             }
         }
