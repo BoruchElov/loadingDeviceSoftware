@@ -46,7 +46,7 @@ public class ARP implements PacketHandler {
     		Buff.rewind();
     		bufferTX.put(Buff);
     		MAC.sendPacket(AddressSource, bufferTX.array());
-            System.out.println("(ARP) Отправлен ответ устройству: " + AddressSource.toStringInHexFormat());
+            //System.out.println("(ARP) Отправлен ответ устройству: " + AddressSource.toStringInHexFormat());
             break;
     	default:
     		System.out.println("(ARP) Пакет не распознан");

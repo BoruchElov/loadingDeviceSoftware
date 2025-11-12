@@ -158,7 +158,9 @@ public class CheckingManager {
         ArrayList<Double> voltages = new ArrayList<>();
         for (Address address : addressesStorage.values()) {
             try {
+                System.out.println(address.toStringInHexFormat());
                 Inverters.sendCommandToInverter(address, Commands.MODBUS, "03,0000,0002");
+                System.out.println("Сообщение отправлено и ответ получен");
                 String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, Commands.MODBUS),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println(voltage);

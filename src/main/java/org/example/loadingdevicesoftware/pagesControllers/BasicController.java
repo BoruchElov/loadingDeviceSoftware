@@ -137,7 +137,12 @@ class BasicController {
             } else if (!snapshot.containsKey(addresses.get(i))) {
                 circles[i].setFill(Color.web(ApplicationConstants.Red));
             } else {
-                circles[i].setFill(Color.web(ApplicationConstants.Green));
+                if (snapshot.get(addresses.get(i)) == StatusStore.OnlineStatus.ONLINE) {
+                    circles[i].setFill(Color.web(ApplicationConstants.Green));
+                } else {
+                    circles[i].setFill(Color.web(ApplicationConstants.Red));
+                }
+
             }
         }
     }

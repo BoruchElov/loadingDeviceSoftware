@@ -150,7 +150,7 @@ class ScreensController extends BasicController {
         }
     }
 
-
+    //TODO доработать вариант с ручным вводом
      /**
      * Метод для задания действий при нажатии кнопки "Пуск"
      * @param event

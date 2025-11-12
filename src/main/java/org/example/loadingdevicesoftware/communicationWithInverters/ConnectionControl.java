@@ -22,6 +22,9 @@ public class ConnectionControl {
     private static final String COM = "COM5";
 
     //Порядок адресов: А1, В1, С1, А2, В2, С2
+    /**
+     * Структура для хранения адресов инверторов, подключенных к сети на данный момент.
+     */
     private static final AtomicReference<Address>[] invertersAddresses = new AtomicReference[]{new AtomicReference<>(new Address(0)),
             new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
             new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
@@ -51,6 +54,16 @@ public class ConnectionControl {
         invs = new Inverters(MAC);
         MAC.registerHandler(0x01, arp);
         MAC.registerHandler(0x02, invs);
+
+        ArrayList<String> values = new ArrayList<>();
+        try {
+            values = new ArrayList<>(AddressesStorage.readAddresses());
+        } catch(Exception e) {
+            System.err.println("Не удалось прочитать адреса из файла.");
+        }
+        for (int i = 0; i < invertersAddresses.length; i++) {
+            invertersAddresses[i] = new AtomicReference<>(new Address(toIntFromHexString(values.get(i))));
+        }
     }
 
     public static void closeConnection() {
