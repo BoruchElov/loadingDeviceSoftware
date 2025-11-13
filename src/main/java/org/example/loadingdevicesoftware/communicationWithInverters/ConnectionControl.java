@@ -75,8 +75,8 @@ public class ConnectionControl {
     }
 
     public static void clearInvertersAddresses() {
-        for (AtomicReference<Address> address : invertersAddresses) {
-            address = new AtomicReference<>(new Address(0));
+        for (int i = 0; i < invertersAddresses.length; i++) {
+            invertersAddresses[i].set(new Address(0));
         }
     }
 

@@ -7,6 +7,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.serial.ComPo
 
 import java.nio.ByteBuffer;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -107,7 +108,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
         Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
         Address addressRCV = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
         ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();
-        if (addressRCV.toStringInHexFormat() != myMAC.toStringInHexFormat()) {
+        if (Objects.equals(addressRCV.toStringInHexFormat(), myMAC.toStringInHexFormat())) {
             if (PacketType != 1) {
                 return;
             }
@@ -122,6 +123,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             System.out.println("(MAC) Нет обработчика для типа: " + PacketType);
         }
     }
+
 
     private String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();

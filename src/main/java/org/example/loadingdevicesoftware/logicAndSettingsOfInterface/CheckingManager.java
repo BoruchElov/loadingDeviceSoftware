@@ -159,11 +159,11 @@ public class CheckingManager {
         for (Address address : addressesStorage.values()) {
             try {
                 System.out.println(address.toStringInHexFormat());
-                Inverters.sendCommandToInverter(address, Commands.MODBUS, "03,0000,0002");
-                System.out.println("Сообщение отправлено и ответ получен");
-                String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, Commands.MODBUS),
+                Commands command = Commands.MODBUS;
+                String arguments = "03,0000,0002";
+                Inverters.sendCommandToInverter(address, command, arguments);
+                String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.NUMBER);
-                System.out.println(voltage);
                 voltages.add(Double.parseDouble(voltage));
             } catch (Exception e) {
                 System.err.println("Ошибка при отправке команды инвертору " + address.toStringInHexFormat());
@@ -176,7 +176,6 @@ public class CheckingManager {
             }
         }
         return true;
-        //return true;
     }
 
 

@@ -18,8 +18,6 @@ public enum Commands {
     BLINK_LED_START, BLINK_LED_STOP, SET_RESISTANCE_CHECK, START_RESISTANCE_CHECK, SET_SCENARO_1, START_SCENARO_1, SET_SCENARO_2,
     START_SCENARO_2, SET_SCENARO_3, START_SCENARO_3, CHECK_SWITCH_POS, FAULT, MODBUS, MODBUS_WRITE, FORCED_STOP;
 
-    Commands() {}
-
     private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     /**
