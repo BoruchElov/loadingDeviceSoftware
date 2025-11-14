@@ -607,9 +607,9 @@ public class _8_HandControlScreenController extends ScreensController implements
     public void startButtonAction(Event event) {
         super.startButtonAction(event);
         if (!CheckingManager.getFormParameters().isEmpty()) {
-            CheckingManager.setFormParameters(new ArrayList<>());
+            CheckingManager.getFormParameters().clear();
         }
-        ArrayList buffer = CheckingManager.getFormParameters();
+        ArrayList<Double> buffer = CheckingManager.getFormParameters();
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
         SimpleTextField[] dataFields = new SimpleTextField[]{phaseALCurrent, phaseALAngle, phaseBLCurrent, phaseBLAngle,

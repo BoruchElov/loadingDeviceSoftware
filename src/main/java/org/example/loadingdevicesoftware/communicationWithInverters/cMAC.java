@@ -102,20 +102,20 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             }
         }
     }
-
+    //TODO скорректировать работу фильтра приёма сообщений
     private void handlePacket(byte[] Buff) {
         Integer PacketType = Byte.toUnsignedInt(Buff[8]);
         Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
         Address addressRCV = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
         ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();
-        if (Objects.equals(addressRCV.toStringInHexFormat(), myMAC.toStringInHexFormat())) {
+        /*if (Objects.equals(addressRCV.toStringInHexFormat(), myMAC.toStringInHexFormat())) {
             if (PacketType != 1) {
                 return;
             }
             if (Buff[9]  != 1 && Buff[9] != 2) {
                 return;
             }
-        }
+        }*/
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);
             handler.handlePacket(adrsrc, PacketPayload);

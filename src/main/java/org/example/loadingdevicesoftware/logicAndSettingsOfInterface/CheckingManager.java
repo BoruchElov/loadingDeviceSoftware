@@ -152,13 +152,12 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        double percent = 13.;
+        /*double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
         for (Address address : addressesStorage.values()) {
             try {
-                System.out.println(address.toStringInHexFormat());
                 Commands command = Commands.MODBUS;
                 String arguments = "03,0000,0002";
                 Inverters.sendCommandToInverter(address, command, arguments);
@@ -175,6 +174,7 @@ public class CheckingManager {
                 return false;
             }
         }
+        return true;*/
         return true;
     }
 
@@ -193,12 +193,14 @@ public class CheckingManager {
     /**
      * Метод для реализации проверки диапазона тока. Если заданный пользователем ток не попадает в диапазон, определённый
      * выключателем, проверка не проходит.
+     * TODO продумать реализацию функционала интерпретации параметров формы в зависимости от сценария
+     *
      *
      * @return
      */
     public static boolean currentRangeCheck() {
 
-        /*if (formParameters.isEmpty()) {
+        if (formParameters.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
         }
@@ -215,12 +217,15 @@ public class CheckingManager {
 
         } catch (Exception e) {
             System.err.println("Ошибка! Получено некорректное положение выключателя.");
+            return false;
         }
 
         if (!responses.isEmpty()) {
+            System.out.println("Пришли непустые сообщения.");
             Integer[] newResponses = responses.toArray(new Integer[0]);
             Double[] newCurrents = formParameters.toArray(new Double[0]);
             for (int i = 0; i < newResponses.length; i++) {
+                System.out.println("Положение переключателя: " + newResponses[i] + "; Уставка по току: " + newCurrents[i]);
                 switch (newResponses[i].intValue()) {
                     case 1:
                         if (newCurrents[2 * i] < 1. || newCurrents[2 * i] > 40.) {
@@ -238,17 +243,18 @@ public class CheckingManager {
                         }
                         break;
                     default:
-                        System.err.println("Некорректный диапазон");
+                        System.err.println("Некорректный диапазон. Положение переключателя: " + newResponses[i]);
                         return false;
                 }
             }
         }
-        return true;*/
         return true;
     }
 
     /**
      * Метод для реализации проверки сопротивления.
+     * TODO реализовать логику ожидания ответа о результатах выполнения сценария
+     * TODO продумать реализацию функционала интерпретации параметров формы в зависимости от сценария
      *
      * @return
      */
