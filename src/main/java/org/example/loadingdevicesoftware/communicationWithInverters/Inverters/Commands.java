@@ -21,6 +21,11 @@ public enum Commands {
     private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     /**
+     * Константа для задания времени ожидания (в секундах) ответа от модулей
+     */
+    private static final long delayTime = 1;
+
+    /**
      * Метод для отправки выбранной команды. Формирует пакет для отправки.
      *
      * @param MAC       MAC-адрес отправителя
@@ -60,11 +65,10 @@ public enum Commands {
         scheduler.schedule(() -> {
             if (!future.isDone()) {
                 System.out.println("(Inverters) Ответ не получен за 1с от устройства: " + address.toString());
-
                 future.completeExceptionally(new TimeoutException("Ответ от устройства не получен за 1с"));
                 Inverters.removeResponse(address);
             }
-        }, 1, TimeUnit.SECONDS);
+        }, delayTime, TimeUnit.SECONDS);
         ByteBuffer result = future.get().flip();
         byte[] responseBytes = new byte[result.remaining()];
         responseBytes = result.get(responseBytes).array();

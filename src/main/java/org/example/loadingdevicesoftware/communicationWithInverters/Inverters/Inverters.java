@@ -1,6 +1,7 @@
 package org.example.loadingdevicesoftware.communicationWithInverters.Inverters;
 
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
+import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
 import org.example.loadingdevicesoftware.communicationWithInverters.PacketHandler;
 import org.example.loadingdevicesoftware.communicationWithInverters.cMAC;
 
@@ -69,6 +70,8 @@ public class Inverters implements PacketHandler {
         } else {
             System.out.println("(Inverters) Ответ от " + AddressSource.toStringInHexFormat() + " не ожидался или уже истёк");
         }
+        //Подключение сервиса для ожидания сообщения
+        EventWaiter.getInstance().incoming(AddressSource,Buff);
     }
 
 }
