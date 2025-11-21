@@ -4,11 +4,11 @@
     -fx-border-radius: 0;
     -fx-border-color: #000000;
     -fx-pref-width: 175px; /* Желаемая ширина */
-    -fx-pref-height: 40px; /* Желаемая высота */
+    -fx-pref-height: 52px; /* Желаемая высота */
     -fx-min-width: 175px; /* Минимальная ширина */
-    -fx-min-height: 40px; /* Минимальная высота */
+    -fx-min-height: 52px; /* Минимальная высота */
     -fx-max-width: 175px;
-    -fx-max-height: 40px;
+    -fx-max-height: 52px;
     -fx-padding: 0px;
 }
 

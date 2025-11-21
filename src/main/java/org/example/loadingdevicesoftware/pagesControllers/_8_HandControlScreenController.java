@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -11,12 +12,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.util.ArrayList;
 
 
 public class _8_HandControlScreenController extends ScreensController implements Configurable {
+
+    //Комбобокс
+    @FXML
+    SimpleComboBox<String> currentFormComboBox;
+    @FXML
+    Text  currentFormText;
     //ТЕКСТОВЫЕ ПОЛЯ
     //текстовые поля для токов и углов слева
     @FXML
@@ -162,6 +170,14 @@ public class _8_HandControlScreenController extends ScreensController implements
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
+                case SimpleComboBox combo when combo == currentFormComboBox -> {
+                    currentFormComboBox.setup();
+                    currentFormComboBox.getItems().add("ИМПУЛЬСНЫЙ");
+                    currentFormComboBox.getItems().add("НАРАСТАЮЩИЙ");
+                    AnchorPane.setTopAnchor(currentFormComboBox, 177.);
+                    AnchorPane.setLeftAnchor(currentFormComboBox, 370.);
+                    currentFormComboBox.setActualStatus(Changeable.Status.LOCKED);
+                }
                 //НАСТРОЙКИ КНОПОК
                 case SimpleButton button when button == conditionButton || button == dryWetButton -> {
                     button.setOnAction(this::changeConfiguration);
@@ -431,7 +447,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                 case Text text when text == contacts || text == one || text == two || text == currentOne ||
                         text == currentTwo || text == phaseOne || text == phaseTwo || text == aOne ||
                         text == aTwo || text == bOne || text == bTwo || text == cOne || text == cTwo ||
-                        text == timerText || text == amperText || text == voltText || text == frequencyText -> {
+                        text == timerText || text == amperText || text == voltText || text == frequencyText
+                        || text == currentFormText -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     text.setFill(Color.BLACK);
 
@@ -460,6 +477,11 @@ public class _8_HandControlScreenController extends ScreensController implements
                             text1.setText("2");
                             AnchorPane.setTopAnchor(text1, 150.);
                             AnchorPane.setLeftAnchor(text1, 322.);
+                        }
+                        case Text text1 when text1 == currentFormText -> {
+                            text1.setText("Вид тока");
+                            AnchorPane.setTopAnchor(text1, 150.);
+                            AnchorPane.setLeftAnchor(text1, 415.);
                         }
                         case Text text1 when text1 == currentOne -> {
                             text1.setText("I, A");
@@ -600,7 +622,11 @@ public class _8_HandControlScreenController extends ScreensController implements
      */
     @Override
     public void launchScenario() {
-
+        Commands typeOfCurrent = currentFormComboBox.getSelectionModel().getSelectedIndex() == 0 ? Commands.SET_SCENARO_1
+                : Commands.SET_SCENARO_2;
+        //После того как дождались ответа на сообщение set_scenaro
+        typeOfCurrent = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? Commands.START_SCENARO_1
+                : Commands.START_SCENARO_2;
     }
 
     @Override
@@ -736,9 +762,9 @@ public class _8_HandControlScreenController extends ScreensController implements
         boolean flag = super.isThereSomethingToCheck();
         if (!flag) {
             CheckingManager.clearVariableAddresses();
-            ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button,moduleB1Button,moduleC1Button,
-                    moduleA2Button,moduleB2Button,moduleC2Button};
-            String[] moduleNames = new String[]{"moduleA1","moduleB1","moduleC1","moduleA2","moduleB2","moduleC2"};
+            ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button,
+                    moduleA2Button, moduleB2Button, moduleC2Button};
+            String[] moduleNames = new String[]{"moduleA1", "moduleB1", "moduleC1", "moduleA2", "moduleB2", "moduleC2"};
             for (int i = 0; i < buttons.length; i++) {
                 if (buttons[i].getObjectPosition().getActualPosition() != 0) {
                     CheckingManager.addVariableAddress(moduleNames[i]);

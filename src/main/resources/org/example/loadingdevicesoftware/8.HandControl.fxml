@@ -14,8 +14,11 @@
 
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton?>
 
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleComboBox?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._8_HandControlScreenController">
     <children>
+        <SimpleComboBox fx:id="currentFormComboBox"/>
+        <Text fx:id="currentFormText"/>
         <!--Кнопки справа-->
         <SimpleButton fx:id="conditionButton"/>
         <!--Кнопка выбора сух/мокрый-->

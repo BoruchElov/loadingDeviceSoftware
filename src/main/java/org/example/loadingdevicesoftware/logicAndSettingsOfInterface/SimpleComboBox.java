@@ -33,7 +33,14 @@ public class SimpleComboBox<T> extends ComboBox<T> implements Changeable {
 
     @Override
     public void setActualStatus(Status status) {
-
+        switch (status) {
+            case LOCKED:
+                setDisable(true);
+                break;
+            case NORMAL:
+                setDisable(false);
+                break;
+        }
     }
 
     private void initialize() {

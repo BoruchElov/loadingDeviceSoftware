@@ -107,6 +107,9 @@ class ScreensController extends BasicController {
                 changeable.setActualStatus(Changeable.Status.NORMAL);
                 changeable.changePosition(0);
             }
+            if (child instanceof SimpleComboBox<?> comboBox) {
+                comboBox.getSelectionModel().clearSelection();
+            }
         }
         Arrays.fill(flags, false);
         if (controller instanceof Configurable object) {
