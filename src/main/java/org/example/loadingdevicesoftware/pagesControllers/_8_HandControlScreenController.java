@@ -176,7 +176,6 @@ public class _8_HandControlScreenController extends ScreensController implements
                     currentFormComboBox.getItems().add("НАРАСТАЮЩИЙ");
                     AnchorPane.setTopAnchor(currentFormComboBox, 177.);
                     AnchorPane.setLeftAnchor(currentFormComboBox, 370.);
-                    currentFormComboBox.setActualStatus(Changeable.Status.LOCKED);
                 }
                 //НАСТРОЙКИ КНОПОК
                 case SimpleButton button when button == conditionButton || button == dryWetButton -> {
@@ -592,6 +591,7 @@ public class _8_HandControlScreenController extends ScreensController implements
             }
         }
         AnchorPane.setTopAnchor(time, 260.);
+        restoreState();
     }
 
     //Функция для отображения активности элементов на форме
@@ -621,20 +621,19 @@ public class _8_HandControlScreenController extends ScreensController implements
      * Метод для реализации логики сценария. Переопределяет метод родительского класса ScreensController.
      */
     @Override
-    public void launchScenario() {
+    public boolean launchScenario() {
+        boolean result = super.launchScenario();
         Commands typeOfCurrent = currentFormComboBox.getSelectionModel().getSelectedIndex() == 0 ? Commands.SET_SCENARO_1
                 : Commands.SET_SCENARO_2;
         //После того как дождались ответа на сообщение set_scenaro
         typeOfCurrent = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? Commands.START_SCENARO_1
                 : Commands.START_SCENARO_2;
+        return result;
     }
 
     @Override
-    public void startButtonAction(Event event) {
-        super.startButtonAction(event);
-        if (!CheckingManager.getFormParameters().isEmpty()) {
-            CheckingManager.getFormParameters().clear();
-        }
+    public void savePageParameters() {
+        super.savePageParameters();
         ArrayList<Double> buffer = CheckingManager.getFormParameters();
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
@@ -646,7 +645,6 @@ public class _8_HandControlScreenController extends ScreensController implements
                 buffer.add(Double.parseDouble(dataFields[i * 2 + 1].getText()));
             }
         }
-
     }
 
     //Функция по смене состояния контактов NC/NO

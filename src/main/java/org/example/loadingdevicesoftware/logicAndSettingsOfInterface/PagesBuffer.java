@@ -14,7 +14,6 @@ public class PagesBuffer {
     public static _5_TestOfMeasurementTransformerScreenController transformerPage;
     public static _6_ComTradeScreenController comTradePage;
     public static _7_DifProtectionScreenController difPage;
-    public static _8_HandControlScreenController handControlPage;
     public static _9_DeBuggerScreenController deBugPage;
 
     @Getter
@@ -47,7 +46,7 @@ public class PagesBuffer {
             saveStates(controller.getAnchorPane().getChildren());
         }
         if (source instanceof _8_HandControlScreenController controller) {
-            handControlPage = (_8_HandControlScreenController) source;
+            saveStates(controller.getAnchorPane().getChildren());
         }
         if (source instanceof _9_DeBuggerScreenController controller) {
             deBugPage = (_9_DeBuggerScreenController) source;
@@ -83,6 +82,7 @@ public class PagesBuffer {
             if (node instanceof SimpleButton button) buffer.add(String.valueOf(button.getObjectPosition().getActualPosition()));
             if (node instanceof ButtonWithPicture button) buffer.add(String.valueOf(button.getObjectPosition().getActualPosition()));
             if (node instanceof SimpleImageView imageView) buffer.add(String.valueOf(imageView.getObjectPosition().getActualPosition()));
+            if (node instanceof SimpleComboBox<?> comboBox) buffer.add(String.valueOf(comboBox.getSelectionModel().getSelectedIndex()));
         }
     }
 }

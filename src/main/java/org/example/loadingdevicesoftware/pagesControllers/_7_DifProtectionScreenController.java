@@ -583,33 +583,7 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     public void restoreState() {
         super.restoreState();
         if (Buffer.isFlagForDifProtection()) {
-            Buffer.setFlagForDifProtection(false);
-            lockAll(menuButton, clearButton, startButton);
-            clearButton.setOnAction(_ -> {
-                unlockAll();
-                clearButton.changePosition(0);
-                startButton.changePosition(0);
-                contactOneOne.getStyleClass().add("circles");
-                clearButton.setText("ОЧИСТИТЬ");
-                clearButton.setOnAction(this::clearAll);
-                startButton.setOnAction(event -> {
-                    try {
-                        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-                        PagesBuffer.savePage(this);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            });
             startButton.setOnAction(_ -> {
-                contactOneOne.getStyleClass().add("circles-two");
-                contactTwoOne.getStyleClass().add("circles-two");
-                // Простое информационное окно
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("");
-                alert.setHeaderText(null); // Необязательный заголовок
-                alert.setContentText("1. Проверка:     Выполнена\n2. Срабатывание:     Контакт 1, Контакт 2\n3. Ошибки:     Нет");
-                alert.showAndWait();
                 clearButton.changePosition(0);
                 clearButton.setText("СОХРАНИТЬ");
                 clearButton.setOnAction(_ -> {

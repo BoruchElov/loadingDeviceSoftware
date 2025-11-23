@@ -33,13 +33,13 @@ class ScreensController extends BasicController {
 
     //Список для хранения некорректно-заполненных элементов
     List<Node> uncheckedNodes = new ArrayList<>();
-    Map<Node,Object> listeners = new HashMap<>();
+    Map<Node, Object> listeners = new HashMap<>();
 
     /**
      * Статический флаг, разрешающий или запрещающий старт сценария.
      */
     @Setter
-    private static boolean isAllowedToStartScenario = false;
+    private static boolean isAllowedToStartScenario;
 
     @FXML
     public void initialize() {
@@ -81,16 +81,10 @@ class ScreensController extends BasicController {
             }
         });
         startButton.setup(SimpleButton.Presets.START);
-
-
-
         startButton.setActualStatus(Changeable.Status.NORMAL);
-        startButton.setOnAction(event -> {startButtonAction(event);});
         clearButton.setup(SimpleButton.Presets.CLEAR);
         clearButton.setActualStatus(Changeable.Status.NORMAL);
-        clearButton.setOnAction(event -> {
-            clearAll(this);
-        });
+        setPageState(PageState.DEFAULT);
     }
 
     //Метод по очистке всех элементов окна приложения
@@ -154,38 +148,6 @@ class ScreensController extends BasicController {
     }
 
     //TODO доработать вариант с ручным вводом
-     /**
-     * Метод для задания действий при нажатии кнопки "Пуск"
-     * @param event
-     */
-    public void startButtonAction(Event event) {
-        try {
-            if (true) {
-                if (!isThereSomethingToCheck()) {
-                    InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-                    PagesBuffer.savePage(this);
-                } else {
-                    for (Node node : uncheckedNodes) {
-                        node.getStyleClass().add("okay");
-                    }
-                    InterfaceElementsLogic.showAlert("Ошибка в заполнении формы!" +
-                            "\nПроверьте выделенные элементы.");
-                    addElementsListeners();
-                    uncheckedNodes.clear();
-                }
-            } else {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-                PagesBuffer.savePage(this);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (isAllowedToStartScenario) {
-            isAllowedToStartScenario = false;
-            launchScenario();
-        }
-    }
 
     public void restoreState() {
         if (PagesBuffer.getFxmlName() != null) {
@@ -193,7 +155,7 @@ class ScreensController extends BasicController {
             ArrayList<Node> elements = new ArrayList<>();
             for (Node node : anchorPane.getChildren()) {
                 if (node instanceof SimpleTextField || node instanceof SimpleButton
-                        || node instanceof ButtonWithPicture || node instanceof SimpleImageView) {
+                        || node instanceof ButtonWithPicture || node instanceof SimpleImageView || node instanceof SimpleComboBox) {
                     elements.add(node);
                 }
             }
@@ -203,8 +165,13 @@ class ScreensController extends BasicController {
                 if (node instanceof SimpleButton button) button.changePosition(Integer.parseInt(timeList.get(i)));
                 if (node instanceof ButtonWithPicture button) button.changePosition(Integer.parseInt(timeList.get(i)));
                 if (node instanceof SimpleImageView image) image.changePosition(Integer.parseInt(timeList.get(i)));
+                if (node instanceof SimpleComboBox<?> comboBox) comboBox.getSelectionModel().select(Integer.parseInt(timeList.get(i)));
             }
             PagesBuffer.buffer.clear();
+        }
+        //Если разрешён запуск сценария
+        if (isAllowedToStartScenario) {
+            setPageState(PageState.ALLOWED_TO_START);
         }
     }
 
@@ -229,10 +196,17 @@ class ScreensController extends BasicController {
         }
     }
 
+    public void savePageParameters() {
+        if (!CheckingManager.getFormParameters().isEmpty()) {
+            CheckingManager.getFormParameters().clear();
+        }
+    }
+
     /**
      * Метод для проверки заполнения требуемых элементов. Проходится по массиву заданных элементов и, в зависимости от
      * состояния элемента, добавляет его в список непроверенных. Помимо этого, если хоть один элемент проверку не прошёл,
      * метод возвращает флаг true.
+     *
      * @return true, если хоть один из нужных элементов находится не в том состоянии
      */
     public boolean isThereSomethingToCheck() {
@@ -256,7 +230,7 @@ class ScreensController extends BasicController {
                     default:
                         break;
                 }
-            } else if (node instanceof SimpleTextField textField){
+            } else if (node instanceof SimpleTextField textField) {
                 if (textField.getText().isBlank()) {
                     result = true;
                     uncheckedNodes.add(textField);
@@ -266,7 +240,130 @@ class ScreensController extends BasicController {
         return result;
     }
 
-    public void launchScenario() {
+    /**
+     * Метод для запуска сценария. Данный метод возвращает флаг об успешном завершении
+     * выполнения сценария, который сигнализирует
+     * @return
+     */
+    public boolean launchScenario() {
+        if (isAllowedToStartScenario) {
+            clearButton.changePosition(0);
+            clearButton.setText("СОХРАНИТЬ");
+        }
+        setPageState(PageState.WAITING_FOR_CHOICE);
+        return true;
+    }
 
+    /**
+     * Метод для экстренного прекращения выполнения сценария
+     */
+    private void shutdownScenario() {
+    }
+
+    /**
+     * enum для задания возможных состояний формы. Всего выделено 4 состояния:
+     * <li>DEFAULT - состояние по умолчанию</li>
+     * <li>ALLOWED_TO_START - состояние, когда получено разрешение на запуск
+     * сценария</li>
+     * <li>IN_PROCESS - состояние в процессе выполнения сценария</li>
+     * <li>WAITING_FOR_CHOICE - состояние, когда форма ожидает выбор пользователя
+     * после выполнения сценария</li>
+     */
+    private enum PageState {
+        DEFAULT, ALLOWED_TO_START, IN_PROCESS, WAITING_FOR_CHOICE
+    }
+
+    /**
+     * Метод для задания состояния формы. Он определяет положение и функционал кнопок
+     * в зависимости от значения enum
+     */
+    private void setPageState(PageState state) {
+        switch (state) {
+            case DEFAULT:
+
+                clearButton.changePosition(0);
+                clearButton.setText("ОЧИСТИТЬ");
+                clearButton.setOnAction(event -> {
+                    clearAll(this);
+                });
+
+                startButton.changePosition(0);
+                startButton.setText("ПУСК");
+                startButton.setOnAction(event -> {
+                    try {
+                        if (true) {
+                            if (!isThereSomethingToCheck()) {
+                                InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                                PagesBuffer.savePage(this);
+                                savePageParameters();
+                            } else {
+                                for (Node node : uncheckedNodes) {
+                                    node.getStyleClass().add("okay");
+                                }
+                                InterfaceElementsLogic.showAlert("Ошибка в заполнении формы!" +
+                                        "\nПроверьте выделенные элементы.");
+                                addElementsListeners();
+                                uncheckedNodes.clear();
+                            }
+                        } else {
+                            InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                            PagesBuffer.savePage(this);
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                break;
+            case ALLOWED_TO_START:
+                unlockAll();
+                lockAll(clearButton, startButton);
+
+                clearButton.changePosition(2);
+                clearButton.setText("ОТМЕНА");
+                clearButton.setOnAction(_ -> {
+                    isAllowedToStartScenario = false;
+                    unlockAll();
+                    setPageState(PageState.DEFAULT);
+                });
+
+                startButton.changePosition(1);
+                startButton.setText("ПУСК");
+                startButton.setOnAction(_ -> {
+                    isAllowedToStartScenario = false;
+                    launchScenario();
+                });
+
+                break;
+            case IN_PROCESS:
+                unlockAll();
+                lockAll(startButton);
+
+                startButton.changePosition(2);
+                startButton.setText("СТОП");
+                startButton.setOnAction(event -> {
+                    shutdownScenario();
+                    setPageState(PageState.ALLOWED_TO_START);
+                });
+
+                break;
+            case WAITING_FOR_CHOICE:
+                unlockAll();
+                lockAll(clearButton, startButton);
+
+                clearButton.changePosition(0);
+                clearButton.setText("СОХРАНИТЬ");
+                clearButton.setOnAction(event -> {
+                    InterfaceElementsLogic.openFileManager();
+                });
+
+                startButton.changePosition(0);
+                startButton.setText("ПРОДОЛЖИТЬ");
+                startButton.setOnAction(event -> {
+                    unlockAll();
+                    setPageState(PageState.DEFAULT);
+                });
+
+                break;
+        }
     }
 }

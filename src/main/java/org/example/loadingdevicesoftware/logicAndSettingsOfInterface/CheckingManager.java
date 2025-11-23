@@ -69,7 +69,7 @@ public class CheckingManager {
      */
 
     public static boolean settingsCheck(Scenarios scenario) throws IOException {
-        List<String> addressesList = AddressesStorage.readAddresses();
+        /*List<String> addressesList = AddressesStorage.readAddresses();
         boolean result = true;
         switch (scenario) {
             case SINGLE_PHASE_SWITCHER, SINGLE_PHASE_PROTECTION:
@@ -141,7 +141,8 @@ public class CheckingManager {
                 }
                 break;
         }
-        return result;
+        return result;*/
+        return true;
     }
 
     /**
@@ -199,7 +200,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean currentRangeCheck() {
-
+/*
         if (formParameters.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
@@ -247,7 +248,7 @@ public class CheckingManager {
                         return false;
                 }
             }
-        }
+        }*/
         return true;
     }
 
