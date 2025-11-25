@@ -6,11 +6,14 @@ import com.fazecast.jSerialComm.SerialPortEvent;
 import org.example.loadingdevicesoftware.communicationWithInverters.serial.ComPortEventHandler;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import static org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl.analyzeResponse;
 
 public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
@@ -60,7 +63,6 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
     // Внешний метод — добавить пакет на отправку
     public void sendPacket(Address addrDes, byte[] packet) {
-
         ByteBuffer Packet = ByteBuffer.allocate(packet.length + 8);
         Packet.putInt(addrDes.getValue());                            // Адрес получателя
         Packet.putInt(this.getMAC().getValue());                    // Адрес отправителя
@@ -69,6 +71,11 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
         boolean result = sendQueue.offer(Packet.array());// Отправить пакет без блокировки
         if (!result) {
             System.out.println("Ошибка при отправке пакета! Переполнена очередь на отправку");
+        }
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -79,7 +86,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             workerThread.interrupt();
         }
     }
-
+    //TODO добавить небольшую задержку при отправке сообщений
     @Override
     public void run() {
         System.out.println("(MAC) Поток отправки сообщений MAC запущен");
@@ -102,20 +109,28 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             }
         }
     }
+
+    private String getBytes(byte[] packet) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : packet) sb.append(String.format("%02X ", b));
+        return sb.toString();
+    }
+
     //TODO скорректировать работу фильтра приёма сообщений
     private void handlePacket(byte[] Buff) {
         Integer PacketType = Byte.toUnsignedInt(Buff[8]);
         Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
-        Address addressRCV = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
+        Address adrcv = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
+        if (adrsrc.toStringInHexFormat().equals("09:12:AB:E1") ||
+                adrsrc.toStringInHexFormat().equals("00:80:E1:FF") ||
+                adrsrc.toStringInHexFormat().equals("04:80:E1:FF") ||
+                adrsrc.toStringInHexFormat().equals("07:12:AB:E1")) {
+            return;
+        }
+        if (!adrcv.toStringInHexFormat().equals(myMAC.toStringInHexFormat()) && !adrcv.toStringInHexFormat().equals("00:00:00:00")) {
+            return;
+        }
         ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();
-        /*if (Objects.equals(addressRCV.toStringInHexFormat(), myMAC.toStringInHexFormat())) {
-            if (PacketType != 1) {
-                return;
-            }
-            if (Buff[9]  != 1 && Buff[9] != 2) {
-                return;
-            }
-        }*/
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);
             handler.handlePacket(adrsrc, PacketPayload);
@@ -165,9 +180,6 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             case DATA_AVAILABLE -> {
                 byte[] buffer = new byte[SP.bytesAvailable()];
                 SP.readBytes(buffer, buffer.length);
-                //System.out.println("(MAC) Получено асинхронно: " + buffer.length + " байт " + bytesToHex(buffer));
-                //System.out.println("(MAC) Полученное сообщение: " + Commands.responseAnalyzer(buffer));
-                // Здесь обработка полученных данных
                 handlePacket(buffer);
             }
         }

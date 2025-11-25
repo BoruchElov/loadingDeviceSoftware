@@ -71,7 +71,16 @@ public class Inverters implements PacketHandler {
             System.out.println("(Inverters) Ответ от " + AddressSource.toStringInHexFormat() + " не ожидался или уже истёк");
         }
         //Подключение сервиса для ожидания сообщения
-        EventWaiter.getInstance().incoming(AddressSource,Buff);
+        EventWaiter.getInstance().incoming(AddressSource, Buff);
     }
 
+    private String getBytes(ByteBuffer packet) {
+        ByteBuffer copy = packet.asReadOnlyBuffer(); // независимая позиция
+        copy.rewind();                                 // позиция -> 0, но только в копии
+        byte[] data = new byte[copy.remaining()];
+        copy.get(data);
+        StringBuilder sb = new StringBuilder();
+        for (byte b : data) sb.append(String.format("%02X ", b));
+        return sb.toString();
+    }
 }

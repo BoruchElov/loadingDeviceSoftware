@@ -637,12 +637,11 @@ public class _8_HandControlScreenController extends ScreensController implements
         ArrayList<Double> buffer = CheckingManager.getFormParameters();
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
-        SimpleTextField[] dataFields = new SimpleTextField[]{phaseALCurrent, phaseALAngle, phaseBLCurrent, phaseBLAngle,
-                phaseCLCurrent, phaseCLAngle, phaseARCurrent, phaseARAngle, phaseBRCurrent, phaseBRAngle, phaseCRCurrent, phaseCRAngle};
+        SimpleTextField[] dataFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
+                phaseARCurrent, phaseBRCurrent,phaseCRCurrent};
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
-                buffer.add(Double.parseDouble(dataFields[i * 2].getText()));
-                buffer.add(Double.parseDouble(dataFields[i * 2 + 1].getText()));
+                buffer.add(Double.parseDouble(dataFields[i].getText()));
             }
         }
     }

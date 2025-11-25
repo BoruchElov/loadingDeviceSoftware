@@ -4,11 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
+import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -69,7 +74,7 @@ public class CheckingManager {
      */
 
     public static boolean settingsCheck(Scenarios scenario) throws IOException {
-        /*List<String> addressesList = AddressesStorage.readAddresses();
+        List<String> addressesList = AddressesStorage.readAddresses();
         boolean result = true;
         switch (scenario) {
             case SINGLE_PHASE_SWITCHER, SINGLE_PHASE_PROTECTION:
@@ -141,8 +146,8 @@ public class CheckingManager {
                 }
                 break;
         }
-        return result;*/
-        return true;
+        return result;
+        //return true;
     }
 
     /**
@@ -195,7 +200,6 @@ public class CheckingManager {
      * Метод для реализации проверки диапазона тока. Если заданный пользователем ток не попадает в диапазон, определённый
      * выключателем, проверка не проходит.
      * TODO продумать реализацию функционала интерпретации параметров формы в зависимости от сценария
-     *
      *
      * @return
      */
@@ -260,33 +264,57 @@ public class CheckingManager {
      * @return
      */
     public static boolean resistanceCheck() {
-        /*Double[] newCurrents = formParameters.toArray(new Double[0]);
+        Double[] newCurrents = formParameters.toArray(new Double[0]);
         int i = 0;
+
+        //Передача всем настроенным и находящимся в сети модулям команды на настройку сценария
         for (Address address : addressesStorage.values()) {
+            Commands command = Commands.SET_RESISTANCE_CHECK;
             try {
-                Commands command = Commands.SET_RESISTANCE_CHECK;
-                Inverters.sendCommandToInverter(address, command, String.valueOf(newCurrents[i]));
+                String data = newCurrents[i] + "," + newCurrents[i] + "," + newCurrents[i];
+                Inverters.sendCommandToInverter(address, command, data);
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
-                        ConnectionControl.ExpectedValue.PHRASE);
-                if (!response.equals("SET_RESISTANCE_CHECK_OK()")) {
+                        ConnectionControl.ExpectedValue.PHRASE).substring(1);
+                System.out.println(response);
+                /*if (!response.equals("SET_RESISTANCE_CHECK(NO)")) {
                     System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
                     return false;
-                }
-                command = Commands.START_RESISTANCE_CHECK;
-                Inverters.sendCommandToInverter(address, command, "");
-                response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
-                        ConnectionControl.ExpectedValue.PHRASE);
-                if (!response.equals("START_RESISTANCE_CHECK_OK()")) {
-                    System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
-                    return false;
-                }
+                }*/
             } catch (Exception e) {
                 System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
                 return false;
             }
-            i += 2;
+            i += 1;
         }
-        return true;*/
+        i = 0;
+        //Передача всем настроенным и находящимся в сети модулям команды на запуск сценария и фиксация запроса на ожидание результатов
+        for (Address address : addressesStorage.values()) {
+            Commands command = Commands.START_RESISTANCE_CHECK;
+            try {
+                Inverters.sendCommandToInverter(address, command, "");
+                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
+                        ConnectionControl.ExpectedValue.PHRASE).substring(1);
+                System.out.println(response);
+                /*if (!response.equals("START_RESISTANCE_CHECK(NO)")) {
+                    System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
+                    return false;
+                }*/
+            } catch (Exception e) {
+                System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
+                return false;
+            }
+            try {
+                EventWaiter.getInstance().waitForEvent(address, Duration.ofSeconds(120)).get();
+                String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
+                        ConnectionControl.ExpectedValue.NUMBER);
+                System.out.println(new String(EventWaiter.getResponse(address), StandardCharsets.UTF_8));
+                System.out.println("Ответ на сценарий: \"" + result + "\"");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Ошибка при ожидании результатов сценария от: " + address.toStringInHexFormat());
+            }
+            i += 1;
+        }
         return true;
     }
 

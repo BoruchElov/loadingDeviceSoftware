@@ -6,6 +6,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.In
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.AddressesStorage;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +34,6 @@ public class ConnectionControl {
     public static Address getInvertersAddress(int index) {
         return invertersAddresses[index].get();
     }
-
-    /*static {
-        List<String> addresses;
-        try {
-            addresses = AddressesStorage.readAddresses();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        for (int i = 0; i < addresses.size(); i++) {
-            invertersAddresses[i] = new AtomicReference<>(new Address(toIntFromHexString(addresses.get(i))));
-        }
-    }*/
 
     private ConnectionControl() {}
 
@@ -78,6 +67,17 @@ public class ConnectionControl {
         for (int i = 0; i < invertersAddresses.length; i++) {
             invertersAddresses[i].set(new Address(0));
         }
+    }
+
+    public static byte[] extractBytes(ByteBuffer buffer) {
+        if (buffer == null) {
+            return new byte[0];
+        }
+        ByteBuffer copy = buffer.asReadOnlyBuffer();
+        copy.rewind();                       // читаем с начала
+        byte[] bytes = new byte[copy.remaining()];
+        copy.get(bytes);
+        return bytes;
     }
 
     public static void fillAddress(List<String>Addresses) {

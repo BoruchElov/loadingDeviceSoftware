@@ -72,8 +72,6 @@ public enum Commands {
         ByteBuffer result = future.get().flip();
         byte[] responseBytes = new byte[result.remaining()];
         responseBytes = result.get(responseBytes).array();
-        //System.out.println("Ответ, полученный от инвертора: " + responseAnalyzer(responseBytes));
-        //System.out.println("Длина ответа: " + responseBytes.length + " байт");
         return responseBytes;
     }
 

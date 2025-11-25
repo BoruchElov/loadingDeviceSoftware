@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.nio.ByteBuffer;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.*;
@@ -63,19 +64,13 @@ public class EventWaiter {
      * Вызывается из Inverters.handlePacket()
      */
     public synchronized void incoming(Address source, ByteBuffer data) {
-
-        // Для красивого вывода создадим копию буфера
-        ByteBuffer info = data.asReadOnlyBuffer();
-        info.flip();
-
-        System.out.println("[EventWaiter] ← Входящее сообщение от " + source +
+        System.out.println("[EventWaiter] ← Входящее сообщение от " + source.toStringInHexFormat() +
                 ", pending = " + pendingEvents.size());
-
         Iterator<PendingEvent> it = pendingEvents.iterator();
 
         while (it.hasNext()) {
             PendingEvent p = it.next();
-            saveResponse(source, info.array());
+            //saveResponse(source, info.array());
 
             System.out.println("[EventWaiter]   • Проверка PendingEvent: ожидаем от " + p.address());
 
@@ -85,6 +80,7 @@ public class EventWaiter {
             }
 
             System.out.println("[EventWaiter]     ✔ СОБЫТИЕ ПОДХОДИТ — завершаем future");
+            saveResponse(source, ConnectionControl.extractBytes(data));
             p.future().complete(data);
             it.remove();
         }
