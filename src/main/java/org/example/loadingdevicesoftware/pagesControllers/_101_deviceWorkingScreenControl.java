@@ -1,6 +1,7 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -22,6 +23,10 @@ public class _101_deviceWorkingScreenControl {
     private boolean[] checkFlags = new boolean[5];
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    private boolean cancelButtonFlag = false;
+    // Флаг "попросили остановить проверки после текущей"
+    private volatile boolean cancelRequested = false;
 
 
     @FXML
@@ -176,6 +181,19 @@ public class _101_deviceWorkingScreenControl {
         Platform.runLater(this::requestForResults);
     }
 
+    private void cancelButtonAction(Event event) {
+        if (cancelButtonFlag) {
+            cancelRequested = true;
+        } else {
+            try {
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.getFxmlName());
+                onClose();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     //TODO добавить логику для уточнения числа фаз для сценариев релейной защиты и выключателя
     //TODO Доработать тексты сообщений: добавить больше полезной информации (конкретные проблемные адреса, модули)
     private void requestForResults() {
@@ -189,8 +207,10 @@ public class _101_deviceWorkingScreenControl {
             default -> throw new IllegalStateException("Unexpected value: " + PagesBuffer.getFxmlName());
         };
 
+        // НОВОЕ: при запуске новой цепочки сбрасываем запрос на отмену
+        cancelRequested = false;
         disableButtons(true);// блокируем кнопки
-
+        cancelButtonFlag = true;
         executor.submit(() -> {
             if (!runCheck(1, () -> {
                         try {
@@ -221,7 +241,6 @@ public class _101_deviceWorkingScreenControl {
     private void disableButtons(boolean disable) {
         Platform.runLater(() -> {
             startButton.setDisable(disable);
-            cancelButton.setDisable(disable);
             menuButton.setDisable(disable);
         });
     }
@@ -230,6 +249,8 @@ public class _101_deviceWorkingScreenControl {
         Platform.runLater(() -> {
             disableButtons(false);
         });
+        cancelButtonFlag = false;
+        cancelRequested = false;
     }
 
     private void updateIndicator(int index, boolean success) {
@@ -247,6 +268,10 @@ public class _101_deviceWorkingScreenControl {
     }
 
     private boolean runCheck(int index, Supplier<Boolean> check, String errorMessage) {
+        if (cancelRequested) {
+            finishChecks();
+            return false; // вызывающий код по шаблону `if (!runCheck(...)) return;` выйдет из потока
+        }
         boolean result = check.get();
         Platform.runLater(() -> updateIndicator(index, result));
         if (!result) {
