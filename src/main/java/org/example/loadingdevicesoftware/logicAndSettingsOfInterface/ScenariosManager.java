@@ -1,0 +1,17 @@
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
+
+public class ScenariosManager {
+
+    private ScenariosManager() {}
+
+    public enum Scenarios {
+        THREE_PHASE_SWITCHER, SINGLE_PHASE_SWITCHER, MEASUREMENT_TRANSFORMER, COMTRADE, DIFFERENTIAL_PROTECTION,
+        HAND_CONTROL, SINGLE_PHASE_PROTECTION, THREE_PHASE_PROTECTION
+    }
+
+    public static void launchScenario(Scenarios scenario) {
+
+    }
+
+}
+

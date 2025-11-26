@@ -622,9 +622,26 @@ public class _8_HandControlScreenController extends ScreensController implements
      */
     @Override
     public boolean launchScenario() {
+        //Добавление логики из родительского метода
         boolean result = super.launchScenario();
-        Commands typeOfCurrent = currentFormComboBox.getSelectionModel().getSelectedIndex() == 0 ? Commands.SET_SCENARO_1
-                : Commands.SET_SCENARO_2;
+        Commands typeOfCurrent = currentFormComboBox.getSelectionModel().getSelectedIndex() == 0 ? Commands.SET_SCENARO_2
+                : Commands.SET_SCENARO_1;
+        //Заполнение динамического массива исходных данных
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
+                moduleB2Button, moduleC2Button};
+        SimpleTextField[] currentFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
+                phaseARCurrent, phaseBRCurrent,phaseCRCurrent};
+        SimpleTextField[] phaseFields = new SimpleTextField[]{phaseALAngle,phaseBLAngle, phaseCLAngle,
+                phaseARAngle, phaseBRAngle,phaseCRAngle};
+        ArrayList<String> scenarioParameters = new ArrayList<>();
+        for (int i = 0; i < buttons.length; i++) {
+            if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                String data = currentFields[i].getText();
+                data += "," + phaseFields[i].getText();
+                data += "," + timeInput.getText();
+                scenarioParameters.add(data);
+            }
+        }
         //После того как дождались ответа на сообщение set_scenaro
         typeOfCurrent = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? Commands.START_SCENARO_1
                 : Commands.START_SCENARO_2;
