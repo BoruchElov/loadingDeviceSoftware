@@ -161,20 +161,25 @@ public class CheckingManager {
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
-        for (Address address : addressesStorage.values()) {
+        Address address = null;
+        for (String module : addressesStorage.keySet()) {
             try {
+                address = addressesStorage.get(module);
                 Commands command = Commands.MODBUS;
                 String arguments = "03,0000,0002";
                 Inverters.sendCommandToInverter(address, command, arguments);
                 String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.NUMBER);
+                System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
+                        ", Напряжение " + voltage + "В, диапазон: [" + Math.round(lowerReference) + ";" + Math.round(upperReference) + "]");
                 voltages.add(Double.parseDouble(voltage));
             } catch (Exception e) {
                 System.err.println("Ошибка при отправке команды инвертору " + address.toStringInHexFormat());
                 return false;
             }
         }
-        for (Double voltage : voltages) {
+        for (
+                Double voltage : voltages) {
             if (!(voltage >= lowerReference && voltage <= upperReference)) {
                 return false;
             }
@@ -209,12 +214,18 @@ public class CheckingManager {
         }
         ArrayList<Integer> responses = new ArrayList<>();
         //Последовательный запрос положения переключателя у каждого модуля
+        Address address = null;
+        int j = 0;
         try {
-            for (Address address : addressesStorage.values()) {
+            for (String module : addressesStorage.keySet()) {
+                address = addressesStorage.get(module);
                 Inverters.sendCommandToInverter(address, Commands.CHECK_SWITCH_POS, "");
                 int response = Integer.parseInt(ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
                         Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
                 responses.add(response);
+                System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
+                        ", Положение переключателя " + response + ", Уставка по току " + formParameters.get(j) + "А");
+                j += 1;
             }
         } catch (Exception e) {
             System.err.println("Ошибка! Получено некорректное положение выключателя.");
@@ -222,7 +233,6 @@ public class CheckingManager {
         }
         //Оценка полученных положений переключателей на соответствие заданному току
         if (!responses.isEmpty()) {
-            System.out.println("Пришли непустые сообщения.");
             Integer[] newResponses = responses.toArray(new Integer[0]);
             Double[] newCurrents = formParameters.toArray(new Double[0]);
             for (int i = 0; i < newResponses.length; i++) {
@@ -263,7 +273,9 @@ public class CheckingManager {
         Double[] newCurrents = formParameters.toArray(new Double[0]);
         int i = 0;
         //Передача всем настроенным и находящимся в сети модулям команды на настройку сценария
-        for (Address address : addressesStorage.values()) {
+        Address address = null;
+        for (String module : addressesStorage.keySet()) {
+            address = addressesStorage.get(module);
             Commands command = Commands.SET_RESISTANCE_CHECK;
             try {
                 String data = newCurrents[i] + "," + newCurrents[i] + "," + newCurrents[i];
@@ -272,11 +284,13 @@ public class CheckingManager {
                         ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
                 if (!response.equals("SET_RESISTANCE_CHECK(YES)")) {
-                    System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
+                    System.err.println("Ошибка! Не получен ответ SET_RESISTANCE_CHECK(YES) от модуля " + module
+                            + "с адресом " + address.toStringInHexFormat());
                     return false;
                 }
             } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
+                System.err.println("Ошибка при отправке команды SET_RESISTANCE_CHECK() модулю " + module
+                        + "с адресом " + address.toStringInHexFormat());
                 return false;
             }
             i += 1;
@@ -284,7 +298,8 @@ public class CheckingManager {
         i = 0;
         //Передача всем настроенным и находящимся в сети модулям команды на запуск сценария, фиксация запроса на ожидание результатов
         //и анализ полученного ответа
-        for (Address address : addressesStorage.values()) {
+        for (String module : addressesStorage.keySet()) {
+            address = addressesStorage.get(module);
             Commands command = Commands.START_RESISTANCE_CHECK;
             try {
                 Inverters.sendCommandToInverter(address, command, "");
@@ -292,11 +307,13 @@ public class CheckingManager {
                         ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
                 if (!response.equals("START_RESISTANCE_CHECK(YES)")) {
-                    System.err.println("Ошибка! Получен неожиданный ответ от инвертора " + address.toStringInHexFormat());
+                    System.err.println("Ошибка! Не получен ответ START_RESISTANCE_CHECK(YES) от модуля " + module
+                            + "с адресом " + address.toStringInHexFormat());
                     return false;
                 }
             } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды инвертору + " + address.toStringInHexFormat());
+                System.err.println("Ошибка при отправке команды START_RESISTANCE_CHECK() модулю " + module
+                        + "с адресом " + address.toStringInHexFormat());
                 return false;
             }
             try {
@@ -306,12 +323,14 @@ public class CheckingManager {
                 System.out.println(new String(EventWaiter.getResponse(address), StandardCharsets.UTF_8).substring(1));
                 System.out.println("Ответ на сценарий: \"" + result + "\"");
                 if (!result.equals("1")) {
-                    System.err.println("Ошибка проверки сопротивления модуля " + address.toStringInHexFormat());
+                    System.err.println("Ошибка! Не выполнена проверка сопротивления модулем " + module
+                            + "с адресом " + address.toStringInHexFormat());
                     return false;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("Ошибка при ожидании результатов сценария от: " + address.toStringInHexFormat());
+                System.err.println("Ошибка при ожидании результатов сценария от модуля " + module + " с адресом: "
+                        + address.toStringInHexFormat());
             }
             i += 1;
         }

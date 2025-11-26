@@ -210,8 +210,8 @@ public class _101_deviceWorkingScreenControl {
             if (!runCheck(4, CheckingManager::currentRangeCheck,
                     "Ошибка проверки диапазона тока!")) return;
 
-            runCheck(5, CheckingManager::resistanceCheck,
-                    "Ошибка проверки сопротивления!");
+            if (!runCheck(5, CheckingManager::resistanceCheck,
+                    "Ошибка проверки сопротивления!")) return;
             finishChecks();
             ScreensController.setAllowedToStartScenario(true);
 
