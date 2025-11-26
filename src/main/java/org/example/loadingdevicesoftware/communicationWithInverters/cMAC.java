@@ -81,6 +81,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
     // Остановка потока
     public void stop() {
+        EventWaiter.shutdown();
         running = false;
         if (workerThread != null) {
             workerThread.interrupt();

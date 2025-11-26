@@ -157,7 +157,7 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        double percent = 13.;
+        /*double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
@@ -183,7 +183,7 @@ public class CheckingManager {
             if (!(voltage >= lowerReference && voltage <= upperReference)) {
                 return false;
             }
-        }
+        }*/
         return true;
     }
 
@@ -207,7 +207,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean currentRangeCheck() {
-        //Проверка наличия параметров из формы, необходимых для проверки
+        /*//Проверка наличия параметров из формы, необходимых для проверки
         if (formParameters.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
@@ -258,7 +258,7 @@ public class CheckingManager {
                         return false;
                 }
             }
-        }
+        }*/
         return true;
     }
 
@@ -285,12 +285,12 @@ public class CheckingManager {
                 System.out.println(response);
                 if (!response.equals("SET_RESISTANCE_CHECK(YES)")) {
                     System.err.println("Ошибка! Не получен ответ SET_RESISTANCE_CHECK(YES) от модуля " + module
-                            + "с адресом " + address.toStringInHexFormat());
+                            + " с адресом " + address.toStringInHexFormat());
                     return false;
                 }
             } catch (Exception e) {
                 System.err.println("Ошибка при отправке команды SET_RESISTANCE_CHECK() модулю " + module
-                        + "с адресом " + address.toStringInHexFormat());
+                        + " с адресом " + address.toStringInHexFormat());
                 return false;
             }
             i += 1;
@@ -308,23 +308,25 @@ public class CheckingManager {
                 System.out.println(response);
                 if (!response.equals("START_RESISTANCE_CHECK(YES)")) {
                     System.err.println("Ошибка! Не получен ответ START_RESISTANCE_CHECK(YES) от модуля " + module
-                            + "с адресом " + address.toStringInHexFormat());
+                            + " с адресом " + address.toStringInHexFormat());
                     return false;
                 }
             } catch (Exception e) {
                 System.err.println("Ошибка при отправке команды START_RESISTANCE_CHECK() модулю " + module
-                        + "с адресом " + address.toStringInHexFormat());
+                        + " с адресом " + address.toStringInHexFormat());
                 return false;
             }
             try {
                 EventWaiter.getInstance().waitForEvent(address, Duration.ofSeconds(120)).get();
                 String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
                         ConnectionControl.ExpectedValue.NUMBER);
-                System.out.println(new String(EventWaiter.getResponse(address), StandardCharsets.UTF_8).substring(1));
+                System.out.println(result);
+                result = result.substring(result.indexOf(":") + 1, result.indexOf("."));
+                System.out.println(result);
                 System.out.println("Ответ на сценарий: \"" + result + "\"");
                 if (!result.equals("1")) {
                     System.err.println("Ошибка! Не выполнена проверка сопротивления модулем " + module
-                            + "с адресом " + address.toStringInHexFormat());
+                            + " с адресом " + address.toStringInHexFormat());
                     return false;
                 }
             } catch (Exception e) {

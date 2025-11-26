@@ -94,14 +94,7 @@ public class _101_deviceWorkingScreenControl {
                     AnchorPane.setTopAnchor(button, 695.0);
                     AnchorPane.setLeftAnchor(button, 770.0);
                     button.setup(SimpleButton.Presets.CANCEL);
-                    button.setOnAction(event -> {
-                        try {
-                            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.getFxmlName());
-                            onClose();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+                    button.setOnAction(this::cancelButtonAction);
                     button.changePosition(2);
                     break;
                 case SimpleButton button when button == startButton:

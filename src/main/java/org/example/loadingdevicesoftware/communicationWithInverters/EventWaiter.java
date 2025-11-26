@@ -86,6 +86,10 @@ public class EventWaiter {
         }
     }
 
+    public static void shutdown() {
+        instance.scheduler.shutdownNow();
+    }
+
     public static byte[] getResponse(Address address) {
         return responsesStorage.get(address);
     }
