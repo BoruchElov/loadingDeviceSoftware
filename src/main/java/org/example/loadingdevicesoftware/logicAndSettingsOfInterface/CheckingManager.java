@@ -32,6 +32,8 @@ public class CheckingManager {
     private static ArrayList<Double> formParameters = new ArrayList<>();
 
     private static final HashMap<String, Address> addressesStorage = new HashMap<>();
+    @Getter
+    private static final ArrayList<Address> availableAddresses = new ArrayList<>();
 
     @Getter
     private static boolean firstCheck = false, secondCheck = false, thirdCheck = false, fourthCheck = false, fifthCheck = false;
@@ -116,6 +118,7 @@ public class CheckingManager {
                 addressesStorage.put("moduleC2", ConnectionControl.getInvertersAddress(5));
                 break;
             case HAND_CONTROL:
+                //variableAddressesStorage - это хранилище адресов, которые выбрал пользователь в сценарии ручного ввода
                 if (!variableAddressesStorage.isEmpty()) {
                     HashMap<String, Integer> map = new HashMap<>();
                     map.put("moduleA1", 0);
@@ -131,20 +134,28 @@ public class CheckingManager {
 
                     for (String module : variableAddressesStorage) {
                         if (Objects.equals(addressesList.get(map.get(module)), "00:00:00:00")) {
-                            result = false;
+                            return false;
                         } else {
-                            Address address = ConnectionControl.getInvertersAddress(map.get(module));
                             for (int i = 0; i < 6; i++) {
-                                address = ConnectionControl.getInvertersAddress(i);
+                                Address address = ConnectionControl.getInvertersAddress(i);
                                 if (addressesList.get(map.get(module)).equals(address.toStringInHexFormat())) {
+                                    addressesStorage.put(module, address);
                                     break;
                                 }
                             }
-                            addressesStorage.put(module, address);
                         }
                     }
                 }
                 break;
+        }
+        if (!availableAddresses.isEmpty()) {
+            availableAddresses.clear();
+        } else {
+            if (!addressesStorage.isEmpty()) {
+                for (String module : addressesStorage.keySet()) {
+                    availableAddresses.add(addressesStorage.get(module));
+                }
+            }
         }
         return result;
     }

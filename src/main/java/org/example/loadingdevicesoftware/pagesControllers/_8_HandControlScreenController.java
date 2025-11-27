@@ -12,10 +12,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import org.example.loadingdevicesoftware.communicationWithInverters.Address;
+import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class _8_HandControlScreenController extends ScreensController implements Configurable {
@@ -624,9 +629,10 @@ public class _8_HandControlScreenController extends ScreensController implements
     public boolean launchScenario() {
         //Добавление логики из родительского метода
         boolean result = super.launchScenario();
+        //Выбор команды
         Commands typeOfCurrent = currentFormComboBox.getSelectionModel().getSelectedIndex() == 0 ? Commands.SET_SCENARO_2
                 : Commands.SET_SCENARO_1;
-        //Заполнение динамического массива исходных данных
+        //Заполнение динамического массива исходных данных. Каждая элемент массива - строка с нужными параметрами сценария
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
         SimpleTextField[] currentFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
@@ -642,6 +648,37 @@ public class _8_HandControlScreenController extends ScreensController implements
                 scenarioParameters.add(data);
             }
         }
+        //Заполнение динамического массива адресов
+        ArrayList<Address>  addresses = new ArrayList<>();
+        ArrayList<String> texts = new ArrayList<>();
+        try {
+            texts = new ArrayList<>(AddressesStorage.readAddresses());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        for (String text : texts) {
+            addresses.add(new Address(ConnectionControl.toIntFromHexString(text)));
+        }
+        //Отправка сообщений с настройками сценария
+        ArrayList<Address> addressesToSend = CheckingManager.getAvailableAddresses();
+        for (int i = 0; i < addressesToSend.size(); i++) {
+            try {
+                Inverters.sendCommandToInverter(addressesToSend.get(i),typeOfCurrent,scenarioParameters.get(i));
+                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addressesToSend.get(i),
+                        typeOfCurrent), ConnectionControl.ExpectedValue.PHRASE).substring(1);
+                System.out.println(response);
+                if (!response.equals("START_RESISTANCE_CHECK(YES)")) {
+                    System.err.println("Ошибка! Не получен ответ START_RESISTANCE_CHECK(YES) от модуля с адресом "
+                            + addressesToSend.get(i).toStringInHexFormat());
+                    return false;
+                }
+            } catch (Exception e) {
+                System.err.println("Ошибка при отправке команды START_RESISTANCE_CHECK() модулю с адресом "
+                        + addressesToSend.get(i).toStringInHexFormat());
+                return false;
+            }
+        }
+
         //После того как дождались ответа на сообщение set_scenaro
         typeOfCurrent = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? Commands.START_SCENARO_1
                 : Commands.START_SCENARO_2;
