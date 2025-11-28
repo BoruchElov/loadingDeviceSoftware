@@ -627,12 +627,13 @@ public class _8_HandControlScreenController extends ScreensController implements
      */
     @Override
     public boolean launchScenario() {
+        ArrayList<String> modules = getChosenModules();
         //Добавление логики из родительского метода
         boolean result = super.launchScenario();
         //Выбор команды
         Commands typeOfCurrent = currentFormComboBox.getSelectionModel().getSelectedIndex() == 0 ? Commands.SET_SCENARO_2
                 : Commands.SET_SCENARO_1;
-        //Заполнение динамического массива исходных данных. Каждая элемент массива - строка с нужными параметрами сценария
+        //Заполнение динамического массива исходных данных. Каждый элемент массива - строка с нужными параметрами сценария
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
         SimpleTextField[] currentFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
@@ -659,6 +660,8 @@ public class _8_HandControlScreenController extends ScreensController implements
         for (String text : texts) {
             addresses.add(new Address(ConnectionControl.toIntFromHexString(text)));
         }
+        //Строка с результатами сценария
+        String output = "";
         //Отправка сообщений с настройками сценария
         ArrayList<Address> addressesToSend = CheckingManager.getAvailableAddresses();
         for (int i = 0; i < addressesToSend.size(); i++) {
@@ -667,17 +670,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addressesToSend.get(i),
                         typeOfCurrent), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
-                if (!response.equals("START_RESISTANCE_CHECK(YES)")) {
-                    System.err.println("Ошибка! Не получен ответ START_RESISTANCE_CHECK(YES) от модуля с адресом "
+                String answer = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? "SET_SCENARO_1(YES)" : "SET_SCENARO_2(YES)";
+                if (!response.equals(answer)) {
+                    System.err.println("Ошибка! Не получен ответ " + answer + " от модуля с адресом "
                             + addressesToSend.get(i).toStringInHexFormat());
                     return false;
                 }
+                output += "Ответ от модуля " + addressesToSend.get(i).toStringInHexFormat() + ": " + response + "\n";
             } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды START_RESISTANCE_CHECK() модулю с адресом "
+                System.err.println("Ошибка при отправке команды SET_SCENARO_1() модулю с адресом "
                         + addressesToSend.get(i).toStringInHexFormat());
                 return false;
             }
         }
+        InterfaceElementsLogic.showAlert(output);
+
+        //Отправка сообщений
+
 
         //После того как дождались ответа на сообщение set_scenaro
         typeOfCurrent = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? Commands.START_SCENARO_1
@@ -813,16 +822,25 @@ public class _8_HandControlScreenController extends ScreensController implements
         boolean flag = super.isThereSomethingToCheck();
         if (!flag) {
             CheckingManager.clearVariableAddresses();
-            ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button,
-                    moduleA2Button, moduleB2Button, moduleC2Button};
-            String[] moduleNames = new String[]{"moduleA1", "moduleB1", "moduleC1", "moduleA2", "moduleB2", "moduleC2"};
-            for (int i = 0; i < buttons.length; i++) {
-                if (buttons[i].getObjectPosition().getActualPosition() != 0) {
-                    CheckingManager.addVariableAddress(moduleNames[i]);
-                }
+            ArrayList<String> modules = getChosenModules();
+            for (String module : modules) {
+                CheckingManager.addVariableAddress(module);
             }
         }
         return flag;
+    }
+
+    private ArrayList<String> getChosenModules() {
+        ArrayList<String> chosenModules = new ArrayList<>();
+        String[] moduleNames = new String[]{"moduleA1", "moduleB1", "moduleC1", "moduleA2", "moduleB2", "moduleC2"};
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button,
+                moduleA2Button, moduleB2Button, moduleC2Button};
+        for (int i = 0; i < buttons.length; i++) {
+            if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                chosenModules.add(moduleNames[i]);
+            }
+        }
+        return chosenModules;
     }
 }
 

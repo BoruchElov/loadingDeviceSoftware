@@ -131,15 +131,16 @@ public class CheckingManager {
                     if (!addressesStorage.isEmpty()) {
                         addressesStorage.clear();
                     }
-
                     for (String module : variableAddressesStorage) {
                         if (Objects.equals(addressesList.get(map.get(module)), "00:00:00:00")) {
-                            return false;
+                            result = false;
                         } else {
+                            result = false;
                             for (int i = 0; i < 6; i++) {
                                 Address address = ConnectionControl.getInvertersAddress(i);
                                 if (addressesList.get(map.get(module)).equals(address.toStringInHexFormat())) {
                                     addressesStorage.put(module, address);
+                                    result = true;
                                     break;
                                 }
                             }

@@ -39,6 +39,11 @@ public final class StatusService {
         store.seenOnline(mac);
     }
 
+    public boolean isAddressOnline(String mac) {
+        StatusStore.ModuleState st = store.raw().get(mac);
+        return st.status == StatusStore.OnlineStatus.ONLINE;
+    }
+
     // Добавить контроллер в список слушателей UI
     public void addListener(Consumer<Map<String, StatusStore.OnlineStatus>> listener) {
         listeners.add(listener);
@@ -56,11 +61,14 @@ public final class StatusService {
 
     private void sweepForTimeouts() {
         final long now = System.nanoTime();
-        store.raw().forEach((mac, st) -> {
+
+        for (String address : store.raw().keySet()) {
+            StatusStore.ModuleState st = store.raw().get(address);
             if (now - st.lastSeenNanos > TIMEOUT_NANOS && st.status != StatusStore.OnlineStatus.OFFLINE) {
                 st.status = StatusStore.OnlineStatus.OFFLINE;
             }
-        });
+        }
+
     }
 
     private void notifyListeners() {

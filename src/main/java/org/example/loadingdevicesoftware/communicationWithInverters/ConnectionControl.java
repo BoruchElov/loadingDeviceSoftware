@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.AddressesStorage;
+import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -45,14 +46,6 @@ public class ConnectionControl {
         MAC.registerHandler(0x02, invs);
 
         ArrayList<String> values = new ArrayList<>();
-        try {
-            values = new ArrayList<>(AddressesStorage.readAddresses());
-        } catch(Exception e) {
-            System.err.println("Не удалось прочитать адреса из файла.");
-        }
-        for (int i = 0; i < invertersAddresses.length; i++) {
-            invertersAddresses[i] = new AtomicReference<>(new Address(toIntFromHexString(values.get(i))));
-        }
     }
 
     public static void closeConnection() {
@@ -61,12 +54,17 @@ public class ConnectionControl {
             MAC.close();
         }
         Commands.closeScheduler();
+        StatusService.getInstance().stop();
     }
 
     public static void clearInvertersAddresses() {
         for (int i = 0; i < invertersAddresses.length; i++) {
             invertersAddresses[i].set(new Address(0));
         }
+    }
+
+    public static void deleteAddress(int address) {
+
     }
 
     public static byte[] extractBytes(ByteBuffer buffer) {
@@ -110,6 +108,7 @@ public class ConnectionControl {
         hexString = hexString.replace(":","");
         return Integer.parseInt(hexString, 16);
     }
+
 
     public static void addAddress(Address address) {
         for (AtomicReference<Address> invertersAddress : invertersAddresses) {

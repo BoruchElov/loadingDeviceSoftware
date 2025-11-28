@@ -13,5 +13,16 @@ public class ScenariosManager {
 
     }
 
+    private static void handControlScenario() {
+
+    }
+
+    /**
+     * Метод для остановки ожидания сообщений от инверторов через EventWaiter, если такое есть.
+     */
+    private static void shutdown() {
+
+    }
+
 }
 
