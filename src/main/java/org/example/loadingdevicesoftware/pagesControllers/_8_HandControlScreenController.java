@@ -61,6 +61,8 @@ public class _8_HandControlScreenController extends ScreensController implements
     @FXML
     SimpleTextField Ampermetr;
     @FXML
+    SimpleTextField currentPhase;
+    @FXML
     SimpleTextField Voltmetr;
     //Текстовое поле для вывода времени
     @FXML
@@ -164,6 +166,8 @@ public class _8_HandControlScreenController extends ScreensController implements
     Text amperText;
     @FXML
     Text voltText;
+    @FXML
+    Text currentPhaseText;
 
 
     @FXML
@@ -207,7 +211,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                         || textField == phaseALAngle || textField == phaseBLAngle || textField == phaseCLAngle
                         || textField == phaseARCurrent || textField == phaseBRCurrent || textField == phaseCRCurrent
                         || textField == phaseARAngle || textField == phaseBRAngle || textField == phaseCRAngle || textField == timeInput
-                        || textField == timeOutput || textField == Ampermetr || textField == Voltmetr || textField == frequencyInput -> {
+                        || textField == timeOutput || textField == Ampermetr || textField == Voltmetr || textField == frequencyInput
+                        || textField == currentPhase-> {
                     textField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     textField.setAlignment(Pos.CENTER);
                     // Переменные для настройки размеров
@@ -292,19 +297,24 @@ public class _8_HandControlScreenController extends ScreensController implements
                         //Амперметр и вольтметр
                         case SimpleTextField tf1 when tf1 == Ampermetr -> {
                             tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
-                            AnchorPane.setTopAnchor(tf1, 590.);
+                            AnchorPane.setTopAnchor(tf1, 520.);
+                            AnchorPane.setLeftAnchor(tf1, 610.);
+                        }
+                        case SimpleTextField tf1 when tf1 == currentPhase -> {
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            AnchorPane.setTopAnchor(tf1, 600.);
                             AnchorPane.setLeftAnchor(tf1, 610.);
                         }
                         case SimpleTextField tf1 when tf1 == Voltmetr -> {
                             tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
-                            AnchorPane.setTopAnchor(tf1, 590.);
+                            AnchorPane.setTopAnchor(tf1, 560.);
                             AnchorPane.setLeftAnchor(tf1, 805.);
                         }
                         //Настройка внешнего вида и расположения кнопки вывода времени отключения
                         case SimpleTextField tf1 when tf1 == timeOutput -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 177.);
-                            AnchorPane.setLeftAnchor(tf1, 830.);
+                            AnchorPane.setLeftAnchor(tf1, 759.);
                         } // Ввод частоты модулей
                         case SimpleTextField tf1 when tf1 == frequencyInput -> {
                             tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
@@ -332,12 +342,12 @@ public class _8_HandControlScreenController extends ScreensController implements
                         //Картинки вольт и ампер метров
                         case SimpleImageView iv1 when iv1 == PicAmpermetr -> {
                             imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.AMPERMETR}, new double[][]{{60., 60.}});
-                            AnchorPane.setTopAnchor(imageView, 585.);
+                            AnchorPane.setTopAnchor(imageView, 555.);
                             AnchorPane.setLeftAnchor(imageView, 533.);
                         }
                         case SimpleImageView iv1 when iv1 == PicVoltmetr -> {
                             imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.VOLTMETR}, new double[][]{{60., 60.}});
-                            AnchorPane.setTopAnchor(imageView, 585.);
+                            AnchorPane.setTopAnchor(imageView, 555.);
                             AnchorPane.setLeftAnchor(imageView, 730.);
                         }
                         default -> {
@@ -452,7 +462,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                         text == currentTwo || text == phaseOne || text == phaseTwo || text == aOne ||
                         text == aTwo || text == bOne || text == bTwo || text == cOne || text == cTwo ||
                         text == timerText || text == amperText || text == voltText || text == frequencyText
-                        || text == currentFormText -> {
+                        || text == currentFormText || text == currentPhaseText -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     text.setFill(Color.BLACK);
 
@@ -540,8 +550,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                         //Окно tсраб.
                         case Text text1 when text1 == timerText -> {
                             text1.setText("tсраб.");
-                            AnchorPane.setTopAnchor(text1, 190.);
-                            AnchorPane.setLeftAnchor(text1, 760.);
+                            AnchorPane.setTopAnchor(text1, 150.);
+                            AnchorPane.setLeftAnchor(text1, 807.);
                         }
                         //Окно frequency.
                         case Text text1 when text1 == frequencyText -> {
@@ -552,13 +562,18 @@ public class _8_HandControlScreenController extends ScreensController implements
                         //текст для АМ и ВМ
                         case Text text1 when text1 == amperText -> {
                             text1.setText("I, A");
-                            AnchorPane.setTopAnchor(text1, 555.);
-                            AnchorPane.setLeftAnchor(text1, 548.);
+                            AnchorPane.setTopAnchor(text1, 495.);
+                            AnchorPane.setLeftAnchor(text1, 645.);
                         }
                         case Text text1 when text1 == voltText -> {
                             text1.setText("U, В");
-                            AnchorPane.setTopAnchor(text1, 555.);
-                            AnchorPane.setLeftAnchor(text1, 743.);
+                            AnchorPane.setTopAnchor(text1, 530.);
+                            AnchorPane.setLeftAnchor(text1, 835.);
+                        }
+                        case Text text1 when text1 == currentPhaseText -> {
+                            text1.setText("φI, гр.");
+                            AnchorPane.setTopAnchor(text1, 575.);
+                            AnchorPane.setLeftAnchor(text1, 635.);
                         }
                         default -> {
                         }
@@ -609,7 +624,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                 break;
             //Управление контактами
             case ButtonWithPicture button when button == contactOneButton || button == contactTwoButton:
-                funChangeModeContact(button);
+                int i = button.getObjectPosition().getActualPosition();
+                button.changePosition(i == 2 ? 0 : (i + 1));
                 break;
             case ButtonWithPicture button when button == moduleA1Button || button == moduleB1Button || button == moduleC1Button
                     || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button:

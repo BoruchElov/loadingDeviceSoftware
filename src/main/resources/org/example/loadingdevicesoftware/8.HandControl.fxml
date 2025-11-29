@@ -48,6 +48,7 @@
         <SimpleTextField fx:id="timeInput"/>
         <!--текстовое поле для ввода частоты -->
         <SimpleTextField fx:id="frequencyInput"/>
+        <SimpleTextField fx:id="currentPhase"/>
 
 
         <!--Картинки-->
@@ -99,6 +100,7 @@
         <!--текст ам и вм-->
         <Text fx:id="amperText"/>
         <Text fx:id="voltText"/>
+        <Text fx:id="currentPhaseText"/>
 
 
         <!--Объекты для наследования-->

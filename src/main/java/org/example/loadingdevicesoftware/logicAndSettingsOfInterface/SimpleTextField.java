@@ -45,7 +45,7 @@ public class SimpleTextField extends TextField implements Changeable {
     }
 
     public enum Sizes {
-        SMALL, MEDIUM, MEDIUM_ONE, LARGE
+        SMALL, MEDIUM, MEDIUM_ONE, MEDIUM_TWO, LARGE
     }
 
     //measures[0] - ширина, measures[1] - высота
@@ -137,6 +137,7 @@ public class SimpleTextField extends TextField implements Changeable {
             case SMALL -> new int[]{52, 52};
             case MEDIUM -> new int[]{75, 52};
             case MEDIUM_ONE -> new int[]{100, 52};
+            case MEDIUM_TWO -> new int[]{145, 52};
             case LARGE -> new int[]{336, 52};
         };
     }
