@@ -24,5 +24,13 @@ public class ScenariosManager {
 
     }
 
+    /**
+        Метод для получения массива строк из
+        результата сценария
+    */
+    public static String[] analyzeResults(String input){
+        return input.replace(" ", "").split(",");
+    }
+
 }
 
