@@ -17,7 +17,7 @@ class ScreensController extends BasicController {
 
     boolean[] flags;                        //Массив для хранения булевых значений для пользовательских решений
 
-    Node[] nodesToCheck;
+    ArrayList<Node> nodesToCheck;
 
     @FXML
     SimpleButton clearButton;
@@ -94,15 +94,20 @@ class ScreensController extends BasicController {
                 if (listeners.containsKey(field)) {
                     field.textProperty().removeListener((ChangeListener<? super String>) listeners.get(field));
                     listeners.remove(field);
-                    field.getStyleClass().removeAll("warning");
+                    field.getStyleClass().remove("warning");
                 }
+            }
+            if (child instanceof SimpleComboBox<?> comboBox) {
+                if (listeners.containsKey(comboBox)) {
+                    comboBox.getSelectionModel().selectedItemProperty().removeListener((ChangeListener<? super Object>) listeners.get(comboBox));
+                    listeners.remove(comboBox);
+                    comboBox.getStyleClass().remove("warning");
+                }
+                comboBox.getSelectionModel().clearSelection();
             }
             if (child instanceof Changeable changeable) {
                 changeable.setActualStatus(Changeable.Status.NORMAL);
                 changeable.changePosition(0);
-            }
-            if (child instanceof SimpleComboBox<?> comboBox) {
-                comboBox.getSelectionModel().clearSelection();
             }
         }
         Arrays.fill(flags, false);
@@ -177,21 +182,31 @@ class ScreensController extends BasicController {
 
     public void addElementsListeners() {
         for (Node node : uncheckedNodes) {
-            List<String> copy = new ArrayList<>(node.getStyleClass());
-            node.getStyleClass().clear();
-            node.getStyleClass().add("warning");
-            node.getStyleClass().addAll(copy);
+            List<String> copy = new ArrayList<>();
+            copy.add("warning");
+            copy.addAll(node.getStyleClass());
+            node.getStyleClass().setAll(copy);
             if (node instanceof SimpleTextField field && !listeners.containsKey(field)) {
                 ChangeListener<String> textListener = (observable, oldValue, newValue) -> {
                     if (field.getText().isBlank()) {
-                        node.getStyleClass().setAll("warning");
-                        node.getStyleClass().addAll(copy);
-                    } else {
                         node.getStyleClass().setAll(copy);
+                    } else {
+                        node.getStyleClass().remove("warning");
                     }
                 };
                 field.textProperty().addListener(textListener);
                 listeners.put(node, textListener);
+            }
+            if (node instanceof SimpleComboBox<?> comboBox && !listeners.containsKey(comboBox)) {
+                ChangeListener<Object> modelListener = (observable, oldValue, newValue) -> {
+                  if (comboBox.getSelectionModel().isEmpty()) {
+                      node.getStyleClass().setAll(copy);
+                  }  else {
+                      node.getStyleClass().remove("warning");
+                  }
+                };
+                comboBox.getSelectionModel().selectedItemProperty().addListener(modelListener);
+                listeners.put(comboBox, modelListener);
             }
         }
     }
@@ -234,6 +249,11 @@ class ScreensController extends BasicController {
                 if (textField.getText().isBlank()) {
                     result = true;
                     uncheckedNodes.add(textField);
+                }
+            } else if (node instanceof SimpleComboBox<?> comboBox) {
+                if (comboBox.getSelectionModel().isEmpty()) {
+                    result = true;
+                    uncheckedNodes.add(comboBox);
                 }
             }
         }

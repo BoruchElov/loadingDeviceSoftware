@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -174,8 +175,8 @@ public class _8_HandControlScreenController extends ScreensController implements
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new Node[]{frequencyInput, timeInput, nameTextField, objectTextField, contactOneButton,
-                contactTwoButton, conditionButton, dryWetButton};
+        nodesToCheck = new ArrayList<>(List.of(new Node[]{frequencyInput, timeInput, nameTextField, objectTextField,
+                currentFormComboBox, phaseALCurrent, phaseALAngle}));
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
@@ -192,13 +193,19 @@ public class _8_HandControlScreenController extends ScreensController implements
                     switch (button) {
                         //Настройка внешнего вида и расположения кнопки условия отключения
                         case SimpleButton bt1 when bt1 == conditionButton -> {
-                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "t/сраб", "Контакт"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "t/сраб", "Контакт"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            bt1.setActualStatus(Changeable.Status.LOCKED);
+                            bt1.changePosition(1);
                             AnchorPane.setTopAnchor(button, 225.);
                             AnchorPane.setLeftAnchor(button, 1005.);
                         }
                         //Кнопка выбора сухого или мокрого контакта
                         case SimpleButton bt1 when bt1 == dryWetButton -> {
-                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "Сухой", "Мокрый"}, FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            bt1.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "Сухой", "Мокрый"},
+                                    FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                            bt1.setActualStatus(Changeable.Status.LOCKED);
+                            bt1.changePosition(0);
                             AnchorPane.setTopAnchor(button, 400.);
                             AnchorPane.setLeftAnchor(button, 1005.);
                         }
@@ -382,6 +389,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                         case ButtonWithPicture button1 when button1 == contactOneButton -> {        //Кнопка контактора 1
                             AnchorPane.setTopAnchor(button1, 177.);
                             AnchorPane.setLeftAnchor(button1, 200.);
+                            button1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                int theFirstPosition = contactOneButton.getObjectPosition().getActualPosition();
+                                int theSecondPosition = contactTwoButton.getObjectPosition().getActualPosition();
+                                if (theFirstPosition == 0 && theSecondPosition == 0) {
+                                    conditionButton.changePosition(1);
+                                    conditionButton.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(conditionButton);
+                                    dryWetButton.changePosition(0);
+                                    dryWetButton.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(dryWetButton);
+                                } else {
+                                    conditionButton.setActualStatus(Changeable.Status.NORMAL);
+                                    if (!nodesToCheck.contains(conditionButton)) nodesToCheck.add(conditionButton);
+                                    dryWetButton.setActualStatus(Changeable.Status.NORMAL);
+                                    if (!nodesToCheck.contains(dryWetButton)) nodesToCheck.add(dryWetButton);
+                                }
+                            });
                         }
                         case ButtonWithPicture button1 when button1 == contactTwoButton -> {        //Контактор 2
                             AnchorPane.setTopAnchor(button1, 177.);
@@ -409,6 +433,19 @@ public class _8_HandControlScreenController extends ScreensController implements
                                     new String[]{"button-module-off", "button-module-on"},
                                     new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
                             bt1.setOnAction(this::changeConfiguration);
+                            bt1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                if (moduleA1Button.getObjectPosition().getActualPosition() == 0) {
+                                    phaseALCurrent.clear();
+                                    phaseALCurrent.setActualStatus(Changeable.Status.LOCKED);
+                                    phaseALAngle.clear();
+                                    phaseALAngle.setActualStatus(Changeable.Status.LOCKED);
+                                } else {
+                                    phaseALCurrent.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseALCurrent.setEditable(true);
+                                    phaseALAngle.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseALAngle.setEditable(true);
+                                }
+                            });
                             AnchorPane.setTopAnchor(bt1, Y1);
                             AnchorPane.setLeftAnchor(bt1, X1);
                         }
@@ -417,6 +454,24 @@ public class _8_HandControlScreenController extends ScreensController implements
                                     new String[]{"button-module-off", "button-module-on"},
                                     new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
                             bt1.setOnAction(this::changeConfiguration);
+                            bt1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                if (moduleB1Button.getObjectPosition().getActualPosition() == 0) {
+                                    phaseBLCurrent.clear();
+                                    phaseBLCurrent.setActualStatus(Changeable.Status.LOCKED);
+                                    phaseBLAngle.clear();
+                                    phaseBLAngle.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(phaseBLCurrent);
+                                    nodesToCheck.remove(phaseBLAngle);
+                                } else {
+                                    phaseBLCurrent.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseBLCurrent.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseBLCurrent)) nodesToCheck.add(phaseBLCurrent);
+                                    phaseBLAngle.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseBLAngle.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseBLAngle)) nodesToCheck.add(phaseBLAngle);
+
+                                }
+                            });
                             AnchorPane.setTopAnchor(bt1, Y2);
                             AnchorPane.setLeftAnchor(bt1, X1);
                         }
@@ -425,6 +480,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                                     new String[]{"button-module-off", "button-module-on"},
                                     new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
                             bt1.setOnAction(this::changeConfiguration);
+                            bt1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                if (moduleC1Button.getObjectPosition().getActualPosition() == 0) {
+                                    phaseCLCurrent.clear();
+                                    phaseCLCurrent.setActualStatus(Changeable.Status.LOCKED);
+                                    phaseCLAngle.clear();
+                                    phaseCLAngle.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(phaseCLCurrent);
+                                    nodesToCheck.remove(phaseCLAngle);
+                                } else {
+                                    phaseCLCurrent.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseCLCurrent.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseCLCurrent)) nodesToCheck.add(phaseCLCurrent);
+                                    phaseCLAngle.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseCLAngle.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseCLAngle)) nodesToCheck.add(phaseCLAngle);
+                                }
+                            });
                             AnchorPane.setTopAnchor(bt1, Y3);
                             AnchorPane.setLeftAnchor(bt1, X1);
                         }
@@ -433,6 +505,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                                     new String[]{"button-module-off", "button-module-on"},
                                     new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
                             bt1.setOnAction(this::changeConfiguration);
+                            bt1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                if (moduleA2Button.getObjectPosition().getActualPosition() == 0) {
+                                    phaseARCurrent.clear();
+                                    phaseARCurrent.setActualStatus(Changeable.Status.LOCKED);
+                                    phaseARAngle.clear();
+                                    phaseARAngle.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(phaseARCurrent);
+                                    nodesToCheck.remove(phaseARAngle);
+                                } else {
+                                    phaseARCurrent.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseARCurrent.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseARCurrent)) nodesToCheck.add(phaseARCurrent);
+                                    phaseARAngle.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseARAngle.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseARAngle)) nodesToCheck.add(phaseARAngle);
+                                }
+                            });
                             AnchorPane.setTopAnchor(bt1, Y1);
                             AnchorPane.setLeftAnchor(bt1, X2);
                         }
@@ -441,6 +530,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                                     new String[]{"button-module-off", "button-module-on"},
                                     new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
                             bt1.setOnAction(this::changeConfiguration);
+                            bt1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                if (moduleB2Button.getObjectPosition().getActualPosition() == 0) {
+                                    phaseBRCurrent.clear();
+                                    phaseBRCurrent.setActualStatus(Changeable.Status.LOCKED);
+                                    phaseBRAngle.clear();
+                                    phaseBRAngle.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(phaseBRCurrent);
+                                    nodesToCheck.remove(phaseBRAngle);
+                                } else {
+                                    phaseBRCurrent.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseBRCurrent.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseBRCurrent)) nodesToCheck.add(phaseBRCurrent);
+                                    phaseBRAngle.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseBRAngle.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseBRAngle)) nodesToCheck.add(phaseBRAngle);
+                                }
+                            });
                             AnchorPane.setTopAnchor(bt1, Y2);
                             AnchorPane.setLeftAnchor(bt1, X2);
                         }
@@ -449,6 +555,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                                     new String[]{"button-module-off", "button-module-on"},
                                     new Image[]{ApplicationConstants.INVERTER_IMAGE, ApplicationConstants.INVERTER_IMAGE});
                             bt1.setOnAction(this::changeConfiguration);
+                            bt1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                if (moduleC2Button.getObjectPosition().getActualPosition() == 0) {
+                                    phaseCRCurrent.clear();
+                                    phaseCRCurrent.setActualStatus(Changeable.Status.LOCKED);
+                                    phaseCRAngle.clear();
+                                    phaseCRAngle.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(phaseCRCurrent);
+                                    nodesToCheck.remove(phaseCRAngle);
+                                } else {
+                                    phaseCRCurrent.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseCRCurrent.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseCRCurrent)) nodesToCheck.add(phaseCRCurrent);
+                                    phaseCRAngle.setActualStatus(Changeable.Status.NORMAL);
+                                    phaseCRAngle.setEditable(true);
+                                    if (!nodesToCheck.contains(phaseCRAngle)) nodesToCheck.add(phaseCRAngle);
+                                }
+                            });
                             AnchorPane.setTopAnchor(bt1, Y3);
                             AnchorPane.setLeftAnchor(bt1, X2);
                         }
@@ -629,7 +752,8 @@ public class _8_HandControlScreenController extends ScreensController implements
                 break;
             case ButtonWithPicture button when button == moduleA1Button || button == moduleB1Button || button == moduleC1Button
                     || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button:
-                funOnOffModule(button);
+                int k = button.getObjectPosition().getActualPosition();
+                button.changePosition(k == 1 ? 0 : (k + 1));
                 //analyzeModuleButtons();
                 break;
             //Определение поведения кнопки ПУСК
@@ -747,94 +871,8 @@ public class _8_HandControlScreenController extends ScreensController implements
         }
     }
 
-    //    Функция по активации модуля
-    public void funOnOffModule(ButtonWithPicture button) {
-        int index = 0;
-        SimpleTextField stf1 = null;
-        SimpleTextField stf2 = null;
-        switch (button) {
-            case ButtonWithPicture button1 when button1 == moduleA1Button:
-                index = 2;
-                stf1 = phaseALCurrent;
-                stf2 = phaseALAngle;
-                break;
-            case ButtonWithPicture button1 when button1 == moduleB1Button:
-                index = 3;
-                stf1 = phaseBLCurrent;
-                stf2 = phaseBLAngle;
-                break;
-            case ButtonWithPicture button1 when button1 == moduleC1Button:
-                index = 4;
-                stf1 = phaseCLCurrent;
-                stf2 = phaseCLAngle;
-                break;
-            case ButtonWithPicture button1 when button1 == moduleA2Button:
-                index = 5;
-                stf1 = phaseARCurrent;
-                stf2 = phaseARAngle;
-                break;
-            case ButtonWithPicture button1 when button1 == moduleB2Button:
-                index = 6;
-                stf1 = phaseBRCurrent;
-                stf2 = phaseBRAngle;
-                break;
-            case ButtonWithPicture button1 when button1 == moduleC2Button:
-                index = 7;
-                stf1 = phaseCRCurrent;
-                stf2 = phaseCRAngle;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + button);
-        }
-        if (flags[index]) {
-            button.changePosition(0);
-            flags[index] = false;
-            stf1.setEditable(false);
-            stf2.setEditable(false);
-        } else {
-            button.changePosition(1);
-            flags[index] = true;
-            stf1.setEditable(true);
-            stf2.setEditable(true);
-
-        }
-    }
-
-    private void analyzeModuleButtons() {
-        ArrayList<Node> dynamicUncheckedNodes = new ArrayList<>(uncheckedNodes);
-        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button,
-                moduleA2Button, moduleB2Button, moduleC2Button};
-        SimpleTextField[][] fields = new SimpleTextField[][]{{phaseALCurrent, phaseALAngle}, {phaseBLCurrent, phaseBLAngle},
-                {phaseCLCurrent, phaseCLAngle}, {phaseARCurrent, phaseARAngle}, {phaseBRCurrent, phaseBRAngle},
-                {phaseCRCurrent, phaseCRAngle}};
-        boolean flag = true;
-        for (int i = 0; i < buttons.length; i++) {
-            if (buttons[i].getObjectPosition().getActualPosition() == 0) {
-                if (dynamicUncheckedNodes.contains(fields[i][0]) && dynamicUncheckedNodes.contains(fields[i][1])) {
-                    dynamicUncheckedNodes.remove(fields[i][0]);
-                    dynamicUncheckedNodes.remove(fields[i][1]);
-                }
-            } else {
-                if (!dynamicUncheckedNodes.contains(fields[i][0]) && !dynamicUncheckedNodes.contains(fields[i][1])) {
-                    dynamicUncheckedNodes.add(fields[i][0]);
-                    dynamicUncheckedNodes.add(fields[i][1]);
-                }
-                flag = false;
-            }
-        }
-        if (flag) {
-            if (!dynamicUncheckedNodes.contains(fields[0][0]) && !dynamicUncheckedNodes.contains(fields[0][1])) {
-                dynamicUncheckedNodes.add(fields[0][0]);
-                dynamicUncheckedNodes.add(fields[0][1]);
-            }
-        }
-
-        uncheckedNodes = dynamicUncheckedNodes;
-    }
-
     @Override
     public boolean isThereSomethingToCheck() {
-        analyzeModuleButtons();
         boolean flag = super.isThereSomethingToCheck();
         if (!flag) {
             CheckingManager.clearVariableAddresses();

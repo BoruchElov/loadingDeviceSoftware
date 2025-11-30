@@ -149,11 +149,11 @@ public class _7_DifProtectionScreenController extends ScreensController implemen
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new Node[]{contactOneButton, contactTwoButton, connectionTypeOne, groupTypeOne,
+        nodesToCheck = new ArrayList<>(List.of(new Node[]{contactOneButton, contactTwoButton, connectionTypeOne, groupTypeOne,
                 connectionTypeTwo, groupTypeTwo, feedingWindingButton, faultLocationButton, phaseAOneCurrent,
                 phaseBOneCurrent, phaseCOneCurrent, phaseATwoCurrent, phaseAButton, phaseBButton, phaseCButton,
                 groundButton, phaseBTwoCurrent, phaseCTwoCurrent,phaseAOneAngle,phaseBOneAngle,phaseCOneAngle,
-                phaseATwoAngle, phaseBTwoAngle,phaseCTwoAngle,objectTextField,nameTextField};
+                phaseATwoAngle, phaseBTwoAngle,phaseCTwoAngle,objectTextField,nameTextField}));
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {

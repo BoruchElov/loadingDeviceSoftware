@@ -12,6 +12,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class _3_TestOfStageProtection3XScreenController extends ScreensController implements Configurable {
 
@@ -73,8 +76,8 @@ public class _3_TestOfStageProtection3XScreenController extends ScreensControlle
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new Node[]{phaseACurrent, phaseBCurrent, phaseCCurrent, contactOneTime, contactTwoTime,
-                phaseButton, contactOneButton, contactTwoButton, nameTextField, objectTextField};
+        nodesToCheck = new ArrayList<>(List.of(new Node[]{phaseACurrent, phaseBCurrent, phaseCCurrent, contactOneTime, contactTwoTime,
+                phaseButton, contactOneButton, contactTwoButton, nameTextField, objectTextField}));
 
         //Настройка текстовых полей ввода значений токов
         SimpleTextField[] textFields = new SimpleTextField[]{phaseACurrent, phaseBCurrent, phaseCCurrent};

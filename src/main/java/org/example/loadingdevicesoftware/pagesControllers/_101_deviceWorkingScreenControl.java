@@ -180,6 +180,7 @@ public class _101_deviceWorkingScreenControl {
         } else {
             try {
                 InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.getFxmlName());
+                ScreensController.setAllowedToStartScenario(false);
                 onClose();
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -17,7 +17,6 @@ public class Position {
     @Getter
     private Image[] images;
     private double[][] sizes;
-    private double[][] location;
 
 
     public Position(String[] styles, String[] texts) {
@@ -43,38 +42,26 @@ public class Position {
         this.styles = styles;
         this.images = images;
         this.sizes = sizes;
-        this.location = location;
     }
 
     public void setActualPosition(int actualPosition, Button button) {
         this.actualPosition = actualPosition;
-        button.getStyleClass().clear();
-        button.getStyleClass().add("button");
-        button.getStyleClass().add(styles[actualPosition]);
+        button.getStyleClass().setAll("button",styles[actualPosition]);
         button.setText(texts[actualPosition]);
     }
 
     public void setActualPosition(int actualPosition, Button button, ImageView imageView) {
         this.actualPosition = actualPosition;
-        button.getStyleClass().clear();
-        imageView.getStyleClass().clear();
-        imageView.getStyleClass().add("image");
-        button.getStyleClass().add("button");
-        button.getStyleClass().add(styles[actualPosition]);
+        button.getStyleClass().setAll("button",styles[actualPosition]);
+        imageView.getStyleClass().setAll("image");
         imageView.setImage(images[actualPosition]);
     }
 
     public void setActualPosition(int actualPosition, SimpleImageView imageView) {
         this.actualPosition = actualPosition;
-        imageView.getStyleClass().clear();
-        imageView.getStyleClass().add("image");
-        imageView.getStyleClass().add(styles[actualPosition]);
+        imageView.getStyleClass().setAll("image", styles[actualPosition]);
         imageView.setFitWidth(sizes[actualPosition][0]);
         imageView.setFitHeight(sizes[actualPosition][1]);
         imageView.setImage(images[actualPosition]);
-        /*if (location != null) {
-            AnchorPane.setLeftAnchor(imageView, location[actualPosition][0]);
-            AnchorPane.setTopAnchor(imageView, location[actualPosition][1]);
-        }*/
     }
 }
