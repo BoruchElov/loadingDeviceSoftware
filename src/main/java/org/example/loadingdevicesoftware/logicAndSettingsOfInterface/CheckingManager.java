@@ -188,7 +188,7 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        /*double percent = 13.;
+        double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
@@ -214,7 +214,7 @@ public class CheckingManager {
             if (!(voltage >= lowerReference && voltage <= upperReference)) {
                 return false;
             }
-        }*/
+        }
         return true;
     }
 
@@ -238,7 +238,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean currentRangeCheck() {
-        /*//Проверка наличия параметров из формы, необходимых для проверки
+        //Проверка наличия параметров из формы, необходимых для проверки
         if (formParameters.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
@@ -289,7 +289,7 @@ public class CheckingManager {
                         return false;
                 }
             }
-        }*/
+        }
         return true;
     }
 
