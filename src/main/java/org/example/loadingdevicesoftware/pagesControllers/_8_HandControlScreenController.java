@@ -410,6 +410,23 @@ public class _8_HandControlScreenController extends ScreensController implements
                         case ButtonWithPicture button1 when button1 == contactTwoButton -> {        //Контактор 2
                             AnchorPane.setTopAnchor(button1, 177.);
                             AnchorPane.setLeftAnchor(button1, 300.);
+                            button1.getStyleClass().addListener((ListChangeListener<String>) change -> {
+                                int theFirstPosition = contactOneButton.getObjectPosition().getActualPosition();
+                                int theSecondPosition = contactTwoButton.getObjectPosition().getActualPosition();
+                                if (theFirstPosition == 0 && theSecondPosition == 0) {
+                                    conditionButton.changePosition(1);
+                                    conditionButton.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(conditionButton);
+                                    dryWetButton.changePosition(0);
+                                    dryWetButton.setActualStatus(Changeable.Status.LOCKED);
+                                    nodesToCheck.remove(dryWetButton);
+                                } else {
+                                    conditionButton.setActualStatus(Changeable.Status.NORMAL);
+                                    if (!nodesToCheck.contains(conditionButton)) nodesToCheck.add(conditionButton);
+                                    dryWetButton.setActualStatus(Changeable.Status.NORMAL);
+                                    if (!nodesToCheck.contains(dryWetButton)) nodesToCheck.add(dryWetButton);
+                                }
+                            });
                         }
                         default -> {
                         }
