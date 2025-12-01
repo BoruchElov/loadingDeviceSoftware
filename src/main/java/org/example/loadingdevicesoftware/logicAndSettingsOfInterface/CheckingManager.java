@@ -7,6 +7,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionCo
 import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
+import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -55,7 +56,7 @@ public class CheckingManager {
     }
 
     /// /////////////////////////////////////////////////////////////////////////
-
+    //TODO доработать проверки для остальных сценариев
     /**
      * Метод для реализации проверки настройки модулей.
      * Для всех сценариев, кроме ручного ввода, она работает следующим образом:
@@ -76,86 +77,104 @@ public class CheckingManager {
      */
 
     public static boolean settingsCheck(Scenarios scenario) throws IOException {
-        List<String> addressesList = AddressesStorage.readAddresses();
+        ArrayList<String> addressesList = AddressesStorage.getListOfSavedAddresses();
+        if (!availableAddresses.isEmpty()) {
+            availableAddresses.clear();
+        }
         boolean result = true;
         switch (scenario) {
             case SINGLE_PHASE_SWITCHER, SINGLE_PHASE_PROTECTION:
-                if (!addressesList.isEmpty()) {
-                    result = !Objects.equals(addressesList.getFirst(), "00:00:00:00");
-                    if (result) {
-                        if (!addressesStorage.isEmpty()) {
-                            addressesStorage.clear();
-                        }
-                        addressesStorage.put("moduleA1", ConnectionControl.getInvertersAddress(0));
+                result = !Objects.equals(addressesList.getFirst(), "00:00:00:00");
+                if (!result) System.out.println("Ошибка! Не настроено достаточное количество модулей.");
+                result &= StatusService.getInstance().isAddressOnline(addressesList.getFirst());
+                if (result) {
+                    if (!addressesStorage.isEmpty()) {
+                        addressesStorage.clear();
                     }
+                    addressesStorage.put("moduleA1", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.getFirst())));
+                } else {
+                    System.out.println("Ошибка! Нужный модуль не находится в сети.");
                 }
                 break;
             case THREE_PHASE_SWITCHER, MEASUREMENT_TRANSFORMER, COMTRADE, THREE_PHASE_PROTECTION:
-                if (addressesList.size() >= 3) {
-                    result = (!Objects.equals(addressesList.getFirst(), "00:00:00:00")) &&
-                            (!Objects.equals(addressesList.get(1), "00:00:00:00")) &&
-                            (!Objects.equals(addressesList.get(2), "00:00:00:00"));
+                result = (!Objects.equals(addressesList.getFirst(), "00:00:00:00")) &&
+                        (!Objects.equals(addressesList.get(1), "00:00:00:00")) &&
+                        (!Objects.equals(addressesList.get(2), "00:00:00:00"));
+                if (!result) System.out.println("Ошибка! Не настроено достаточное количество модулей.");
+                result &= (StatusService.getInstance().isAddressOnline(addressesList.getFirst()) &&
+                        StatusService.getInstance().isAddressOnline(addressesList.get(1)) &&
+                        StatusService.getInstance().isAddressOnline(addressesList.get(2)));
+                if (result) {
+                    if (!addressesStorage.isEmpty()) {
+                        addressesStorage.clear();
+                    }
+                    addressesStorage.put("moduleA1", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.getFirst())));
+                    addressesStorage.put("moduleB1", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.get(1))));
+                    addressesStorage.put("moduleC1", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.get(2))));
+                } else {
+                    System.out.println("Ошибка! Нужное количество модулей не находится в сети.");
                 }
-                if (!addressesStorage.isEmpty()) {
-                    addressesStorage.clear();
-                }
-                addressesStorage.put("moduleA1", ConnectionControl.getInvertersAddress(0));
-                addressesStorage.put("moduleB1", ConnectionControl.getInvertersAddress(1));
-                addressesStorage.put("moduleC1", ConnectionControl.getInvertersAddress(2));
                 break;
             case DIFFERENTIAL_PROTECTION:
-                if (addressesList.size() == 6) {
-                    result = !addressesList.contains("00:00:00:00");
+                result = !addressesList.contains("00:00:00:00");
+                if (!result) System.out.println("Ошибка! Не настроено достаточное количество модулей.");
+                result &= (StatusService.getInstance().isAddressOnline(addressesList.getFirst()) &&
+                StatusService.getInstance().isAddressOnline(addressesList.get(1)) &&
+                StatusService.getInstance().isAddressOnline(addressesList.get(2)) &&
+                StatusService.getInstance().isAddressOnline(addressesList.get(3)) &&
+                StatusService.getInstance().isAddressOnline(addressesList.get(4)) &&
+                StatusService.getInstance().isAddressOnline(addressesList.get(5)));
+                if (result) {
+                    if (!addressesStorage.isEmpty()) {
+                        addressesStorage.clear();
+                    }
+                    addressesStorage.put("moduleA1", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.getFirst())));
+                    addressesStorage.put("moduleB1", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.get(1))));
+                    addressesStorage.put("moduleC1", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.get(2))));
+                    addressesStorage.put("moduleA2", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.get(3))));
+                    addressesStorage.put("moduleB2", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.get(4))));
+                    addressesStorage.put("moduleC2", new Address(ConnectionControl.
+                            toIntFromHexString(addressesList.get(5))));
+                } else {
+                    System.out.println("Ошибка! Нужное количество модулей не находится в сети.");
                 }
-                if (!addressesStorage.isEmpty()) {
-                    addressesStorage.clear();
-                }
-                addressesStorage.put("moduleA1", ConnectionControl.getInvertersAddress(0));
-                addressesStorage.put("moduleB1", ConnectionControl.getInvertersAddress(1));
-                addressesStorage.put("moduleC1", ConnectionControl.getInvertersAddress(2));
-                addressesStorage.put("moduleA2", ConnectionControl.getInvertersAddress(3));
-                addressesStorage.put("moduleB2", ConnectionControl.getInvertersAddress(4));
-                addressesStorage.put("moduleC2", ConnectionControl.getInvertersAddress(5));
+
                 break;
             case HAND_CONTROL:
                 //variableAddressesStorage - это хранилище адресов, которые выбрал пользователь в сценарии ручного ввода
                 if (!variableAddressesStorage.isEmpty()) {
-                    HashMap<String, Integer> map = new HashMap<>();
-                    map.put("moduleA1", 0);
-                    map.put("moduleB1", 1);
-                    map.put("moduleC1", 2);
-                    map.put("moduleA2", 3);
-                    map.put("moduleB2", 4);
-                    map.put("moduleC2", 5);
-
+                    HashMap<String,String> addresses = AddressesStorage.readAddresses();
                     if (!addressesStorage.isEmpty()) {
                         addressesStorage.clear();
                     }
                     for (String module : variableAddressesStorage) {
-                        if (Objects.equals(addressesList.get(map.get(module)), "00:00:00:00")) {
-                            result = false;
-                        } else {
-                            result = false;
-                            for (int i = 0; i < 6; i++) {
-                                Address address = ConnectionControl.getInvertersAddress(i);
-                                if (addressesList.get(map.get(module)).equals(address.toStringInHexFormat())) {
-                                    addressesStorage.put(module, address);
-                                    result = true;
-                                    break;
-                                }
-                            }
+                        if (Objects.equals(addresses.get(module), "00:00:00:00")) {
+                            System.out.println("Ошибка! Модуль " + module + " не настроен.");
+                            return false;
                         }
+                        if (!StatusService.getInstance().isAddressOnline(addresses.get(module))) {
+                            System.out.println("Ошибка! Модуль " + module + " с адресом " + addresses.get(module) +
+                                    " не в сети.");
+                            return false;
+                        }
+                        addressesStorage.put(module, new Address(ConnectionControl.toIntFromHexString(addresses.get(module))));
                     }
+
                 }
                 break;
         }
-        if (!availableAddresses.isEmpty()) {
-            availableAddresses.clear();
-        } else {
-            if (!addressesStorage.isEmpty()) {
-                for (String module : addressesStorage.keySet()) {
-                    availableAddresses.add(addressesStorage.get(module));
-                }
+        if (!addressesStorage.isEmpty()) {
+            for (String module : addressesStorage.keySet()) {
+                availableAddresses.add(addressesStorage.get(module));
             }
         }
         return result;

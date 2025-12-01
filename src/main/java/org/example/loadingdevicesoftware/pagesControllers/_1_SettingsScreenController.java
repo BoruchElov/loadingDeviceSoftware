@@ -139,7 +139,7 @@ public class _1_SettingsScreenController extends BasicController {
         String[] phrases = new String[]{"МОДУЛЬ А1", "МОДУЛЬ В1", "МОДУЛЬ С1", "МОДУЛЬ А2", "МОДУЛЬ В2", "МОДУЛЬ С2"};
         List<String> addresses;
         try {
-            addresses = AddressesStorage.readAddresses();
+            addresses = AddressesStorage.getListOfSavedAddresses();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -269,11 +269,5 @@ public class _1_SettingsScreenController extends BasicController {
         } else {
             combo.getItems().setAll(filtered); // нет subList-ов руками
         }
-    }
-
-
-
-    private void clearList() {
-
     }
 }

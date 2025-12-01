@@ -57,8 +57,19 @@ public class InterfaceElementsLogic {
         stage.show();
     }
 
+    public enum Alert_Size{
+        SMALL, MEDIUM, LARGE
+    }
+
     @FXML
-    public static void showAlert(String message) {
+    public static void showAlert(String message, Alert_Size size) {
+
+        int[] sizes = switch (size) {
+            case SMALL -> new int[]{500,180};
+            case MEDIUM -> new int[]{600,300};
+            case LARGE -> new int[]{700,500};
+        };
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setTitle("");
@@ -88,7 +99,7 @@ public class InterfaceElementsLogic {
 
         alert.getDialogPane().setContent(label);
         alert.getDialogPane().setStyle("-fx-background-color: #005286; -fx-padding: 0;" +
-                "-fx-pref-width: 500; -fx-pref-height: 180;");
+                "-fx-pref-width: " + sizes[0] + "; -fx-pref-height: " + sizes[1] + ";");
         alert.showAndWait();
     }
 

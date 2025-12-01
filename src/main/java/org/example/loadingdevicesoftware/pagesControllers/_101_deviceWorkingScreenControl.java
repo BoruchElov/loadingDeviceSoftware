@@ -269,7 +269,8 @@ public class _101_deviceWorkingScreenControl {
         boolean result = check.get();
         Platform.runLater(() -> updateIndicator(index, result));
         if (!result) {
-            Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage));
+            Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage,
+                    InterfaceElementsLogic.Alert_Size.SMALL));
             finishChecks();
         }
         return result;

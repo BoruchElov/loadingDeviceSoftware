@@ -21,9 +21,9 @@ public final class StatusService {
     private final List<Consumer<Map<String, StatusStore.OnlineStatus>>> listeners =
             new CopyOnWriteArrayList<>();
 
-    private static final long TIMEOUT_NANOS = Duration.ofSeconds(2).toNanos();
+    private static final long TIMEOUT_NANOS = Duration.ofSeconds(5).toNanos();
     private static final long SWEEP_PERIOD_MS = 200;
-    private static final long UI_PERIOD_MS = 500;
+    private static final long UI_PERIOD_MS = 200;
 
     private StatusService() {
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> {

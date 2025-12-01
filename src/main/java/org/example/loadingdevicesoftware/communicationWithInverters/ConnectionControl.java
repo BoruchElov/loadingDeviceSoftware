@@ -1,16 +1,14 @@
 package org.example.loadingdevicesoftware.communicationWithInverters;
 
-import lombok.Getter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.AddressesStorage;
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ConnectionControl {
@@ -25,15 +23,12 @@ public class ConnectionControl {
 
     //Порядок адресов: А1, В1, С1, А2, В2, С2
     /**
-     * Структура для хранения адресов инверторов, подключенных к сети на данный момент.
+     * Защищённый список для хранения адресов всех инверторов, запрашивавших адрес планшета за время сессии.
      */
-    private static final AtomicReference<Address>[] invertersAddresses = new AtomicReference[]{new AtomicReference<>(new Address(0)),
-            new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
-            new AtomicReference<>(new Address(0)), new AtomicReference<>(new Address(0)),
-            new AtomicReference<>(new Address(0))};
+    private static final CopyOnWriteArrayList<Address> invertersAddresses = new CopyOnWriteArrayList<>();
 
     public static Address getInvertersAddress(int index) {
-        return invertersAddresses[index].get();
+        return invertersAddresses.get(index);
     }
 
     private ConnectionControl() {}
@@ -44,8 +39,6 @@ public class ConnectionControl {
         invs = new Inverters(MAC);
         MAC.registerHandler(0x01, arp);
         MAC.registerHandler(0x02, invs);
-
-        ArrayList<String> values = new ArrayList<>();
     }
 
     public static void closeConnection() {
@@ -55,16 +48,6 @@ public class ConnectionControl {
         }
         Commands.closeScheduler();
         StatusService.getInstance().stop();
-    }
-
-    public static void clearInvertersAddresses() {
-        for (int i = 0; i < invertersAddresses.length; i++) {
-            invertersAddresses[i].set(new Address(0));
-        }
-    }
-
-    public static void deleteAddress(int address) {
-
     }
 
     public static byte[] extractBytes(ByteBuffer buffer) {
@@ -78,30 +61,12 @@ public class ConnectionControl {
         return bytes;
     }
 
-    public static void fillAddress(List<String>Addresses) {
-        for (int i = 0; i < Addresses.size(); i++) {
-            if (Addresses.get(i).equals("00:00:00:00")) {
-                continue;
-            }
-            invertersAddresses[i] = new AtomicReference<>(new Address(toIntFromHexString(Addresses.get(i))));
-        }
-    }
-
     public static List<String> getSavedAddresses() {
         List<String> addresses = new ArrayList<>();
-        for (AtomicReference<Address> invertersAddress : invertersAddresses) {
-            addresses.add(invertersAddress.get().toStringInHexFormat());
+        for (Address invertersAddress : invertersAddresses) {
+            addresses.add(invertersAddress.toStringInHexFormat());
         }
         return addresses;
-    }
-
-    public static boolean isAddressKnown(Address address) {
-        for (AtomicReference<Address> addr : invertersAddresses) {
-            if (addr.get().equals(address)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static int toIntFromHexString(String hexString) {
@@ -111,12 +76,10 @@ public class ConnectionControl {
 
 
     public static void addAddress(Address address) {
-        for (AtomicReference<Address> invertersAddress : invertersAddresses) {
-            if (invertersAddress.get().getValue() == 0) {
-                invertersAddress.set(address);
-                break;
-            }
+        for (Address invertersAddress : invertersAddresses) {
+            if (invertersAddress.equals(address)) return;
         }
+        invertersAddresses.add(address);
     }
 
     public enum ExpectedValue {

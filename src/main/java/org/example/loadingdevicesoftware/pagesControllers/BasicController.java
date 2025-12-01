@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -120,9 +121,9 @@ class BasicController {
 
     private void updateIndicators(Map<String, StatusStore.OnlineStatus> snapshot) {
         Circle[] circles = new Circle[]{circleA1, circleB1, circleC1, circleA2, circleB2, circleC2};
-        List<String> addresses;
+        ArrayList<String> addresses;
         try {
-            addresses  = AddressesStorage.readAddresses();
+            addresses  = AddressesStorage.getListOfSavedAddresses();
         } catch (IOException e) {
             for (Circle circle : circles) {
                 circle.setFill(Color.web(ApplicationConstants.Red));

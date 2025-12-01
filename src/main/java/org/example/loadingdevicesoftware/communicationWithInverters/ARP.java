@@ -11,9 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ARP implements PacketHandler {
     private cMAC MAC;
     
-    private final ConcurrentHashMap<Address, Long> deviceLastSeen = new ConcurrentHashMap<>(); 	// Храним: Address -> время последнего пинга
-    private static final long DEVICE_TIMEOUT_MS = 10_000;
-    
     public ARP(cMAC mac) {
         this.MAC = mac;
     }
@@ -27,9 +24,7 @@ public class ARP implements PacketHandler {
     	byte TypeMsg = Buff.get();
     	switch(TypeMsg) {
     	case 1:					// Запрос на MAC адрес сервера
-            if (!ConnectionControl.isAddressKnown(AddressSource)) {
-                ConnectionControl.addAddress(AddressSource);
-            }
+            ConnectionControl.addAddress(AddressSource);
             System.out.println("(ARP) Запрос на MAC адрес от: " + AddressSource.toStringInHexFormat());
             bufferTX = ByteBuffer.allocate(1+1+4);
     		Buff.rewind();
@@ -41,7 +36,6 @@ public class ARP implements PacketHandler {
     	case 2:
             System.out.println("(ARP) Запрос на PING от: " + AddressSource.toStringInHexFormat());
             StatusService.getInstance().onStatusMessage(AddressSource.toStringInHexFormat());
-            onPing(AddressSource);						// Обновляем список подключенных устройств
     		bufferTX = ByteBuffer.allocate(1+1);
     		Buff.rewind();
     		bufferTX.put(Buff);
@@ -51,29 +45,5 @@ public class ARP implements PacketHandler {
     	default:
     		System.out.println("(ARP) Пакет не распознан");
     	}
-    }
-    
-    /**
-     * Метод вызывается, когда приходит пинг от устройства
-     */
-    public void onPing(Address Addr) {
-        deviceLastSeen.put(Addr, System.currentTimeMillis());
-    }
-    
-    
-    /**
-     * Возвращает список устройств, которые пинговали нас за последние 10 секунд
-     */
-    public List<Address> getConnectedDevices() {
-        long now = System.currentTimeMillis();
-        List<Address> connected = new ArrayList<>();
-
-        for (Map.Entry<Address, Long> entry : deviceLastSeen.entrySet()) {
-            if (now - entry.getValue() <= DEVICE_TIMEOUT_MS) {
-                connected.add(entry.getKey());
-            }
-        }
-
-        return connected;
     }
 }

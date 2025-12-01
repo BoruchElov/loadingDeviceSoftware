@@ -321,7 +321,7 @@ class ScreensController extends BasicController {
                                     node.getStyleClass().add("okay");
                                 }
                                 InterfaceElementsLogic.showAlert("Ошибка в заполнении формы!" +
-                                        "\nПроверьте выделенные элементы.");
+                                        "\nПроверьте выделенные элементы.", InterfaceElementsLogic.Alert_Size.SMALL);
                                 addElementsListeners();
                                 uncheckedNodes.clear();
                             }

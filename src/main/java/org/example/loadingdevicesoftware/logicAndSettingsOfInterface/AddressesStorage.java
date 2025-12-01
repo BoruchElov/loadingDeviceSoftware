@@ -7,10 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -61,21 +58,39 @@ public final class AddressesStorage {
     /**
      * Reads all addresses from the persistent storage.
      */
-    public static List<String> readAddresses() throws IOException {
+    public static HashMap<String, String> readAddresses() throws IOException {
         Path file = getAddressesFile();
         if (Files.size(file) == 0) {
-            return new ArrayList<>();
+            return new HashMap<>();
         }
         String data = Files.readString(file, StandardCharsets.UTF_8);
         List<String> addresses = Arrays.stream(data.split(";"))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
-
-        // Если после фильтрации список пуст — значит были только ;;;;
+        String[] modules = new String[]{"moduleA1","moduleB1","moduleC1","moduleA2","moduleB2","moduleC2"};
+        String[] macAddresses = new String[6];
         if (addresses.isEmpty()) {
-            return List.of(new String[]{"00:00:00:00","00:00:00:00","00:00:00:00","00:00:00:00","00:00:00:00",
-                    "00:00:00:00"});
+            macAddresses = new String[]{"00:00:00:00","00:00:00:00","00:00:00:00","00:00:00:00",
+                    "00:00:00:00", "00:00:00:00"};
+        } else {
+            for (int i = 0; i < addresses.size(); i++) {
+                macAddresses[i] = addresses.get(i);
+            }
+        }
+        HashMap<String, String> map = new HashMap<>();
+        for (int i = 0; i < modules.length; i++) {
+            map.put(modules[i], macAddresses[i]);
+        }
+
+        return map;
+    }
+
+    public static ArrayList<String> getListOfSavedAddresses() throws IOException {
+        ArrayList<String> addresses = new ArrayList<>();
+        String[] modules = new String[]{"moduleA1","moduleB1","moduleC1","moduleA2","moduleB2","moduleC2"};
+        for (String module : modules) {
+            addresses.add(readAddresses().get(module));
         }
         return addresses;
     }

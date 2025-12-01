@@ -48,7 +48,7 @@ public class Address {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Address address)) return false;
-        return value == address.value;
+        return Objects.equals(toStringInHexFormat(), address.toStringInHexFormat());
     }
 
     @Override

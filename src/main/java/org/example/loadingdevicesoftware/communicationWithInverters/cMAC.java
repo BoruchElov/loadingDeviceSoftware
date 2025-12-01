@@ -58,7 +58,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
     }
 
     public Address getMAC() {
-        return new Address(myMAC.getValue());
+        return myMAC;
     }
 
     // Внешний метод — добавить пакет на отправку
@@ -128,7 +128,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
                 adrsrc.toStringInHexFormat().equals("07:12:AB:E1")) {
             return;
         }
-        if (!adrcv.toStringInHexFormat().equals(myMAC.toStringInHexFormat()) && !adrcv.toStringInHexFormat().equals("00:00:00:00")) {
+        if (!adrcv.equals(myMAC) && !adrcv.toStringInHexFormat().equals("00:00:00:00")) {
             return;
         }
         ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();

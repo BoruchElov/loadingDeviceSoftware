@@ -810,7 +810,7 @@ public class _8_HandControlScreenController extends ScreensController implements
         ArrayList<Address>  addresses = new ArrayList<>();
         ArrayList<String> texts = new ArrayList<>();
         try {
-            texts = new ArrayList<>(AddressesStorage.readAddresses());
+            texts = AddressesStorage.getListOfSavedAddresses();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -840,7 +840,7 @@ public class _8_HandControlScreenController extends ScreensController implements
                 return false;
             }
         }
-        InterfaceElementsLogic.showAlert(output);
+        InterfaceElementsLogic.showAlert(output, InterfaceElementsLogic.Alert_Size.MEDIUM);
 
         //Отправка сообщений
 
