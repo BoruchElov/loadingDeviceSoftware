@@ -1,5 +1,9 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -13,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
@@ -22,6 +27,7 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 public class _8_HandControlScreenController extends ScreensController implements Configurable {
@@ -783,13 +789,9 @@ public class _8_HandControlScreenController extends ScreensController implements
      * Метод для реализации логики сценария. Переопределяет метод родительского класса ScreensController.
      */
     @Override
-    public boolean launchScenario() {
-        ArrayList<String> modules = getChosenModules();
+    public void launchScenario() {
         //Добавление логики из родительского метода
-        boolean result = super.launchScenario();
-        //Выбор команды
-        Commands typeOfCurrent = currentFormComboBox.getSelectionModel().getSelectedIndex() == 0 ? Commands.SET_SCENARO_2
-                : Commands.SET_SCENARO_1;
+        super.launchScenario();
         //Заполнение динамического массива исходных данных. Каждый элемент массива - строка с нужными параметрами сценария
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
@@ -803,52 +805,50 @@ public class _8_HandControlScreenController extends ScreensController implements
                 String data = currentFields[i].getText();
                 data += "," + phaseFields[i].getText();
                 data += "," + timeInput.getText();
+                data += "," + frequencyInput.getText();
+                data += "," + (dryWetButton.getObjectPosition().getActualPosition() == 2 ? "1" : "0");
+                data += "," + contactOneButton.getObjectPosition().getActualPosition();
+                data += "," + contactTwoButton.getObjectPosition().getActualPosition();
+                data += "," + (conditionButton.getObjectPosition().getActualPosition() == 2 ? "1" : "0");
                 scenarioParameters.add(data);
             }
         }
-        //Заполнение динамического массива адресов
-        ArrayList<Address>  addresses = new ArrayList<>();
-        ArrayList<String> texts = new ArrayList<>();
-        try {
-            texts = AddressesStorage.getListOfSavedAddresses();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        int timeout = Integer.parseInt(timeInput.getText());
+        if (currentFormComboBox.getSelectionModel().getSelectedIndex() != 0) {
+            ScenariosManager.handControlScenarioTwo(scenarioParameters,timeout);
+        } else {
+            ScenariosManager.handControlScenarioTwo(scenarioParameters,timeout);
         }
-        for (String text : texts) {
-            addresses.add(new Address(ConnectionControl.toIntFromHexString(text)));
-        }
-        //Строка с результатами сценария
-        String output = "";
-        //Отправка сообщений с настройками сценария
-        ArrayList<Address> addressesToSend = CheckingManager.getAvailableAddresses();
-        for (int i = 0; i < addressesToSend.size(); i++) {
-            try {
-                Inverters.sendCommandToInverter(addressesToSend.get(i),typeOfCurrent,scenarioParameters.get(i));
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addressesToSend.get(i),
-                        typeOfCurrent), ConnectionControl.ExpectedValue.PHRASE).substring(1);
-                System.out.println(response);
-                String answer = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? "SET_SCENARO_1(YES)" : "SET_SCENARO_2(YES)";
-                if (!response.equals(answer)) {
-                    System.err.println("Ошибка! Не получен ответ " + answer + " от модуля с адресом "
-                            + addressesToSend.get(i).toStringInHexFormat());
-                    return false;
+        //
+        setPageState(PageState.IN_PROCESS);
+        //Запуск анимации на время выполнения сценария
+        startBlinkingAnimation();
+        //Асинхронный запуск сценария
+        CompletableFuture<Boolean> resultFuture = currentFormComboBox.getSelectionModel().getSelectedIndex() != 0 ?
+                ScenariosManager.handControlScenarioOne(scenarioParameters,timeout) :
+                ScenariosManager.handControlScenarioTwo(scenarioParameters,timeout);
+        //Действие по завершении работы сценария
+        resultFuture.thenAccept(success -> {
+            // Доступ к UI — только из FX Application Thread
+            Platform.runLater(() -> {
+                //Остановка анимации
+                stopBlinkingAnimation();
+                //Показ всплывающего окна с результатами сценария или ошибкой
+                if (success) {
+                    StringBuilder sb = new StringBuilder("Результаты сценария:\n");
+                    ScenariosManager.getResponses().forEach((addr, arr) -> {
+                        sb.append(addr.toStringInHexFormat()).append(" : ");
+                        sb.append(String.join(", ", arr));
+                        sb.append("\n");
+                    });
+                    InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
+                    setPageState(PageState.WAITING_FOR_CHOICE);
+                } else {
+                    InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
+                    setPageState(PageState.ALLOWED_TO_START);
                 }
-                output += "Ответ от модуля " + addressesToSend.get(i).toStringInHexFormat() + ": " + response + "\n";
-            } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды SET_SCENARO_1() модулю с адресом "
-                        + addressesToSend.get(i).toStringInHexFormat());
-                return false;
-            }
-        }
-        InterfaceElementsLogic.showAlert(output, InterfaceElementsLogic.Alert_Size.MEDIUM);
-
-        //Отправка сообщений
-
-
-        //После того как дождались ответа на сообщение set_scenaro
-        typeOfCurrent = typeOfCurrent.equals(Commands.SET_SCENARO_1) ? Commands.START_SCENARO_1
-                : Commands.START_SCENARO_2;
-        return result;
+            });
+        });
     }
 
     @Override
@@ -913,5 +913,34 @@ public class _8_HandControlScreenController extends ScreensController implements
         }
         return chosenModules;
     }
+
+
+    //Временное решение - мигание кружков для обозначения работы сценария.
+    //TODO удалить после отладки
+    private Timeline blinkingTimeline;
+
+    private void startBlinkingAnimation() {
+        blinkingTimeline = new Timeline(
+                new KeyFrame(Duration.millis(0), e -> {
+                    contactOne.setFill(Color.YELLOW);
+                    contactTwo.setFill(Color.YELLOW);
+                }),
+                new KeyFrame(Duration.millis(200), e -> {
+                    contactOne.setFill(Color.TRANSPARENT);
+                    contactTwo.setFill(Color.TRANSPARENT);
+                })
+        );
+        blinkingTimeline.setCycleCount(Animation.INDEFINITE);
+        blinkingTimeline.play();
+    }
+
+    private void stopBlinkingAnimation() {
+        if (blinkingTimeline != null) {
+            blinkingTimeline.stop();
+            contactOne.setFill(Color.TRANSPARENT);
+            contactTwo.setFill(Color.TRANSPARENT);
+        }
+    }
+    /// //////////////////////////////////////////////////
 }
 

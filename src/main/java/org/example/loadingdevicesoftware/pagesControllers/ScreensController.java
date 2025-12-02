@@ -265,13 +265,12 @@ class ScreensController extends BasicController {
      * выполнения сценария, который сигнализирует
      * @return
      */
-    public boolean launchScenario() {
+    public void launchScenario() {
         if (isAllowedToStartScenario) {
             clearButton.changePosition(0);
             clearButton.setText("СОХРАНИТЬ");
         }
         setPageState(PageState.WAITING_FOR_CHOICE);
-        return true;
     }
 
     /**
@@ -289,7 +288,7 @@ class ScreensController extends BasicController {
      * <li>WAITING_FOR_CHOICE - состояние, когда форма ожидает выбор пользователя
      * после выполнения сценария</li>
      */
-    private enum PageState {
+    protected enum PageState {
         DEFAULT, ALLOWED_TO_START, IN_PROCESS, WAITING_FOR_CHOICE
     }
 
@@ -297,7 +296,7 @@ class ScreensController extends BasicController {
      * Метод для задания состояния формы. Он определяет положение и функционал кнопок
      * в зависимости от значения enum
      */
-    private void setPageState(PageState state) {
+    protected void setPageState(PageState state) {
         switch (state) {
             case DEFAULT:
 
@@ -357,7 +356,6 @@ class ScreensController extends BasicController {
             case IN_PROCESS:
                 unlockAll();
                 lockAll(startButton);
-
                 startButton.changePosition(2);
                 startButton.setText("СТОП");
                 startButton.setOnAction(event -> {
