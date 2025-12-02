@@ -15,6 +15,7 @@ module org.example.loadingdevicesoftware {
     requires java.compiler;
     requires com.fazecast.jSerialComm;
     requires com.fasterxml.jackson.databind;
+    requires org.example.loadingdevicesoftware;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;
