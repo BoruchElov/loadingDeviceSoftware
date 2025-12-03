@@ -76,8 +76,8 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new ArrayList<>(List.of(new Node[]{phaseACurrent, phaseBCurrent, phaseCCurrent, contactOneTime, contactTwoTime,
-                phaseButton, contactOneButton, contactTwoButton, nameTextField, objectTextField}));
+        nodesToCheck = new ArrayList<>(List.of(new Node[]{phaseACurrent, phaseBCurrent, phaseCCurrent,
+                nameTextField, objectTextField}));
 
         //Настройка текстовых полей ввода значений токов
         SimpleTextField[] textFields = new SimpleTextField[]{phaseACurrent, phaseBCurrent, phaseCCurrent};
@@ -163,10 +163,12 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
 
         //Настройка внешнего вида и расположения кнопки изменения конфигурации
         phaseButton.setOnAction(this::changeConfiguration);
+        flags[0] = true;
         phaseButton.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "1", "3"},
                 FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         AnchorPane.setTopAnchor(phaseButton, 210.);
         AnchorPane.setLeftAnchor(phaseButton, 1008.);
+        phaseButton.changePosition(2);
         //Настройка внешнего вида и расположения кнопок положения контактов
         contactOneButton.setup(new ImageView(), ButtonWithPicture.ButtonSizes.SMALL, ButtonWithPicture.ImagViewSizes.SMALLEST,
                 new String[]{"contacts-imageview", "contacts-imageview", "contacts-imageview"},
@@ -201,6 +203,8 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
                     phaseA1.setText("");
                     phaseB1.setText("А1");
                     phaseC1.setText("");
+                    nodesToCheck.remove(phaseBCurrent);
+                    nodesToCheck.remove(phaseCCurrent);
                     flags[0] = false;
                 } else {
                     phaseButton.changePosition(2);
@@ -214,8 +218,11 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
                     phaseA1.setText("А1");
                     phaseB1.setText("В1");
                     phaseC1.setText("С1");
+                    if (!nodesToCheck.contains(phaseBCurrent)) nodesToCheck.add(phaseBCurrent);
+                    if (!nodesToCheck.contains(phaseCCurrent)) nodesToCheck.add(phaseCCurrent);
                     flags[0] = true;
                 }
+                resetState();
                 break;
             case ButtonWithPicture button when button == contactOneButton:
                 if (flags[1]) {
@@ -247,5 +254,15 @@ public class _2_TestOfSwitcher3XScreenController extends ScreensController imple
                 AnchorPane.setLeftAnchor(switcher, 550.);
                 break;
         }
+    }
+
+    private void resetState() {
+        Node[] nodesToClear = new Node[]{objectTextField, nameTextField, phaseACurrent, phaseBCurrent, phaseCCurrent,
+        contactOneButton, contactTwoButton};
+        for (Node node : nodesToClear) {
+            node.getStyleClass().remove("warning");
+            if (node instanceof SimpleTextField) ((SimpleTextField) node).clear();
+        }
+
     }
 }
