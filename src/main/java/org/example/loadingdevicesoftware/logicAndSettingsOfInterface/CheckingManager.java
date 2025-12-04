@@ -352,10 +352,10 @@ public class CheckingManager {
                 String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println(result);
-                result = result.substring(result.indexOf(":") + 1, result.indexOf("."));
+                result = result.substring(result.indexOf("(") + 1, result.indexOf(","));
                 System.out.println(result);
                 System.out.println("Ответ на сценарий: \"" + result + "\"");
-                if (!result.equals("1")) {
+                if (!result.equals("S")) {
                     System.err.println("Ошибка! Не выполнена проверка сопротивления модулем " + module
                             + " с адресом " + address.toStringInHexFormat());
                     return false;
