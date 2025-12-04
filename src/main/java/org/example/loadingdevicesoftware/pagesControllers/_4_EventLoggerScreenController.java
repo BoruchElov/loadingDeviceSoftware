@@ -1,125 +1,40 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
+import javafx.scene.layout.AnchorPane;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.DateTimeUpdater;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Changeable;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsLogic;
-import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.InterfaceElementsSettings;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton;
 
 import java.io.IOException;
-import java.util.Objects;
 
-public class _4_EventLoggerScreenController {
+public class _4_EventLoggerScreenController extends BasicController {
 
-    private final InterfaceElementsSettings interfaceElementsSettings = new InterfaceElementsSettings();
+    @FXML
+    SimpleButton menuButton;
 
-    //кнопки
     @FXML
-    private Button toMenuButton;
-    @FXML
-    private Button startButton;
-    @FXML
-    private Button event1;
-    @FXML
-    private Button event2;
-    @FXML
-    private Button event3;
-    @FXML
-    private Button event4;
-    @FXML
-    private Button event5;
-    @FXML
-    private Button event6;
-
-    // картинка фона
-    @FXML
-    private ImageView backgroundImageView;
-
-    //инвертора
-    @FXML
-    private ImageView inverterA1Status;
-    @FXML
-    private ImageView inverterA2Status;
-    @FXML
-    private ImageView inverterB1Status;
-    @FXML
-    private ImageView inverterB2Status;
-    @FXML
-    private ImageView inverterC1Status;
-    @FXML
-    private ImageView inverterC2Status;
-    //картинка кнопок старт/меню
-    @FXML
-    ImageView toMenuButtonImageView;
-    @FXML
-    ImageView startButtonImageView;
-
-    //Объявление текстового поля для вывода даты-времени
-    @FXML
-    private Text dateTimeText;
-
-    //Объект фоновой картинки
-    Image backImageOutSC = new Image(Objects.requireNonNull(getClass().
-            getResource("/screen/9.отладка/отладка(безКнопок).png")).toExternalForm());
-
-
     public void initialize() {
-        dateTimeText.textProperty().bind(DateTimeUpdater.getInstance().dateTimeProperty());
-        //Задание изображений для статусов инверторов
-        inverterA1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
-        inverterA2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
-        inverterB1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
-        inverterB2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
-        inverterC1Status.setImage(ApplicationConstants.STATUS_CONNECTED);
-        inverterC2Status.setImage(ApplicationConstants.STATUS_CONNECTED);
-        //Установка картинки на фон
-        backgroundImageView.setImage(backImageOutSC);
+        super.initialize();
 
-        //Настройка кнопки "Меню"
-        setupTextBottoms(event1, "СОБЫТИЕ 1");
-        //Настройка кнопки "Пуск"
-        setupTextBottoms(event2, "СОБЫТИЕ 2");
-        //Настройка кнопки "Меню"
-        setupTextBottoms(event3, "СОБЫТИЕ 3");
-        //Настройка кнопки "Пуск"
-        setupTextBottoms(event4, "СОБЫТИЕ 4");
-        //Настройка кнопки "Меню"
-        setupTextBottoms(event5, "СОБЫТИЕ 5");
-        //Настройка кнопки "Пуск"
-        setupTextBottoms(event6, "СОБЫТИЕ 6");
+        imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
 
-        interfaceElementsSettings.getBlackMenuButton(toMenuButton,toMenuButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
-        interfaceElementsSettings.getBlackSaveButton(startButton,startButtonImageView, InterfaceElementsSettings.Background.LIGHT_BLUE);
+        AnchorPane.setTopAnchor(dateTimeText, 714.0);
+        AnchorPane.setLeftAnchor(dateTimeText, 490.0);
+
+        AnchorPane.setTopAnchor(menuButton, 695.0);
+        AnchorPane.setLeftAnchor(menuButton, 50.0);
+        menuButton.setup(SimpleButton.Presets.MENU);
+        menuButton.setActualStatus(Changeable.Status.NORMAL);
+        menuButton.setOnAction(event -> {
+            try {
+                InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
-
-    @FXML
-    public void goToMainScreen(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "0.baseWindow.fxml");
-    }
-
-    @FXML
-    public void goToStartScreen(ActionEvent event) throws IOException {
-        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
-    }
-
-    //Метод для настройки кнопок в нижней части окна сценария диф.защиты
-    public void setupTextBottoms(Button button, String text) {
-        interfaceElementsSettings.buttonSettings(ApplicationConstants.colours.LIGHT_BLUE, ApplicationConstants.colours.BLACK,
-                3, 17, 15, ApplicationConstants.colours.BLACK, 26, 0,
-                button);
-        button.setText(text);
-    }
-
-    //Тестовый метод для проверки работы кнопки
-    public void testClick() {
-        System.out.println("Кнопка работает");
-    }
-
 
 }
