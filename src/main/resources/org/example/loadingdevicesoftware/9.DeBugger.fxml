@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleTextField?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._9_DeBuggerScreenController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._9_DebuggerScenarioController">
     <children>
         <SimpleButton fx:id="menuButton"/>
         <SimpleButton fx:id="startButton"/>

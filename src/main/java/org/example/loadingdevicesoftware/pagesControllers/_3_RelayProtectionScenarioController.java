@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class _3_TestOfStageProtection3XScreenController extends ScreensController implements Configurable {
+public class _3_RelayProtectionScenarioController extends ScreensController implements Configurable {
 
     @FXML
     SimpleTextField phaseACurrent;

@@ -9,7 +9,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -18,19 +17,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import org.example.loadingdevicesoftware.communicationWithInverters.Address;
-import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 
-public class _8_HandControlScreenController extends ScreensController implements Configurable {
+public class _8_HandControlScenarioController extends ScreensController implements Configurable {
 
     //Комбобокс
     @FXML

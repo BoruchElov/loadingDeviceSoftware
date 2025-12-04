@@ -10,7 +10,7 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButto
 
 import java.io.IOException;
 
-public class _4_EventLoggerScreenController extends BasicController {
+public class _4_EventLoggerController extends BasicController {
 
     @FXML
     SimpleButton menuButton;

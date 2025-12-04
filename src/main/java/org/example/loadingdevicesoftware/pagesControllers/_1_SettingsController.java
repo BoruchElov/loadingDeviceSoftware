@@ -1,6 +1,5 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
-import com.lowagie.text.Anchor;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class _1_SettingsScreenController extends BasicController {
+public class _1_SettingsController extends BasicController {
     @FXML
     SimpleButton saveButton;
     @FXML

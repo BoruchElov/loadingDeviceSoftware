@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
-public class _101_deviceWorkingScreenControl {
+public class _10_CheckingController {
 
     private boolean[] checkFlags = new boolean[5];
 

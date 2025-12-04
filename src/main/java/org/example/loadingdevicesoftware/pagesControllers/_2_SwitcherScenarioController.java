@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class _2_TestOfSwitcher3XScreenController extends ScreensController implements Configurable {
+public class _2_SwitcherScenarioController extends ScreensController implements Configurable {
 
     @FXML
     SimpleTextField phaseACurrent;

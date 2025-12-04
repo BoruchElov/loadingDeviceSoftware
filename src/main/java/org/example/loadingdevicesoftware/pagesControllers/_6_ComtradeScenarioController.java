@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 
-public class _6_ComTradeScreenController extends ScreensController implements Configurable {
+public class _6_ComtradeScenarioController extends ScreensController implements Configurable {
 
     @FXML
     SimpleButton comtradeButton;
