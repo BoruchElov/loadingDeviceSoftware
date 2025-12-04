@@ -164,11 +164,11 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
         //Настройка внешнего вида и расположения кнопки изменения конфигурации
         phaseButton.setOnAction(this::changeConfiguration);
         flags[0] = true;
-        phaseButton.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"", "1", "3"},
+        phaseButton.setup(new String[]{"phase-button", "phase-button", "phase-button"}, new String[]{"3", "1"},
                 FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         AnchorPane.setTopAnchor(phaseButton, 210.);
         AnchorPane.setLeftAnchor(phaseButton, 1008.);
-        phaseButton.changePosition(2);
+        phaseButton.changePosition(0);
         //Настройка внешнего вида и расположения кнопок положения контактов
         contactOneButton.setup(new ImageView(), ButtonWithPicture.ButtonSizes.SMALL, ButtonWithPicture.ImagViewSizes.SMALLEST,
                 new String[]{"contacts-imageview", "contacts-imageview", "contacts-imageview"},
@@ -189,6 +189,14 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
     public void changeConfiguration(Event event) {
         switch (event.getSource()) {
             case SimpleButton button when button == phaseButton:
+                int i = button.getObjectPosition().getActualPosition();
+                phaseButton.changePosition(i == 1 ? 0 : i+1);
+                i = button.getObjectPosition().getActualPosition();
+                if (i == 0) {
+
+                } else {
+
+                }
                 if (flags[0]) {
                     phaseButton.changePosition(1);
                     switcher.changePosition(1);
@@ -256,9 +264,13 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
         }
     }
 
+    private void phaseButtonAction() {
+
+    }
+
     private void resetState() {
         Node[] nodesToClear = new Node[]{objectTextField, nameTextField, phaseACurrent, phaseBCurrent, phaseCCurrent,
-        contactOneButton, contactTwoButton};
+                contactOneButton, contactTwoButton};
         for (Node node : nodesToClear) {
             node.getStyleClass().remove("warning");
             if (node instanceof SimpleTextField) ((SimpleTextField) node).clear();
