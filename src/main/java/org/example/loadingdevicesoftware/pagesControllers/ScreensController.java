@@ -2,7 +2,6 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -212,8 +211,8 @@ class ScreensController extends BasicController {
     }
 
     public void savePageParameters() {
-        if (!CheckingManager.getFormParameters().isEmpty()) {
-            CheckingManager.getFormParameters().clear();
+        if (!CheckingManager.getCurrents().isEmpty()) {
+            CheckingManager.getCurrents().clear();
         }
     }
 

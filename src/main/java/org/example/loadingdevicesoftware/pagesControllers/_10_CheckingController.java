@@ -256,8 +256,8 @@ public class _10_CheckingController {
 
     private void onClose() {
         executor.shutdownNow();
-        if (!CheckingManager.getFormParameters().isEmpty()) {
-            CheckingManager.setFormParameters(new ArrayList<>());
+        if (!CheckingManager.getCurrents().isEmpty()) {
+            CheckingManager.setCurrents(new ArrayList<>());
         }
     }
 

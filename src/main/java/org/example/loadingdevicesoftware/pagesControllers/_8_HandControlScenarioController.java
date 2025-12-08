@@ -848,14 +848,20 @@ public class _8_HandControlScenarioController extends ScreensController implemen
     @Override
     public void savePageParameters() {
         super.savePageParameters();
-        ArrayList<Double> buffer = CheckingManager.getFormParameters();
+        ArrayList<Double> buffer = CheckingManager.getCurrents();
+        ArrayList<Double> resistanceBuffer = CheckingManager.getResistanceCheckParameters();
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
-        SimpleTextField[] dataFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
+        SimpleTextField[] currentsFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
                 phaseARCurrent, phaseBRCurrent,phaseCRCurrent};
+        SimpleTextField[] phasesFields = new SimpleTextField[]{phaseALAngle,phaseBLAngle, phaseCLAngle,
+                phaseARAngle, phaseBRAngle,phaseCRAngle};
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
-                buffer.add(Double.parseDouble(dataFields[i].getText()));
+                buffer.add(Double.parseDouble(currentsFields[i].getText()));
+                resistanceBuffer.add(Double.parseDouble(currentsFields[i].getText()));
+                resistanceBuffer.add(Double.parseDouble(phasesFields[i].getText()));
+                resistanceBuffer.add(Double.parseDouble(timeInput.getText()));
             }
         }
     }
@@ -868,17 +874,6 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         } else {
             button.changePosition(2);
             flags[0] = true;
-        }
-    }
-
-    //Функция выбора и активации инвертора
-    public void funChangeModeContact(ButtonWithPicture button) {
-        if (flags[1]) {
-            button.changePosition(0);
-            flags[1] = false;
-        } else {
-            button.changePosition(1);
-            flags[1] = true;
         }
     }
 

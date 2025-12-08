@@ -10,13 +10,8 @@ import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.In
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class CheckingManager {
 
@@ -30,7 +25,10 @@ public class CheckingManager {
 
     @Setter
     @Getter
-    private static ArrayList<Double> formParameters = new ArrayList<>();
+    private static ArrayList<Double> currents = new ArrayList<>();
+
+    @Getter
+    private static ArrayList<Double> resistanceCheckParameters = new ArrayList<>();
 
     private static final HashMap<String, Address> addressesStorage = new HashMap<>();
     @Getter
@@ -239,7 +237,7 @@ public class CheckingManager {
      */
     public static boolean currentRangeCheck() {
         //Проверка наличия параметров из формы, необходимых для проверки
-        if (formParameters.isEmpty()) {
+        if (currents.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
         }
@@ -255,7 +253,7 @@ public class CheckingManager {
                         Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
                 responses.add(response);
                 System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
-                        ", Положение переключателя " + response + ", Уставка по току " + formParameters.get(j) + "А");
+                        ", Положение переключателя " + response + ", Уставка по току " + currents.get(j) + "А");
                 j += 1;
             }
         } catch (Exception e) {
@@ -265,7 +263,7 @@ public class CheckingManager {
         //Оценка полученных положений переключателей на соответствие заданному току
         if (!responses.isEmpty()) {
             Integer[] newResponses = responses.toArray(new Integer[0]);
-            Double[] newCurrents = formParameters.toArray(new Double[0]);
+            Double[] newCurrents = currents.toArray(new Double[0]);
             for (int i = 0; i < newResponses.length; i++) {
                 System.out.println("Положение переключателя: " + newResponses[i] + "; Уставка по току: " + newCurrents[i]);
                 switch (newResponses[i].intValue()) {
@@ -301,7 +299,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean resistanceCheck() {
-        Double[] newCurrents = formParameters.toArray(new Double[0]);
+        Double[] parameters = resistanceCheckParameters.toArray(new Double[0]);
         int i = 0;
         //Передача всем настроенным и находящимся в сети модулям команды на настройку сценария
         Address address = null;
@@ -309,7 +307,7 @@ public class CheckingManager {
             address = addressesStorage.get(module);
             Commands command = Commands.SET_RESISTANCE_CHECK;
             try {
-                String data = newCurrents[i] + "," + newCurrents[i] + "," + newCurrents[i];
+                String data = parameters[3 * i] + "," + parameters[3 * i + 1] + "," + parameters[3 * i + 2];
                 Inverters.sendCommandToInverter(address, command, data);
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.PHRASE).substring(1);
