@@ -77,7 +77,7 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
         super.initialize();
 
         nodesToCheck = new ArrayList<>(List.of(new Node[]{phaseACurrent, phaseBCurrent, phaseCCurrent,
-                nameTextField, objectTextField}));
+                nameTextField, objectTextField, contactOneButton, contactTwoButton}));
 
         //Настройка текстовых полей ввода значений токов
         SimpleTextField[] textFields = new SimpleTextField[]{phaseACurrent, phaseBCurrent, phaseCCurrent};
@@ -182,6 +182,8 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
         contactTwoButton.setOnAction(this::changeConfiguration);
         AnchorPane.setTopAnchor(contactTwoButton, 177.);
         AnchorPane.setLeftAnchor(contactTwoButton, 300.);
+
+        restoreState();
     }
 
     //Общий метод для изменения конфигурации страницы
@@ -189,14 +191,6 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
     public void changeConfiguration(Event event) {
         switch (event.getSource()) {
             case SimpleButton button when button == phaseButton:
-                int i = button.getObjectPosition().getActualPosition();
-                phaseButton.changePosition(i == 1 ? 0 : i+1);
-                i = button.getObjectPosition().getActualPosition();
-                if (i == 0) {
-
-                } else {
-
-                }
                 if (flags[0]) {
                     phaseButton.changePosition(1);
                     switcher.changePosition(1);
@@ -215,7 +209,7 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
                     nodesToCheck.remove(phaseCCurrent);
                     flags[0] = false;
                 } else {
-                    phaseButton.changePosition(2);
+                    phaseButton.changePosition(0);
                     switcher.changePosition(0);
                     phaseBCurrent.setActualStatus(Changeable.Status.NORMAL);
                     phaseBCurrent.setPromptText("0");

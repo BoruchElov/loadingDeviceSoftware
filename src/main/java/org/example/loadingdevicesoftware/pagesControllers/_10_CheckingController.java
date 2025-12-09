@@ -201,35 +201,44 @@ public class _10_CheckingController {
             default -> throw new IllegalStateException("Unexpected value: " + PagesBuffer.getFxmlName());
         };
 
-        // НОВОЕ: при запуске новой цепочки сбрасываем запрос на отмену
-        cancelRequested = false;
-        disableButtons(true);// блокируем кнопки
-        cancelButtonFlag = true;
-        executor.submit(() -> {
-            if (!runCheck(1, () -> {
-                        try {
-                            return CheckingManager.settingsCheck(actualScenario);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    },
-                    "Ошибка настройки!\nКоличество настроенных модулей не соответствует выбранному сценарию.")) return;
+        if (PagesBuffer.getFxmlName().equals("8.HandControl.fxml")) {
+            // НОВОЕ: при запуске новой цепочки сбрасываем запрос на отмену
+            cancelRequested = false;
+            disableButtons(true);// блокируем кнопки
+            cancelButtonFlag = true;
+            executor.submit(() -> {
+                if (!runCheck(1, () -> {
+                            try {
+                                return CheckingManager.settingsCheck(actualScenario);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        },
+                        "Ошибка настройки!\nКоличество настроенных модулей не соответствует выбранному сценарию."))
+                    return;
 
-            if (!runCheck(2, CheckingManager::powerCheck,
-                    "Ошибка проверки питания!\nНедостаточное количество модулей получают питание")) return;
+                if (!runCheck(2, CheckingManager::powerCheck,
+                        "Ошибка проверки питания!\nНедостаточное количество модулей получают питание")) return;
 
-            if (!runCheck(3, CheckingManager::synchronizationCheck,
-                    "Ошибка проверки синхронизации!\nМодули не синхронизированы")) return;
+                if (!runCheck(3, CheckingManager::synchronizationCheck,
+                        "Ошибка проверки синхронизации!\nМодули не синхронизированы")) return;
 
-            if (!runCheck(4, CheckingManager::currentRangeCheck,
-                    "Ошибка проверки диапазона тока!")) return;
+                if (!runCheck(4, CheckingManager::currentRangeCheck,
+                        "Ошибка проверки диапазона тока!")) return;
 
-            if (!runCheck(5, CheckingManager::resistanceCheck,
-                    "Ошибка проверки сопротивления!")) return;
-            finishChecks();
-            ScreensController.setAllowedToStartScenario(true);
+                if (!runCheck(5, CheckingManager::resistanceCheck,
+                        "Ошибка проверки сопротивления!")) return;
+                finishChecks();
+                ScreensController.setAllowedToStartScenario(true);
 
-        });
+            });
+        } else {
+            for (int i = 0; i < checks.size(); i++) {
+                updateIndicator(i + 1,true);
+                finishChecks();
+                ScreensController.setAllowedToStartScenario(true);
+            }
+        }
     }
 
     private void disableButtons(boolean disable) {
