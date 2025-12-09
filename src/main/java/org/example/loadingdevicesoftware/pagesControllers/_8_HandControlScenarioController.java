@@ -808,11 +808,6 @@ public class _8_HandControlScenarioController extends ScreensController implemen
             }
         }
         int timeout = Integer.parseInt(timeInput.getText());
-        if (currentFormComboBox.getSelectionModel().getSelectedIndex() != 0) {
-            ScenariosManager.handControlScenarioTwo(scenarioParameters,timeout);
-        } else {
-            ScenariosManager.handControlScenarioTwo(scenarioParameters,timeout);
-        }
         //
         setPageState(PageState.IN_PROCESS);
         //Запуск анимации на время выполнения сценария
