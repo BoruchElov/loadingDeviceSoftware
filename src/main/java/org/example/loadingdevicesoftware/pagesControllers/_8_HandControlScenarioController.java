@@ -807,7 +807,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                 scenarioParameters.add(data);
             }
         }
-        int timeout = Integer.parseInt(timeInput.getText());
+        double timeout = Double.parseDouble(timeInput.getText());
         //
         setPageState(PageState.IN_PROCESS);
         //Запуск анимации на время выполнения сценария
@@ -815,7 +815,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         //Асинхронный запуск сценария
         CompletableFuture<Boolean> resultFuture = currentFormComboBox.getSelectionModel().getSelectedIndex() != 0 ?
                 ScenariosManager.handControlScenarioOne(scenarioParameters,timeout) :
-                ScenariosManager.handControlScenarioTwo(scenarioParameters,timeout);
+                ScenariosManager.handControlScenarioOne(scenarioParameters,timeout);
         //Действие по завершении работы сценария
         resultFuture.thenAccept(success -> {
             // Доступ к UI — только из FX Application Thread
@@ -905,7 +905,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
 
     private void startBlinkingAnimation() {
         blinkingTimeline = new Timeline(
-                new KeyFrame(Duration.millis(0), e -> {
+                new KeyFrame(Duration.millis(100), e -> {
                     contactOne.setFill(Color.YELLOW);
                     contactTwo.setFill(Color.YELLOW);
                 }),

@@ -17,18 +17,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScenariosManager {
 
-    private ScenariosManager() {}
+    private ScenariosManager() {
+    }
 
     @Getter
-    private static final Map<Address,String[]>  responses = new ConcurrentHashMap<>();
+    private static final Map<Address, String[]> responses = new ConcurrentHashMap<>();
 
     /**
      * Метод для запуска сценария выдачи линейного тока
+     *
      * @param modulesParameters
      * @param timeout
      * @return
      */
-    public static CompletableFuture<Boolean> handControlScenarioOne(ArrayList<String> modulesParameters, int timeout) {
+    public static CompletableFuture<Boolean> handControlScenarioOne(ArrayList<String> modulesParameters, double timeout) {
         responses.clear();
         ArrayList<Address> addresses = CheckingManager.getAvailableAddresses();
 
@@ -36,7 +38,7 @@ public class ScenariosManager {
         Commands command = Commands.SET_SCENARO_1;
         for (int i = 0; i < addresses.size(); i++) {
             try {
-                Inverters.sendCommandToInverter(addresses.get(i),command,modulesParameters.get(i));
+                Inverters.sendCommandToInverter(addresses.get(i), command, modulesParameters.get(i));
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -60,7 +62,7 @@ public class ScenariosManager {
         for (int i = 0; i < addresses.size(); i++) {
             try {
                 //Отправка команды на запуск
-                Inverters.sendCommandToInverter(addresses.get(i),command,modulesParameters.get(i));
+                Inverters.sendCommandToInverter(addresses.get(i), command, "");
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -72,7 +74,7 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis(timeout * 1100L));
+                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 2000L)));
                 scenarioResultsFutures.put(address, future);
                 future.whenComplete((buffer, err) -> {
                     if (err != null) {
@@ -100,11 +102,12 @@ public class ScenariosManager {
 
     /**
      * Метод для запуска сценария выдачи импульсного тока
+     *
      * @param modulesParameters
      * @param timeout
      * @return
      */
-    public static CompletableFuture<Boolean> handControlScenarioTwo (ArrayList<String> modulesParameters, int timeout) {
+    public static CompletableFuture<Boolean> handControlScenarioTwo(ArrayList<String> modulesParameters, double timeout) {
         responses.clear();
         ArrayList<Address> addresses = CheckingManager.getAvailableAddresses();
 
@@ -112,7 +115,7 @@ public class ScenariosManager {
         Commands command = Commands.SET_SCENARO_2;
         for (int i = 0; i < addresses.size(); i++) {
             try {
-                Inverters.sendCommandToInverter(addresses.get(i),command,modulesParameters.get(i));
+                Inverters.sendCommandToInverter(addresses.get(i), command, modulesParameters.get(i));
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -136,7 +139,7 @@ public class ScenariosManager {
         for (int i = 0; i < addresses.size(); i++) {
             try {
                 //Отправка команды на запуск
-                Inverters.sendCommandToInverter(addresses.get(i),command,modulesParameters.get(i));
+                Inverters.sendCommandToInverter(addresses.get(i), command, modulesParameters.get(i));
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -148,7 +151,7 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis(timeout * 1100L));
+                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 2000L)));
                 scenarioResultsFutures.put(address, future);
                 future.whenComplete((buffer, err) -> {
                     if (err != null) {
@@ -182,10 +185,10 @@ public class ScenariosManager {
     }
 
     /**
-        Метод для получения массива строк из
-        результата сценария
-    */
-    public static String[] analyzeResults(String input){
+     * Метод для получения массива строк из
+     * результата сценария
+     */
+    public static String[] analyzeResults(String input) {
         return input.replace(" ", "").split(",");
     }
 

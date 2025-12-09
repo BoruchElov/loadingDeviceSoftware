@@ -307,7 +307,8 @@ public class CheckingManager {
             address = addressesStorage.get(module);
             Commands command = Commands.SET_RESISTANCE_CHECK;
             try {
-                String data = parameters[3 * i] + "," + parameters[3 * i + 1] + "," + parameters[3 * i + 2];
+                String time = "6.0";
+                String data = parameters[3 * i] + "," + parameters[3 * i + 1] + "," + time;
                 Inverters.sendCommandToInverter(address, command, data);
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.PHRASE).substring(1);
