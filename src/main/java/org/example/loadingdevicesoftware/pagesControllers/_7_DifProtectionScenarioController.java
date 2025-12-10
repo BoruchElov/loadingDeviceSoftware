@@ -1,11 +1,11 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -148,11 +148,7 @@ public class _7_DifProtectionScenarioController extends ScreensController implem
     public void initialize() {
         super.initialize();
 
-        nodesToCheck = new ArrayList<>(List.of(new Node[]{contactOneButton, contactTwoButton, connectionTypeOne, groupTypeOne,
-                connectionTypeTwo, groupTypeTwo, feedingWindingButton, faultLocationButton, phaseAOneCurrent,
-                phaseBOneCurrent, phaseCOneCurrent, phaseATwoCurrent, phaseAButton, phaseBButton, phaseCButton,
-                groundButton, phaseBTwoCurrent, phaseCTwoCurrent,phaseAOneAngle,phaseBOneAngle,phaseCOneAngle,
-                phaseATwoAngle, phaseBTwoAngle,phaseCTwoAngle,objectTextField,nameTextField}));
+        nodesToCheck = new ArrayList<>(List.of(new Node[]{nameTextField, objectTextField}));
 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
@@ -386,7 +382,8 @@ public class _7_DifProtectionScenarioController extends ScreensController implem
                             AnchorPane.setTopAnchor(text1, 501.);
                             AnchorPane.setLeftAnchor(text1, 968.);
                         }
-                        default -> {}
+                        default -> {
+                        }
                     }
                 }
                 case Circle c when c == contactOneOne || c == contactTwoOne -> {
@@ -415,72 +412,78 @@ public class _7_DifProtectionScenarioController extends ScreensController implem
                     switch (textField) {
                         case SimpleTextField textField1 when textField1 == phaseAOneCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(0.01,3000., SimpleTextField.numberOfDecimals.THREE);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseAOneAngle -> {
-                            textField1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
                             textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(-360.,360., SimpleTextField.numberOfDecimals.THREE);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBOneCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(0.01,3000., SimpleTextField.numberOfDecimals.THREE);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBOneAngle -> {
-                            textField1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
                             textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(-360.,360., SimpleTextField.numberOfDecimals.THREE);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCOneCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(0.01,3000., SimpleTextField.numberOfDecimals.THREE);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 20.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCOneAngle -> {
-                            textField1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
                             textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(-360.,360., SimpleTextField.numberOfDecimals.THREE);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 105.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseATwoCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(0.01,3000., SimpleTextField.numberOfDecimals.THREE);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseATwoAngle -> {
-                            textField1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
                             textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(-360.,360., SimpleTextField.numberOfDecimals.THREE);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 310.);
                             AnchorPane.setLeftAnchor(textField1, 750.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBTwoCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(0.01,3000., SimpleTextField.numberOfDecimals.THREE);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseBTwoAngle -> {
-                            textField1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
                             textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(-360.,360., SimpleTextField.numberOfDecimals.THREE);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 372.);
                             AnchorPane.setLeftAnchor(textField1, 750.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCTwoCurrent -> {
                             textField1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(0.01,3000., SimpleTextField.numberOfDecimals.THREE);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 832.);
                         }
                         case SimpleTextField textField1 when textField1 == phaseCTwoAngle -> {
-                            textField1.setLimits(-360,360, SimpleTextField.numberOfDecimals.INT);
                             textField1.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+                            textField1.setLimits(-360.,360., SimpleTextField.numberOfDecimals.THREE);
                             textField1.setActualStatus(Changeable.Status.LOCKED);
                             AnchorPane.setTopAnchor(textField1, 434.);
                             AnchorPane.setLeftAnchor(textField1, 750.);
@@ -582,12 +585,36 @@ public class _7_DifProtectionScenarioController extends ScreensController implem
     public void restoreState() {
         super.restoreState();
         if (Buffer.isFlagForDifProtection()) {
+            Buffer.setFlagForDifProtection(false);
+            lockAll(menuButton, clearButton, startButton);
+            clearButton.setOnAction(_ -> {
+                unlockAll();
+                clearButton.changePosition(0);
+                startButton.changePosition(0);
+                contactOneOne.getStyleClass().add("circles");
+                clearButton.setText("ОЧИСТИТЬ");
+                clearButton.setOnAction(this::clearAll);
+                startButton.setOnAction(event -> {
+                    try {
+                        InterfaceElementsLogic.switchScene((Node) event.getSource(), "100.checkingStartConditions.fxml");
+                        PagesBuffer.savePage(this);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            });
             startButton.setOnAction(_ -> {
+                contactOneOne.getStyleClass().add("circles-two");
+                contactTwoOne.getStyleClass().add("circles-two");
+                // Простое информационное окно
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("");
+                alert.setHeaderText(null); // Необязательный заголовок
+                alert.setContentText("1. Проверка:     Выполнена\n2. Срабатывание:     Контакт 1, Контакт 2\n3. Ошибки:     Нет");
+                alert.showAndWait();
                 clearButton.changePosition(0);
                 clearButton.setText("СОХРАНИТЬ");
-                clearButton.setOnAction(_ -> {
-                    InterfaceElementsLogic.openFileManager();
-                });
+                clearButton.setOnAction(_ -> {InterfaceElementsLogic.openFileManager();});
                 startButton.changePosition(0);
                 startButton.setText("ПРОДОЛЖИТЬ");
                 menuButton.setActualStatus(Changeable.Status.LOCKED);
@@ -609,44 +636,6 @@ public class _7_DifProtectionScenarioController extends ScreensController implem
             clearButton.changePosition(2);
             clearButton.setText("ОТМЕНА");
             startButton.changePosition(1);
-        }
-    }
-
-    @Override
-    public void addElementsListeners() {
-        super.addElementsListeners();
-        for (Node node : uncheckedNodes) {
-            List<String> copy = new ArrayList<>(node.getStyleClass());
-            node.getStyleClass().clear();
-            node.getStyleClass().add("warning");
-            node.getStyleClass().addAll(copy);
-            if (node instanceof SimpleButton button && !listeners.containsKey(button)) {
-                if (button.equals(phaseAButton) || button.equals(phaseBButton) || button.equals(phaseCButton)
-                        || button.equals(groundButton)) {
-                    EventHandler<ActionEvent> handler = event -> {
-
-                        this.changeConfiguration(event);
-                        SimpleButton[] phaseButtons = new SimpleButton[]{phaseAButton,phaseBButton,phaseCButton,
-                                groundButton};
-                        int n = 0;
-                        for (SimpleButton button1 : phaseButtons) {
-                            n += button1.getObjectPosition().getActualPosition() == 0 ? 0 : 1;
-                        }
-                        if (n > 2) {
-                            for (SimpleButton button1 : phaseButtons) {
-                                if (button1.getObjectPosition().getActualPosition() == 0) {
-                                    node.getStyleClass().setAll("warning");
-                                }
-                            }
-                        } else {
-                            node.getStyleClass().setAll(copy);
-                        }
-
-                    };
-                    button.setOnAction(handler);
-                    listeners.put(node, handler);
-                }
-            }
         }
     }
 
@@ -905,5 +894,4 @@ public class _7_DifProtectionScenarioController extends ScreensController implem
         return new int[]{elementZero, elementOne, elementTwo, elementThree, elementFour,
                 elementFive, elementSix, elementSeven, elementEight, elementNine};
     }
-
 }
