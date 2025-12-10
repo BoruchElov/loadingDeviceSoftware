@@ -30,6 +30,35 @@
         <Text fx:id = "inverterA2"/>
         <Text fx:id = "inverterB2"/>
         <Text fx:id = "inverterC2"/>
+        <Text fx:id="AOneText"/>
+        <Text fx:id="BOneText"/>
+        <Text fx:id="COneText"/>
+        <Text fx:id="inputCurrentText"/>
+        <Text fx:id="inputPhaseText"/>
+        <Text fx:id="inputTimeText"/>
+        <Text fx:id="secondaryCurrentRMSText"/>
+        <Text fx:id="secondaryCurrentPhaseText"/>
+        <Text fx:id="secondaryVoltageRMSText"/>
+        <Text fx:id="secondaryVoltagePhaseText"/>
+        <Text fx:id="secondaryImpedanceText"/>
+        <Text fx:id="transformerRatioText"/>
+        <Text fx:id="ratedPowerText"/>
+        <Text fx:id="powerFactorText"/>
+        <Text fx:id="measuredCurrentText"/>
+        <Text fx:id="measuredVoltageText"/>
+        <SimpleTextField fx:id="currentInput"/>
+        <SimpleTextField fx:id="phaseInput"/>
+        <SimpleTextField fx:id="timeInput"/>
+        <SimpleTextField fx:id="secondaryCurrentPhase"/>
+        <SimpleTextField fx:id="secondaryCurrentRMS"/>
+        <SimpleTextField fx:id="secondaryVoltageRMS"/>
+        <SimpleTextField fx:id="secondaryVoltagePhase"/>
+        <SimpleTextField fx:id="secondaryImpedance"/>
+        <SimpleTextField fx:id="transformerRatio"/>
+        <SimpleTextField fx:id="ratedPower"/>
+        <SimpleTextField fx:id="powerFactor"/>
+        <SimpleTextField fx:id="measuredCurrent"/>
+        <SimpleTextField fx:id="measuredVoltage"/>
 
     </children>
 </AnchorPane>
