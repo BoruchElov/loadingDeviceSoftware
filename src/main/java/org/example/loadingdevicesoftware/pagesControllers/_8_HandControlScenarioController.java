@@ -26,6 +26,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class _8_HandControlScenarioController extends ScreensController implements Configurable {
 
+
     //Комбобокс
     @FXML
     SimpleComboBox<String> currentFormComboBox;

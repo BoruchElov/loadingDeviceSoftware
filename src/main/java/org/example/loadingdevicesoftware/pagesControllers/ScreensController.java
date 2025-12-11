@@ -169,7 +169,8 @@ class ScreensController extends BasicController {
                 if (node instanceof SimpleButton button) button.changePosition(Integer.parseInt(timeList.get(i)));
                 if (node instanceof ButtonWithPicture button) button.changePosition(Integer.parseInt(timeList.get(i)));
                 if (node instanceof SimpleImageView image) image.changePosition(Integer.parseInt(timeList.get(i)));
-                if (node instanceof SimpleComboBox<?> comboBox) comboBox.getSelectionModel().select(Integer.parseInt(timeList.get(i)));
+                if (node instanceof SimpleComboBox<?> comboBox)
+                    comboBox.getSelectionModel().select(Integer.parseInt(timeList.get(i)));
             }
             PagesBuffer.buffer.clear();
         }
@@ -198,11 +199,11 @@ class ScreensController extends BasicController {
             }
             if (node instanceof SimpleComboBox<?> comboBox && !listeners.containsKey(comboBox)) {
                 ChangeListener<Object> modelListener = (observable, oldValue, newValue) -> {
-                  if (comboBox.getSelectionModel().isEmpty()) {
-                      node.getStyleClass().setAll(copy);
-                  }  else {
-                      node.getStyleClass().remove("warning");
-                  }
+                    if (comboBox.getSelectionModel().isEmpty()) {
+                        node.getStyleClass().setAll(copy);
+                    } else {
+                        node.getStyleClass().remove("warning");
+                    }
                 };
                 comboBox.getSelectionModel().selectedItemProperty().addListener(modelListener);
                 listeners.put(comboBox, modelListener);
@@ -262,6 +263,7 @@ class ScreensController extends BasicController {
     /**
      * Метод для запуска сценария. Данный метод возвращает флаг об успешном завершении
      * выполнения сценария, который сигнализирует
+     *
      * @return
      */
     public void launchScenario() {
@@ -347,8 +349,8 @@ class ScreensController extends BasicController {
                 startButton.changePosition(1);
                 startButton.setText("ПУСК");
                 startButton.setOnAction(_ -> {
+                    if (isAllowedToStartScenario) launchScenario();
                     isAllowedToStartScenario = false;
-                    launchScenario();
                 });
 
                 break;
