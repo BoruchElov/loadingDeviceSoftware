@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -27,11 +28,14 @@ import java.util.concurrent.CompletableFuture;
 public class _8_HandControlScenarioController extends ScreensController implements Configurable {
 
 
+    @FXML
+    CheckBox symmetricalComponentsCheckBox;
+
     //Комбобокс
     @FXML
     SimpleComboBox<String> currentFormComboBox;
     @FXML
-    Text  currentFormText;
+    Text currentFormText;
     //ТЕКСТОВЫЕ ПОЛЯ
     //текстовые поля для токов и углов слева
     @FXML
@@ -132,11 +136,29 @@ public class _8_HandControlScenarioController extends ScreensController implemen
     @FXML
     Text currentOne;
     @FXML
+    Text positiveSequenceCurrent;
+    @FXML
+    Text positiveSequencePhase;
+    @FXML
+    Text negativeSequenceCurrent;
+    @FXML
+    Text negativeSequencePhase;
+    @FXML
+    Text positiveSequenceCurrentTwo;
+    @FXML
+    Text positiveSequencePhaseTwo;
+    @FXML
+    Text negativeSequenceCurrentTwo;
+    @FXML
+    Text negativeSequencePhaseTwo;
+    @FXML
     Text currentTwo;
     @FXML
     Text phaseOne;
     @FXML
     Text phaseTwo;
+    @FXML
+    Text symmetricalComponents;
     //Текст фаз
     @FXML
     Text aOne;
@@ -175,6 +197,17 @@ public class _8_HandControlScenarioController extends ScreensController implemen
     @FXML
     public void initialize() {
         super.initialize();
+
+        symmetricalComponentsCheckBox.getStyleClass().add("check-box");
+        AnchorPane.setTopAnchor(symmetricalComponentsCheckBox, 597.);
+        AnchorPane.setLeftAnchor(symmetricalComponentsCheckBox, 435.);
+        symmetricalComponentsCheckBox.setOnAction(event -> {
+            comboBoxAction();
+        });
+        symmetricalComponents.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.NORMAL));
+        symmetricalComponents.setText("УЧЁТ СИМ.СОС.");
+        AnchorPane.setTopAnchor(symmetricalComponents, 565.);
+        AnchorPane.setLeftAnchor(symmetricalComponents, 390.);
 
         nodesToCheck = new ArrayList<>(List.of(new Node[]{frequencyInput, timeInput, nameTextField, objectTextField,
                 currentFormComboBox, phaseALCurrent, phaseALAngle}));
@@ -220,7 +253,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         || textField == phaseARCurrent || textField == phaseBRCurrent || textField == phaseCRCurrent
                         || textField == phaseARAngle || textField == phaseBRAngle || textField == phaseCRAngle || textField == timeInput
                         || textField == timeOutput || textField == Ampermetr || textField == Voltmetr || textField == frequencyInput
-                        || textField == currentPhase-> {
+                        || textField == currentPhase -> {
                     textField.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     textField.setAlignment(Pos.CENTER);
                     // Переменные для настройки размеров
@@ -603,7 +636,10 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         text == currentTwo || text == phaseOne || text == phaseTwo || text == aOne ||
                         text == aTwo || text == bOne || text == bTwo || text == cOne || text == cTwo ||
                         text == timerText || text == amperText || text == voltText || text == frequencyText
-                        || text == currentFormText || text == currentPhaseText -> {
+                        || text == currentFormText || text == currentPhaseText || text == positiveSequenceCurrent ||
+                        text == positiveSequencePhase || text == negativeSequenceCurrent || text == negativeSequencePhase ||
+                        text == positiveSequenceCurrentTwo || text == positiveSequencePhaseTwo || text == negativeSequenceCurrentTwo
+                        || text == negativeSequencePhaseTwo -> {
                     text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                     text.setFill(Color.BLACK);
 
@@ -648,15 +684,39 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setTopAnchor(text1, 240.);
                             AnchorPane.setLeftAnchor(text1, 758.);
                         }
+                        case Text text1 when text == positiveSequenceCurrent -> {
+                            text1.setText("");
+                        }
+                        case Text text1 when text == positiveSequencePhase -> {
+                            text1.setText("");
+                        }
+                        case Text text1 when text == negativeSequenceCurrent -> {
+                            text1.setText("");
+                        }
+                        case Text text1 when text == negativeSequencePhase -> {
+                            text1.setText("");
+                        }
+                        case Text text1 when text == positiveSequenceCurrentTwo -> {
+                            text1.setText("");
+                        }
+                        case Text text1 when text == positiveSequencePhaseTwo -> {
+                            text1.setText("");
+                        }
+                        case Text text1 when text == negativeSequenceCurrentTwo -> {
+                            text1.setText("");
+                        }
+                        case Text text1 when text == negativeSequencePhaseTwo -> {
+                            text1.setText("");
+                        }
                         case Text text1 when text1 == phaseOne -> {
-                            text1.setText("fi, град");
+                            text1.setText("φ, °");
                             AnchorPane.setTopAnchor(text1, 240.);
-                            AnchorPane.setLeftAnchor(text1, 167.);
+                            AnchorPane.setLeftAnchor(text1, 187.);
                         }
                         case Text text1 when text1 == phaseTwo -> {
-                            text1.setText("fi, град");
+                            text1.setText("φ, °");
                             AnchorPane.setTopAnchor(text1, 240.);
-                            AnchorPane.setLeftAnchor(text1, 835.);
+                            AnchorPane.setLeftAnchor(text1, 855.);
                         }//Текст для модулей
                         case Text text1 when text1 == aOne -> {
                             text1.setText("МОДУЛЬ A1");
@@ -755,6 +815,68 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         restoreState();
     }
 
+    private void comboBoxAction() {
+        if (symmetricalComponentsCheckBox.isSelected()) {
+            currentOne.setText("I0, A");
+            AnchorPane.setTopAnchor(currentOne, 240.);
+            AnchorPane.setLeftAnchor(currentOne, 79.);
+            currentTwo.setText("I0, A");
+            AnchorPane.setTopAnchor(currentTwo, 240.);
+            AnchorPane.setLeftAnchor(currentTwo, 758.);
+            phaseOne.setText("φ0, °");
+            AnchorPane.setTopAnchor(phaseOne, 240.);
+            AnchorPane.setLeftAnchor(phaseOne, 187.);
+            phaseTwo.setText("φ0, °");
+            AnchorPane.setTopAnchor(phaseTwo, 240.);
+            AnchorPane.setLeftAnchor(phaseTwo, 855.);
+            positiveSequenceCurrent.setText("I1, A");
+            AnchorPane.setTopAnchor(positiveSequenceCurrent, 335.);
+            AnchorPane.setLeftAnchor(positiveSequenceCurrent, 79.);
+            positiveSequencePhase.setText("φ1, °");
+            AnchorPane.setTopAnchor(positiveSequencePhase, 335.);
+            AnchorPane.setLeftAnchor(positiveSequencePhase, 187.);
+            negativeSequenceCurrent.setText("I2, A");
+            AnchorPane.setTopAnchor(negativeSequenceCurrent, 425.);
+            AnchorPane.setLeftAnchor(negativeSequenceCurrent, 79.);
+            negativeSequencePhase.setText("φ2, °");
+            AnchorPane.setTopAnchor(negativeSequencePhase, 425.);
+            AnchorPane.setLeftAnchor(negativeSequencePhase, 187.);
+            positiveSequenceCurrentTwo.setText("I1, A");
+            AnchorPane.setTopAnchor(positiveSequenceCurrentTwo, 335.);
+            AnchorPane.setLeftAnchor(positiveSequenceCurrentTwo, 758.);
+            positiveSequencePhaseTwo.setText("φ1, °");
+            AnchorPane.setTopAnchor(positiveSequencePhaseTwo, 335.);
+            AnchorPane.setLeftAnchor(positiveSequencePhaseTwo, 855.);
+            negativeSequenceCurrentTwo.setText("I2, A");
+            AnchorPane.setTopAnchor(negativeSequenceCurrentTwo, 425.);
+            AnchorPane.setLeftAnchor(negativeSequenceCurrentTwo, 758.);
+            negativeSequencePhaseTwo.setText("φ2, °");
+            AnchorPane.setTopAnchor(negativeSequencePhaseTwo, 425.);
+            AnchorPane.setLeftAnchor(negativeSequencePhaseTwo, 855.);
+        } else {
+            currentOne.setText("I, A");
+            AnchorPane.setTopAnchor(currentOne, 240.);
+            AnchorPane.setLeftAnchor(currentOne, 79.);
+            currentTwo.setText("I, A");
+            AnchorPane.setTopAnchor(currentTwo, 240.);
+            AnchorPane.setLeftAnchor(currentTwo, 758.);
+            phaseOne.setText("φ, °");
+            AnchorPane.setTopAnchor(phaseOne, 240.);
+            AnchorPane.setLeftAnchor(phaseOne, 187.);
+            phaseTwo.setText("φ, °");
+            AnchorPane.setTopAnchor(phaseTwo, 240.);
+            AnchorPane.setLeftAnchor(phaseTwo, 855.);
+            positiveSequenceCurrent.setText("");
+            positiveSequencePhase.setText("");
+            negativeSequenceCurrent.setText("");
+            negativeSequencePhase.setText("");
+            positiveSequenceCurrentTwo.setText("");
+            positiveSequencePhaseTwo.setText("");
+            negativeSequenceCurrentTwo.setText("");
+            negativeSequencePhaseTwo.setText("");
+        }
+    }
+
     //Функция для отображения активности элементов на форме
     @Override
     public void changeConfiguration(Event event) {
@@ -790,10 +912,10 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         //Заполнение динамического массива исходных данных. Каждый элемент массива - строка с нужными параметрами сценария
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
-        SimpleTextField[] currentFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
-                phaseARCurrent, phaseBRCurrent,phaseCRCurrent};
-        SimpleTextField[] phaseFields = new SimpleTextField[]{phaseALAngle,phaseBLAngle, phaseCLAngle,
-                phaseARAngle, phaseBRAngle,phaseCRAngle};
+        SimpleTextField[] currentFields = new SimpleTextField[]{phaseALCurrent, phaseBLCurrent, phaseCLCurrent,
+                phaseARCurrent, phaseBRCurrent, phaseCRCurrent};
+        SimpleTextField[] phaseFields = new SimpleTextField[]{phaseALAngle, phaseBLAngle, phaseCLAngle,
+                phaseARAngle, phaseBRAngle, phaseCRAngle};
         ArrayList<String> scenarioParameters = new ArrayList<>();
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
@@ -815,8 +937,8 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         startBlinkingAnimation();
         //Асинхронный запуск сценария
         CompletableFuture<Boolean> resultFuture = currentFormComboBox.getSelectionModel().getSelectedIndex() != 0 ?
-                ScenariosManager.handControlScenarioOne(scenarioParameters,timeout) :
-                ScenariosManager.handControlScenarioOne(scenarioParameters,timeout);
+                ScenariosManager.handControlScenarioOne(scenarioParameters, timeout) :
+                ScenariosManager.handControlScenarioOne(scenarioParameters, timeout);
         //Действие по завершении работы сценария
         resultFuture.thenAccept(success -> {
             // Доступ к UI — только из FX Application Thread
@@ -848,10 +970,10 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         ArrayList<Double> resistanceBuffer = CheckingManager.getResistanceCheckParameters();
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
-        SimpleTextField[] currentsFields = new SimpleTextField[]{phaseALCurrent,phaseBLCurrent, phaseCLCurrent,
-                phaseARCurrent, phaseBRCurrent,phaseCRCurrent};
-        SimpleTextField[] phasesFields = new SimpleTextField[]{phaseALAngle,phaseBLAngle, phaseCLAngle,
-                phaseARAngle, phaseBRAngle,phaseCRAngle};
+        SimpleTextField[] currentsFields = new SimpleTextField[]{phaseALCurrent, phaseBLCurrent, phaseCLCurrent,
+                phaseARCurrent, phaseBRCurrent, phaseCRCurrent};
+        SimpleTextField[] phasesFields = new SimpleTextField[]{phaseALAngle, phaseBLAngle, phaseCLAngle,
+                phaseARAngle, phaseBRAngle, phaseCRAngle};
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
                 buffer.add(Double.parseDouble(currentsFields[i].getText()));

@@ -15,10 +15,21 @@
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleButton?>
 
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleComboBox?>
+<?import javafx.scene.control.CheckBox?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._8_HandControlScenarioController">
     <children>
+        <CheckBox fx:id="symmetricalComponentsCheckBox"/>
         <SimpleComboBox fx:id="currentFormComboBox"/>
         <Text fx:id="currentFormText"/>
+        <Text fx:id="symmetricalComponents"/>
+        <Text fx:id="positiveSequenceCurrent"/>
+        <Text fx:id="positiveSequencePhase"/>
+        <Text fx:id="negativeSequenceCurrent"/>
+        <Text fx:id="negativeSequencePhase"/>
+        <Text fx:id="positiveSequenceCurrentTwo"/>
+        <Text fx:id="positiveSequencePhaseTwo"/>
+        <Text fx:id="negativeSequenceCurrentTwo"/>
+        <Text fx:id="negativeSequencePhaseTwo"/>
         <!--Кнопки справа-->
         <SimpleButton fx:id="conditionButton"/>
         <!--Кнопка выбора сух/мокрый-->
