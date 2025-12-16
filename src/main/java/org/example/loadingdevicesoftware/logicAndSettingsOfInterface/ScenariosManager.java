@@ -74,13 +74,16 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 2000L)));
+                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SCENARIO_RESULTS,
+                                Duration.ofMillis((long) (timeout * 2000L)));
                 scenarioResultsFutures.put(address, future);
+                ConnectionControl.startRequesting(address, (long) (timeout * 1000L));
                 future.whenComplete((buffer, err) -> {
                     if (err != null) {
                         System.err.println("Модуль " + address.toStringInHexFormat()
                                 + " не прислал второе сообщение: " + err);
                         scenarioFailed.set(true);
+                        ConnectionControl.stopRequesting();
                     } else {
                         responses.put(address, analyzeResults(ConnectionControl.
                                 analyzeResponse(ConnectionControl.extractBytes(buffer),
@@ -88,6 +91,7 @@ public class ScenariosManager {
                     }
                 });
             } catch (Exception e) {
+                ConnectionControl.stopRequesting();
                 System.err.println("Ошибка при отправке команды START_SCENARO_1() модулю с адресом "
                         + addresses.get(i).toStringInHexFormat());
                 return CompletableFuture.completedFuture(false);
@@ -151,13 +155,16 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 2000L)));
+                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SCENARIO_RESULTS,
+                                Duration.ofMillis((long) (timeout * 2000L)));
                 scenarioResultsFutures.put(address, future);
+                ConnectionControl.startRequesting(address, (long) (timeout * 1000L));
                 future.whenComplete((buffer, err) -> {
                     if (err != null) {
                         System.err.println("Модуль " + address.toStringInHexFormat()
                                 + " не прислал второе сообщение: " + err);
                         scenarioFailed.set(true);
+                        ConnectionControl.stopRequesting();
                     } else {
                         responses.put(address, analyzeResults(ConnectionControl.
                                 analyzeResponse(ConnectionControl.extractBytes(buffer),
@@ -165,6 +172,7 @@ public class ScenariosManager {
                     }
                 });
             } catch (Exception e) {
+                ConnectionControl.stopRequesting();
                 System.err.println("Ошибка при отправке команды START_SCENARO_2() модулю с адресом "
                         + addresses.get(i).toStringInHexFormat());
                 return CompletableFuture.completedFuture(false);

@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ConnectionControl {
@@ -31,7 +31,8 @@ public class ConnectionControl {
         return invertersAddresses.get(index);
     }
 
-    private ConnectionControl() {}
+    private ConnectionControl() {
+    }
 
     public static void openConnection() {
         MAC = new cMAC(COM, BAUDE_RATE, NUM_BITS);
@@ -70,7 +71,7 @@ public class ConnectionControl {
     }
 
     public static int toIntFromHexString(String hexString) {
-        hexString = hexString.replace(":","");
+        hexString = hexString.replace(":", "");
         return Integer.parseInt(hexString, 16);
     }
 
@@ -81,6 +82,7 @@ public class ConnectionControl {
         }
         invertersAddresses.add(address);
     }
+
 
     public enum ExpectedValue {
         NUMBER, PHRASE
@@ -93,5 +95,39 @@ public class ConnectionControl {
             case PHRASE -> message;
         };
     }
-    
+
+    static ScheduledExecutorService infoPollExecutor;
+    static ScheduledFuture<?> infoPollFuture;
+
+    public static void startRequesting(Address invertersAddress, long timeout_ms) {
+        infoPollExecutor = Executors.newSingleThreadScheduledExecutor();
+        infoPollFuture = infoPollExecutor.scheduleAtFixedRate(
+                () -> {
+                    try {
+                        Inverters.sendCommandToInverter(invertersAddress, Commands.MODBUS, "03,0000,0002");
+                        String response = analyzeResponse(Inverters.getLastResponse(invertersAddress,
+                                Commands.MODBUS), ConnectionControl.ExpectedValue.PHRASE).substring(1);
+                        System.out.println(response);
+                    } catch (Exception e) {
+                        System.err.println("Ошибка опроса: " + e.getMessage());
+                    }
+                },
+                0,
+                500,  // 2 раза в секунду
+                TimeUnit.MILLISECONDS
+        );
+
+        infoPollExecutor.schedule(() -> {
+            infoPollFuture.cancel(true);
+            infoPollExecutor.shutdownNow();
+            System.out.println("Опрос завершён по таймауту.");
+        }, timeout_ms - 500, TimeUnit.MILLISECONDS);
+    }
+
+    public static void stopRequesting() {
+        if (infoPollFuture != null && !infoPollFuture.isCancelled()) infoPollFuture.cancel(true);
+        if (infoPollExecutor != null && !infoPollExecutor.isShutdown()) infoPollExecutor.shutdownNow();
+    }
+
+
 }

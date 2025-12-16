@@ -17,7 +17,7 @@ import static org.example.loadingdevicesoftware.communicationWithInverters.Conne
 
 public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
-
+    //TODO поменять 07 на 09 (изначальный адрес 0x0712ABE1)
     public static final int myMACInt = 0x0712ABE1;
     private static Address myMAC = new Address(myMACInt);
     private SerialPort SP;
@@ -124,7 +124,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
         Address adrcv = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
         if (adrsrc.toStringInHexFormat().equals("09:12:AB:E1") ||
                 adrsrc.toStringInHexFormat().equals("00:80:E1:FF") ||
-                adrsrc.toStringInHexFormat().equals("04:80:E1:FF") ||
+                adrsrc.toStringInHexFormat().equals("06:80:E1:FF") ||
                 adrsrc.toStringInHexFormat().equals("07:12:AB:E1")) {
             return;
         }
@@ -138,14 +138,6 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
         } catch (Exception e) {
             System.out.println("(MAC) Нет обработчика для типа: " + PacketType);
         }
-    }
-
-
-    private String bytesToHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes)
-            sb.append(String.format("%02X ", b));
-        return sb.toString();
     }
 
     @Override

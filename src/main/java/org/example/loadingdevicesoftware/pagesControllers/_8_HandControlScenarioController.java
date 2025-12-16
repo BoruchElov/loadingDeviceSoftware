@@ -18,6 +18,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import org.example.loadingdevicesoftware.communicationWithInverters.Address;
+import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.util.ArrayList;
@@ -939,6 +943,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         CompletableFuture<Boolean> resultFuture = currentFormComboBox.getSelectionModel().getSelectedIndex() != 0 ?
                 ScenariosManager.handControlScenarioOne(scenarioParameters, timeout) :
                 ScenariosManager.handControlScenarioOne(scenarioParameters, timeout);
+        //ConnectionControl.startRequesting(new Address(ConnectionControl.toIntFromHexString("04:08:E1:FF")));
         //Действие по завершении работы сценария
         resultFuture.thenAccept(success -> {
             // Доступ к UI — только из FX Application Thread
@@ -955,10 +960,12 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     });
                     InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
                     setPageState(PageState.WAITING_FOR_CHOICE);
+                    //ConnectionControl.stopRequesting();
                 } else {
                     InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
                     setPageState(PageState.ALLOWED_TO_START);
                 }
+                ConnectionControl.stopRequesting();
             });
         });
     }
