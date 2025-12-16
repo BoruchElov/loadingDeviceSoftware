@@ -16,7 +16,8 @@ import java.util.concurrent.*;
 public enum Commands {
 
     BLINK_LED_START, BLINK_LED_STOP, SET_RESISTANCE_CHECK, START_RESISTANCE_CHECK, SET_SCENARO_1, START_SCENARO_1, SET_SCENARO_2,
-    START_SCENARO_2, SET_SCENARO_3, START_SCENARO_3, CHECK_SWITCH_POS, FAULT, MODBUS, MODBUS_WRITE, FORCED_STOP;
+    START_SCENARO_2, SET_SCENARO_3, START_SCENARO_3, CHECK_SWITCH_POS, FAULT, MODBUS, MODBUS_WRITE, FORCED_STOP, SC_RES,
+    SCENARIO_RESULTS;
 
     private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -36,7 +37,11 @@ public enum Commands {
      * @throws InterruptedException
      */
     static byte[] callFunction(cMAC MAC, Address address, Commands command, String arguments) throws ExecutionException, InterruptedException {
+        respondToFunction(MAC, address, command, arguments);
+        return waitForAnswer(address);
+    }
 
+    static void respondToFunction(cMAC MAC, Address address, Commands command, String arguments) {
         String textCommand = command.toString() + "(" + arguments + ")";
         byte[] fullCommandInBytes = textCommand.getBytes(StandardCharsets.UTF_8);
         byte[] commandForInverter = new byte[fullCommandInBytes.length + 1];
@@ -47,7 +52,6 @@ public enum Commands {
         } catch (Exception e) {
             System.out.println("Ошибка! Невозможно отправить пакет: проверьте соединение, адрес или сообщение.");
         }
-        return waitForAnswer(address);
     }
 
 

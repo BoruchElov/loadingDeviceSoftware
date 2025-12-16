@@ -42,6 +42,10 @@ public class Inverters implements PacketHandler {
         saveLastResponse(inverterAddress, command, Commands.callFunction(tabletAddress, inverterAddress, command, arguments));
     }
 
+    public static void respondToInverter(Address inverterAddress, Commands command, String arguments) {
+        Commands.respondToFunction(tabletAddress, inverterAddress, command, arguments);
+    }
+
     public static void saveLastResponse(Address inverterAddress, Commands command, byte[] bytes) {
         responses.put(inverterAddress.getValue() + ":" + command.name(), bytes);
     }

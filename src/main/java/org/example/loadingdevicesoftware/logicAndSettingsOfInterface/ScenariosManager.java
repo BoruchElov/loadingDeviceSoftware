@@ -74,7 +74,7 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 2000L)));
+                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 4000L)));
                 scenarioResultsFutures.put(address, future);
                 future.whenComplete((buffer, err) -> {
                     if (err != null) {
@@ -85,6 +85,7 @@ public class ScenariosManager {
                         responses.put(address, analyzeResults(ConnectionControl.
                                 analyzeResponse(ConnectionControl.extractBytes(buffer),
                                         ConnectionControl.ExpectedValue.NUMBER)));
+                        Inverters.respondToInverter(address, Commands.SC_RES, "YES");
                     }
                 });
             } catch (Exception e) {
@@ -151,7 +152,7 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 2000L)));
+                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 4000L)));
                 scenarioResultsFutures.put(address, future);
                 future.whenComplete((buffer, err) -> {
                     if (err != null) {
@@ -162,6 +163,7 @@ public class ScenariosManager {
                         responses.put(address, analyzeResults(ConnectionControl.
                                 analyzeResponse(ConnectionControl.extractBytes(buffer),
                                         ConnectionControl.ExpectedValue.NUMBER)));
+                        Inverters.respondToInverter(address, Commands.SC_RES, "YES");
                     }
                 });
             } catch (Exception e) {

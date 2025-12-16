@@ -7,6 +7,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.serial.ComPo
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -68,6 +69,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
         Packet.putInt(this.getMAC().getValue());                    // Адрес отправителя
         Packet.put(packet);                                            // PayLoad
         //System.out.println("Запрос на отправку " + Packet.array().length + " байт.");
+        //System.out.println("Запрос на отправку: " + Arrays.toString(packet) );
         boolean result = sendQueue.offer(Packet.array());// Отправить пакет без блокировки
         if (!result) {
             System.out.println("Ошибка при отправке пакета! Переполнена очередь на отправку");
@@ -100,7 +102,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
                     System.err.println("(MAC) Ошибка при отправке пакета");
                     // Можно добавить повторную попытку
                 } else {
-                    //System.out.println("(MAC) Пакет отправлен: " + bytesToHex(packet));
+                    System.out.println("(MAC) Пакет отправлен: " + bytesToHex(packet));
                     //System.out.println("Отправлено: " + written + " из " + packet.length);
                 }
 
