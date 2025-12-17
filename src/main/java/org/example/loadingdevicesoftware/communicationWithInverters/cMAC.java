@@ -18,7 +18,7 @@ import static org.example.loadingdevicesoftware.communicationWithInverters.Conne
 public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
     //TODO поменять 07 на 09 (изначальный адрес 0x0712ABE1)
-    public static final int myMACInt = 0x0712ABE1;
+    public static final int myMACInt = 0x0912ABE1;
     private static Address myMAC = new Address(myMACInt);
     private SerialPort SP;
     private final Map<Integer, PacketHandler> upperLayerHandlers = new ConcurrentHashMap<>();

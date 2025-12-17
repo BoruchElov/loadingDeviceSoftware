@@ -109,7 +109,7 @@ public class ConnectionControl {
                     try {
                         Inverters.sendCommandToInverter(inverterAddress, Commands.MODBUS, "03,0000,0010");
                         String response = analyzeResponse(Inverters.getLastResponse(inverterAddress,
-                                Commands.MODBUS), ConnectionControl.ExpectedValue.PHRASE).substring(1);
+                                Commands.MODBUS), ExpectedValue.NUMBER);
                         System.out.println(response);
                     } catch (Exception e) {
                         System.err.println("Ошибка опроса: " + e.getMessage());

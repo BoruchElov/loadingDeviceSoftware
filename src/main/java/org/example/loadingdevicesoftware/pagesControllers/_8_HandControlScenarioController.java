@@ -21,7 +21,9 @@ import javafx.util.Duration;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.InverterParams;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
+import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.util.ArrayList;
@@ -943,7 +945,28 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         CompletableFuture<Boolean> resultFuture = currentFormComboBox.getSelectionModel().getSelectedIndex() != 0 ?
                 ScenariosManager.handControlScenarioOne(scenarioParameters, timeout) :
                 ScenariosManager.handControlScenarioOne(scenarioParameters, timeout);
-        //ConnectionControl.startRequesting(new Address(ConnectionControl.toIntFromHexString("04:08:E1:FF")));
+
+        //Настройка отображения параметров
+        ArrayList<InverterParams> inverters = new ArrayList<>();
+        ArrayList<SimpleTextField[]> modulesParameters = new ArrayList<>();
+        for (Address address : CheckingManager.getAvailableAddresses()) {
+            inverters.add(PollingManager.getParams(address));
+        }
+        for (int i = 0; i < buttons.length; i++) {
+            if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                modulesParameters.add(new SimpleTextField[]{currentFields[i], phaseFields[i]});
+            }
+        }
+        for (int i = 0; i < inverters.size(); i++) {
+            modulesParameters.get(i)[0].textProperty().bind(inverters.get(i).currentRMSProperty());
+            modulesParameters.get(i)[1].textProperty().bind(inverters.get(i).currentPhaseProperty());
+        }
+
+        objectTextField.textProperty().bind(inverters.get(0).currentRMSProperty());
+        nameTextField.textProperty().bind(inverters.get(0).currentPhaseProperty());
+
+
+
         //Действие по завершении работы сценария
         resultFuture.thenAccept(success -> {
             // Доступ к UI — только из FX Application Thread
@@ -965,7 +988,12 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
                     setPageState(PageState.ALLOWED_TO_START);
                 }
-                ConnectionControl.stopRequesting();
+                for (SimpleTextField[] fields : modulesParameters) {
+                    fields[0].textProperty().unbind();
+                    fields[1].textProperty().unbind();
+                }
+                objectTextField.textProperty().unbind();
+                nameTextField.textProperty().unbind();
             });
         });
     }
