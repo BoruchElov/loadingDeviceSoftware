@@ -3,6 +3,7 @@ package org.example.loadingdevicesoftware.communicationWithInverters;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,11 +34,12 @@ public class EventWaiter {
      */
     public synchronized CompletableFuture<ByteBuffer> waitForEvent(
             Address address,
+            PossibleResponses response,
             Duration timeout
     ) {
         CompletableFuture<ByteBuffer> future = new CompletableFuture<>();
 
-        PendingEvent pending = new PendingEvent(address, future);
+        PendingEvent pending = new PendingEvent(address, response, future);
         pendingEvents.add(pending);
 
         System.out.println("[EventWaiter] → Зарегистрировано ожидание события от " + address +
@@ -68,6 +70,8 @@ public class EventWaiter {
                 ", pending = " + pendingEvents.size());
         Iterator<PendingEvent> it = pendingEvents.iterator();
 
+        PossibleResponses response = getExpectedResponse(data);
+
         while (it.hasNext()) {
             PendingEvent p = it.next();
             //saveResponse(source, info.array());
@@ -78,6 +82,12 @@ public class EventWaiter {
                 System.out.println("[EventWaiter]     → адрес не совпадает");
                 continue;
             }
+            if (p.expectedResponse() != response) {
+                System.out.println("[EventWaiter]     → событие не совпадает");
+                continue;
+            }
+            System.out.println("Ожидался ответ: " + p.expectedResponse.name());
+            System.out.println("Получен ответ: " + response.name());
 
             System.out.println("[EventWaiter]     ✔ СОБЫТИЕ ПОДХОДИТ — завершаем future");
             saveResponse(source, ConnectionControl.extractBytes(data));
@@ -94,12 +104,34 @@ public class EventWaiter {
         return responsesStorage.get(address);
     }
 
+    public enum PossibleResponses {
+        BLINK_LED_START, BLINK_LED_STOP, SET_RESISTANCE_CHECK, SET_SCENARO_1, SET_SCENARO_2, CHECK_SWITCH_POS,
+        SCENARIO_RESULTS, MODBUS, MODBUS_WRITE
+    }
+
+    private PossibleResponses getExpectedResponse(ByteBuffer data) {
+        byte[] savedData = ConnectionControl.extractBytes(data);
+        String message = new String(savedData, StandardCharsets.UTF_8);
+        System.out.println(message);
+        message = message.substring(1, message.indexOf("("));
+        System.out.println(message);
+        PossibleResponses outputResponse = PossibleResponses.BLINK_LED_START;
+        for (PossibleResponses response : PossibleResponses.values()) {
+            if (response.name().equals(message)) {
+                outputResponse = response;
+                break;
+            }
+        }
+        return outputResponse;
+    }
+
     private void saveResponse(Address address, byte[] response) {
         responsesStorage.put(address, response);
     }
 
     private record PendingEvent(
             Address address,
+            PossibleResponses expectedResponse,
             CompletableFuture<ByteBuffer> future
     ) {
     }

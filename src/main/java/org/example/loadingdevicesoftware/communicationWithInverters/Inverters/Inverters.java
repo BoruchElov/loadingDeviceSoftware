@@ -1,11 +1,9 @@
 package org.example.loadingdevicesoftware.communicationWithInverters.Inverters;
 
-import org.example.loadingdevicesoftware.communicationWithInverters.Address;
-import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
-import org.example.loadingdevicesoftware.communicationWithInverters.PacketHandler;
-import org.example.loadingdevicesoftware.communicationWithInverters.cMAC;
+import org.example.loadingdevicesoftware.communicationWithInverters.*;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -16,8 +14,7 @@ import java.util.concurrent.ExecutionException;
 public class Inverters implements PacketHandler {
 
     private static cMAC tabletAddress;
-    private static final ConcurrentHashMap<Address, CompletableFuture<ByteBuffer>> pendingResponses = new ConcurrentHashMap<>();
-    private byte[] lastResponse;
+    private static final ConcurrentHashMap<String, CompletableFuture<ByteBuffer>> pendingResponses = new ConcurrentHashMap<>();
 
     private static final ConcurrentHashMap<String, byte[]> responses = new ConcurrentHashMap<>();
 
@@ -47,28 +44,27 @@ public class Inverters implements PacketHandler {
     }
 
     public static void saveLastResponse(Address inverterAddress, Commands command, byte[] bytes) {
-        responses.put(inverterAddress.getValue() + ":" + command.name(), bytes);
+        responses.put(inverterAddress.getValue() + "|" + command.name(), bytes);
     }
 
     public static byte[] getLastResponse(Address inverterAddress, Commands command) {
-        return responses.get(inverterAddress.getValue() + ":" + command.name());
+        return responses.get(inverterAddress.getValue() + "|" + command.name());
     }
 
-    public static void removeResponse(Address deviceAddress) {
-        pendingResponses.remove(deviceAddress);
+    public static void removeResponse(String code) {
+        pendingResponses.remove(code);
     }
 
-    public static void addResponse(Address deviceAddress, CompletableFuture<ByteBuffer> response) {
-        pendingResponses.put(deviceAddress, response);
-    }
-
-    public static ByteBuffer getLastResponse(Address deviceAddress) throws ExecutionException, InterruptedException {
-        return pendingResponses.get(deviceAddress).get();
+    public static void addResponse(String code, CompletableFuture<ByteBuffer> response) {
+        pendingResponses.put(code, response);
     }
 
     @Override
     public void handlePacket(Address AddressSource, ByteBuffer Buff) {
-        CompletableFuture<ByteBuffer> future = pendingResponses.remove(AddressSource);
+        String command = new String(ConnectionControl.extractBytes(Buff), StandardCharsets.UTF_8);
+        String code = AddressSource.toStringInHexFormat() + "|" + command.substring(1, command.indexOf('('));
+        System.out.println("Получено сообщение с кодом: " + code);
+        CompletableFuture<ByteBuffer> future = pendingResponses.remove(code);
         if (future != null) {
             future.complete(Buff);                            // Разблокируем ожидающий поток
         } else {

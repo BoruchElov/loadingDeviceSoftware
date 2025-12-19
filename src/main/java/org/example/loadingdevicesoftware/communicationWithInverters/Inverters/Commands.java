@@ -52,6 +52,7 @@ public enum Commands {
         } catch (Exception e) {
             System.out.println("Ошибка! Невозможно отправить пакет: проверьте соединение, адрес или сообщение.");
         }
+        return waitForAnswer(address, command);
     }
 
 
@@ -63,14 +64,16 @@ public enum Commands {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    static byte[] waitForAnswer(Address address) throws ExecutionException, InterruptedException {
+    static byte[] waitForAnswer(Address address, Commands command) throws ExecutionException, InterruptedException {
         CompletableFuture<ByteBuffer> future = new CompletableFuture<>();
-        Inverters.addResponse(address, future);
+        String code = address.toStringInHexFormat() + "|" + command.toString();
+        Inverters.addResponse(code, future);
+        System.out.println("Отправлено сообщение с кодом: " + code);
         scheduler.schedule(() -> {
             if (!future.isDone()) {
-                System.out.println("(Inverters) Ответ не получен за 1с от устройства: " + address.toString());
+                System.out.println("(Inverters) Ответ не получен за 1с от устройства: " + address.toStringInHexFormat());
                 future.completeExceptionally(new TimeoutException("Ответ от устройства не получен за 1с"));
-                Inverters.removeResponse(address);
+                Inverters.removeResponse(code);
             }
         }, delayTime, TimeUnit.SECONDS);
         ByteBuffer result = future.get().flip();
@@ -86,27 +89,6 @@ public enum Commands {
         scheduler.shutdownNow();
     }
 
-    /**
-     * Метод для интерпретации полученного ответа в читаемом виде.
-     * <p>
-     * TODO добавить возможность перевода MAC-адреса в понятное имя инвертора.
-     *
-     * @param response ответ в виде массива байт
-     * @return интерпретацию ответа в виде строки
-     */
-
-    public static String responseAnalyzer(byte[] response) {
-        StringBuilder senderMAC = new StringBuilder();
-        StringBuilder receiverMAC = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            senderMAC.append(String.format("%02X", response[i], StandardCharsets.UTF_8));
-            senderMAC.append(i == 3 ? "" : ":");
-            receiverMAC.append(String.format("%02X", response[i + 4], StandardCharsets.UTF_8));
-            receiverMAC.append((i + 4) == 7 ? "" : ":");
-        }
-        String message = new String(response, 8, response.length - 8, StandardCharsets.UTF_8);
-        return senderMAC + " | " + receiverMAC + " | " + message;
-    }
 
 
 

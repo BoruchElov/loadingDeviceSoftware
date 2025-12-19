@@ -20,11 +20,11 @@ public class SimpleTextField extends TextField implements Changeable {
     }
 
     public enum numberOfDecimals {
-        INT, TWO, THREE
+        INT, ONE, TWO, THREE
     }
 
     typeOfValue type;
-    numberOfDecimals decimals = numberOfDecimals.TWO;
+    numberOfDecimals decimals = numberOfDecimals.ONE;
 
     private double MAX = 3000.;
     private double MIN = 1.;
@@ -74,6 +74,7 @@ public class SimpleTextField extends TextField implements Changeable {
             case DIGIT:
                 Pattern decimalPattern = switch (decimals) {
                     case INT -> Pattern.compile("-?\\d*");
+                    case ONE -> Pattern.compile("-?\\d*(\\.\\d{0,1})?");
                     case TWO -> Pattern.compile("-?\\d*(\\.\\d{0,2})?");
                     case THREE -> Pattern.compile("-?\\d*(\\.\\d{0,3})?");
                 };
@@ -99,7 +100,7 @@ public class SimpleTextField extends TextField implements Changeable {
                             }
                         });
                         break;
-                    case TWO, THREE:
+                    case ONE, TWO, THREE:
                         TextFormatter<Double> formatterFloat = new TextFormatter<>(
                                 new DoubleStringConverter(),
                                 null, filter
@@ -153,7 +154,7 @@ public class SimpleTextField extends TextField implements Changeable {
                     case INT:
                         tooltipText = "Данное поле принимает только числа в диапазоне от " + (int) MIN + " до " + (int) MAX;
                         break;
-                    case TWO, THREE:
+                    case ONE, TWO, THREE:
                         tooltipText = "Данное поле принимает только числа в диапазоне от " + MIN + " до " + MAX;
                         break;
                 }

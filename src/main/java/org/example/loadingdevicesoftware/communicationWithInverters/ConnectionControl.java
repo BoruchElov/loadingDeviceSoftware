@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.communicationWithInverters;
 
+import org.apache.commons.math3.analysis.function.Add;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
@@ -7,8 +8,9 @@ import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ConnectionControl {
@@ -27,11 +29,9 @@ public class ConnectionControl {
      */
     private static final CopyOnWriteArrayList<Address> invertersAddresses = new CopyOnWriteArrayList<>();
 
-    public static Address getInvertersAddress(int index) {
-        return invertersAddresses.get(index);
-    }
 
-    private ConnectionControl() {}
+    private ConnectionControl() {
+    }
 
     public static void openConnection() {
         MAC = new cMAC(COM, BAUDE_RATE, NUM_BITS);
@@ -70,7 +70,7 @@ public class ConnectionControl {
     }
 
     public static int toIntFromHexString(String hexString) {
-        hexString = hexString.replace(":","");
+        hexString = hexString.replace(":", "");
         return Integer.parseInt(hexString, 16);
     }
 
@@ -81,6 +81,7 @@ public class ConnectionControl {
         }
         invertersAddresses.add(address);
     }
+
 
     public enum ExpectedValue {
         NUMBER, PHRASE
@@ -93,5 +94,50 @@ public class ConnectionControl {
             case PHRASE -> message;
         };
     }
-    
+
+    private static final HashMap<Address, ScheduledExecutorService> infoPollExecutors = new HashMap();
+    private static final HashMap<Address, ScheduledFuture<?>> infoPollFutures = new HashMap<>();
+
+    public static void startRequesting(Address inverterAddress, long timeout_ms) {
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        infoPollExecutors.put(inverterAddress, executor);
+
+        ScheduledFuture<?> future = executor.scheduleAtFixedRate(() -> {
+                    try {
+                        Inverters.sendCommandToInverter(inverterAddress, Commands.MODBUS, "03,0000,0010");
+                        String response = analyzeResponse(Inverters.getLastResponse(inverterAddress,
+                                Commands.MODBUS), ExpectedValue.NUMBER);
+                        System.out.println(response);
+                    } catch (Exception e) {
+                        System.err.println("Ошибка опроса: " + e.getMessage());
+                    }
+                },
+                0,
+                500,  // 2 раза в секунду
+                TimeUnit.MILLISECONDS);
+        infoPollFutures.put(inverterAddress, future);
+
+        executor.schedule(() -> {
+            future.cancel(true);
+            executor.shutdownNow();
+            System.out.println("Опрос завершён по таймауту.");
+        }, timeout_ms - 500, TimeUnit.MILLISECONDS);
+
+    }
+
+    public static void stopRequesting() {
+
+        for (Address inverterAddress : infoPollExecutors.keySet()) {
+            if (infoPollFutures.get(inverterAddress) != null && !infoPollFutures.get(inverterAddress).isCancelled()) {
+                infoPollFutures.get(inverterAddress).cancel(true);
+            }
+            if (infoPollExecutors.get(inverterAddress) != null && !infoPollExecutors.get(inverterAddress).isShutdown()) {
+                infoPollExecutors.get(inverterAddress).shutdownNow();
+            }
+        }
+        if (!infoPollFutures.isEmpty()) infoPollFutures.clear();
+        if (!infoPollExecutors.isEmpty()) infoPollExecutors.clear();
+    }
+
+
 }

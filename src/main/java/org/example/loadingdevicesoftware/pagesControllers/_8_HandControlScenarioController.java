@@ -18,6 +18,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import org.example.loadingdevicesoftware.communicationWithInverters.Address;
+import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.InverterParams;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
+import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.util.ArrayList;
@@ -274,7 +280,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseALAngle -> {
-                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.ONE);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X2);
@@ -285,7 +291,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLAngle -> {
-                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.ONE);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X2);
@@ -296,7 +302,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLAngle -> {
-                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.ONE);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X2);
@@ -308,7 +314,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseARAngle -> {
-                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.ONE);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X4);
@@ -319,7 +325,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRAngle -> {
-                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.ONE);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X4);
@@ -330,7 +336,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRAngle -> {
-                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.INT);
+                            tf1.setLimits(-360, 360, SimpleTextField.numberOfDecimals.ONE);
                             tf1.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X4);
@@ -939,6 +945,9 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         CompletableFuture<Boolean> resultFuture = currentFormComboBox.getSelectionModel().getSelectedIndex() != 0 ?
                 ScenariosManager.handControlScenarioOne(scenarioParameters, timeout) :
                 ScenariosManager.handControlScenarioOne(scenarioParameters, timeout);
+
+        //Настройка отображения параметров
+        setFieldsValues(true);
         //Действие по завершении работы сценария
         resultFuture.thenAccept(success -> {
             // Доступ к UI — только из FX Application Thread
@@ -955,12 +964,55 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     });
                     InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
                     setPageState(PageState.WAITING_FOR_CHOICE);
+                    //ConnectionControl.stopRequesting();
                 } else {
                     InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
                     setPageState(PageState.ALLOWED_TO_START);
                 }
+                setFieldsValues(false);
             });
         });
+    }
+
+    private void setFieldsValues(boolean isDataUpdating) {
+        SimpleTextField[] currentFields = new SimpleTextField[]{phaseALCurrent, phaseBLCurrent, phaseCLCurrent,
+                phaseARCurrent, phaseBRCurrent, phaseCRCurrent};
+        SimpleTextField[] phaseFields = new SimpleTextField[]{phaseALAngle, phaseBLAngle, phaseCLAngle,
+                phaseARAngle, phaseBRAngle, phaseCRAngle};
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
+                moduleB2Button, moduleC2Button};
+
+        ArrayList<InverterParams> inverters = new ArrayList<>();
+        ArrayList<SimpleTextField[]> modulesParameters = new ArrayList<>();
+        for (Address address : CheckingManager.getAvailableAddresses()) {
+            inverters.add(PollingManager.getParams(address));
+        }
+        for (int i = 0; i < buttons.length; i++) {
+            if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                modulesParameters.add(new SimpleTextField[]{currentFields[i], phaseFields[i]});
+            }
+        }
+        if (isDataUpdating) {
+            for (int i = 0; i < inverters.size(); i++) {
+                if (inverters.get(i) == null) continue;
+                modulesParameters.get(i)[0].setLimits(-1.0,3500.0, SimpleTextField.numberOfDecimals.ONE);
+                modulesParameters.get(i)[0].setEditable(false);
+                modulesParameters.get(i)[0].textProperty().bind(inverters.get(i).currentRMSProperty());
+                modulesParameters.get(i)[1].setEditable(false);
+                modulesParameters.get(i)[1].textProperty().bind(inverters.get(i).currentPhaseProperty());
+            }
+        } else {
+            for (int i = 0; i < inverters.size(); i++) {
+                if (inverters.get(i) == null) continue;
+                modulesParameters.get(i)[0].setLimits(1.0,3000.0, SimpleTextField.numberOfDecimals.ONE);
+                modulesParameters.get(i)[0].clear();
+                modulesParameters.get(i)[0].setEditable(false);
+                modulesParameters.get(i)[0].textProperty().unbind();
+                modulesParameters.get(i)[1].setEditable(false);
+                modulesParameters.get(i)[1].clear();
+                modulesParameters.get(i)[1].textProperty().unbind();
+            }
+        }
     }
 
     @Override
