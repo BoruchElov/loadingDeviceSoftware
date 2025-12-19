@@ -76,8 +76,7 @@ public class ScenariosManager {
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
                         EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SCENARIO_RESULTS,
-                                Duration.ofMillis((long) (timeout * 2000L)));
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 4000L)));
+                                Duration.ofMillis((long) (timeout * 4000L)));
                 scenarioResultsFutures.put(address, future);
                 PollingManager.start(address, (long) (timeout * 1000L));
                 future.whenComplete((buffer, err) -> {
@@ -159,8 +158,7 @@ public class ScenariosManager {
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
                         EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SCENARIO_RESULTS,
-                                Duration.ofMillis((long) (timeout * 2000L)));
-                        EventWaiter.getInstance().waitForEvent(address, Duration.ofMillis((long) (timeout * 4000L)));
+                                Duration.ofMillis((long) (timeout * 4000L)));
                 scenarioResultsFutures.put(address, future);
                 PollingManager.start(address, (long) (timeout * 1000L));
                 future.whenComplete((buffer, err) -> {
