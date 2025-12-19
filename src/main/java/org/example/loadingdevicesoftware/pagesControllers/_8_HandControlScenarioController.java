@@ -994,6 +994,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         }
         if (isDataUpdating) {
             for (int i = 0; i < inverters.size(); i++) {
+                if (inverters.get(i) == null) continue;
                 modulesParameters.get(i)[0].setLimits(-1.0,3500.0, SimpleTextField.numberOfDecimals.ONE);
                 modulesParameters.get(i)[0].setEditable(false);
                 modulesParameters.get(i)[0].textProperty().bind(inverters.get(i).currentRMSProperty());
@@ -1002,6 +1003,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
             }
         } else {
             for (int i = 0; i < inverters.size(); i++) {
+                if (inverters.get(i) == null) continue;
                 modulesParameters.get(i)[0].setLimits(1.0,3000.0, SimpleTextField.numberOfDecimals.ONE);
                 modulesParameters.get(i)[0].clear();
                 modulesParameters.get(i)[0].setEditable(false);

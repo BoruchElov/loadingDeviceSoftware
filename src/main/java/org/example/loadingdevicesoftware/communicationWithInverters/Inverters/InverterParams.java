@@ -25,7 +25,8 @@ public class InverterParams {
         Platform.runLater(() -> {
             try {
                 ArrayList<String> list = parse(response);
-
+                if (list.isEmpty()) return;
+                if (list.size() < 5) list = new ArrayList<>(Arrays.asList("0,0,0,0,0".split(",")));
                 currentRMS.set(list.get(0));
                 currentPhase.set(list.get(1));
                 voltmeterVoltage.set(list.get(2));

@@ -33,17 +33,17 @@ public class PollingManager {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executors.put(address, executor);
 
-        InverterParams params = paramsMap.computeIfAbsent(
-                address, a -> new InverterParams()
-        );
+        InverterParams params = new InverterParams();
+        paramsMap.putIfAbsent(address, params);
 
+        long pollingPeriod = 571;
 
         ScheduledFuture<?> future = executor.scheduleAtFixedRate(() -> {
                     try {
                         Inverters.sendCommandToInverter(
                                 address,
                                 Commands.MODBUS,
-                                "03,0000,0010"
+                                "03,0000,000A"
                         );
 
                         String response = analyzeResponse(
@@ -53,6 +53,7 @@ public class PollingManager {
                                 ConnectionControl.ExpectedValue.NUMBER
                         );
 
+                        if (response == null || response.isBlank()) response = "0,0,0,0,0";
                         params.updateFromResponse(response);
 
                     } catch (Exception e) {
@@ -60,14 +61,15 @@ public class PollingManager {
                     }
                 },
                 0,
-                500,
+                pollingPeriod,
                 TimeUnit.MILLISECONDS
         );
 
         futures.put(address, future);
 
+        if (timeoutMs < pollingPeriod + 200) return;
         executor.schedule(() -> stop(address),
-                timeoutMs - 500, TimeUnit.MILLISECONDS);
+                timeoutMs - pollingPeriod, TimeUnit.MILLISECONDS);
     }
 
     public static void stop(Address address) {

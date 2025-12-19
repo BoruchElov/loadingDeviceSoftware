@@ -7,6 +7,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.serial.ComPo
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -119,18 +120,20 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
     //TODO скорректировать работу фильтра приёма сообщений
     private void handlePacket(byte[] Buff) {
-        Integer PacketType = Byte.toUnsignedInt(Buff[8]);
         Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
         Address adrcv = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
         if (adrsrc.toStringInHexFormat().equals("09:12:AB:E1") ||
                 adrsrc.toStringInHexFormat().equals("00:80:E1:FF") ||
                 adrsrc.toStringInHexFormat().equals("06:80:E1:FF") ||
-                adrsrc.toStringInHexFormat().equals("07:12:AB:E1")) {
+                adrsrc.toStringInHexFormat().equals("07:12:AB:E1") ||
+                adrsrc.toStringInHexFormat().equals("25:12:AB:E1")) {
             return;
         }
         if (!adrcv.equals(myMAC) && !adrcv.toStringInHexFormat().equals("00:00:00:00")) {
             return;
         }
+        Integer PacketType = Byte.toUnsignedInt(Buff[8]);
+        System.out.println("Тип пакета: " + PacketType);
         ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);
@@ -173,9 +176,23 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             case DATA_AVAILABLE -> {
                 byte[] buffer = new byte[SP.bytesAvailable()];
                 SP.readBytes(buffer, buffer.length);
+                /*System.out.println(Arrays.toString(buffer));
+                System.out.println(new String(Arrays.copyOfRange(buffer,9,buffer.length), StandardCharsets.UTF_8));
+                System.out.println("Адрес отправителя: " + getAddress(Arrays.copyOfRange(buffer,4,8)) +
+                        ", Адрес получателя: " + getAddress(Arrays.copyOfRange(buffer,0,4)));*/
                 handlePacket(buffer);
             }
         }
+    }
+
+    private String getAddress(byte[] input) {
+        String hex = String.format("%08X", ByteBuffer.wrap(input).getInt());
+        StringBuilder hexOutput = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            hexOutput.append(hex, i * 2, (i + 1) * 2);
+            hexOutput.append(((i +1) * 2 == 8) ? "" : ":");
+        }
+        return hexOutput.toString();
     }
 
 }

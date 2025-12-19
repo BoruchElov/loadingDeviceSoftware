@@ -29,9 +29,6 @@ public class ConnectionControl {
      */
     private static final CopyOnWriteArrayList<Address> invertersAddresses = new CopyOnWriteArrayList<>();
 
-    public static Address getInvertersAddress(int index) {
-        return invertersAddresses.get(index);
-    }
 
     private ConnectionControl() {
     }
