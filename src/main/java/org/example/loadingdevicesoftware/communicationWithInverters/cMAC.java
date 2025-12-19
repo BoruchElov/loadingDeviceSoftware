@@ -14,12 +14,10 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl.analyzeResponse;
-
 public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
     //TODO поменять 07 на 09 (изначальный адрес 0x0712ABE1)
-    public static final int myMACInt = 0x0912ABE1;
+    public static final int myMACInt = 0x0712ABE1;
     private static Address myMAC = new Address(myMACInt);
     private SerialPort SP;
     private final Map<Integer, PacketHandler> upperLayerHandlers = new ConcurrentHashMap<>();
@@ -111,6 +109,13 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
                 break;
             }
         }
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes)
+            sb.append(String.format("%02X ", b));
+        return sb.toString();
     }
 
     private String getBytes(byte[] packet) {

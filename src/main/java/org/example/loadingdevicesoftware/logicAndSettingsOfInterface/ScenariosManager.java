@@ -75,7 +75,7 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SCENARIO_RESULTS,
+                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SC_RES,
                                 Duration.ofMillis((long) (timeout * 4000L)));
                 scenarioResultsFutures.put(address, future);
                 PollingManager.start(address, (long) (timeout * 1000L));
@@ -157,7 +157,7 @@ public class ScenariosManager {
                 //Регистрация ожидания
                 Address address = addresses.get(i);
                 CompletableFuture<ByteBuffer> future =
-                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SCENARIO_RESULTS,
+                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SC_RES,
                                 Duration.ofMillis((long) (timeout * 4000L)));
                 scenarioResultsFutures.put(address, future);
                 PollingManager.start(address, (long) (timeout * 1000L));

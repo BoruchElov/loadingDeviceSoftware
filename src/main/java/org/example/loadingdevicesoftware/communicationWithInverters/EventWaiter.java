@@ -6,7 +6,6 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.*;
@@ -43,7 +42,8 @@ public class EventWaiter {
         pendingEvents.add(pending);
 
         System.out.println("[EventWaiter] → Зарегистрировано ожидание события от " + address +
-                ", timeout = " + timeout.getSeconds() + " секунд");
+                ", timeout = " + timeout.getSeconds() + " секунд\nКод события: " + address.toStringInHexFormat() + "|" +
+                response.name());
 
         // Таймаут
         scheduler.schedule(() -> {
@@ -106,7 +106,7 @@ public class EventWaiter {
 
     public enum PossibleResponses {
         BLINK_LED_START, BLINK_LED_STOP, SET_RESISTANCE_CHECK, SET_SCENARO_1, SET_SCENARO_2, CHECK_SWITCH_POS,
-        SCENARIO_RESULTS, MODBUS, MODBUS_WRITE
+        SC_RES, MODBUS, MODBUS_WRITE
     }
 
     private PossibleResponses getExpectedResponse(ByteBuffer data) {

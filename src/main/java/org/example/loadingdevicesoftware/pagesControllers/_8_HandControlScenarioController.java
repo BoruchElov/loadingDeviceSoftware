@@ -1000,6 +1000,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                 modulesParameters.get(i)[0].textProperty().bind(inverters.get(i).currentRMSProperty());
                 modulesParameters.get(i)[1].setEditable(false);
                 modulesParameters.get(i)[1].textProperty().bind(inverters.get(i).currentPhaseProperty());
+                System.out.println("Параметры обновляются");
             }
         } else {
             for (int i = 0; i < inverters.size(); i++) {

@@ -38,7 +38,7 @@ public enum Commands {
      */
     static byte[] callFunction(cMAC MAC, Address address, Commands command, String arguments) throws ExecutionException, InterruptedException {
         respondToFunction(MAC, address, command, arguments);
-        return waitForAnswer(address);
+        return waitForAnswer(address, command);
     }
 
     static void respondToFunction(cMAC MAC, Address address, Commands command, String arguments) {
@@ -52,7 +52,6 @@ public enum Commands {
         } catch (Exception e) {
             System.out.println("Ошибка! Невозможно отправить пакет: проверьте соединение, адрес или сообщение.");
         }
-        return waitForAnswer(address, command);
     }
 
 

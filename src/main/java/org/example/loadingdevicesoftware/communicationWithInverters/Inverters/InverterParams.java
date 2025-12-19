@@ -32,6 +32,7 @@ public class InverterParams {
                 voltmeterVoltage.set(list.get(2));
                 amperemeterCurrent.set(list.get(3));
                 amperemeterPhase.set(list.get(4));
+                System.out.println("Параметры обновились");
 
             } catch (Exception e) {
                 System.err.println("Ошибка парсинга: " + e.getMessage());
