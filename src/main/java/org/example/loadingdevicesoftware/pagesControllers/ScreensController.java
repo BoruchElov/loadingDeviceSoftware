@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import lombok.Setter;
+import org.example.loadingdevicesoftware.communicationWithInverters.Address;
+import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.IOException;
@@ -278,6 +280,11 @@ class ScreensController extends BasicController {
      * Метод для экстренного прекращения выполнения сценария
      */
     private void shutdownScenario() {
+        for (Address address : CheckingManager.getAvailableAddresses()) {
+            if (PollingManager.isPolled(address)) {
+                PollingManager.stop(address);
+            }
+        }
     }
 
     /**

@@ -80,11 +80,11 @@ public class ScenariosManager {
                 scenarioResultsFutures.put(address, future);
                 PollingManager.start(address, (long) (timeout * 1000L));
                 future.whenComplete((buffer, err) -> {
+                    PollingManager.stop(address);
                     if (err != null) {
                         System.err.println("Модуль " + address.toStringInHexFormat()
                                 + " не прислал второе сообщение: " + err);
                         scenarioFailed.set(true);
-                        PollingManager.stop(address);
                     } else {
                         responses.put(address, analyzeResults(ConnectionControl.
                                 analyzeResponse(ConnectionControl.extractBytes(buffer),
@@ -162,11 +162,11 @@ public class ScenariosManager {
                 scenarioResultsFutures.put(address, future);
                 PollingManager.start(address, (long) (timeout * 1000L));
                 future.whenComplete((buffer, err) -> {
+                    PollingManager.stop(address);
                     if (err != null) {
                         System.err.println("Модуль " + address.toStringInHexFormat()
                                 + " не прислал второе сообщение: " + err);
                         scenarioFailed.set(true);
-                        PollingManager.stop(address);
                     } else {
                         responses.put(address, analyzeResults(ConnectionControl.
                                 analyzeResponse(ConnectionControl.extractBytes(buffer),

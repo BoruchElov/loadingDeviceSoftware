@@ -87,5 +87,9 @@ public class PollingManager {
         System.out.println("Опрос остановлен: " + address);
     }
 
+    public static boolean isPolled(Address address) {
+        return futures.containsKey(address);
+    }
+
 
 }
