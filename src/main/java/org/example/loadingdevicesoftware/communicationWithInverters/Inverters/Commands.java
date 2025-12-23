@@ -27,6 +27,11 @@ public enum Commands {
     private static final long delayTime = 1;
 
     /**
+     * Константа для задания количества попыток ожидания ответа.
+     */
+    private static final int numberOfRetries = 3;
+
+    /**
      * Метод для отправки выбранной команды. Формирует пакет для отправки.
      *
      * @param MAC       MAC-адрес отправителя
@@ -37,8 +42,30 @@ public enum Commands {
      * @throws InterruptedException
      */
     static byte[] callFunction(cMAC MAC, Address address, Commands command, String arguments) throws ExecutionException, InterruptedException {
-        respondToFunction(MAC, address, command, arguments);
-        return waitForAnswer(address, command);
+        ExecutionException lastException = null;
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            try {
+                System.out.println(
+                        "Попытка " + attempt + "/" + numberOfRetries +
+                                " отправки команды " + command
+                );
+
+                respondToFunction(MAC, address, command, arguments);
+                return waitForAnswer(address, command);
+
+            } catch (ExecutionException e) {
+                lastException = e;
+                System.out.println(
+                        "Попытка " + attempt + " завершилась неудачно: " +
+                                e.getCause().getMessage()
+                );
+            }
+        }
+
+        throw new ExecutionException(
+                "Не удалось получить ответ после " + numberOfRetries + " попыток" + lastException.getMessage(),
+                lastException
+        );
     }
 
     static void respondToFunction(cMAC MAC, Address address, Commands command, String arguments) {
