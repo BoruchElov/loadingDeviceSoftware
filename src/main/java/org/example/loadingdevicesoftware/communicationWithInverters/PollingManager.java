@@ -73,21 +73,21 @@ public class PollingManager {
     }
 
     public static void stop(Address address) {
+        if (isPolled(address)) {
+            ScheduledFuture<?> future = futures.remove(address);
+            if (future != null) {
+                future.cancel(true);
+            }
 
-        ScheduledFuture<?> future = futures.remove(address);
-        if (future != null) {
-            future.cancel(true);
+            ScheduledExecutorService executor = executors.remove(address);
+            if (executor != null) {
+                executor.shutdownNow();
+            }
+            System.out.println("Опрос остановлен: " + address);
         }
-
-        ScheduledExecutorService executor = executors.remove(address);
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-
-        System.out.println("Опрос остановлен: " + address);
     }
 
-    public static boolean isPolled(Address address) {
+    private static boolean isPolled(Address address) {
         return futures.containsKey(address);
     }
 

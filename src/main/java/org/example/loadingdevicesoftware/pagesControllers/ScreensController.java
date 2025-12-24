@@ -281,9 +281,7 @@ class ScreensController extends BasicController {
      */
     private void shutdownScenario() {
         for (Address address : CheckingManager.getAvailableAddresses()) {
-            if (PollingManager.isPolled(address)) {
-                PollingManager.stop(address);
-            }
+            PollingManager.stop(address);
         }
     }
 
