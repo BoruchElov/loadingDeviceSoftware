@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import lombok.Getter;
 import lombok.Setter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
@@ -297,6 +298,8 @@ class ScreensController extends BasicController {
     protected enum PageState {
         DEFAULT, ALLOWED_TO_START, IN_PROCESS, WAITING_FOR_CHOICE
     }
+    @Getter
+    private PageState stateOfPage;
 
     /**
      * Метод для задания состояния формы. Он определяет положение и функционал кнопок
@@ -305,7 +308,7 @@ class ScreensController extends BasicController {
     protected void setPageState(PageState state) {
         switch (state) {
             case DEFAULT:
-
+                stateOfPage = PageState.DEFAULT;
                 clearButton.changePosition(0);
                 clearButton.setText("ОЧИСТИТЬ");
                 clearButton.setOnAction(event -> {
@@ -340,6 +343,7 @@ class ScreensController extends BasicController {
                 });
                 break;
             case ALLOWED_TO_START:
+                stateOfPage = PageState.ALLOWED_TO_START;
                 unlockAll();
                 lockAll(clearButton, startButton);
 
@@ -360,6 +364,7 @@ class ScreensController extends BasicController {
 
                 break;
             case IN_PROCESS:
+                stateOfPage = PageState.IN_PROCESS;
                 unlockAll();
                 lockAll(startButton);
                 startButton.changePosition(2);
@@ -371,6 +376,7 @@ class ScreensController extends BasicController {
 
                 break;
             case WAITING_FOR_CHOICE:
+                stateOfPage = PageState.WAITING_FOR_CHOICE;
                 unlockAll();
                 lockAll(clearButton, startButton);
 
@@ -384,10 +390,13 @@ class ScreensController extends BasicController {
                 startButton.setText("ПРОДОЛЖИТЬ");
                 startButton.setOnAction(event -> {
                     unlockAll();
+                    additionalAction();
                     setPageState(PageState.DEFAULT);
                 });
 
                 break;
         }
     }
+
+    public void additionalAction() {}
 }

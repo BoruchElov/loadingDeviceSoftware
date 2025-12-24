@@ -36,7 +36,7 @@ public class PollingManager {
         InverterParams params = new InverterParams();
         paramsMap.put(address, params);
 
-        long pollingPeriod = 971;
+        long pollingPeriod = 911;
 
         ScheduledFuture<?> future = executor.scheduleAtFixedRate(() -> {
                     try {

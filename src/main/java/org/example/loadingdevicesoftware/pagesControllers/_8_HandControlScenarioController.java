@@ -27,6 +27,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.PollingManag
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -36,6 +37,8 @@ public class _8_HandControlScenarioController extends ScreensController implemen
 
     @FXML
     CheckBox symmetricalComponentsCheckBox;
+
+    private HashMap<SimpleTextField,String> parametersBuffer = new HashMap<>();
 
     //Комбобокс
     @FXML
@@ -915,6 +918,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
     public void launchScenario() {
         //Добавление логики из родительского метода
         super.launchScenario();
+        parametersBuffer.clear();
         //Заполнение динамического массива исходных данных. Каждый элемент массива - строка с нужными параметрами сценария
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
@@ -925,6 +929,8 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         ArrayList<String> scenarioParameters = new ArrayList<>();
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                parametersBuffer.put(currentFields[i],currentFields[i].getText());
+                parametersBuffer.put(phaseFields[i],phaseFields[i].getText());
                 String data = currentFields[i].getText();
                 data += "," + phaseFields[i].getText();
                 data += "," + timeInput.getText();
@@ -968,7 +974,6 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
                     setPageState(PageState.ALLOWED_TO_START);
                 }
-                setFieldsValues(false);
             });
         });
     }
@@ -980,39 +985,54 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                 phaseARAngle, phaseBRAngle, phaseCRAngle};
         ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
                 moduleB2Button, moduleC2Button};
-
-        ArrayList<InverterParams> inverters = new ArrayList<>();
+        int size = CheckingManager.getAvailableAddresses().size();
         ArrayList<SimpleTextField[]> modulesParameters = new ArrayList<>();
-        for (Address address : CheckingManager.getAvailableAddresses()) {
-            inverters.add(PollingManager.getParams(address));
-        }
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
                 modulesParameters.add(new SimpleTextField[]{currentFields[i], phaseFields[i]});
             }
         }
         if (isDataUpdating) {
+            ArrayList<InverterParams> inverters = new ArrayList<>();
+            for (Address address : CheckingManager.getAvailableAddresses()) {
+                inverters.add(PollingManager.getParams(address));
+            }
             for (int i = 0; i < inverters.size(); i++) {
                 if (inverters.get(i) == null) continue;
-                modulesParameters.get(i)[0].setLimits(-1.0,3500.0, SimpleTextField.numberOfDecimals.ONE);
+                modulesParameters.get(i)[0].setLimits(-1.0, 3500.0, SimpleTextField.numberOfDecimals.ONE);
                 modulesParameters.get(i)[0].setEditable(false);
                 modulesParameters.get(i)[0].textProperty().bind(inverters.get(i).currentRMSProperty());
                 modulesParameters.get(i)[1].setEditable(false);
                 modulesParameters.get(i)[1].textProperty().bind(inverters.get(i).currentPhaseProperty());
                 System.out.println("Параметры обновляются");
             }
+            Ampermetr.textProperty().bind(inverters.getFirst().amperemeterCurrentProperty());
+            currentPhase.textProperty().bind(inverters.getFirst().amperemeterPhaseProperty());
+            Voltmetr.textProperty().bind(inverters.getFirst().voltmeterVoltageProperty());
         } else {
-            for (int i = 0; i < inverters.size(); i++) {
-                if (inverters.get(i) == null) continue;
+            for (int i = 0; i < size; i++) {
                 modulesParameters.get(i)[0].textProperty().unbind();
-                modulesParameters.get(i)[0].setLimits(1.0,3000.0, SimpleTextField.numberOfDecimals.ONE);
+                modulesParameters.get(i)[0].setLimits(1.0, 3000.0, SimpleTextField.numberOfDecimals.ONE);
                 modulesParameters.get(i)[0].clear();
-                modulesParameters.get(i)[0].setEditable(false);
-                modulesParameters.get(i)[1].setEditable(false);
+                modulesParameters.get(i)[0].setText(parametersBuffer.get(modulesParameters.get(i)[0]));
+                modulesParameters.get(i)[0].setEditable(true);
+                modulesParameters.get(i)[1].setEditable(true);
                 modulesParameters.get(i)[1].textProperty().unbind();
                 modulesParameters.get(i)[1].clear();
+                modulesParameters.get(i)[1].setText(parametersBuffer.get(modulesParameters.get(i)[1]));
             }
+            Ampermetr.textProperty().unbind();
+            Ampermetr.clear();
+            currentPhase.textProperty().unbind();
+            currentPhase.clear();
+            Voltmetr.textProperty().unbind();
+            Voltmetr.clear();
         }
+    }
+
+    @Override
+    public void additionalAction() {
+        setFieldsValues(false);
     }
 
     @Override
