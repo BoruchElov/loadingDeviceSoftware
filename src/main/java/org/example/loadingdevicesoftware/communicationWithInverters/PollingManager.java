@@ -34,7 +34,7 @@ public class PollingManager {
         executors.put(address, executor);
 
         InverterParams params = new InverterParams();
-        paramsMap.putIfAbsent(address, params);
+        paramsMap.put(address, params);
 
         long pollingPeriod = 971;
 
