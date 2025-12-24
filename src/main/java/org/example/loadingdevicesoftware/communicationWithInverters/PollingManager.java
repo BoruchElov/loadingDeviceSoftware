@@ -43,7 +43,7 @@ public class PollingManager {
                         Inverters.sendCommandToInverter(
                                 address,
                                 Commands.MODBUS,
-                                "03,0000,000A"
+                                "03,1000,1010"
                         );
 
                         String response = analyzeResponse(
