@@ -964,7 +964,6 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     });
                     InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
                     setPageState(PageState.WAITING_FOR_CHOICE);
-                    //ConnectionControl.stopRequesting();
                 } else {
                     InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
                     setPageState(PageState.ALLOWED_TO_START);
@@ -1005,13 +1004,13 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         } else {
             for (int i = 0; i < inverters.size(); i++) {
                 if (inverters.get(i) == null) continue;
+                modulesParameters.get(i)[0].textProperty().unbind();
                 modulesParameters.get(i)[0].setLimits(1.0,3000.0, SimpleTextField.numberOfDecimals.ONE);
                 modulesParameters.get(i)[0].clear();
                 modulesParameters.get(i)[0].setEditable(false);
-                modulesParameters.get(i)[0].textProperty().unbind();
                 modulesParameters.get(i)[1].setEditable(false);
-                modulesParameters.get(i)[1].clear();
                 modulesParameters.get(i)[1].textProperty().unbind();
+                modulesParameters.get(i)[1].clear();
             }
         }
     }
