@@ -346,23 +346,23 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         }
                         //Амперметр и вольтметр
                         case SimpleTextField tf1 when tf1 == Ampermetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 520.);
                             AnchorPane.setLeftAnchor(tf1, 610.);
                         }
                         case SimpleTextField tf1 when tf1 == currentPhase -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 600.);
                             AnchorPane.setLeftAnchor(tf1, 610.);
                         }
                         case SimpleTextField tf1 when tf1 == Voltmetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 560.);
                             AnchorPane.setLeftAnchor(tf1, 805.);
                         }
                         //Настройка внешнего вида и расположения кнопки вывода времени отключения
                         case SimpleTextField tf1 when tf1 == timeOutput -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 177.);
                             AnchorPane.setLeftAnchor(tf1, 759.);
                         } // Ввод частоты модулей
@@ -968,6 +968,9 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         sb.append(String.join(", ", arr));
                         sb.append("\n");
                     });
+                    String timeResponse = ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[1].substring(3,8)
+                            + " | " + ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[2].substring(3,8);
+                    timeOutput.setText(timeResponse);
                     InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
                     setPageState(PageState.WAITING_FOR_CHOICE);
                 } else {
@@ -1027,6 +1030,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
             currentPhase.clear();
             Voltmetr.textProperty().unbind();
             Voltmetr.clear();
+            timeOutput.clear();
         }
     }
 
