@@ -19,10 +19,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
-import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.InverterParams;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
@@ -211,7 +208,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         AnchorPane.setTopAnchor(symmetricalComponentsCheckBox, 597.);
         AnchorPane.setLeftAnchor(symmetricalComponentsCheckBox, 435.);
         symmetricalComponentsCheckBox.setOnAction(event -> {
-            comboBoxAction();
+            checkBoxAction();
         });
         symmetricalComponents.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.NORMAL));
         symmetricalComponents.setText("УЧЁТ СИМ.СОС.");
@@ -838,8 +835,15 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         restoreState();
     }
 
-    private void comboBoxAction() {
+    private void checkBoxAction() {
+
+        SimpleTextField[] currentFields = new SimpleTextField[]{phaseALCurrent, phaseBLCurrent, phaseCLCurrent,
+                phaseARCurrent, phaseBRCurrent, phaseCRCurrent};
+        SimpleTextField[] phaseFields = new SimpleTextField[]{phaseALAngle, phaseBLAngle, phaseCLAngle,
+                phaseARAngle, phaseBRAngle, phaseCRAngle};
+
         if (symmetricalComponentsCheckBox.isSelected()) {
+            //Настройка положения текстовых полей
             currentOne.setText("I0, A");
             AnchorPane.setTopAnchor(currentOne, 240.);
             AnchorPane.setLeftAnchor(currentOne, 79.);
@@ -876,7 +880,9 @@ public class _8_HandControlScenarioController extends ScreensController implemen
             negativeSequencePhaseTwo.setText("φ2, °");
             AnchorPane.setTopAnchor(negativeSequencePhaseTwo, 425.);
             AnchorPane.setLeftAnchor(negativeSequencePhaseTwo, 855.);
+            /// ////////////////////////////////////////////////////////////////
         } else {
+            //Настройка положения текстовых полей
             currentOne.setText("I, A");
             AnchorPane.setTopAnchor(currentOne, 240.);
             AnchorPane.setLeftAnchor(currentOne, 79.);
@@ -897,6 +903,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
             positiveSequencePhaseTwo.setText("");
             negativeSequenceCurrentTwo.setText("");
             negativeSequencePhaseTwo.setText("");
+            /// ////////////////////////////////////////////////////////////////
         }
     }
 
