@@ -284,6 +284,10 @@
     -fx-background-color: derive(#00FF7F, 20%);
 }
 
+.button-module-on:disabled{
+    -fx-opacity: 1.0;
+}
+
 .button-module-off{
     -fx-alignment: center;         /* Выравнивание по центру */
     -fx-padding: 0px;             /* Небольшой отступ */
@@ -291,6 +295,13 @@
     -fx-border-width: 0px;
     -fx-background-insets: 0;
     -fx-border-insets: 0;
+    -fx-background-color: transparent;
+}
+
+.button-module-off:disabled{
+    -fx-opacity: 1.0;
+}
+.button-module-blink{
     -fx-background-color: transparent;
 }
 

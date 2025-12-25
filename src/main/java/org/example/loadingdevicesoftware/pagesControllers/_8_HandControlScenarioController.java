@@ -38,7 +38,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
     @FXML
     CheckBox symmetricalComponentsCheckBox;
 
-    private HashMap<SimpleTextField,String> parametersBuffer = new HashMap<>();
+    private HashMap<SimpleTextField, String> parametersBuffer = new HashMap<>();
 
     //Комбобокс
     @FXML
@@ -434,6 +434,13 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(button1, 200.);
                             button1.getStyleClass().addListener((ListChangeListener<String>) change -> {
                                 int theFirstPosition = contactOneButton.getObjectPosition().getActualPosition();
+                                if (theFirstPosition == 0) {
+                                    contactOne.setFill(Color.TRANSPARENT);
+                                } else if (theFirstPosition == 1) {
+                                    contactOne.setFill(Color.web(ApplicationConstants.Green));
+                                } else {
+                                    contactOne.setFill(Color.web(ApplicationConstants.Red));
+                                }
                                 int theSecondPosition = contactTwoButton.getObjectPosition().getActualPosition();
                                 if (theFirstPosition == 0 && theSecondPosition == 0) {
                                     conditionButton.changePosition(1);
@@ -456,6 +463,13 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             button1.getStyleClass().addListener((ListChangeListener<String>) change -> {
                                 int theFirstPosition = contactOneButton.getObjectPosition().getActualPosition();
                                 int theSecondPosition = contactTwoButton.getObjectPosition().getActualPosition();
+                                if (theSecondPosition == 0) {
+                                    contactTwo.setFill(Color.TRANSPARENT);
+                                } else if (theSecondPosition == 1) {
+                                    contactTwo.setFill(Color.web(ApplicationConstants.Green));
+                                } else {
+                                    contactTwo.setFill(Color.web(ApplicationConstants.Red));
+                                }
                                 if (theFirstPosition == 0 && theSecondPosition == 0) {
                                     conditionButton.changePosition(1);
                                     conditionButton.setActualStatus(Changeable.Status.LOCKED);
@@ -903,7 +917,6 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     || button == moduleA2Button || button == moduleB2Button || button == moduleC2Button:
                 int k = button.getObjectPosition().getActualPosition();
                 button.changePosition(k == 1 ? 0 : (k + 1));
-                //analyzeModuleButtons();
                 break;
             //Определение поведения кнопки ПУСК
             case null, default:
@@ -929,8 +942,8 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         ArrayList<String> scenarioParameters = new ArrayList<>();
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getObjectPosition().getActualPosition() != 0) {
-                parametersBuffer.put(currentFields[i],currentFields[i].getText());
-                parametersBuffer.put(phaseFields[i],phaseFields[i].getText());
+                parametersBuffer.put(currentFields[i], currentFields[i].getText());
+                parametersBuffer.put(phaseFields[i], phaseFields[i].getText());
                 String data = currentFields[i].getText();
                 data += "," + phaseFields[i].getText();
                 data += "," + timeInput.getText();
@@ -968,8 +981,23 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         sb.append(String.join(", ", arr));
                         sb.append("\n");
                     });
-                    String timeResponse = ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[1].substring(3,8)
-                            + " | " + ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[2].substring(3,8);
+                    String timeOne = ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[1].substring(3, 8);
+                    if (!timeOne.equals("0.000")) {
+                        if (contactOneButton.getObjectPosition().getActualPosition() == 1) {
+                            contactOneButton.changePosition(2);
+                        } else {
+                            contactOneButton.changePosition(1);
+                        }
+                    }
+                    String timeTwo = ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[2].substring(3, 8);
+                    if (!timeTwo.equals("0.000")) {
+                        if (contactTwoButton.getObjectPosition().getActualPosition() == 1) {
+                            contactTwoButton.changePosition(2);
+                        } else {
+                            contactTwoButton.changePosition(1);
+                        }
+                    }
+                    String timeResponse = timeOne + " | " + timeTwo;
                     timeOutput.setText(timeResponse);
                     InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
                     setPageState(PageState.WAITING_FOR_CHOICE);
@@ -1103,14 +1131,22 @@ public class _8_HandControlScenarioController extends ScreensController implemen
     private Timeline blinkingTimeline;
 
     private void startBlinkingAnimation() {
+        ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
+                moduleB2Button, moduleC2Button};
         blinkingTimeline = new Timeline(
                 new KeyFrame(Duration.millis(100), e -> {
-                    contactOne.setFill(Color.YELLOW);
-                    contactTwo.setFill(Color.YELLOW);
+                    for (int i = 0; i < buttons.length; i++) {
+                        if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                            buttons[i].getStyleClass().add("button-module-blink");
+                        }
+                    }
                 }),
-                new KeyFrame(Duration.millis(200), e -> {
-                    contactOne.setFill(Color.TRANSPARENT);
-                    contactTwo.setFill(Color.TRANSPARENT);
+                new KeyFrame(Duration.millis(450), e -> {
+                    for (int i = 0; i < buttons.length; i++) {
+                        if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                            buttons[i].getStyleClass().remove("button-module-blink");
+                        }
+                    }
                 })
         );
         blinkingTimeline.setCycleCount(Animation.INDEFINITE);
@@ -1120,8 +1156,13 @@ public class _8_HandControlScenarioController extends ScreensController implemen
     private void stopBlinkingAnimation() {
         if (blinkingTimeline != null) {
             blinkingTimeline.stop();
-            contactOne.setFill(Color.TRANSPARENT);
-            contactTwo.setFill(Color.TRANSPARENT);
+            ButtonWithPicture[] buttons = new ButtonWithPicture[]{moduleA1Button, moduleB1Button, moduleC1Button, moduleA2Button,
+                    moduleB2Button, moduleC2Button};
+            for (int i = 0; i < buttons.length; i++) {
+                if (buttons[i].getObjectPosition().getActualPosition() != 0) {
+                    buttons[i].getStyleClass().remove("button-module-blink");
+                }
+            }
         }
     }
     /// //////////////////////////////////////////////////
