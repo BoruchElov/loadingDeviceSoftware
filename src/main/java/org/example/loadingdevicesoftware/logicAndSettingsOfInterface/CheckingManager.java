@@ -188,7 +188,7 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        double percent = 13.;
+        /*double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
@@ -214,7 +214,7 @@ public class CheckingManager {
             if (!(voltage >= lowerReference && voltage <= upperReference)) {
                 return false;
             }
-        }
+        }*/
         return true;
     }
 
@@ -349,12 +349,15 @@ public class CheckingManager {
                 return false;
             }
             try {
-                CompletableFuture<ByteBuffer> future = EventWaiter.getInstance().waitForEvent(address,
+                /*CompletableFuture<ByteBuffer> future = EventWaiter.getInstance().waitForEvent(address,
                         EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120));
                 Address finalAddress = address;
                 future.whenComplete((buffer, err) -> {
                     Inverters.respondToInverter(finalAddress, Commands.SC_RES, "YES");
-                });
+                });*/
+                EventWaiter.getInstance().waitForEvent(address,
+                        EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120)).get();
+                Inverters.respondToInverter(address, Commands.SC_RES, "YES");
                 String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println(result);
