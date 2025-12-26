@@ -949,12 +949,23 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                 data += "," + timeInput.getText();
                 data += "," + frequencyInput.getText();
                 data += "," + (dryWetButton.getObjectPosition().getActualPosition() == 2 ? "1" : "0");
-                data += "," + contactOneButton.getObjectPosition().getActualPosition();
-                data += "," + contactTwoButton.getObjectPosition().getActualPosition();
-                data += "," + (conditionButton.getObjectPosition().getActualPosition() == 2 ? "1" : "0");
+                String variableOne = switch(contactOneButton.getObjectPosition().getActualPosition()) {
+                    case 0 -> "2";
+                    case 1 -> "0";
+                    default -> "1";
+                };
+                data += "," + variableOne;
+                variableOne = switch(contactTwoButton.getObjectPosition().getActualPosition()) {
+                    case 0 -> "2";
+                    case 1 -> "0";
+                    default -> "1";
+                };
+                data += "," + variableOne;
+                data += "," + (conditionButton.getObjectPosition().getActualPosition() == 2 ? "1" : "2");
                 scenarioParameters.add(data);
             }
         }
+        System.out.println(scenarioParameters.getFirst());
         double timeout = Double.parseDouble(timeInput.getText());
         //
         setPageState(PageState.IN_PROCESS);
@@ -980,6 +991,10 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         sb.append(addr.toStringInHexFormat()).append(" : ");
                         sb.append(String.join(", ", arr));
                         sb.append("\n");
+                        if (dryWetButton.getObjectPosition().getActualPosition() != 0) {
+                            sb.append("Статус: " + (arr[0].equals("S") ? "Остановка по успешному срабатыванию контакта" :
+                                    "Остановка по истечению времени"));
+                        }
                     });
                     String timeOne = ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[1].substring(3, 8);
                     if (!timeOne.equals("0.000")) {
