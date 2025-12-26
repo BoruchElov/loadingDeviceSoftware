@@ -24,7 +24,7 @@ public enum Commands {
     /**
      * Константа для задания времени ожидания (в секундах) ответа от модулей
      */
-    private static final long delayTime = 1;
+    private static final long delayTime = 4;
 
     /**
      * Константа для задания количества попыток ожидания ответа.
