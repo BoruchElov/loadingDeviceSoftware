@@ -29,9 +29,9 @@ public class InverterParams {
                 if (list.size() < 5) list = new ArrayList<>(Arrays.asList("0,0,0,0,0".split(",")));
                 currentRMS.set(list.get(0));
                 currentPhase.set(list.get(1));
-                voltmeterVoltage.set(list.get(2));
-                amperemeterCurrent.set(list.get(3));
-                amperemeterPhase.set(list.get(4));
+                amperemeterCurrent.set(list.get(2));
+                amperemeterPhase.set(list.get(3));
+                voltmeterVoltage.set(list.get(4));
                 System.out.println("Параметры обновились");
 
             } catch (Exception e) {

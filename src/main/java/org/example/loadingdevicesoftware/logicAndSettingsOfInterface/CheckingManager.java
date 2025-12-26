@@ -186,7 +186,7 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        /*double percent = 13.;
+        double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
@@ -212,7 +212,7 @@ public class CheckingManager {
             if (!(voltage >= lowerReference && voltage <= upperReference)) {
                 return false;
             }
-        }*/
+        }
         return true;
     }
 
@@ -236,7 +236,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean currentRangeCheck() {
-        /*//Проверка наличия параметров из формы, необходимых для проверки
+        //Проверка наличия параметров из формы, необходимых для проверки
         if (currents.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
@@ -287,7 +287,7 @@ public class CheckingManager {
                         return false;
                 }
             }
-        }*/
+        }
         return true;
     }
 
@@ -299,7 +299,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean resistanceCheck() {
-        /*Double[] parameters = resistanceCheckParameters.toArray(new Double[0]);
+        Double[] parameters = resistanceCheckParameters.toArray(new Double[0]);
         int i = 0;
         //Передача всем настроенным и находящимся в сети модулям команды на настройку сценария
         Address address = null;
@@ -347,7 +347,8 @@ public class CheckingManager {
                 return false;
             }
             try {
-                EventWaiter.getInstance().waitForEvent(address, Duration.ofSeconds(120)).get();
+                EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SC_RES,
+                        Duration.ofSeconds(120)).get();
                 String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println(result);
@@ -365,7 +366,7 @@ public class CheckingManager {
                         + address.toStringInHexFormat());
             }
             i += 1;
-        }*/
+        }
         return true;
     }
 
