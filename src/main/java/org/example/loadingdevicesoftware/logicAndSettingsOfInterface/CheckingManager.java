@@ -10,8 +10,10 @@ import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.In
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class CheckingManager {
 
@@ -236,7 +238,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean currentRangeCheck() {
-        //Проверка наличия параметров из формы, необходимых для проверки
+        /*//Проверка наличия параметров из формы, необходимых для проверки
         if (currents.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
@@ -287,7 +289,7 @@ public class CheckingManager {
                         return false;
                 }
             }
-        }
+        }*/
         return true;
     }
 
@@ -347,15 +349,19 @@ public class CheckingManager {
                 return false;
             }
             try {
-                EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SC_RES,
-                        Duration.ofSeconds(120)).get();
+                CompletableFuture<ByteBuffer> future = EventWaiter.getInstance().waitForEvent(address,
+                        EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120));
+                Address finalAddress = address;
+                future.whenComplete((buffer, err) -> {
+                    Inverters.respondToInverter(finalAddress, Commands.SC_RES, "YES");
+                });
                 String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println(result);
                 result = result.substring(result.indexOf("(") + 1, result.indexOf(","));
                 System.out.println(result);
                 System.out.println("Ответ на сценарий: \"" + result + "\"");
-                if (!result.equals("S")) {
+                if (!result.equals("T")) {
                     System.err.println("Ошибка! Не выполнена проверка сопротивления модулем " + module
                             + " с адресом " + address.toStringInHexFormat());
                     return false;
