@@ -16,6 +16,9 @@ module org.example.loadingdevicesoftware {
     requires com.fazecast.jSerialComm;
     requires com.fasterxml.jackson.databind;
     requires commons.math3;
+    requires org.apache.pdfbox;
+    requires java.desktop;
+    requires javafx.swing;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;

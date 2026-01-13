@@ -312,6 +312,7 @@ class ScreensController extends BasicController {
                 clearButton.changePosition(0);
                 clearButton.setText("ОЧИСТИТЬ");
                 clearButton.setOnAction(event -> {
+                    PdfViewer.openPDFFile();
                     clearAll(this);
                 });
 
