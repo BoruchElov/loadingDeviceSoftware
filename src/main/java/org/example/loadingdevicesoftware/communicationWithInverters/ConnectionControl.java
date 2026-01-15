@@ -95,49 +95,5 @@ public class ConnectionControl {
         };
     }
 
-    private static final HashMap<Address, ScheduledExecutorService> infoPollExecutors = new HashMap();
-    private static final HashMap<Address, ScheduledFuture<?>> infoPollFutures = new HashMap<>();
-
-    public static void startRequesting(Address inverterAddress, long timeout_ms) {
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        infoPollExecutors.put(inverterAddress, executor);
-
-        ScheduledFuture<?> future = executor.scheduleAtFixedRate(() -> {
-                    try {
-                        Inverters.sendCommandToInverter(inverterAddress, Commands.MODBUS, "03,0000,0010");
-                        String response = analyzeResponse(Inverters.getLastResponse(inverterAddress,
-                                Commands.MODBUS), ExpectedValue.NUMBER);
-                        System.out.println(response);
-                    } catch (Exception e) {
-                        System.err.println("Ошибка опроса: " + e.getMessage());
-                    }
-                },
-                0,
-                500,  // 2 раза в секунду
-                TimeUnit.MILLISECONDS);
-        infoPollFutures.put(inverterAddress, future);
-
-        executor.schedule(() -> {
-            future.cancel(true);
-            executor.shutdownNow();
-            System.out.println("Опрос завершён по таймауту.");
-        }, timeout_ms - 500, TimeUnit.MILLISECONDS);
-
-    }
-
-    public static void stopRequesting() {
-
-        for (Address inverterAddress : infoPollExecutors.keySet()) {
-            if (infoPollFutures.get(inverterAddress) != null && !infoPollFutures.get(inverterAddress).isCancelled()) {
-                infoPollFutures.get(inverterAddress).cancel(true);
-            }
-            if (infoPollExecutors.get(inverterAddress) != null && !infoPollExecutors.get(inverterAddress).isShutdown()) {
-                infoPollExecutors.get(inverterAddress).shutdownNow();
-            }
-        }
-        if (!infoPollFutures.isEmpty()) infoPollFutures.clear();
-        if (!infoPollExecutors.isEmpty()) infoPollExecutors.clear();
-    }
-
 
 }
