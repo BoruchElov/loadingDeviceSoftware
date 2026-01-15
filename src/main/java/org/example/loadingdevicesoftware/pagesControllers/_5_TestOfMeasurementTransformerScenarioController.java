@@ -1,9 +1,8 @@
 package org.example.loadingdevicesoftware.pagesControllers;
 
-import eu.hansolo.tilesfx.colors.Medium;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -208,15 +207,51 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         currentInput.setPrefSize(200., 67.);
         currentInput.setEditable(true);
 
-        //Настройка текстовых полей вывода
         measuredCurrent.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         measuredCurrent.setAlignment(Pos.CENTER);
-        measuredCurrent.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
-        measuredCurrent.setLimits(-3000.0, 3000.0, SimpleTextField.numberOfDecimals.THREE);
-        AnchorPane.setTopAnchor(measuredCurrent, 215.);
-        AnchorPane.setLeftAnchor(measuredCurrent, 1005.);
-        measuredCurrent.setPrefSize(200., 67.);
-        measuredCurrent.setEditable(true);
+        measuredCurrent.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(measuredCurrent, 563.);
+        AnchorPane.setLeftAnchor(measuredCurrent, 450.);
+        measuredCurrent.setEditable(false);
+
+        measuredVoltage.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        measuredVoltage.setAlignment(Pos.CENTER);
+        measuredVoltage.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(measuredVoltage, 563.);
+        AnchorPane.setLeftAnchor(measuredVoltage, 750.);
+        measuredVoltage.setEditable(false);
+
+        secondaryImpedance.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        secondaryImpedance.setAlignment(Pos.CENTER);
+        secondaryImpedance.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(secondaryImpedance, 200.);
+        AnchorPane.setLeftAnchor(secondaryImpedance, 315.);
+        secondaryImpedance.setPrefSize(67., 67.);
+        secondaryImpedance.setEditable(false);
+
+        transformerRatio.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        transformerRatio.setAlignment(Pos.CENTER);
+        transformerRatio.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(transformerRatio, 282.);
+        AnchorPane.setLeftAnchor(transformerRatio, 315.);
+        transformerRatio.setPrefSize(67., 67.);
+        transformerRatio.setEditable(false);
+
+        ratedPower.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        ratedPower.setAlignment(Pos.CENTER);
+        ratedPower.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(ratedPower, 364.);
+        AnchorPane.setLeftAnchor(ratedPower, 315.);
+        ratedPower.setPrefSize(67., 67.);
+        ratedPower.setEditable(false);
+
+        powerFactor.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        powerFactor.setAlignment(Pos.CENTER);
+        powerFactor.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(powerFactor, 446.);
+        AnchorPane.setLeftAnchor(powerFactor, 315.);
+        powerFactor.setPrefSize(67., 67.);
+        powerFactor.setEditable(false);
 
     }
 
