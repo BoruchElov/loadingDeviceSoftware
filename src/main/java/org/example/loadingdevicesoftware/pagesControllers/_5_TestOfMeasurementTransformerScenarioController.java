@@ -83,28 +83,28 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
 
         //Настройка текстов
         secondaryCurrentRMSText.setText("I2, А");
-        secondaryCurrentRMSText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        secondaryCurrentRMSText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         secondaryCurrentRMSText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(secondaryCurrentRMSText, 0.0);
-        AnchorPane.setLeftAnchor(secondaryCurrentRMSText, 0.0);
+        AnchorPane.setTopAnchor(secondaryCurrentRMSText, 210.0);
+        AnchorPane.setLeftAnchor(secondaryCurrentRMSText, 73.0);
 
-        secondaryCurrentPhaseText.setText("φ2, °");
-        secondaryCurrentPhaseText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        secondaryCurrentPhaseText.setText("φI2, °");
+        secondaryCurrentPhaseText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         secondaryCurrentPhaseText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(secondaryCurrentPhaseText, 0.0);
-        AnchorPane.setLeftAnchor(secondaryCurrentPhaseText, 0.0);
+        AnchorPane.setTopAnchor(secondaryCurrentPhaseText, 210.0);
+        AnchorPane.setLeftAnchor(secondaryCurrentPhaseText, 178.0);
 
         secondaryVoltageRMSText.setText("U2, В");
-        secondaryVoltageRMSText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        secondaryVoltageRMSText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         secondaryVoltageRMSText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(secondaryVoltageRMSText, 0.0);
-        AnchorPane.setLeftAnchor(secondaryVoltageRMSText, 0.0);
+        AnchorPane.setTopAnchor(secondaryVoltageRMSText, 375.);
+        AnchorPane.setLeftAnchor(secondaryVoltageRMSText, 73.0);
 
-        secondaryVoltagePhaseText.setText("φ2, °");
-        secondaryVoltagePhaseText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        secondaryVoltagePhaseText.setText("φU2, °");
+        secondaryVoltagePhaseText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         secondaryVoltagePhaseText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(secondaryVoltagePhaseText, 0.0);
-        AnchorPane.setLeftAnchor(secondaryVoltagePhaseText, 0.0);
+        AnchorPane.setTopAnchor(secondaryVoltagePhaseText, 375.0);
+        AnchorPane.setLeftAnchor(secondaryVoltagePhaseText, 178.0);
 
         secondaryImpedanceText.setText("Z2, \nОм");
         secondaryImpedanceText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
@@ -253,6 +253,37 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         powerFactor.setPrefSize(67., 67.);
         powerFactor.setEditable(false);
 
+        secondaryCurrentRMS.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        secondaryCurrentRMS.setAlignment(Pos.CENTER);
+        secondaryCurrentRMS.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(secondaryCurrentRMS, 239.);
+        AnchorPane.setLeftAnchor(secondaryCurrentRMS, 50.);
+        secondaryCurrentRMS.setPrefSize(90., 67.);
+        secondaryCurrentRMS.setEditable(false);
+
+        secondaryCurrentPhase.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        secondaryCurrentPhase.setAlignment(Pos.CENTER);
+        secondaryCurrentPhase.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(secondaryCurrentPhase, 239.);
+        AnchorPane.setLeftAnchor(secondaryCurrentPhase, 155.);
+        secondaryCurrentPhase.setPrefSize(90., 67.);
+        secondaryCurrentPhase.setEditable(false);
+
+        secondaryVoltageRMS.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        secondaryVoltageRMS.setAlignment(Pos.CENTER);
+        secondaryVoltageRMS.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(secondaryVoltageRMS, 407.);
+        AnchorPane.setLeftAnchor(secondaryVoltageRMS, 50.);
+        secondaryVoltageRMS.setPrefSize(90., 67.);
+        secondaryVoltageRMS.setEditable(false);
+
+        secondaryVoltagePhase.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+        secondaryVoltagePhase.setAlignment(Pos.CENTER);
+        secondaryVoltagePhase.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        AnchorPane.setTopAnchor(secondaryVoltagePhase, 407.);
+        AnchorPane.setLeftAnchor(secondaryVoltagePhase, 155.);
+        secondaryVoltagePhase.setPrefSize(90., 67.);
+        secondaryVoltagePhase.setEditable(false);
     }
 
 }
