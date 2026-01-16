@@ -106,29 +106,29 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         AnchorPane.setTopAnchor(secondaryVoltagePhaseText, 0.0);
         AnchorPane.setLeftAnchor(secondaryVoltagePhaseText, 0.0);
 
-        secondaryImpedanceText.setText("Z2, Ом");
-        secondaryImpedanceText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        secondaryImpedanceText.setText("Z2, \nОм");
+        secondaryImpedanceText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         secondaryImpedanceText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(secondaryImpedanceText, 0.0);
-        AnchorPane.setLeftAnchor(secondaryImpedanceText, 0.0);
+        AnchorPane.setTopAnchor(secondaryImpedanceText, 208.0);
+        AnchorPane.setLeftAnchor(secondaryImpedanceText, 260.0);
 
         transformerRatioText.setText("KT");
-        transformerRatioText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        transformerRatioText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         transformerRatioText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(transformerRatioText, 0.0);
-        AnchorPane.setLeftAnchor(transformerRatioText, 0.0);
+        AnchorPane.setTopAnchor(transformerRatioText, 305.0);
+        AnchorPane.setLeftAnchor(transformerRatioText, 260.0);
 
-        ratedPowerText.setText("SН, ВА");
-        ratedPowerText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        ratedPowerText.setText("SН, \nВА");
+        ratedPowerText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         ratedPowerText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(ratedPowerText, 0.0);
-        AnchorPane.setLeftAnchor(ratedPowerText, 0.0);
+        AnchorPane.setTopAnchor(ratedPowerText, 375.0);
+        AnchorPane.setLeftAnchor(ratedPowerText, 260.0);
 
         powerFactorText.setText("cos φ");
-        powerFactorText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        powerFactorText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         powerFactorText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(powerFactorText, 0.0);
-        AnchorPane.setLeftAnchor(powerFactorText, 0.0);
+        AnchorPane.setTopAnchor(powerFactorText, 468.0);
+        AnchorPane.setLeftAnchor(powerFactorText, 260.0);
 
         AOneText.setText("A1");
         AOneText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
@@ -225,7 +225,7 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         secondaryImpedance.setAlignment(Pos.CENTER);
         secondaryImpedance.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(secondaryImpedance, 200.);
-        AnchorPane.setLeftAnchor(secondaryImpedance, 315.);
+        AnchorPane.setLeftAnchor(secondaryImpedance, 319.);
         secondaryImpedance.setPrefSize(67., 67.);
         secondaryImpedance.setEditable(false);
 
@@ -233,7 +233,7 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         transformerRatio.setAlignment(Pos.CENTER);
         transformerRatio.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(transformerRatio, 282.);
-        AnchorPane.setLeftAnchor(transformerRatio, 315.);
+        AnchorPane.setLeftAnchor(transformerRatio, 319.);
         transformerRatio.setPrefSize(67., 67.);
         transformerRatio.setEditable(false);
 
@@ -241,7 +241,7 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         ratedPower.setAlignment(Pos.CENTER);
         ratedPower.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(ratedPower, 364.);
-        AnchorPane.setLeftAnchor(ratedPower, 315.);
+        AnchorPane.setLeftAnchor(ratedPower, 319.);
         ratedPower.setPrefSize(67., 67.);
         ratedPower.setEditable(false);
 
@@ -249,7 +249,7 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         powerFactor.setAlignment(Pos.CENTER);
         powerFactor.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(powerFactor, 446.);
-        AnchorPane.setLeftAnchor(powerFactor, 315.);
+        AnchorPane.setLeftAnchor(powerFactor, 319.);
         powerFactor.setPrefSize(67., 67.);
         powerFactor.setEditable(false);
 
