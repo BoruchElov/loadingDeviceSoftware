@@ -112,8 +112,9 @@ public class EventWaiter {
     private PossibleResponses getExpectedResponse(ByteBuffer data) {
         byte[] savedData = ConnectionControl.extractBytes(data);
         String message = new String(savedData, StandardCharsets.UTF_8);
+        message = message.substring(1);
         System.out.println(message);
-        message = message.substring(1, message.indexOf("("));
+        message = message.substring(0, message.indexOf("("));
         System.out.println(message);
         PossibleResponses outputResponse = PossibleResponses.BLINK_LED_START;
         for (PossibleResponses response : PossibleResponses.values()) {

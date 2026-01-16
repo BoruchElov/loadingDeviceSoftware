@@ -65,6 +65,7 @@ public final class StatusService {
         for (String address : store.raw().keySet()) {
             StatusStore.ModuleState st = store.raw().get(address);
             if (now - st.lastSeenNanos > TIMEOUT_NANOS && st.status != StatusStore.OnlineStatus.OFFLINE) {
+                System.out.println("Устройство не в сети!");
                 st.status = StatusStore.OnlineStatus.OFFLINE;
             }
         }

@@ -73,14 +73,4 @@ public class Inverters implements PacketHandler {
         //Подключение сервиса для ожидания сообщения
         EventWaiter.getInstance().incoming(AddressSource, Buff);
     }
-
-    private String getBytes(ByteBuffer packet) {
-        ByteBuffer copy = packet.asReadOnlyBuffer(); // независимая позиция
-        copy.rewind();                                 // позиция -> 0, но только в копии
-        byte[] data = new byte[copy.remaining()];
-        copy.get(data);
-        StringBuilder sb = new StringBuilder();
-        for (byte b : data) sb.append(String.format("%02X ", b));
-        return sb.toString();
-    }
 }

@@ -238,7 +238,7 @@ public class CheckingManager {
      * @return
      */
     public static boolean currentRangeCheck() {
-        /*//Проверка наличия параметров из формы, необходимых для проверки
+        //Проверка наличия параметров из формы, необходимых для проверки
         if (currents.isEmpty()) {
             System.err.println("Ошибка! Не переданы параметры из формы.");
             return false;
@@ -289,7 +289,19 @@ public class CheckingManager {
                         return false;
                 }
             }
-        }*/
+            try {
+                for (String module : addressesStorage.keySet()) {
+                    address = addressesStorage.get(module);
+                    Inverters.sendCommandToInverter(address, Commands.BUTTON_LOCK, "");
+                    String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
+                            Commands.BUTTON_LOCK), ConnectionControl.ExpectedValue.NUMBER);
+                    System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() + ": " + response);
+                }
+            } catch (Exception e) {
+                System.err.println("Ошибка! Получено некорректное положение выключателя.");
+                return false;
+            }
+        }
         return true;
     }
 
@@ -357,13 +369,13 @@ public class CheckingManager {
                 });*/
                 EventWaiter.getInstance().waitForEvent(address,
                         EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120)).get();
-                Inverters.respondToInverter(address, Commands.SC_RES, "YES");
                 String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println(result);
                 result = result.substring(result.indexOf("(") + 1, result.indexOf(","));
                 System.out.println(result);
                 System.out.println("Ответ на сценарий: \"" + result + "\"");
+                Inverters.respondToInverter(address, Commands.SC_RES, "YES");
                 if (!result.equals("T")) {
                     System.err.println("Ошибка! Не выполнена проверка сопротивления модулем " + module
                             + " с адресом " + address.toStringInHexFormat());

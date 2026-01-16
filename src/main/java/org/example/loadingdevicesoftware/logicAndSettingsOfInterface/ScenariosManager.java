@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScenariosManager {
@@ -90,6 +91,7 @@ public class ScenariosManager {
                                 analyzeResponse(ConnectionControl.extractBytes(buffer),
                                         ConnectionControl.ExpectedValue.NUMBER)));
                         Inverters.respondToInverter(address, Commands.SC_RES, "YES");
+
                     }
                 });
             } catch (Exception e) {
