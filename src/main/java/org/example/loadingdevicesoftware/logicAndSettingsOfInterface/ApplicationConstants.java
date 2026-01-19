@@ -46,14 +46,6 @@ public class ApplicationConstants {
     public static final int APPLICATION_WINDOW_HEIGHT = 800;
 
     //TODO Убрать после рефакторинга
-    //Константы для цветов интерфейса
-    public static final String BLACK_HEX = "#221E1F";
-    public static final String BLUE_HEX = "#0F5D9C";
-    public static final String LIGHT_BLUE_HEX = "#CFECF8";
-    public static final String WHITE_HEX = "#FFFFFF";
-    public static final String ORANGE_HEX = "#F9AE40";
-    public static final String BLACK_WORD = "black";
-    public static final String WHITE_WORD = "white";
     public static boolean expertStatus = false;
     //Константы для текста
     public static final String FONT_NAME = "Myriad Pro";
@@ -69,79 +61,65 @@ public class ApplicationConstants {
             throw new RuntimeException(e);
         }
     }
-    public static final Image STATUS_CONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/иконкаЗеленыйКруг.png")).toExternalForm());
-    public static final Image STATUS_DISCONNECTED = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/иконкаКрасныйКруг.png")).toExternalForm());
-    public static final Image WHITE_BUTTON = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Кнопка(белая).png")).toExternalForm());
-    public static final Image WHITE_BUTTON_LONG = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Кнопка(белая)_длинная.png")).toExternalForm());
-    public static final Image BLACK_BUTTON = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Кнопка(черная).png")).toExternalForm());
-    public static final Image BLACK_BUTTON_LONG = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Кнопка(черная)_длинная.png")).toExternalForm());
-    public static final Image NORMALLY_CLOSED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/иконкаНормЗамкКонт.png")).toExternalForm());
-    public static final Image NORMALLY_OPENED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/иконкаНормРазомкКонт.png")).toExternalForm());
 
     public static final Image NEW_BACKGROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/New_Background.png")).toExternalForm());
+            getResource("/BasePictures/New_Background.png")).toExternalForm());
     public static final Image NEW_BASE_BACKGROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Base_Background.png")).toExternalForm());
+            getResource("/BasePictures/Base_Background.png")).toExternalForm());
     public static final Image SINGLE_PHASE_SWITCH = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Single_Phase_Switch.png")).toExternalForm());
+            getResource("/BasePictures/Single_Phase_Switch.png")).toExternalForm());
     public static final Image THREE_PHASE_SWITCH = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Three_Phase_Switch.png")).toExternalForm());
+            getResource("/BasePictures/Three_Phase_Switch.png")).toExternalForm());
     public static final Image OPENED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Opened_Contact.png")).toExternalForm());
+            getResource("/BasePictures/Opened_Contact.png")).toExternalForm());
     public static final Image CLOSED_CONTACT = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Closed_Contact.png")).toExternalForm());
+            getResource("/BasePictures/Closed_Contact.png")).toExternalForm());
     public static final Image INVERTER_IMAGE = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Inverter_new.png")).toExternalForm());
+            getResource("/BasePictures/Inverter_new.png")).toExternalForm());
     public static final Image BACKGROUND_BLUE = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Background_Blue.png")).toExternalForm());
+            getResource("/BasePictures/Background_Blue.png")).toExternalForm());
     public static final Image CHECK_SUCCESSFUL = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/CHECK_SUCCESS.png")).toExternalForm());
+            getResource("/BasePictures/CHECK_SUCCESS.png")).toExternalForm());
     public static final Image CHECK_FAILED = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/CHECK_FAILED.png")).toExternalForm());
+            getResource("/BasePictures/CHECK_FAILED.png")).toExternalForm());
     public static final Image ARROW_LEFT = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Arrow_to_Left.png")).toExternalForm());
+            getResource("/BasePictures/Arrow_to_Left.png")).toExternalForm());
     public static final Image ARROW_RIGHT = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Arrow_to_Right.png")).toExternalForm());
+            getResource("/BasePictures/Arrow_to_Right.png")).toExternalForm());
     public static final Image GROUND = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Ground_Picture.png")).toExternalForm());
+            getResource("/BasePictures/Ground_Picture.png")).toExternalForm());
     public static final Image LIGHTNING = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Lightning.png")).toExternalForm());
+            getResource("/BasePictures/Lightning.png")).toExternalForm());
     public static final Image LIGHTNING_RED = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/Lightning_Red.png")).toExternalForm());
+            getResource("/BasePictures/Lightning_Red.png")).toExternalForm());
+    public static final Image CURRENT_TRANSFRMER = new Image(Objects.requireNonNull(ApplicationConstants.class.
+            getResource("/BasePictures/currentTransformer.png")).toExternalForm());
 
     //иконка вольтметра и амперметра
     public static final Image AMPERMETR = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/DeviceAV.png")).toExternalForm());
+            getResource("/BasePictures/DeviceAV.png")).toExternalForm());
     public static final Image VOLTMETR = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/DeviceAV.png")).toExternalForm());
+            getResource("/BasePictures/DeviceAV.png")).toExternalForm());
 
     //Иконки главного экрана
     public static final Image SETTINGS = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/settings.png")).toExternalForm());
+            getResource("/BasePictures/settings.png")).toExternalForm());
     public static final Image SWITCHER_TEST = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/switcher.png")).toExternalForm());
+            getResource("/BasePictures/switcher.png")).toExternalForm());
     public static final Image RELAY_PROTECTION = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/relay.png")).toExternalForm());
+            getResource("/BasePictures/relay.png")).toExternalForm());
     public static final Image EVENT_LOGGER = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/event.png")).toExternalForm());
+            getResource("/BasePictures/event.png")).toExternalForm());
     public static final Image MEASUREMENT_TRANSFORMER = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/transformer.png")).toExternalForm());
+            getResource("/BasePictures/transformer.png")).toExternalForm());
     public static final Image COMTRADE = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/comtrade.png")).toExternalForm());
+            getResource("/BasePictures/comtrade.png")).toExternalForm());
     public static final Image DIFFERENTIAL_PROTECTION = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/differential.png")).toExternalForm());
+            getResource("/BasePictures/differential.png")).toExternalForm());
     public static final Image HAND_CONTROL = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/hand.png")).toExternalForm());
+            getResource("/BasePictures/hand.png")).toExternalForm());
     public static final Image DEBUGGER = new Image(Objects.requireNonNull(ApplicationConstants.class.
-            getResource("/screen/BasePictures/debugger.png")).toExternalForm());
+            getResource("/BasePictures/debugger.png")).toExternalForm());
 
 
 }
