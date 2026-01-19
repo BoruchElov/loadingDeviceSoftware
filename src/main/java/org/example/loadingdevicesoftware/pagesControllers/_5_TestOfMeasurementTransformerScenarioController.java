@@ -3,11 +3,18 @@ package org.example.loadingdevicesoftware.pagesControllers;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.ApplicationConstants;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.FontManager;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleImageView;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleTextField;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class _5_TestOfMeasurementTransformerScenarioController extends ScreensController {
     
@@ -74,12 +81,22 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
     SimpleTextField measuredCurrent;
     @FXML
     SimpleTextField measuredVoltage;
+
+    @FXML
+    SimpleImageView amperemeterFigure;
+    @FXML
+    SimpleImageView voltmeterFigure;
+    @FXML
+    SimpleImageView currentTransformer;
     
     
 
     @FXML
     public void initialize() {
         super.initialize();
+
+        nodesToCheck = new ArrayList<>(List.of(new Node[]{currentInput, phaseInput, timeInput, objectTextField,
+                nameTextField}));
 
         //Настройка текстов
         secondaryCurrentRMSText.setText("I2, А");
@@ -131,34 +148,34 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         AnchorPane.setLeftAnchor(powerFactorText, 260.0);
 
         AOneText.setText("A1");
-        AOneText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        AOneText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         AOneText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(AOneText, 0.0);
-        AnchorPane.setLeftAnchor(AOneText, 0.0);
+        AnchorPane.setTopAnchor(AOneText, 190.0);
+        AnchorPane.setLeftAnchor(AOneText, 575.0);
 
         BOneText.setText("B1");
-        BOneText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        BOneText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         BOneText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(BOneText, 0.0);
-        AnchorPane.setLeftAnchor(BOneText, 0.0);
+        AnchorPane.setTopAnchor(BOneText, 190.0);
+        AnchorPane.setLeftAnchor(BOneText, 645.0);
 
         COneText.setText("C1");
-        COneText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        COneText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         COneText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(COneText, 0.0);
-        AnchorPane.setLeftAnchor(COneText, 0.0);
+        AnchorPane.setTopAnchor(COneText, 190.0);
+        AnchorPane.setLeftAnchor(COneText, 715.0);
 
         measuredCurrentText.setText("I, А");
-        measuredCurrentText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        measuredCurrentText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         measuredCurrentText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(measuredCurrentText, 0.0);
-        AnchorPane.setLeftAnchor(measuredCurrentText, 0.0);
+        AnchorPane.setTopAnchor(measuredCurrentText, 530.0);
+        AnchorPane.setLeftAnchor(measuredCurrentText, 588.0);
 
         measuredVoltageText.setText("U, В");
-        measuredVoltageText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL));
+        measuredVoltageText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         measuredVoltageText.setFill(Color.BLACK);
-        AnchorPane.setTopAnchor(measuredVoltageText, 0.0);
-        AnchorPane.setLeftAnchor(measuredVoltageText, 0.0);
+        AnchorPane.setTopAnchor(measuredVoltageText, 530.0);
+        AnchorPane.setLeftAnchor(measuredVoltageText, 685.0);
 
         inputCurrentText.setText("Ток, А");
         inputCurrentText.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
@@ -209,48 +226,44 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
 
         measuredCurrent.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         measuredCurrent.setAlignment(Pos.CENTER);
-        measuredCurrent.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        measuredCurrent.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(measuredCurrent, 563.);
         AnchorPane.setLeftAnchor(measuredCurrent, 450.);
         measuredCurrent.setEditable(false);
 
         measuredVoltage.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         measuredVoltage.setAlignment(Pos.CENTER);
-        measuredVoltage.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        measuredVoltage.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(measuredVoltage, 563.);
         AnchorPane.setLeftAnchor(measuredVoltage, 750.);
         measuredVoltage.setEditable(false);
 
         secondaryImpedance.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         secondaryImpedance.setAlignment(Pos.CENTER);
-        secondaryImpedance.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        secondaryImpedance.setup("", SimpleTextField.Sizes.SMALL_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(secondaryImpedance, 200.);
         AnchorPane.setLeftAnchor(secondaryImpedance, 319.);
-        secondaryImpedance.setPrefSize(67., 67.);
         secondaryImpedance.setEditable(false);
 
         transformerRatio.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         transformerRatio.setAlignment(Pos.CENTER);
-        transformerRatio.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        transformerRatio.setup("", SimpleTextField.Sizes.SMALL_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(transformerRatio, 282.);
         AnchorPane.setLeftAnchor(transformerRatio, 319.);
-        transformerRatio.setPrefSize(67., 67.);
         transformerRatio.setEditable(false);
 
         ratedPower.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         ratedPower.setAlignment(Pos.CENTER);
-        ratedPower.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        ratedPower.setup("", SimpleTextField.Sizes.SMALL_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(ratedPower, 364.);
         AnchorPane.setLeftAnchor(ratedPower, 319.);
-        ratedPower.setPrefSize(67., 67.);
         ratedPower.setEditable(false);
 
         powerFactor.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
         powerFactor.setAlignment(Pos.CENTER);
-        powerFactor.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+        powerFactor.setup("", SimpleTextField.Sizes.SMALL_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(powerFactor, 446.);
         AnchorPane.setLeftAnchor(powerFactor, 319.);
-        powerFactor.setPrefSize(67., 67.);
         powerFactor.setEditable(false);
 
         secondaryCurrentRMS.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
@@ -258,7 +271,6 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         secondaryCurrentRMS.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(secondaryCurrentRMS, 239.);
         AnchorPane.setLeftAnchor(secondaryCurrentRMS, 50.);
-        secondaryCurrentRMS.setPrefSize(90., 67.);
         secondaryCurrentRMS.setEditable(false);
 
         secondaryCurrentPhase.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
@@ -266,7 +278,6 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         secondaryCurrentPhase.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(secondaryCurrentPhase, 239.);
         AnchorPane.setLeftAnchor(secondaryCurrentPhase, 155.);
-        secondaryCurrentPhase.setPrefSize(90., 67.);
         secondaryCurrentPhase.setEditable(false);
 
         secondaryVoltageRMS.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
@@ -274,7 +285,6 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         secondaryVoltageRMS.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(secondaryVoltageRMS, 407.);
         AnchorPane.setLeftAnchor(secondaryVoltageRMS, 50.);
-        secondaryVoltageRMS.setPrefSize(90., 67.);
         secondaryVoltageRMS.setEditable(false);
 
         secondaryVoltagePhase.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
@@ -282,8 +292,20 @@ public class _5_TestOfMeasurementTransformerScenarioController extends ScreensCo
         secondaryVoltagePhase.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
         AnchorPane.setTopAnchor(secondaryVoltagePhase, 407.);
         AnchorPane.setLeftAnchor(secondaryVoltagePhase, 155.);
-        secondaryVoltagePhase.setPrefSize(90., 67.);
         secondaryVoltagePhase.setEditable(false);
+
+        //Настройка изображений
+        amperemeterFigure.setup(new String[]{""}, new Image[]{ApplicationConstants.AMPERMETR}, new double[][]{{60., 60.}});
+        AnchorPane.setTopAnchor(amperemeterFigure, 567.);
+        AnchorPane.setLeftAnchor(amperemeterFigure, 570.);
+
+        voltmeterFigure.setup(new String[]{""}, new Image[]{ApplicationConstants.VOLTMETR}, new double[][]{{60., 60.}});
+        AnchorPane.setTopAnchor(voltmeterFigure, 567.);
+        AnchorPane.setLeftAnchor(voltmeterFigure, 673.);
+
+        currentTransformer.setup(new String[]{""}, new Image[]{ApplicationConstants.CURRENT_TRANSFRMER}, new double[][]{{350., 350.}});
+        AnchorPane.setTopAnchor(currentTransformer, 180.);
+        AnchorPane.setLeftAnchor(currentTransformer, 480.);
     }
 
 }

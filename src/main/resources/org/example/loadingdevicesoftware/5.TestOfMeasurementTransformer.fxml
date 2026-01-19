@@ -9,6 +9,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleTextField?>
 
+<?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleImageView?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._5_TestOfMeasurementTransformerScenarioController">
     <children>
         <SimpleButton fx:id="menuButton"/>
@@ -59,6 +60,9 @@
         <SimpleTextField fx:id="powerFactor"/>
         <SimpleTextField fx:id="measuredCurrent"/>
         <SimpleTextField fx:id="measuredVoltage"/>
+        <SimpleImageView fx:id="amperemeterFigure"/>
+        <SimpleImageView fx:id="voltmeterFigure"/>
+        <SimpleImageView fx:id="currentTransformer"/>
 
     </children>
 </AnchorPane>

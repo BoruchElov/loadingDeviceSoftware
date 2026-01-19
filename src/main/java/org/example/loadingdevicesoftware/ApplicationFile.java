@@ -22,7 +22,7 @@ public class ApplicationFile extends Application {
                 ApplicationConstants.APPLICATION_WINDOW_HEIGHT);
         scene.getStylesheets().add(ApplicationFile.class.getResource("applicationStyle.css").toExternalForm());
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().
-                getResource("/images/control-system.png")).toExternalForm()));
+                getResource("/control-system.png")).toExternalForm()));
         stage.setResizable(false);
         stage.setTitle("Контроллер прогрузочного устройства");
         stage.setScene(scene);

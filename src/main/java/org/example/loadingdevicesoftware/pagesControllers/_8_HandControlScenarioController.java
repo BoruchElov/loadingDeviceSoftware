@@ -19,10 +19,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
-import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.InverterParams;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
@@ -278,7 +275,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     switch (textField) {
                         //Текстовые поля модулей слева
                         case SimpleTextField tf1 when tf1 == phaseALCurrent -> {
-                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
@@ -289,7 +286,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBLCurrent -> {
-                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
@@ -300,7 +297,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X2);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCLCurrent -> {
-                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X1);
                         }
@@ -312,7 +309,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         }
                         //Текстовые поля справа
                         case SimpleTextField tf1 when tf1 == phaseARCurrent -> {
-                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y1);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
@@ -323,7 +320,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseBRCurrent -> {
-                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y2);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
@@ -334,7 +331,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(tf1, X4);
                         }
                         case SimpleTextField tf1 when tf1 == phaseCRCurrent -> {
-                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("1.0", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, Y3);
                             AnchorPane.setLeftAnchor(tf1, X3);
                         }
@@ -346,28 +343,28 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                         }
                         //Амперметр и вольтметр
                         case SimpleTextField tf1 when tf1 == Ampermetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.ORDINARY);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 520.);
                             AnchorPane.setLeftAnchor(tf1, 610.);
                         }
                         case SimpleTextField tf1 when tf1 == currentPhase -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.ORDINARY);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 600.);
                             AnchorPane.setLeftAnchor(tf1, 610.);
                         }
                         case SimpleTextField tf1 when tf1 == Voltmetr -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.ORDINARY);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 560.);
                             AnchorPane.setLeftAnchor(tf1, 805.);
                         }
                         //Настройка внешнего вида и расположения кнопки вывода времени отключения
                         case SimpleTextField tf1 when tf1 == timeOutput -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.ORDINARY);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_THREE, SimpleTextField.typeOfValue.ORDINARY);
                             AnchorPane.setTopAnchor(tf1, 177.);
                             AnchorPane.setLeftAnchor(tf1, 759.);
                         } // Ввод частоты модулей
                         case SimpleTextField tf1 when tf1 == frequencyInput -> {
-                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_ONE, SimpleTextField.typeOfValue.DIGIT);
+                            tf1.setup("", SimpleTextField.Sizes.MEDIUM_TWO, SimpleTextField.typeOfValue.DIGIT);
                             AnchorPane.setTopAnchor(tf1, 177.);
                             AnchorPane.setLeftAnchor(tf1, 640.);
                             tf1.setEditable(true);
