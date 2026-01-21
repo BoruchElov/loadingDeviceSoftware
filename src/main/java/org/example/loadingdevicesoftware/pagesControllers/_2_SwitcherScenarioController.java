@@ -91,7 +91,7 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
             AnchorPane.setLeftAnchor(textField, 200.);
         }
         //Настройка текстовых полей ввода значений временных уставок контактов
-        contactOneTime.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+        contactOneTime.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
         contactOneTime.setAlignment(Pos.CENTER);
         contactOneTime.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         contactOneTime.setActualStatus(Changeable.Status.LOCKED);
@@ -157,7 +157,7 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
         //Настройка ImageView с изображением выключателя
         switcher.setup(new String[]{"", ""},
                 new Image[]{ApplicationConstants.THREE_PHASE_SWITCH, ApplicationConstants.SINGLE_PHASE_SWITCH},
-                new double[][]{{250, 250}, {68, 221}});
+                new double[][]{{300, 300}, {82, 266}}); //1,2
         AnchorPane.setTopAnchor(switcher, 290.);
         AnchorPane.setLeftAnchor(switcher, 550.);
 
