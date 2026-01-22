@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 public class Inverters implements PacketHandler {
 
     private static cMAC tabletAddress;
-    private static final ConcurrentHashMap<String, CompletableFuture<ByteBuffer>> pendingResponses = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, CompletableFuture<byte[]>> pendingResponses = new ConcurrentHashMap<>();
 
     private static final ConcurrentHashMap<String, byte[]> responses = new ConcurrentHashMap<>();
 
@@ -39,12 +39,16 @@ public class Inverters implements PacketHandler {
         saveLastResponse(inverterAddress, command, Commands.callFunction(tabletAddress, inverterAddress, command, arguments));
     }
 
+    public static CompletableFuture<byte[]> sendCommandToInverterAsync(Address inverterAddress, Commands command, String arguments) {
+        return Commands.callFunctionAsync(tabletAddress, inverterAddress, command, arguments);
+    }
+
     public static void respondToInverter(Address inverterAddress, Commands command, String arguments) {
         Commands.respondToFunction(tabletAddress, inverterAddress, command, arguments);
     }
 
     public static void saveLastResponse(Address inverterAddress, Commands command, byte[] bytes) {
-        responses.put(inverterAddress.getValue() + "|" + command.name(), bytes);
+        responses.put(Commands.formCode(inverterAddress,command), bytes);
     }
 
     public static byte[] getLastResponse(Address inverterAddress, Commands command) {
@@ -55,16 +59,16 @@ public class Inverters implements PacketHandler {
         pendingResponses.remove(code);
     }
 
-    public static void addResponse(String code, CompletableFuture<ByteBuffer> response) {
+    public static void addResponse(String code, CompletableFuture<byte[]> response) {
         pendingResponses.put(code, response);
     }
 
     @Override
-    public void handlePacket(Address AddressSource, ByteBuffer Buff) {
-        String command = new String(ConnectionControl.extractBytes(Buff), StandardCharsets.UTF_8);
+    public void handlePacket(Address AddressSource, byte[] Buff) {
+        String command = new String(Buff, StandardCharsets.UTF_8);
         String code = AddressSource.toStringInHexFormat() + "|" + command.substring(1, command.indexOf('('));
         System.out.println("Получено сообщение с кодом: " + code);
-        CompletableFuture<ByteBuffer> future = pendingResponses.remove(code);
+        CompletableFuture<byte[]> future = pendingResponses.remove(code);
         if (future != null) {
             future.complete(Buff);                            // Разблокируем ожидающий поток
         } else {

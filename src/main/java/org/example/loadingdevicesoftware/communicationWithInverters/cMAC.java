@@ -143,7 +143,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
         ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);
-            handler.handlePacket(adrsrc, PacketPayload);
+            handler.handlePacket(adrsrc, PacketPayload.array());
         } catch (Exception e) {
             System.out.println("(MAC) Нет обработчика для типа: " + PacketType);
         }

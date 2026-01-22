@@ -44,6 +44,15 @@ public class Address {
                 (byte) (value >> 24));
     }
 
+    public byte[] getBytes() {
+        return new byte[]{
+                (byte) (value >> 24),
+                (byte) (value >> 16),
+                (byte) (value >> 8),
+                (byte) value
+        };
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

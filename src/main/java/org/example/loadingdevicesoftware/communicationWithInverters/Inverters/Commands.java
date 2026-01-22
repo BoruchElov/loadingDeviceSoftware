@@ -1,11 +1,13 @@
 package org.example.loadingdevicesoftware.communicationWithInverters.Inverters;
 
+import org.apache.commons.math3.analysis.function.Add;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.cMAC;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Класс типа enum для читаемой и структурированной отправки команд инверторам.
@@ -81,7 +83,6 @@ public enum Commands {
         }
     }
 
-
     /**
      * Утилитарный метод для остановки потока приёма-передачи сообщений на время ожидания ответа на последнее
      * отправоенное сообщение.
@@ -91,7 +92,7 @@ public enum Commands {
      * @throws InterruptedException
      */
     static byte[] waitForAnswer(Address address, Commands command) throws ExecutionException, InterruptedException {
-        CompletableFuture<ByteBuffer> future = new CompletableFuture<>();
+        CompletableFuture<byte[]> future = new CompletableFuture<>();
         String code = address.toStringInHexFormat() + "|" + command.toString();
         Inverters.addResponse(code, future);
         System.out.println("Отправлено сообщение с кодом: " + code);
@@ -102,11 +103,87 @@ public enum Commands {
                 Inverters.removeResponse(code);
             }
         }, delayTime, TimeUnit.SECONDS);
-        ByteBuffer result = future.get().flip();
-        byte[] responseBytes = new byte[result.remaining()];
-        responseBytes = result.get(responseBytes).array();
-        return responseBytes;
+        return future.get();
     }
+
+    public static String formCode(Address address, Commands command) {
+        return address.toStringInHexFormat() + "|" + command.toString();
+    }
+
+    /**
+     * Метод для отправки выбранной команды. Формирует пакет для отправки.
+     *
+     * @param MAC       MAC-адрес отправителя
+     * @param address   адрес получателя
+     * @param command   команда для отправки
+     * @param arguments параметры команды
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    static CompletableFuture<byte[]> callFunctionAsync(
+            cMAC MAC, Address address, Commands command, String arguments) {
+
+        String textCommand = command.toString() + "(" + arguments + ")";
+        byte[] fullCommandInBytes = textCommand.getBytes(StandardCharsets.UTF_8);
+        byte[] commandForInverter = new byte[fullCommandInBytes.length + 1];
+        commandForInverter[0] = 0x02;
+        System.arraycopy(fullCommandInBytes, 0, commandForInverter, 1, fullCommandInBytes.length);
+
+        CompletableFuture<byte[]> future = new CompletableFuture<>();
+
+        final int maxAttempts = 3;
+        final long timeoutSec = 7;
+        final AtomicInteger attempt = new AtomicInteger(1);
+
+        Runnable sendTask = new Runnable() {
+            @Override
+            public void run() {
+                if (future.isDone()) return;
+
+                int currentAttempt = attempt.get();
+
+                Inverters.addResponse(formCode(address, command), future);
+
+                try {
+                    MAC.sendPacket(address, commandForInverter);
+                } catch (Exception e) {
+                    System.out.println("Ошибка отправки (попытка "
+                            + currentAttempt + "/" + maxAttempts + "): " + e.getMessage());
+                    Inverters.removeResponse(formCode(address, command));
+
+                    if (attempt.incrementAndGet() <= maxAttempts) {
+                        scheduler.schedule(this, 100, TimeUnit.MILLISECONDS);
+                    } else {
+                        future.completeExceptionally(e);
+                    }
+                    return;
+                }
+
+                scheduler.schedule(() -> {
+                    if (future.isDone()) return;
+
+                    System.out.println("(Inverters) Ответ не получен за "
+                            + timeoutSec + "с от устройства: "
+                            + address.toStringInHexFormat()
+                            + " (попытка " + currentAttempt + "/" + maxAttempts + ")");
+
+                    Inverters.removeResponse(formCode(address, command));
+
+                    if (attempt.incrementAndGet() <= maxAttempts) {
+                        scheduler.execute(this);
+                    } else {
+                        future.completeExceptionally(
+                                new TimeoutException("Ответ не получен за "
+                                        + timeoutSec + "с после " + maxAttempts + " попыток"));
+                    }
+                }, timeoutSec, TimeUnit.SECONDS);
+            }
+        };
+
+        sendTask.run();
+        return future;
+    }
+
 
     /**
      * Метод для принудительной остановки прерывателя потоков.
@@ -114,8 +191,6 @@ public enum Commands {
     public static void closeScheduler() {
         scheduler.shutdownNow();
     }
-
-
 
 
 }

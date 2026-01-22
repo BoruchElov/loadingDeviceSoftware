@@ -31,12 +31,12 @@ public class EventWaiter {
      * @param timeout время ожидания в секундах
      * @return
      */
-    public synchronized CompletableFuture<ByteBuffer> waitForEvent(
+    public synchronized CompletableFuture<byte[]> waitForEvent(
             Address address,
             PossibleResponses response,
             Duration timeout
     ) {
-        CompletableFuture<ByteBuffer> future = new CompletableFuture<>();
+        CompletableFuture<byte[]> future = new CompletableFuture<>();
 
         PendingEvent pending = new PendingEvent(address, response, future);
         pendingEvents.add(pending);
@@ -65,7 +65,7 @@ public class EventWaiter {
      * Метод для "прослушивания" входящих сообщений от модулей.
      * Вызывается из Inverters.handlePacket()
      */
-    public synchronized void incoming(Address source, ByteBuffer data) {
+    public synchronized void incoming(Address source, byte[] data) {
         System.out.println("[EventWaiter] ← Входящее сообщение от " + source.toStringInHexFormat() +
                 ", pending = " + pendingEvents.size());
         Iterator<PendingEvent> it = pendingEvents.iterator();
@@ -90,7 +90,7 @@ public class EventWaiter {
             System.out.println("Получен ответ: " + response.name());
 
             System.out.println("[EventWaiter]     ✔ СОБЫТИЕ ПОДХОДИТ — завершаем future");
-            saveResponse(source, ConnectionControl.extractBytes(data));
+            saveResponse(source, data);
             p.future().complete(data);
             it.remove();
         }
@@ -109,9 +109,8 @@ public class EventWaiter {
         SC_RES, MODBUS, MODBUS_WRITE
     }
 
-    private PossibleResponses getExpectedResponse(ByteBuffer data) {
-        byte[] savedData = ConnectionControl.extractBytes(data);
-        String message = new String(savedData, StandardCharsets.UTF_8);
+    private PossibleResponses getExpectedResponse(byte[] data) {
+        String message = new String(data, StandardCharsets.UTF_8);
         message = message.substring(1);
         System.out.println(message);
         message = message.substring(0, message.indexOf("("));
@@ -133,7 +132,7 @@ public class EventWaiter {
     private record PendingEvent(
             Address address,
             PossibleResponses expectedResponse,
-            CompletableFuture<ByteBuffer> future
+            CompletableFuture<byte[]> future
     ) {
     }
 }
