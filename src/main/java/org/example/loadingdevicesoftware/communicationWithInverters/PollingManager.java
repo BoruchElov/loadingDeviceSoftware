@@ -128,9 +128,5 @@ public final class PollingManager {
         }
     }
 
-    private static boolean isPolled(Address address) {
-        return futures.containsKey(address);
-    }
-
 
 }
