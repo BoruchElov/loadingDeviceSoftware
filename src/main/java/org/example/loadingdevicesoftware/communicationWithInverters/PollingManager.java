@@ -6,84 +6,125 @@ import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.In
 
 import java.util.Map;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl.analyzeResponse;
 
-public class PollingManager {
+public final class PollingManager {
 
-    private static final Map<Address, ScheduledExecutorService> executors =
-            new ConcurrentHashMap<>();
+    private static final long pollingPeriod = 911; // ms
+    private static final ConcurrentHashMap<Address, ScheduledExecutorService> executors = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Address, ScheduledFuture<?>> futures = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Address, InverterParams> paramsMap = new ConcurrentHashMap<>();
 
-    private static final Map<Address, ScheduledFuture<?>> futures =
-            new ConcurrentHashMap<>();
+    // новое: флаг активного запроса на адрес
+    private static final ConcurrentHashMap<Address, AtomicBoolean> inFlight = new ConcurrentHashMap<>();
 
-    private static final Map<Address, InverterParams> paramsMap =
-            new ConcurrentHashMap<>();
+    // опционально: если хотите уметь cancel текущий запрос при stop()
+    private static final ConcurrentHashMap<Address, CompletableFuture<?>> activeRequests = new ConcurrentHashMap<>();
+
+    private static final String MODBUS_ARGS = "03,1000,1010";
 
     private PollingManager() {
     }
 
     public static InverterParams getParams(Address address) {
-        return paramsMap.get(address);
+        return paramsMap.computeIfAbsent(address, a -> new InverterParams());
     }
 
-    public static void start(Address address, long timeoutMs) {
+    public static void start(Address address, long durationMs) {
 
-        if (executors.containsKey(address)) return;
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        // Если уже запущено — ничего не делаем (или перезапуск по вашей логике)
+        if (futures.containsKey(address)) {
+            return;
+        }
+
+        if (durationMs < pollingPeriod + 200) return;
+
+        paramsMap.computeIfAbsent(address, a -> new InverterParams());
+        inFlight.computeIfAbsent(address, a -> new AtomicBoolean(false));
+
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = new Thread(r, "Polling-" + address.toStringInHexFormat());
+            t.setDaemon(true);
+            return t;
+        });
+
         executors.put(address, executor);
 
-        InverterParams params = new InverterParams();
-        paramsMap.put(address, params);
-
-        long pollingPeriod = 911;
-
-        ScheduledFuture<?> future = executor.scheduleAtFixedRate(() -> {
-                    try {
-                        Inverters.sendCommandToInverter(
-                                address,
-                                Commands.MODBUS,
-                                "03,1000,1010"
-                        );
-
-                        String response = analyzeResponse(
-                                Inverters.getLastResponse(
-                                        address,
-                                        Commands.MODBUS),
-                                ConnectionControl.ExpectedValue.NUMBER
-                        );
-
-                        if (response == null || response.isBlank()) response = "0,0,0,0,0";
-                        params.updateFromResponse(response);
-
-                    } catch (Exception e) {
-                        System.err.println("Ошибка опроса: " + e.getMessage());
-                    }
-                },
-                0,
-                pollingPeriod,
-                TimeUnit.MILLISECONDS
-        );
-
+        ScheduledFuture<?> future = executor.scheduleAtFixedRate(() -> tick(address), 0, pollingPeriod, TimeUnit.MILLISECONDS);
         futures.put(address, future);
 
-        if (timeoutMs < pollingPeriod + 200) return;
-        executor.schedule(() -> stop(address),
-                timeoutMs - pollingPeriod, TimeUnit.MILLISECONDS);
+        executor.schedule(() -> stop(address), durationMs - pollingPeriod, TimeUnit.MILLISECONDS);
     }
 
-    public static void stop(Address address) {
-        if (isPolled(address)) {
-            ScheduledFuture<?> future = futures.remove(address);
-            if (future != null) {
-                future.cancel(true);
-            }
 
-            ScheduledExecutorService executor = executors.remove(address);
-            if (executor != null) {
-                executor.shutdownNow();
-            }
-            System.out.println("Опрос остановлен: " + address);
+    private static void tick(Address address) {
+
+        AtomicBoolean flag = inFlight.get(address);
+        if (flag == null) return;
+
+        // если предыдущий запрос ещё не завершён — этот тик пропускаем
+        if (!flag.compareAndSet(false, true)) {
+            return;
+        }
+
+        CompletableFuture<byte[]> cf = Inverters.sendCommandToInverterAsync(address, Commands.MODBUS, MODBUS_ARGS);
+
+        activeRequests.put(address, cf);
+
+        cf.orTimeout(7000, TimeUnit.MILLISECONDS) // подберите под вашу линию
+                .whenComplete((data, ex) -> {
+                    try {
+                        if (ex != null || data == null) {
+                            // мягкий лог; polling не должен “убивать” поток
+                            // System.out.println("(Polling) fail " + address + ": " + (ex != null ? ex.getMessage() : "null"));
+                            return;
+                        }
+
+                        String response = (ConnectionControl.analyzeResponse(data, ConnectionControl.ExpectedValue.NUMBER)
+                                == null || ConnectionControl.analyzeResponse(data, ConnectionControl.ExpectedValue.NUMBER)
+                                .isBlank()) ? "0,0,0,0,0" : ConnectionControl.analyzeResponse(data, ConnectionControl
+                                .ExpectedValue.NUMBER);
+
+                        InverterParams params = paramsMap.get(address);
+                        if (params == null) return;
+
+                        // Если внутри params обновляются JavaFX properties — обновляйте на FX thread
+                        javafx.application.Platform.runLater(() -> params.updateFromResponse(response));
+
+                    } catch (Exception parseEx) {
+                        // System.out.println("(Polling) parse error " + address + ": " + parseEx.getMessage());
+                    } finally {
+                        activeRequests.remove(address);
+                        flag.set(false);
+                    }
+                });
+    }
+
+
+    public static void stop(Address address) {
+
+        ScheduledFuture<?> f = futures.remove(address);
+        if (f != null) {
+            f.cancel(true);
+        }
+
+        ScheduledExecutorService ex = executors.remove(address);
+        if (ex != null) {
+            ex.shutdownNow();
+        }
+
+        // сброс флага inFlight
+        AtomicBoolean flag = inFlight.get(address);
+        if (flag != null) {
+            flag.set(false);
+        }
+
+        // опционально: попытка отменить активный запрос
+        CompletableFuture<?> req = activeRequests.remove(address);
+        if (req != null) {
+            req.cancel(true);
         }
     }
 
