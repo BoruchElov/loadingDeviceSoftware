@@ -31,78 +31,46 @@ public class ScenariosManager {
      * @return
      */
     public static CompletableFuture<Boolean> handControlScenarioOne(ArrayList<String> modulesParameters, double timeout) {
+
         responses.clear();
         ArrayList<Address> addresses = CheckingManager.getAvailableAddresses();
 
-        //Отправка сообщений с настройками сценария
-        Commands command = Commands.SET_SCENARO_1;
+        // 1) SET_SCENARO_1 всем адресам (async) + барьер
+        ArrayList<CompletableFuture<Boolean>> setFutures = new ArrayList<>();
         for (int i = 0; i < addresses.size(); i++) {
-            try {
-                Inverters.sendCommandToInverterSync(addresses.get(i), command, modulesParameters.get(i));
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
-                        command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
-                System.out.println(response);
-                if (!response.equals("SET_SCENARO_1(YES)")) {
-                    System.err.println("Ошибка! Не получен ответ SET_SCENARO_1(YES) от модуля с адресом "
-                            + addresses.get(i).toStringInHexFormat());
-                    return CompletableFuture.completedFuture(false);
-                }
-            } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды SET_SCENARO_1() модулю с адресом "
-                        + addresses.get(i).toStringInHexFormat());
-                return CompletableFuture.completedFuture(false);
-            }
+            Address addr = addresses.get(i);
+
+            setFutures.add(
+                    sendAndExpectPhrase(addr,
+                            Commands.SET_SCENARO_1,
+                            modulesParameters.get(i),
+                            "SET_SCENARO_1(YES)")
+            );
         }
 
-        //Отправка сообщений с командой на запуск сценария
-        command = Commands.START_SCENARO_1;
-        //Мапа для хранения ссылок на задания по ожиданию ответа
-        Map<Address, CompletableFuture<byte[]>> scenarioResultsFutures = new ConcurrentHashMap<>();
-        AtomicBoolean scenarioFailed = new AtomicBoolean(false);
-        for (int i = 0; i < addresses.size(); i++) {
-            try {
-                //Отправка команды на запуск
-                Inverters.sendCommandToInverterSync(addresses.get(i), command, "");
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
-                        command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
-                System.out.println(response);
-                if (!response.equals("START_SCENARO_1(YES)")) {
-                    System.err.println("Ошибка! Не получен ответ START_SCENARO_1(YES) от модуля с адресом "
-                            + addresses.get(i).toStringInHexFormat());
-                    return CompletableFuture.completedFuture(false);
-                }
-                //Регистрация ожидания
-                Address address = addresses.get(i);
-                CompletableFuture<byte[]> future =
-                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SC_RES,
-                                Duration.ofMillis((long) (timeout * 4000L)));
-                scenarioResultsFutures.put(address, future);
-                PollingManager.start(address, (long) (timeout * 1000L));
-                future.whenComplete((buffer, err) -> {
-                    PollingManager.stop(address);
-                    if (err != null) {
-                        System.err.println("Модуль " + address.toStringInHexFormat()
-                                + " не прислал второе сообщение: " + err);
-                        scenarioFailed.set(true);
-                    } else {
-                        responses.put(address, analyzeResults(ConnectionControl.
-                                analyzeResponse(buffer, ConnectionControl.ExpectedValue.NUMBER)));
-                        Inverters.respondToInverter(address, Commands.SC_RES, "YES");
-                    }
-                });
-            } catch (Exception e) {
-                PollingManager.stop(addresses.get(i));
-                System.err.println("Ошибка при отправке команды START_SCENARO_1() модулю с адресом "
-                        + addresses.get(i).toStringInHexFormat());
+        CompletableFuture<Boolean> setAll =
+                CompletableFuture.allOf(setFutures.toArray(new CompletableFuture[0]))
+                        .thenApply(v -> setFutures.stream().allMatch(CompletableFuture::join));
+
+        // 2) START_SCENARO_1 всем адресам + ожидание SC_RES
+        return setAll.thenCompose(setOk -> {
+            if (!setOk) {
+                System.err.println("Ошибка! Не все модули подтвердили SET_SCENARO_1(YES)");
                 return CompletableFuture.completedFuture(false);
             }
-        }
-        //Создаёт задачу на ожидание выполнения всех задач из списка
-        CompletableFuture<Void> all =
-                CompletableFuture.allOf(scenarioResultsFutures.values().toArray(new CompletableFuture[0]));
-        //Ожидание выполнения всех задач из списка all с последующим возвратом значения scenarioFailed
-        return all.thenApply(v -> !scenarioFailed.get());
+
+            ArrayList<CompletableFuture<Boolean>> resultFutures = new ArrayList<>();
+            for (Address addr : addresses) {
+                resultFutures.add(
+                        startAndWaitScenarioResult(addr, Commands.START_SCENARO_1, "", timeout)
+                );
+            }
+
+            return CompletableFuture.allOf(resultFutures.toArray(new CompletableFuture[0]))
+                    .thenApply(v -> resultFutures.stream().allMatch(CompletableFuture::join));
+        });
     }
+
 
     /**
      * Метод для запуска сценария выдачи импульсного тока
@@ -112,78 +80,147 @@ public class ScenariosManager {
      * @return
      */
     public static CompletableFuture<Boolean> handControlScenarioTwo(ArrayList<String> modulesParameters, double timeout) {
+
         responses.clear();
         ArrayList<Address> addresses = CheckingManager.getAvailableAddresses();
 
-        //Отправка сообщений с настройками сценария
-        Commands command = Commands.SET_SCENARO_2;
+        // 1) SET_SCENARO_2
+        ArrayList<CompletableFuture<Boolean>> setFutures = new ArrayList<>();
         for (int i = 0; i < addresses.size(); i++) {
-            try {
-                Inverters.sendCommandToInverterSync(addresses.get(i), command, modulesParameters.get(i));
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
-                        command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
-                System.out.println(response);
-                if (!response.equals("SET_SCENARO_2(YES)")) {
-                    System.err.println("Ошибка! Не получен ответ SET_SCENARO_2(YES) от модуля с адресом "
-                            + addresses.get(i).toStringInHexFormat());
-                    return CompletableFuture.completedFuture(false);
-                }
-            } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды SET_SCENARO_2() модулю с адресом "
-                        + addresses.get(i).toStringInHexFormat());
-                return CompletableFuture.completedFuture(false);
-            }
+            Address addr = addresses.get(i);
+
+            setFutures.add(
+                    sendAndExpectPhrase(addr,
+                            Commands.SET_SCENARO_2,
+                            modulesParameters.get(i),
+                            "SET_SCENARO_2(YES)")
+            );
         }
 
-        //Отправка сообщений с командой на запуск сценария
-        command = Commands.START_SCENARO_2;
-        //Мапа для хранения ссылок на задания по ожиданию ответа
-        Map<Address, CompletableFuture<byte[]>> scenarioResultsFutures = new ConcurrentHashMap<>();
-        AtomicBoolean scenarioFailed = new AtomicBoolean(false);
-        for (int i = 0; i < addresses.size(); i++) {
-            try {
-                //Отправка команды на запуск
-                Inverters.sendCommandToInverterSync(addresses.get(i), command, modulesParameters.get(i));
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
-                        command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
-                System.out.println(response);
-                if (!response.equals("START_SCENARO_2(YES)")) {
-                    System.err.println("Ошибка! Не получен ответ START_SCENARO_2(YES) от модуля с адресом "
-                            + addresses.get(i).toStringInHexFormat());
-                    return CompletableFuture.completedFuture(false);
-                }
-                //Регистрация ожидания
-                Address address = addresses.get(i);
-                CompletableFuture<byte[]> future =
-                        EventWaiter.getInstance().waitForEvent(address, EventWaiter.PossibleResponses.SC_RES,
-                                Duration.ofMillis((long) (timeout * 4000L)));
-                scenarioResultsFutures.put(address, future);
-                PollingManager.start(address, (long) (timeout * 1000L));
-                future.whenComplete((buffer, err) -> {
-                    PollingManager.stop(address);
-                    if (err != null) {
-                        System.err.println("Модуль " + address.toStringInHexFormat()
-                                + " не прислал второе сообщение: " + err);
-                        scenarioFailed.set(true);
-                    } else {
-                        responses.put(address, analyzeResults(ConnectionControl.
-                                analyzeResponse(buffer, ConnectionControl.ExpectedValue.NUMBER)));
-                        Inverters.respondToInverter(address, Commands.SC_RES, "YES");
-                    }
-                });
-            } catch (Exception e) {
-                PollingManager.stop(addresses.get(i));
-                System.err.println("Ошибка при отправке команды START_SCENARO_2() модулю с адресом "
-                        + addresses.get(i).toStringInHexFormat());
+        CompletableFuture<Boolean> setAll =
+                CompletableFuture.allOf(setFutures.toArray(new CompletableFuture[0]))
+                        .thenApply(v -> setFutures.stream().allMatch(CompletableFuture::join));
+
+        // 2) START_SCENARO_2 + ожидание SC_RES
+        return setAll.thenCompose(setOk -> {
+            if (!setOk) {
+                System.err.println("Ошибка! Не все модули подтвердили SET_SCENARO_2(YES)");
                 return CompletableFuture.completedFuture(false);
             }
-        }
-        //Создаёт задачу на ожидание выполнения всех задач из списка
-        CompletableFuture<Void> all =
-                CompletableFuture.allOf(scenarioResultsFutures.values().toArray(new CompletableFuture[0]));
-        //Ожидание выполнения всех задач из списка all с последующим возвратом значения scenarioFailed
-        return all.thenApply(v -> !scenarioFailed.get());
+
+            ArrayList<CompletableFuture<Boolean>> resultFutures = new ArrayList<>();
+            for (int i = 0; i < addresses.size(); i++) {
+                Address addr = addresses.get(i);
+
+                // В вашей текущей версии START_SCENARO_2 отправляется с modulesParameters.get(i)
+                // Я сохраняю это поведение.
+                resultFutures.add(
+                        startAndWaitScenarioResult(addr, Commands.START_SCENARO_2, modulesParameters.get(i), timeout)
+                );
+            }
+
+            return CompletableFuture.allOf(resultFutures.toArray(new CompletableFuture[0]))
+                    .thenApply(v -> resultFutures.stream().allMatch(CompletableFuture::join));
+        });
     }
+
+
+    private static CompletableFuture<Boolean> sendAndExpectPhrase(Address address,
+                                                                  Commands command,
+                                                                  String args,
+                                                                  String expectedPhrase) {
+        return Inverters.sendCommandToInverterAsync(address, command, args)
+                .thenApply(bytes -> {
+                    String resp = ConnectionControl
+                            .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE)
+                            .substring(1);
+                    return expectedPhrase.equals(resp);
+                })
+                .exceptionally(ex -> false);
+    }
+
+    private static CompletableFuture<Boolean> startAndWaitScenarioResult(
+            Address address,
+            Commands startCommand,
+            String startArgs,
+            double timeoutSeconds
+    ) {
+        final String expectedStart = startCommand.name() + "(YES)";
+        final long timeoutMs = (long) (timeoutSeconds * 4000L);
+
+        // 1) Отправляем START (async) и проверяем подтверждение
+        CompletableFuture<Boolean> scenarioFuture =
+                sendAndExpectPhrase(address, startCommand, startArgs, expectedStart)
+                        .thenCompose(startOk -> {
+                            if (!startOk) {
+                                System.err.println("Ошибка! Не получен ответ " + expectedStart + " от модуля "
+                                        + address.toStringInHexFormat());
+                                // START не подтвердили — считаем сценарий проваленным, но unlock всё равно сделаем ниже
+                                return CompletableFuture.completedFuture(false);
+                            }
+
+                            // 2) START подтверждён: запускаем polling и ждём SC_RES
+                            PollingManager.start(address, (long) (timeoutSeconds * 1000L));
+
+                            return EventWaiter.getInstance()
+                                    .waitForEvent(address,
+                                            EventWaiter.PossibleResponses.SC_RES,
+                                            Duration.ofMillis(timeoutMs))
+                                    .handle((buffer, err) -> {
+                                        if (err != null || buffer == null) {
+                                            System.err.println("Модуль " + address.toStringInHexFormat()
+                                                    + " не прислал SC_RES: " + (err != null ? err.getMessage() : "null"));
+                                            return false;
+                                        }
+
+                                        try {
+                                            responses.put(address,
+                                                    analyzeResults(ConnectionControl.analyzeResponse(
+                                                            buffer, ConnectionControl.ExpectedValue.NUMBER)));
+
+                                            // подтверждаем приём результата сценария
+                                            Inverters.respondToInverter(address, Commands.SC_RES, "YES");
+                                            return true;
+
+                                        } catch (Exception parseEx) {
+                                            System.err.println("Ошибка обработки SC_RES от " + address.toStringInHexFormat()
+                                                    + ": " + parseEx.getMessage());
+                                            return false;
+                                        }
+                                    })
+                                    // 3) ВАЖНО: polling остановить в любом случае после ожидания SC_RES
+                                    .whenComplete((r, e) -> PollingManager.stop(address));
+                        })
+                        // Если что-то пошло не так на верхнем уровне — считаем сценарий проваленным,
+                        // но unlock всё равно будет сделан ниже.
+                        .exceptionally(ex -> {
+                            System.err.println("Ошибка выполнения сценария на модуле " + address.toStringInHexFormat()
+                                    + ": " + ex.getMessage());
+                            // stop на всякий случай (если ошибка случилась до whenComplete)
+                            PollingManager.stop(address);
+                            return false;
+                        });
+
+        // 4) BUTTON_UNLOCK отправляется ВСЕГДА, и итог сценария при этом сохраняется.
+        return scenarioFuture.thenCompose(success ->
+                Inverters.sendCommandToInverterAsync(address, Commands.BUTTON_UNLOCK, "")
+                        .thenApply(bytes -> {
+                            String resp = ConnectionControl
+                                    .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE)
+                                    .substring(1);
+
+                            System.out.println("[BUTTON_UNLOCK] " + address.toStringInHexFormat() + " -> " + resp);
+                            return success; // возвращаем результат сценария, не результат unlock
+                        })
+                        .exceptionally(ex -> {
+                            System.out.println("[BUTTON_UNLOCK] " + address.toStringInHexFormat()
+                                    + " -> ERROR: " + ex.getMessage());
+                            return success; // unlock не удался, но результат сценария не меняем
+                        })
+        );
+    }
+
+
 
     /**
      * Метод для остановки ожидания сообщений от инверторов через EventWaiter, если такое есть.
