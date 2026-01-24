@@ -126,8 +126,10 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
 
     //TODO скорректировать работу фильтра приёма сообщений
     private void handlePacket(byte[] Buff) {
-        Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
+        Integer PacketType = Byte.toUnsignedInt(Buff[8]);
+        System.out.println(PacketType);
         Address adrcv = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
+        Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
         if (adrsrc.toStringInHexFormat().equals("09:12:AB:E1") ||
                 adrsrc.toStringInHexFormat().equals("00:80:E1:FF") ||
                 adrsrc.toStringInHexFormat().equals("06:80:E1:FF") ||
@@ -138,12 +140,11 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
         if (!adrcv.equals(myMAC) && !adrcv.toStringInHexFormat().equals("00:00:00:00")) {
             return;
         }
-        Integer PacketType = Byte.toUnsignedInt(Buff[8]);
-        System.out.println("Тип пакета: " + PacketType);
-        ByteBuffer PacketPayload = ByteBuffer.wrap(Buff, 8, Buff.length - 8).slice();
+        byte[] payload = Arrays.copyOfRange(Buff, 8, Buff.length);
+        System.out.println(bytesToHex(Buff));
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);
-            handler.handlePacket(adrsrc, PacketPayload.array());
+            handler.handlePacket(adrsrc, payload);
         } catch (Exception e) {
             System.out.println("(MAC) Нет обработчика для типа: " + PacketType);
         }
