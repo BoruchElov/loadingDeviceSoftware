@@ -8,7 +8,6 @@ import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Co
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 
-import java.nio.ByteBuffer;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class ScenariosManager {
         Commands command = Commands.SET_SCENARO_1;
         for (int i = 0; i < addresses.size(); i++) {
             try {
-                Inverters.sendCommandToInverter(addresses.get(i), command, modulesParameters.get(i));
+                Inverters.sendCommandToInverterSync(addresses.get(i), command, modulesParameters.get(i));
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -63,7 +62,7 @@ public class ScenariosManager {
         for (int i = 0; i < addresses.size(); i++) {
             try {
                 //Отправка команды на запуск
-                Inverters.sendCommandToInverter(addresses.get(i), command, "");
+                Inverters.sendCommandToInverterSync(addresses.get(i), command, "");
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -120,7 +119,7 @@ public class ScenariosManager {
         Commands command = Commands.SET_SCENARO_2;
         for (int i = 0; i < addresses.size(); i++) {
             try {
-                Inverters.sendCommandToInverter(addresses.get(i), command, modulesParameters.get(i));
+                Inverters.sendCommandToInverterSync(addresses.get(i), command, modulesParameters.get(i));
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -144,7 +143,7 @@ public class ScenariosManager {
         for (int i = 0; i < addresses.size(); i++) {
             try {
                 //Отправка команды на запуск
-                Inverters.sendCommandToInverter(addresses.get(i), command, modulesParameters.get(i));
+                Inverters.sendCommandToInverterSync(addresses.get(i), command, modulesParameters.get(i));
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(addresses.get(i),
                         command), ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);

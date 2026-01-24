@@ -10,7 +10,6 @@ import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.In
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -188,7 +187,7 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        /*double percent = 13.;
+        double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
@@ -198,7 +197,7 @@ public class CheckingManager {
                 address = addressesStorage.get(module);
                 Commands command = Commands.MODBUS;
                 String arguments = "03,0000,0002";
-                Inverters.sendCommandToInverter(address, command, arguments);
+                Inverters.sendCommandToInverterSync(address, command, arguments);
                 String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
@@ -214,7 +213,7 @@ public class CheckingManager {
             if (!(voltage >= lowerReference && voltage <= upperReference)) {
                 return false;
             }
-        }*/
+        }
         return true;
     }
 
@@ -250,7 +249,7 @@ public class CheckingManager {
         try {
             for (String module : addressesStorage.keySet()) {
                 address = addressesStorage.get(module);
-                Inverters.sendCommandToInverter(address, Commands.CHECK_SWITCH_POS, "");
+                Inverters.sendCommandToInverterSync(address, Commands.CHECK_SWITCH_POS, "");
                 int response = Integer.parseInt(ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
                         Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
                 responses.add(response);
@@ -292,7 +291,7 @@ public class CheckingManager {
             try {
                 for (String module : addressesStorage.keySet()) {
                     address = addressesStorage.get(module);
-                    Inverters.sendCommandToInverter(address, Commands.BUTTON_LOCK, "");
+                    Inverters.sendCommandToInverterSync(address, Commands.BUTTON_LOCK, "");
                     String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
                             Commands.BUTTON_LOCK), ConnectionControl.ExpectedValue.NUMBER);
                     System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() + ": " + response);
@@ -304,14 +303,14 @@ public class CheckingManager {
         }
         return true;
     }
-
-    /**
+/*
+    *//**
      * Метод для реализации проверки сопротивления.
      * TODO реализовать логику ожидания ответа о результатах выполнения сценария
      * TODO продумать реализацию функционала интерпретации параметров формы в зависимости от сценария
      *
      * @return
-     */
+     *//*
     public static boolean resistanceCheck() {
         Double[] parameters = resistanceCheckParameters.toArray(new Double[0]);
         int i = 0;
@@ -323,7 +322,7 @@ public class CheckingManager {
             try {
                 String time = "6.0";
                 String data = parameters[3 * i] + "," + parameters[3 * i + 1] + "," + time;
-                Inverters.sendCommandToInverter(address, command, data);
+                Inverters.sendCommandToInverterSync(address, command, data);
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -346,7 +345,7 @@ public class CheckingManager {
             address = addressesStorage.get(module);
             Commands command = Commands.START_RESISTANCE_CHECK;
             try {
-                Inverters.sendCommandToInverter(address, command, "");
+                Inverters.sendCommandToInverterSync(address, command, "");
                 String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
                         ConnectionControl.ExpectedValue.PHRASE).substring(1);
                 System.out.println(response);
@@ -361,12 +360,12 @@ public class CheckingManager {
                 return false;
             }
             try {
-                /*CompletableFuture<ByteBuffer> future = EventWaiter.getInstance().waitForEvent(address,
+                *//*CompletableFuture<ByteBuffer> future = EventWaiter.getInstance().waitForEvent(address,
                         EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120));
                 Address finalAddress = address;
                 future.whenComplete((buffer, err) -> {
                     Inverters.respondToInverter(finalAddress, Commands.SC_RES, "YES");
-                });*/
+                });*//*
                 EventWaiter.getInstance().waitForEvent(address,
                         EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120)).get();
                 String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
@@ -389,6 +388,119 @@ public class CheckingManager {
             i += 1;
         }
         return true;
+    }*/
+
+    public static CompletableFuture<Boolean> resistanceCheck() {
+
+        // фиксируем список адресов на момент старта проверки
+        // (чтобы не зависеть от возможных изменений addressesStorage во время async-работы)
+        List<Map.Entry<String, Address>> modules = new ArrayList<>(addressesStorage.entrySet());
+
+        Double[] parameters = resistanceCheckParameters.toArray(new Double[0]);
+
+        // 1) Этап настройки SET_RESISTANCE_CHECK асинхронно для всех модулей
+        List<CompletableFuture<Boolean>> setFutures = new ArrayList<>();
+        for (int i = 0; i < modules.size(); i++) {
+            String moduleName = modules.get(i).getKey();
+            Address address = modules.get(i).getValue();
+
+            String time = "6.0";
+            String data = parameters[3 * i] + "," + parameters[3 * i + 1] + "," + time;
+
+            CompletableFuture<Boolean> f =
+                    Inverters.sendCommandToInverterAsync(address, Commands.SET_RESISTANCE_CHECK, data)
+                            .thenApply(bytes -> {
+                                String response = ConnectionControl
+                                        .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE)
+                                        .substring(1);
+
+                                if (!response.equals("SET_RESISTANCE_CHECK(YES)")) {
+                                    System.err.println("Ошибка! Не получен ответ SET_RESISTANCE_CHECK(YES) от модуля "
+                                            + moduleName + " с адресом " + address.toStringInHexFormat());
+                                    return false;
+                                }
+                                return true;
+                            })
+                            .exceptionally(ex -> {
+                                System.err.println("Ошибка при отправке SET_RESISTANCE_CHECK() модулю " + moduleName
+                                        + " с адресом " + address.toStringInHexFormat() + ": " + ex.getMessage());
+                                return false;
+                            });
+
+            setFutures.add(f);
+         }
+
+        CompletableFuture<Boolean> setAll =
+                CompletableFuture.allOf(setFutures.toArray(new CompletableFuture[0]))
+                        .thenApply(v -> setFutures.stream().allMatch(CompletableFuture::join));
+
+        // 2) Этап запуска START_RESISTANCE_CHECK асинхронно + ожидание SC_RES асинхронно
+        return setAll.thenCompose(setOk -> {
+            if (!setOk) return CompletableFuture.completedFuture(false);
+
+            List<CompletableFuture<Boolean>> resultFutures = new ArrayList<>();
+
+            for (int i = 0; i < modules.size(); i++) {
+                String moduleName = modules.get(i).getKey();
+                Address address = modules.get(i).getValue();
+
+                CompletableFuture<Boolean> f =
+                        Inverters.sendCommandToInverterAsync(address, Commands.START_RESISTANCE_CHECK, "")
+                                .thenCompose(startBytes -> {
+                                    String startResp = ConnectionControl
+                                            .analyzeResponse(startBytes, ConnectionControl.ExpectedValue.PHRASE)
+                                            .substring(1);
+
+                                    if (!startResp.equals("START_RESISTANCE_CHECK(YES)")) {
+                                        System.err.println("Ошибка! Не получен ответ START_RESISTANCE_CHECK(YES) от модуля "
+                                                + moduleName + " с адресом " + address.toStringInHexFormat());
+                                        return CompletableFuture.completedFuture(false);
+                                    }
+
+                                    // ждём SC_RES
+                                    return EventWaiter.getInstance()
+                                            .waitForEvent(address, EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120))
+                                            .thenApply(scResBytes -> {
+                                                String raw = ConnectionControl.analyzeResponse(scResBytes,
+                                                        ConnectionControl.ExpectedValue.NUMBER);
+
+                                                // raw содержит что-то вида "...(T,...."
+                                                String result = raw;
+                                                int p1 = result.indexOf('(');
+                                                int p2 = result.indexOf(',');
+                                                if (p1 >= 0 && p2 > p1) {
+                                                    result = result.substring(p1 + 1, p2);
+                                                } else {
+                                                    // на случай неожиданного формата
+                                                    System.err.println("Некорректный формат SC_RES от " + address.toStringInHexFormat()
+                                                            + ": " + raw);
+                                                    result = "F";
+                                                }
+
+                                                // подтверждаем приём результата
+                                                Inverters.respondToInverter(address, Commands.SC_RES, "YES");
+
+                                                if (!result.equals("T")) {
+                                                    System.err.println("Ошибка! Не выполнена проверка сопротивления модулем "
+                                                            + moduleName + " с адресом " + address.toStringInHexFormat());
+                                                    return false;
+                                                }
+                                                return true;
+                                            });
+                                })
+                                .exceptionally(ex -> {
+                                    System.err.println("Ошибка в проверке сопротивления для " + moduleName
+                                            + " (" + address.toStringInHexFormat() + "): " + ex.getMessage());
+                                    return false;
+                                });
+
+                resultFutures.add(f);
+            }
+
+            return CompletableFuture.allOf(resultFutures.toArray(new CompletableFuture[0]))
+                    .thenApply(v -> resultFutures.stream().allMatch(CompletableFuture::join));
+        });
     }
+
 
 }

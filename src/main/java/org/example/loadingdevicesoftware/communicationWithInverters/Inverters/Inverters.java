@@ -2,7 +2,6 @@ package org.example.loadingdevicesoftware.communicationWithInverters.Inverters;
 
 import org.example.loadingdevicesoftware.communicationWithInverters.*;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,16 +28,21 @@ public class Inverters implements PacketHandler {
     }
 
     /**
-     * Метод для отправки управляющей команды на инвертор.
+     * Метод для синхронной отправки управляющей команды на инвертор.
      * <p>
-     * TODO реализовать возможность нормальной подгрузки адресов инверторов из файла
      * @param command вид управляющей команды
      * @param arguments аргументы команды
      */
-    public static void sendCommandToInverter(Address inverterAddress, Commands command, String arguments) throws ExecutionException, InterruptedException {
+    public static void sendCommandToInverterSync(Address inverterAddress, Commands command, String arguments) throws ExecutionException, InterruptedException {
         saveLastResponse(inverterAddress, command, Commands.callFunction(tabletAddress, inverterAddress, command, arguments));
     }
 
+    /**
+     * Метод для асинхронной отправки управляющей команды на инвертор.
+     * <p>
+     * @param command вид управляющей команды
+     * @param arguments аргументы команды
+     */
     public static CompletableFuture<byte[]> sendCommandToInverterAsync(Address inverterAddress, Commands command, String arguments) {
         return Commands.callFunctionAsync(tabletAddress, inverterAddress, command, arguments);
     }

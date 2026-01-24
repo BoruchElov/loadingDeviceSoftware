@@ -226,18 +226,26 @@ public class _10_CheckingController {
                 if (!runCheck(4, CheckingManager::currentRangeCheck,
                         "Ошибка проверки диапазона тока!")) return;
 
-                if (!runCheck(5, CheckingManager::resistanceCheck,
-                        "Ошибка проверки сопротивления!")) return;
-                finishChecks();
-                ScreensController.setAllowedToStartScenario(true);
-
+                runCheckAsync(5, CheckingManager::resistanceCheck,
+                        "Ошибка проверки сопротивления!")
+                        .thenAccept(ok -> {
+                            if (cancelRequested) {
+                                finishChecks();
+                                return;
+                            }
+                            if (ok) {
+                                finishChecks();
+                                ScreensController.setAllowedToStartScenario(true);
+                            }
+                        });
+                return;
             });
         } else {
             for (int i = 0; i < checks.size(); i++) {
                 updateIndicator(i + 1,true);
-                finishChecks();
-                ScreensController.setAllowedToStartScenario(true);
             }
+            finishChecks();
+            ScreensController.setAllowedToStartScenario(true);
         }
     }
 
@@ -284,6 +292,46 @@ public class _10_CheckingController {
         }
         return result;
     }
+
+    private java.util.concurrent.CompletableFuture<Boolean> runCheckAsync(
+            int index,
+            java.util.function.Supplier<java.util.concurrent.CompletableFuture<Boolean>> check,
+            String errorMessage
+    ) {
+        if (cancelRequested) {
+            finishChecks();
+            return java.util.concurrent.CompletableFuture.completedFuture(false);
+        }
+
+        java.util.concurrent.CompletableFuture<Boolean> f;
+        try {
+            f = check.get();
+        } catch (Exception e) {
+            Platform.runLater(() -> updateIndicator(index, false));
+            Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage,
+                    InterfaceElementsLogic.Alert_Size.SMALL));
+            finishChecks();
+            return java.util.concurrent.CompletableFuture.completedFuture(false);
+        }
+
+        return f.whenComplete((result, err) -> {
+            if (cancelRequested) {
+                finishChecks();
+                return;
+            }
+
+            boolean ok = (err == null) && Boolean.TRUE.equals(result);
+
+            Platform.runLater(() -> updateIndicator(index, ok));
+
+            if (!ok) {
+                Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage,
+                        InterfaceElementsLogic.Alert_Size.SMALL));
+                finishChecks();
+            }
+        });
+    }
+
 
 
 }
