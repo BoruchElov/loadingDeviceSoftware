@@ -947,13 +947,13 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                 data += "," + timeInput.getText();
                 data += "," + frequencyInput.getText();
                 data += "," + (dryWetButton.getObjectPosition().getActualPosition() == 2 ? "1" : "0");
-                String variableOne = switch(contactOneButton.getObjectPosition().getActualPosition()) {
+                String variableOne = switch (contactOneButton.getObjectPosition().getActualPosition()) {
                     case 0 -> "2";
                     case 1 -> "0";
                     default -> "1";
                 };
                 data += "," + variableOne;
-                variableOne = switch(contactTwoButton.getObjectPosition().getActualPosition()) {
+                variableOne = switch (contactTwoButton.getObjectPosition().getActualPosition()) {
                     case 0 -> "2";
                     case 1 -> "0";
                     default -> "1";
@@ -977,7 +977,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
         //Настройка отображения параметров
         setFieldsValues(true);
         //Действие по завершении работы сценария
-        resultFuture.thenAccept(success -> {
+        /*resultFuture.thenAccept(success -> {
             // Доступ к UI — только из FX Application Thread
             Platform.runLater(() -> {
                 //Остановка анимации
@@ -1019,7 +1019,63 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     setPageState(PageState.ALLOWED_TO_START);
                 }
             });
+        });*/
+        resultFuture.whenComplete((success, err) -> {
+            System.out.println("[Scenario] completed. success=" + success + ", err=" + err);
+            if (err != null) {
+                err.printStackTrace();
+            }
+
+            Platform.runLater(() -> {
+                stopBlinkingAnimation();
+
+                if (err != null) {
+                    InterfaceElementsLogic.showAlert(
+                            "Сценарий завершился с исключением: " + err.getMessage(),
+                            InterfaceElementsLogic.Alert_Size.SMALL
+                    );
+                    setPageState(PageState.ALLOWED_TO_START);
+                    return;
+                }
+
+                if (Boolean.TRUE.equals(success)) {
+                    StringBuilder sb = new StringBuilder("Результаты сценария:\n");
+                    ScenariosManager.getResponses().forEach((addr, arr) -> {
+                        sb.append(addr.toStringInHexFormat()).append(" : ");
+                        sb.append(String.join(", ", arr));
+                        sb.append("\n");
+                        if (dryWetButton.getObjectPosition().getActualPosition() != 0) {
+                            sb.append("Статус: " + (arr[0].equals("S") ? "Остановка по успешному срабатыванию контакта" :
+                                    "Остановка по истечению времени"));
+                        }
+                    });
+                    String timeOne = ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[1].substring(3, 8);
+                    if (!timeOne.equals("0.000")) {
+                        if (contactOneButton.getObjectPosition().getActualPosition() == 1) {
+                            contactOneButton.changePosition(2);
+                        } else {
+                            contactOneButton.changePosition(1);
+                        }
+                    }
+                    String timeTwo = ScenariosManager.getResponses().get(CheckingManager.getAvailableAddresses().getFirst())[2].substring(3, 8);
+                    if (!timeTwo.equals("0.000")) {
+                        if (contactTwoButton.getObjectPosition().getActualPosition() == 1) {
+                            contactTwoButton.changePosition(2);
+                        } else {
+                            contactTwoButton.changePosition(1);
+                        }
+                    }
+                    String timeResponse = timeOne + " | " + timeTwo;
+                    timeOutput.setText(timeResponse);
+                    InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
+                    setPageState(PageState.WAITING_FOR_CHOICE);
+                } else {
+                    InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
+                    setPageState(PageState.ALLOWED_TO_START);
+                }
+            });
         });
+
     }
 
     private void setFieldsValues(boolean isDataUpdating) {
