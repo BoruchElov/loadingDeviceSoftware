@@ -93,7 +93,7 @@ public enum Commands {
      */
     static byte[] waitForAnswer(Address address, Commands command) throws ExecutionException, InterruptedException {
         CompletableFuture<byte[]> future = new CompletableFuture<>();
-        String code = address.toStringInHexFormat() + "|" + command.toString();
+        String code = formCode(address, command);
         Inverters.addResponse(code, future);
         System.out.println("Отправлено сообщение с кодом: " + code);
         scheduler.schedule(() -> {
