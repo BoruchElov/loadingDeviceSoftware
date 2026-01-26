@@ -37,8 +37,22 @@ public class EventWaiter {
             Duration timeout
     ) {
         CompletableFuture<byte[]> future = new CompletableFuture<>();
-
         PendingEvent pending = new PendingEvent(address, response, future);
+
+        long duplicates = pendingEvents.stream()
+                .filter(p -> p.address().equals(address) && p.expectedResponse() == response)
+                .count();
+
+        System.out.println("[EventWaiter][REGISTER] key=" + address.toStringInHexFormat() + "|" + response.name()
+                + " duplicatesBeforeAdd=" + duplicates
+                + " pendingTotalBeforeAdd=" + pendingEvents.size()
+                + " thread=" + Thread.currentThread().getName());
+
+        if (duplicates > 0) {
+            System.err.println("[EventWaiter][WARNING] DUPLICATE pending for "
+                    + address.toStringInHexFormat() + "|" + response.name());
+        }
+
         pendingEvents.add(pending);
 
         System.out.println("[EventWaiter] → Зарегистрировано ожидание события от " + address +
@@ -69,8 +83,26 @@ public class EventWaiter {
         System.out.println("[EventWaiter] ← Входящее сообщение от " + source.toStringInHexFormat() +
                 ", pending = " + pendingEvents.size());
         Iterator<PendingEvent> it = pendingEvents.iterator();
+        PossibleResponses response;
 
-        PossibleResponses response = getExpectedResponse(data);
+        try {
+            response = getExpectedResponse(data);
+        } catch (Exception ex) {
+            System.err.println("[EventWaiter][INCOMING][PARSE_ERROR] from=" + source.toStringInHexFormat()
+                    + " err=" + ex);
+            ex.printStackTrace();
+            return;
+        }
+
+        long matches = pendingEvents.stream()
+                .filter(p -> p.address().equals(source) && p.expectedResponse() == response)
+                .count();
+
+        System.out.println("[EventWaiter][INCOMING] from=" + source.toStringInHexFormat()
+                + " detected=" + response.name()
+                + " pendingTotal=" + pendingEvents.size()
+                + " matches=" + matches
+                + " thread=" + Thread.currentThread().getName());
 
         while (it.hasNext()) {
             PendingEvent p = it.next();

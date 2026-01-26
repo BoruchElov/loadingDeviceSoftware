@@ -70,15 +70,30 @@ public class Inverters implements PacketHandler {
     @Override
     public void handlePacket(Address AddressSource, byte[] Buff) {
         String command = new String(Buff, StandardCharsets.UTF_8);
-        String code = AddressSource.toStringInHexFormat() + "|" + command.substring(1, command.indexOf('('));
-        System.out.println("Получено сообщение с кодом: " + code);
-        CompletableFuture<byte[]> future = pendingResponses.remove(code);
-        if (future != null) {
-            future.complete(Buff);                            // Разблокируем ожидающий поток
-        } else {
-            System.out.println("(Inverters) Ответ от " + AddressSource.toStringInHexFormat() + " не ожидался или уже истёк");
+
+        String cmdName = "<?>";
+
+        try {
+            cmdName = command.substring(1, command.indexOf('('));
+        } catch (Exception ex) {
+            System.err.println("[Inverters][RX][PARSE_ERROR] from=" + AddressSource.toStringInHexFormat()
+                    + " raw=" + command + " err=" + ex);
+            ex.printStackTrace();
         }
-        //Подключение сервиса для ожидания сообщения
+
+        String code = AddressSource.toStringInHexFormat() + "|" + cmdName;
+        CompletableFuture<byte[]> future = pendingResponses.remove(code);
+
+        System.out.println("[Inverters][RX] from=" + AddressSource.toStringInHexFormat()
+                + " cmd=" + cmdName
+                + " pendingResponsesHit=" + (future != null)
+                + " thread=" + Thread.currentThread().getName());
+
+        if (future != null) {
+            future.complete(Buff);
+        }
+
         EventWaiter.getInstance().incoming(AddressSource, Buff);
     }
+
 }
