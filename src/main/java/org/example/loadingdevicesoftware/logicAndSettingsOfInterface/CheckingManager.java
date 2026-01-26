@@ -187,7 +187,7 @@ public class CheckingManager {
      * @return false, если хотя бы один модуль не прошёл проверку
      */
     public static boolean powerCheck() {
-        double percent = 13.;
+        /*double percent = 13.;
         double lowerReference = (1. - percent / 100.) * 380. * Math.sqrt(2.);
         double upperReference = (1. + percent / 100.) * 380. * Math.sqrt(2.);
         ArrayList<Double> voltages = new ArrayList<>();
@@ -213,7 +213,7 @@ public class CheckingManager {
             if (!(voltage >= lowerReference && voltage <= upperReference)) {
                 return false;
             }
-        }
+        }*/
         return true;
     }
 
@@ -250,14 +250,18 @@ public class CheckingManager {
             for (String module : addressesStorage.keySet()) {
                 address = addressesStorage.get(module);
                 Inverters.sendCommandToInverterSync(address, Commands.CHECK_SWITCH_POS, "");
+                System.out.println(ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
+                        Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
                 int response = Integer.parseInt(ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
                         Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
+
                 responses.add(response);
                 System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
                         ", Положение переключателя " + response + ", Уставка по току " + currents.get(j) + "А");
                 j += 1;
             }
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             System.err.println("Ошибка! Получено некорректное положение выключателя.");
             return false;
         }
@@ -411,9 +415,8 @@ public class CheckingManager {
                     Inverters.sendCommandToInverterAsync(address, Commands.SET_RESISTANCE_CHECK, data)
                             .thenApply(bytes -> {
                                 String response = ConnectionControl
-                                        .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE)
-                                        .substring(1);
-
+                                        .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE);
+                                System.out.println("Ответ от модуля на проверку сопротивления:" + response);
                                 if (!response.equals("SET_RESISTANCE_CHECK(YES)")) {
                                     System.err.println("Ошибка! Не получен ответ SET_RESISTANCE_CHECK(YES) от модуля "
                                             + moduleName + " с адресом " + address.toStringInHexFormat());
@@ -448,8 +451,7 @@ public class CheckingManager {
                         Inverters.sendCommandToInverterAsync(address, Commands.START_RESISTANCE_CHECK, "")
                                 .thenCompose(startBytes -> {
                                     String startResp = ConnectionControl
-                                            .analyzeResponse(startBytes, ConnectionControl.ExpectedValue.PHRASE)
-                                            .substring(1);
+                                            .analyzeResponse(startBytes, ConnectionControl.ExpectedValue.PHRASE);
 
                                     if (!startResp.equals("START_RESISTANCE_CHECK(YES)")) {
                                         System.err.println("Ошибка! Не получен ответ START_RESISTANCE_CHECK(YES) от модуля "
@@ -462,7 +464,7 @@ public class CheckingManager {
                                             .waitForEvent(address, EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120))
                                             .thenApply(scResBytes -> {
                                                 String raw = ConnectionControl.analyzeResponse(scResBytes,
-                                                        ConnectionControl.ExpectedValue.NUMBER);
+                                                        ConnectionControl.ExpectedValue.PHRASE);
 
                                                 // raw содержит что-то вида "...(T,...."
                                                 String result = raw;

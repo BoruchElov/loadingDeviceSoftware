@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.communicationWithInverters;
 
+import org.apache.commons.math3.analysis.function.Add;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
@@ -7,9 +8,10 @@ import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.*;
-
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ConnectionControl {
 
@@ -19,7 +21,7 @@ public class ConnectionControl {
 
     private static final int BAUDE_RATE = 9600;
     private static final int NUM_BITS = 8;
-    private static final String COM = "COM5";
+    private static final String COM = "COM12";
 
     //Порядок адресов: А1, В1, С1, А2, В2, С2
     /**
@@ -86,11 +88,13 @@ public class ConnectionControl {
     }
 
     public static String analyzeResponse(byte[] input, ExpectedValue expectedValue) {
-        String message = new String(input, 8, input.length - 8, StandardCharsets.UTF_8);
+        String message = new String(input, 1, input.length - 1, StandardCharsets.UTF_8);
         return switch (expectedValue) {
             case NUMBER -> message.substring(message.indexOf('(') + 1, message.indexOf(')'));
             case PHRASE -> message;
         };
     }
+
+
 
 }
