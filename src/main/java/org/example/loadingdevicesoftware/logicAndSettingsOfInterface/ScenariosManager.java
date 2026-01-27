@@ -132,8 +132,7 @@ public class ScenariosManager {
         return Inverters.sendCommandToInverterAsync(address, command, args)
                 .thenApply(bytes -> {
                     String resp = ConnectionControl
-                            .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE)
-                            .substring(1);
+                            .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE);
                     return expectedPhrase.equals(resp);
                 })
                 .exceptionally(ex -> false);
@@ -206,8 +205,7 @@ public class ScenariosManager {
                 Inverters.sendCommandToInverterAsync(address, Commands.BUTTON_UNLOCK, "")
                         .thenApply(bytes -> {
                             String resp = ConnectionControl
-                                    .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE)
-                                    .substring(1);
+                                    .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE);
 
                             System.out.println("[BUTTON_UNLOCK] " + address.toStringInHexFormat() + " -> " + resp);
                             return success; // возвращаем результат сценария, не результат unlock
