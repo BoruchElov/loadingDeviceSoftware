@@ -225,6 +225,32 @@ public class CheckingManager {
      * @return
      */
     public static boolean synchronizationCheck() {
+        ///////////////////////
+        //Флаг для запуска заглушки проверки синхронизации
+        boolean synchronizationCheck = false;
+        ///////////////////////
+        if (synchronizationCheck) {
+            Address address = null;
+            try {
+                for (String module : addressesStorage.keySet()) {
+                    address = addressesStorage.get(module);
+                    Inverters.sendCommandToInverterSync(address, Commands.START_SYNK, "1");
+                    String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
+                            Commands.START_SYNK), ConnectionControl.ExpectedValue.PHRASE);
+                    System.out.println(response);
+                    System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
+                            ", Ответ: " + response);
+                    if (!response.equals("START_SYNK(YES)")) {
+                        System.err.println("Ошибка! Ответ модуля " + module + " с адресом " + address.toStringInHexFormat() +
+                                "не равен START_SYNK(YES). Полученный ответ: " + response);
+                        return false;
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+                return false;
+            }
+        }
         return true;
     }
 
@@ -307,93 +333,14 @@ public class CheckingManager {
         }
         return true;
     }
-/*
-    *//**
+
+    /**
      * Метод для реализации проверки сопротивления.
      * TODO реализовать логику ожидания ответа о результатах выполнения сценария
      * TODO продумать реализацию функционала интерпретации параметров формы в зависимости от сценария
      *
      * @return
-     *//*
-    public static boolean resistanceCheck() {
-        Double[] parameters = resistanceCheckParameters.toArray(new Double[0]);
-        int i = 0;
-        //Передача всем настроенным и находящимся в сети модулям команды на настройку сценария
-        Address address = null;
-        for (String module : addressesStorage.keySet()) {
-            address = addressesStorage.get(module);
-            Commands command = Commands.SET_RESISTANCE_CHECK;
-            try {
-                String time = "6.0";
-                String data = parameters[3 * i] + "," + parameters[3 * i + 1] + "," + time;
-                Inverters.sendCommandToInverterSync(address, command, data);
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
-                        ConnectionControl.ExpectedValue.PHRASE).substring(1);
-                System.out.println(response);
-                if (!response.equals("SET_RESISTANCE_CHECK(YES)")) {
-                    System.err.println("Ошибка! Не получен ответ SET_RESISTANCE_CHECK(YES) от модуля " + module
-                            + " с адресом " + address.toStringInHexFormat());
-                    return false;
-                }
-            } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды SET_RESISTANCE_CHECK() модулю " + module
-                        + " с адресом " + address.toStringInHexFormat());
-                return false;
-            }
-            i += 1;
-        }
-        i = 0;
-        //Передача всем настроенным и находящимся в сети модулям команды на запуск сценария, фиксация запроса на ожидание результатов
-        //и анализ полученного ответа
-        for (String module : addressesStorage.keySet()) {
-            address = addressesStorage.get(module);
-            Commands command = Commands.START_RESISTANCE_CHECK;
-            try {
-                Inverters.sendCommandToInverterSync(address, command, "");
-                String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
-                        ConnectionControl.ExpectedValue.PHRASE).substring(1);
-                System.out.println(response);
-                if (!response.equals("START_RESISTANCE_CHECK(YES)")) {
-                    System.err.println("Ошибка! Не получен ответ START_RESISTANCE_CHECK(YES) от модуля " + module
-                            + " с адресом " + address.toStringInHexFormat());
-                    return false;
-                }
-            } catch (Exception e) {
-                System.err.println("Ошибка при отправке команды START_RESISTANCE_CHECK() модулю " + module
-                        + " с адресом " + address.toStringInHexFormat());
-                return false;
-            }
-            try {
-                *//*CompletableFuture<ByteBuffer> future = EventWaiter.getInstance().waitForEvent(address,
-                        EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120));
-                Address finalAddress = address;
-                future.whenComplete((buffer, err) -> {
-                    Inverters.respondToInverter(finalAddress, Commands.SC_RES, "YES");
-                });*//*
-                EventWaiter.getInstance().waitForEvent(address,
-                        EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120)).get();
-                String result = ConnectionControl.analyzeResponse(EventWaiter.getResponse(address),
-                        ConnectionControl.ExpectedValue.NUMBER);
-                System.out.println(result);
-                result = result.substring(result.indexOf("(") + 1, result.indexOf(","));
-                System.out.println(result);
-                System.out.println("Ответ на сценарий: \"" + result + "\"");
-                Inverters.respondToInverter(address, Commands.SC_RES, "YES");
-                if (!result.equals("T")) {
-                    System.err.println("Ошибка! Не выполнена проверка сопротивления модулем " + module
-                            + " с адресом " + address.toStringInHexFormat());
-                    return false;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.err.println("Ошибка при ожидании результатов сценария от модуля " + module + " с адресом: "
-                        + address.toStringInHexFormat());
-            }
-            i += 1;
-        }
-        return true;
-    }*/
-
+     */
     public static CompletableFuture<Boolean> resistanceCheck() {
 
         // фиксируем список адресов на момент старта проверки
