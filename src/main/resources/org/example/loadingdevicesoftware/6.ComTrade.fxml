@@ -19,7 +19,6 @@
       <SimpleTextField fx:id="nameTextField"/>
       <SimpleTextField fx:id="objectTextField"/>
       <ImageView fx:id="imageView"/>
-      <SimpleImageView fx:id="inverterImageView"/>
       <Circle fx:id="circleA1" />
       <Circle fx:id="circleA2" />
       <Circle fx:id="circleB1" />

@@ -135,7 +135,7 @@ public class _1_SettingsController extends BasicController {
         Text[] texts = new Text[]{textInverterAOne, textInverterBOne, textInverterCOne, textInverterATwo,
                 textInverterBTwo, textInverterCTwo};
 
-        String[] phrases = new String[]{"МОДУЛЬ А1", "МОДУЛЬ В1", "МОДУЛЬ С1", "МОДУЛЬ А2", "МОДУЛЬ В2", "МОДУЛЬ С2"};
+        String[] phrases = new String[]{"БЛОК А1", "БЛОК В1", "БЛОК С1", "БЛОК А2", "БЛОК В2", "БЛОК С2"};
         List<String> addresses;
         try {
             addresses = AddressesStorage.getListOfSavedAddresses();

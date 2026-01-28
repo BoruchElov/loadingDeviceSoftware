@@ -671,8 +671,8 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     Double Y2 = 380.;           //Второй уровень
                     Double Y3 = 465.;           //Третий уровень
 
-                    Double X1 = 260.;           //Отступ по горизонтали для текста Модуль 1
-                    Double X2 = 590.;           //Модуль 2
+                    Double X1 = 275.;           //Отступ по горизонтали для текста Модуль 1
+                    Double X2 = 615.;           //Модуль 2
 
                     switch (text) {
                         case Text text1 when text1 == contacts -> {
@@ -740,32 +740,32 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                             AnchorPane.setLeftAnchor(text1, 855.);
                         }//Текст для модулей
                         case Text text1 when text1 == aOne -> {
-                            text1.setText("МОДУЛЬ A1");
+                            text1.setText("БЛОК A1");
                             AnchorPane.setTopAnchor(text1, Y1);
                             AnchorPane.setLeftAnchor(text1, X1);
                         }
                         case Text text1 when text1 == bOne -> {
-                            text1.setText("МОДУЛЬ B1");
+                            text1.setText("БЛОК B1");
                             AnchorPane.setTopAnchor(text1, Y2);
                             AnchorPane.setLeftAnchor(text1, X1);
                         }
                         case Text text1 when text1 == cOne -> {
-                            text1.setText("МОДУЛЬ C1");
+                            text1.setText("БЛОК C1");
                             AnchorPane.setTopAnchor(text1, Y3);
                             AnchorPane.setLeftAnchor(text1, X1);
                         }
                         case Text text1 when text1 == aTwo -> {
-                            text1.setText("МОДУЛЬ A2");
+                            text1.setText("БЛОК A2");
                             AnchorPane.setTopAnchor(text1, Y1);
                             AnchorPane.setLeftAnchor(text1, X2);
                         }
                         case Text text1 when text1 == bTwo -> {
-                            text1.setText("МОДУЛЬ B2");
+                            text1.setText("БЛОК B2");
                             AnchorPane.setTopAnchor(text1, Y2);
                             AnchorPane.setLeftAnchor(text1, X2);
                         }
                         case Text text1 when text1 == cTwo -> {
-                            text1.setText("МОДУЛЬ C2");
+                            text1.setText("БЛОК C2");
                             AnchorPane.setTopAnchor(text1, Y3);
                             AnchorPane.setLeftAnchor(text1, X2);
                         }

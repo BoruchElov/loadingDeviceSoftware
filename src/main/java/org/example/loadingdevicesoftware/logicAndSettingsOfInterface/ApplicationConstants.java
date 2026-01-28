@@ -31,6 +31,8 @@ public class ApplicationConstants {
         BLACK, BLUE, LIGHT_BLUE, WHITE, ORANGE
     }
 
+    public static final String ACTUAL_VERSION = "1.0.0";
+
     public enum basicColours {
         WHITE, BLACK, GREEN, GRAY, BLUE, RED
     }

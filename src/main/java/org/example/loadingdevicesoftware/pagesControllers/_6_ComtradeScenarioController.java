@@ -12,8 +12,6 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
 
     @FXML
     SimpleButton comtradeButton;
-    @FXML
-    SimpleImageView inverterImageView;
 
     @FXML
     public void initialize() {
@@ -28,11 +26,6 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                     AnchorPane.setTopAnchor(button, 365.0);
                     AnchorPane.setLeftAnchor(button, 500.0);
                     button.setOnAction(_ -> {InterfaceElementsLogic.openFileManager();});
-                    break;
-                case SimpleImageView imageView when imageView == inverterImageView:
-                    imageView.setup(new String[]{""}, new Image[]{ApplicationConstants.INVERTER_IMAGE}, new double[][]{{150,150}});
-                    AnchorPane.setTopAnchor(imageView, 330.0);
-                    AnchorPane.setLeftAnchor(imageView, 300.0);
                     break;
                 default:
                     break;

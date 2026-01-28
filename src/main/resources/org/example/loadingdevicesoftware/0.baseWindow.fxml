@@ -21,6 +21,8 @@
       <ButtonWithPicture fx:id="settingsButton"/>
       <ButtonWithPicture fx:id="developmentButton"/>
 
+      <Text fx:id="versionText"/>
+
 <!--      <ButtonWithPicture fx:id="AboutTheDeviceButton"/>-->
 
       <ImageView fx:id="imageView"/>

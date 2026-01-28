@@ -98,7 +98,7 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
         AnchorPane.setTopAnchor(contactOneTime, 250.);
         AnchorPane.setLeftAnchor(contactOneTime, 200.);
 
-        contactTwoTime.setup("0", SimpleTextField.Sizes.SMALL, SimpleTextField.typeOfValue.DIGIT);
+        contactTwoTime.setup("0", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
         contactTwoTime.setAlignment(Pos.CENTER);
         contactTwoTime.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
         contactTwoTime.setActualStatus(Changeable.Status.LOCKED);
@@ -123,20 +123,20 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
             }
             text[i].setText(texts[i]);
         }
-        AnchorPane.setTopAnchor(phaseA1, 270.);
-        AnchorPane.setLeftAnchor(phaseA1, 593.);
-        AnchorPane.setTopAnchor(phaseB1, 270.);
+        AnchorPane.setTopAnchor(phaseA1, 205.);
+        AnchorPane.setLeftAnchor(phaseA1, 575.);
+        AnchorPane.setTopAnchor(phaseB1, 205.);
         AnchorPane.setLeftAnchor(phaseB1, 664.);
-        AnchorPane.setTopAnchor(phaseC1, 270.);
-        AnchorPane.setLeftAnchor(phaseC1, 735.);
+        AnchorPane.setTopAnchor(phaseC1, 205.);
+        AnchorPane.setLeftAnchor(phaseC1, 750.);
         AnchorPane.setTopAnchor(contactOne, 570.);
         AnchorPane.setLeftAnchor(contactOne, 573.);
         AnchorPane.setTopAnchor(contactTwo, 570.);
         AnchorPane.setLeftAnchor(contactTwo, 694.);
         AnchorPane.setTopAnchor(one, 150.);
-        AnchorPane.setLeftAnchor(one, 220.);
+        AnchorPane.setLeftAnchor(one, 242.);
         AnchorPane.setTopAnchor(two, 150.);
-        AnchorPane.setLeftAnchor(two, 322.);
+        AnchorPane.setLeftAnchor(two, 344.);
         AnchorPane.setTopAnchor(contacts, 190.);
         AnchorPane.setTopAnchor(time, 260.);
         AnchorPane.setTopAnchor(current, 410.);
@@ -147,9 +147,9 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
             circle.getStyleClass().add("circles");
         }
         AnchorPane.setTopAnchor(contactOneOne, 189.);
-        AnchorPane.setLeftAnchor(contactOneOne, 165.);
+        AnchorPane.setLeftAnchor(contactOneOne, 187.);
         AnchorPane.setTopAnchor(contactTwoOne, 189.);
-        AnchorPane.setLeftAnchor(contactTwoOne, 265.);
+        AnchorPane.setLeftAnchor(contactTwoOne, 287.);
         AnchorPane.setTopAnchor(contactOneTwo, 539.);
         AnchorPane.setLeftAnchor(contactOneTwo, 606.);
         AnchorPane.setTopAnchor(contactTwoTwo, 539.);
@@ -158,8 +158,8 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
         switcher.setup(new String[]{"", ""},
                 new Image[]{ApplicationConstants.THREE_PHASE_SWITCH, ApplicationConstants.SINGLE_PHASE_SWITCH},
                 new double[][]{{300, 300}, {82, 266}}); //1,2
-        AnchorPane.setTopAnchor(switcher, 290.);
-        AnchorPane.setLeftAnchor(switcher, 550.);
+        AnchorPane.setTopAnchor(switcher, 220.);
+        AnchorPane.setLeftAnchor(switcher, 525.);
 
         //Настройка внешнего вида и расположения кнопки изменения конфигурации
         phaseButton.setOnAction(this::changeConfiguration);
@@ -175,13 +175,13 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
                 new Image[]{null, ApplicationConstants.OPENED_CONTACT, ApplicationConstants.CLOSED_CONTACT});
         contactOneButton.setOnAction(this::changeConfiguration);
         AnchorPane.setTopAnchor(contactOneButton, 177.);
-        AnchorPane.setLeftAnchor(contactOneButton, 200.);
+        AnchorPane.setLeftAnchor(contactOneButton, 222.);
         contactTwoButton.setup(new ImageView(), ButtonWithPicture.ButtonSizes.SMALL, ButtonWithPicture.ImagViewSizes.SMALLEST,
                 new String[]{"contacts-imageview", "contacts-imageview", "contacts-imageview"},
                 new Image[]{null, ApplicationConstants.OPENED_CONTACT, ApplicationConstants.CLOSED_CONTACT});
         contactTwoButton.setOnAction(this::changeConfiguration);
         AnchorPane.setTopAnchor(contactTwoButton, 177.);
-        AnchorPane.setLeftAnchor(contactTwoButton, 300.);
+        AnchorPane.setLeftAnchor(contactTwoButton, 322.);
 
         restoreState();
     }
@@ -200,8 +200,8 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
                     phaseCCurrent.clear();
                     phaseCCurrent.setActualStatus(Changeable.Status.LOCKED);
                     phaseCCurrent.setPromptText("");
-                    AnchorPane.setTopAnchor(switcher, 290.);
-                    AnchorPane.setLeftAnchor(switcher, 642.);
+                    AnchorPane.setTopAnchor(switcher, 220.);
+                    AnchorPane.setLeftAnchor(switcher, 637.);
                     phaseA1.setText("");
                     phaseB1.setText("А1");
                     phaseC1.setText("");
@@ -215,8 +215,8 @@ public class _2_SwitcherScenarioController extends ScreensController implements 
                     phaseBCurrent.setPromptText("0");
                     phaseCCurrent.setActualStatus(Changeable.Status.NORMAL);
                     phaseCCurrent.setPromptText("0");
-                    AnchorPane.setTopAnchor(switcher, 290.);
-                    AnchorPane.setLeftAnchor(switcher, 550.);
+                    AnchorPane.setTopAnchor(switcher, 220.);
+                    AnchorPane.setLeftAnchor(switcher, 525.);
                     phaseA1.setText("А1");
                     phaseB1.setText("В1");
                     phaseC1.setText("С1");

@@ -71,12 +71,12 @@ class BasicController {
             text.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
             text.setFill(Color.WHITE);
         }
-        inverterA1.setText("МОДУЛЬ А1");
-        inverterA2.setText("МОДУЛЬ А2");
-        inverterB1.setText("МОДУЛЬ В1");
-        inverterB2.setText("МОДУЛЬ В2");
-        inverterC1.setText("МОДУЛЬ С1");
-        inverterC2.setText("МОДУЛЬ С2");
+        inverterA1.setText("БЛОК А1");
+        inverterA2.setText("БЛОК А2");
+        inverterB1.setText("БЛОК В1");
+        inverterB2.setText("БЛОК В2");
+        inverterC1.setText("БЛОК С1");
+        inverterC2.setText("БЛОК С2");
         AnchorPane.setTopAnchor(inverterA1, 37.5);
         AnchorPane.setLeftAnchor(inverterA1, 85.0);
         AnchorPane.setTopAnchor(inverterA2, 77.5);

@@ -5,7 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
@@ -32,6 +34,9 @@ public class _0_MainScreenController extends BasicController{
     @FXML
     ButtonWithPicture developmentButton;
 
+    @FXML
+    Text versionText;
+
 
 //    @FXML
 //    ButtonWithPicture AboutTheDeviceButton;
@@ -42,6 +47,13 @@ public class _0_MainScreenController extends BasicController{
         ScreensController.setAllowedToStartScenario(false);
         PagesBuffer.clear();
         imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
+
+        //Настройка текста с номером актуальной версии
+        versionText.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.NORMAL));
+        versionText.setFill(Color.WHITE);
+        versionText.setText("Версия " + ApplicationConstants.ACTUAL_VERSION);
+        AnchorPane.setTopAnchor(versionText, 764.0);
+        AnchorPane.setLeftAnchor(versionText, 1140.0);
 
         //Создание шрифта для кнопок
         Font buttonsFont = FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.SMALL);
