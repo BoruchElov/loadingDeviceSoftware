@@ -41,7 +41,7 @@ public enum Messages {
     /**
      * Константа для задания времени ожидания (в секундах) ответа от модулей
      */
-    private static final long delayTime = 4;
+    private static final long delayTime = 10;
 
     /**
      * Константа для задания количества попыток ожидания ответа.
@@ -108,21 +108,18 @@ public enum Messages {
      */
     static byte[] waitForAnswer(Address address, Messages command) throws ExecutionException, InterruptedException {
         CompletableFuture<byte[]> future = new CompletableFuture<>();
-        String code = formCode(address, command);
         Inverters.addResponse(address, command, future);
-        System.out.println("Отправлено сообщение с кодом: " + code);
+        System.out.println("Отправлено сообщение с кодом: " + address.toStringInHexFormat() + "|" + command);
         scheduler.schedule(() -> {
             if (!future.isDone()) {
-                System.out.println("(Inverters) Ответ не получен за 1с от устройства: " + address.toStringInHexFormat());
-                future.completeExceptionally(new TimeoutException("Ответ от устройства не получен за 1с"));
+                System.out.println("(Inverters) Ответ не получен за " + delayTime + " c от устройства: " +
+                        address.toStringInHexFormat());
+                future.completeExceptionally(new TimeoutException("Ответ от устройства не получен за " +
+                        delayTime + " c"));
                 Inverters.removeResponse(address, command);
             }
         }, delayTime, TimeUnit.SECONDS);
         return future.get();
-    }
-
-    public static String formCode(Address address, Messages command) {
-        return address.toStringInHexFormat() + "|" + command.toString();
     }
 
     /**
@@ -177,7 +174,7 @@ public enum Messages {
                     if (future.isDone()) return;
 
                     System.out.println("(Inverters) Ответ не получен за "
-                            + delayTime + "с от устройства: "
+                            + delayTime + " с от устройства: "
                             + address.toStringInHexFormat()
                             + " (попытка " + currentAttempt + "/" + maxAttempts + ")");
 
@@ -188,7 +185,7 @@ public enum Messages {
                     } else {
                         future.completeExceptionally(
                                 new TimeoutException("Ответ не получен за "
-                                        + delayTime + "с после " + maxAttempts + " попыток"));
+                                        + delayTime + " с после " + maxAttempts + " попыток"));
                     }
                 }, delayTime, TimeUnit.SECONDS);
             }

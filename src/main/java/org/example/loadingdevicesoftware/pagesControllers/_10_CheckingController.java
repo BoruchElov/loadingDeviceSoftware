@@ -175,16 +175,13 @@ public class _10_CheckingController {
     }
 
     private void cancelButtonAction(Event event) {
-        if (cancelButtonFlag) {
+        try {
             cancelRequested = true;
-        } else {
-            try {
-                InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.getFxmlName());
-                ScreensController.setAllowedToStartScenario(false);
-                onClose();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            InterfaceElementsLogic.switchScene((Node) event.getSource(), PagesBuffer.getFxmlName());
+            ScreensController.setAllowedToStartScenario(false);
+            onClose();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
