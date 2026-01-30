@@ -1,14 +1,11 @@
 package org.example.loadingdevicesoftware.communicationWithInverters;
 
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Messages;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.InverterParams;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 
-import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl.analyzeResponse;
 
 public final class PollingManager {
 
@@ -69,7 +66,7 @@ public final class PollingManager {
             return;
         }
 
-        CompletableFuture<byte[]> cf = Inverters.sendCommandToInverterAsync(address, Commands.MODBUS, MODBUS_ARGS);
+        CompletableFuture<byte[]> cf = Inverters.sendCommandToInverterAsync(address, Messages.MODBUS, MODBUS_ARGS);
 
         activeRequests.put(address, cf);
 

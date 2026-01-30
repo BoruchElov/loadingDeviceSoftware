@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Messages;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
@@ -234,9 +234,9 @@ public class CheckingManager {
             try {
                 for (String module : addressesStorage.keySet()) {
                     address = addressesStorage.get(module);
-                    Inverters.sendCommandToInverterSync(address, Commands.START_SYNK, "1");
+                    Inverters.sendCommandToInverterSync(address, Messages.START_SYNK, "1");
                     String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
-                            Commands.START_SYNK), ConnectionControl.ExpectedValue.PHRASE);
+                            Messages.START_SYNK), ConnectionControl.ExpectedValue.PHRASE);
                     System.out.println(response);
                     System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
                             ", Ответ: " + response);
@@ -275,11 +275,11 @@ public class CheckingManager {
         try {
             for (String module : addressesStorage.keySet()) {
                 address = addressesStorage.get(module);
-                Inverters.sendCommandToInverterSync(address, Commands.CHECK_SWITCH_POS, "");
+                Inverters.sendCommandToInverterSync(address, Messages.CHECK_SWITCH_POS, "");
                 System.out.println(ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
-                        Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
+                        Messages.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
                 int response = Integer.parseInt(ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
-                        Commands.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
+                        Messages.CHECK_SWITCH_POS), ConnectionControl.ExpectedValue.NUMBER));
 
                 responses.add(response);
                 System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
@@ -321,9 +321,9 @@ public class CheckingManager {
             try {
                 for (String module : addressesStorage.keySet()) {
                     address = addressesStorage.get(module);
-                    Inverters.sendCommandToInverterSync(address, Commands.BUTTON_LOCK, "");
+                    Inverters.sendCommandToInverterSync(address, Messages.BUTTON_LOCK, "");
                     String response = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address,
-                            Commands.BUTTON_LOCK), ConnectionControl.ExpectedValue.NUMBER);
+                            Messages.BUTTON_LOCK), ConnectionControl.ExpectedValue.NUMBER);
                     System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() + ": " + response);
                 }
             } catch (Exception e) {
@@ -359,7 +359,7 @@ public class CheckingManager {
             String data = parameters[3 * i] + "," + parameters[3 * i + 1] + "," + time;
 
             CompletableFuture<Boolean> f =
-                    Inverters.sendCommandToInverterAsync(address, Commands.SET_RESISTANCE_CHECK, data)
+                    Inverters.sendCommandToInverterAsync(address, Messages.SET_RESISTANCE_CHECK, data)
                             .thenApply(bytes -> {
                                 String response = ConnectionControl
                                         .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE);
@@ -395,7 +395,7 @@ public class CheckingManager {
                 Address address = modules.get(i).getValue();
 
                 CompletableFuture<Boolean> f =
-                        Inverters.sendCommandToInverterAsync(address, Commands.START_RESISTANCE_CHECK, "")
+                        Inverters.sendCommandToInverterAsync(address, Messages.START_RESISTANCE_CHECK, "")
                                 .thenCompose(startBytes -> {
                                     String startResp = ConnectionControl
                                             .analyzeResponse(startBytes, ConnectionControl.ExpectedValue.PHRASE);
@@ -427,7 +427,7 @@ public class CheckingManager {
                                                 }
 
                                                 // подтверждаем приём результата
-                                                Inverters.respondToInverter(address, Commands.SC_RES, "YES");
+                                                Inverters.respondToInverter(address, Messages.SC_RES, "YES");
 
                                                 if (!result.equals("T")) {
                                                     System.err.println("Ошибка! Не выполнена проверка сопротивления модулем "

@@ -1,17 +1,14 @@
 package org.example.loadingdevicesoftware.communicationWithInverters;
 
-import org.apache.commons.math3.analysis.function.Add;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Messages;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ConnectionControl {
 
@@ -46,7 +43,7 @@ public class ConnectionControl {
             MAC.stop();
             MAC.close();
         }
-        Commands.closeScheduler();
+        Messages.closeScheduler();
         StatusService.getInstance().stop();
     }
 

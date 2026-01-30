@@ -1,10 +1,8 @@
 package org.example.loadingdevicesoftware.communicationWithInverters.Inverters;
 
-import org.apache.commons.math3.analysis.function.Add;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.cMAC;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,11 +13,28 @@ import java.util.concurrent.atomic.AtomicInteger;
  * TODO сделать этот класс default и настроить доступ только через класс Inverters
  */
 
-public enum Commands {
+public enum Messages {
 
-    BLINK_LED_START, BLINK_LED_STOP, SET_RESISTANCE_CHECK, START_RESISTANCE_CHECK, SET_SCENARO_1, START_SCENARO_1, SET_SCENARO_2,
-    START_SCENARO_2, SET_SCENARO_3, START_SCENARO_3, CHECK_SWITCH_POS, FAULT, MODBUS, MODBUS_WRITE, FORCED_STOP, SC_RES,
-    SCENARIO_RESULTS, BUTTON_LOCK, BUTTON_UNLOCK, START_SYNK;
+    BLINK_LED_START,
+    BLINK_LED_STOP,
+    SET_RESISTANCE_CHECK,
+    START_RESISTANCE_CHECK,
+    SET_SCENARO_1,
+    START_SCENARO_1,
+    SET_SCENARO_2,
+    START_SCENARO_2,
+    SET_SCENARO_3,
+    START_SCENARO_3,
+    CHECK_SWITCH_POS,
+    FAULT,
+    MODBUS,
+    MODBUS_WRITE,
+    FORCED_STOP,
+    SC_RES,
+    SCENARIO_RESULTS,
+    BUTTON_LOCK,
+    BUTTON_UNLOCK,
+    START_SYNK;
 
     private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -43,7 +58,7 @@ public enum Commands {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    static byte[] callFunction(cMAC MAC, Address address, Commands command, String arguments) throws ExecutionException, InterruptedException {
+    static byte[] callFunction(cMAC MAC, Address address, Messages command, String arguments) throws ExecutionException, InterruptedException {
         ExecutionException lastException = null;
         for (int attempt = 1; attempt <= 3; attempt++) {
             try {
@@ -70,7 +85,7 @@ public enum Commands {
         );
     }
 
-    static void respondToFunction(cMAC MAC, Address address, Commands command, String arguments) {
+    static void respondToFunction(cMAC MAC, Address address, Messages command, String arguments) {
         String textCommand = command.toString() + "(" + arguments + ")";
         byte[] fullCommandInBytes = textCommand.getBytes(StandardCharsets.UTF_8);
         byte[] commandForInverter = new byte[fullCommandInBytes.length + 1];
@@ -91,7 +106,7 @@ public enum Commands {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    static byte[] waitForAnswer(Address address, Commands command) throws ExecutionException, InterruptedException {
+    static byte[] waitForAnswer(Address address, Messages command) throws ExecutionException, InterruptedException {
         CompletableFuture<byte[]> future = new CompletableFuture<>();
         String code = formCode(address, command);
         Inverters.addResponse(code, future);
@@ -106,7 +121,7 @@ public enum Commands {
         return future.get();
     }
 
-    public static String formCode(Address address, Commands command) {
+    public static String formCode(Address address, Messages command) {
         return address.toStringInHexFormat() + "|" + command.toString();
     }
 
@@ -121,7 +136,7 @@ public enum Commands {
      * @throws InterruptedException
      */
     static CompletableFuture<byte[]> callFunctionAsync(
-            cMAC MAC, Address address, Commands command, String arguments) {
+            cMAC MAC, Address address, Messages command, String arguments) {
 
         String textCommand = command.toString() + "(" + arguments + ")";
         byte[] fullCommandInBytes = textCommand.getBytes(StandardCharsets.UTF_8);
@@ -132,7 +147,6 @@ public enum Commands {
         CompletableFuture<byte[]> future = new CompletableFuture<>();
 
         final int maxAttempts = 3;
-        final long timeoutSec = 7;
         final AtomicInteger attempt = new AtomicInteger(1);
 
         Runnable sendTask = new Runnable() {
@@ -163,7 +177,7 @@ public enum Commands {
                     if (future.isDone()) return;
 
                     System.out.println("(Inverters) Ответ не получен за "
-                            + timeoutSec + "с от устройства: "
+                            + delayTime + "с от устройства: "
                             + address.toStringInHexFormat()
                             + " (попытка " + currentAttempt + "/" + maxAttempts + ")");
 
@@ -174,9 +188,9 @@ public enum Commands {
                     } else {
                         future.completeExceptionally(
                                 new TimeoutException("Ответ не получен за "
-                                        + timeoutSec + "с после " + maxAttempts + " попыток"));
+                                        + delayTime + "с после " + maxAttempts + " попыток"));
                     }
-                }, timeoutSec, TimeUnit.SECONDS);
+                }, delayTime, TimeUnit.SECONDS);
             }
         };
 

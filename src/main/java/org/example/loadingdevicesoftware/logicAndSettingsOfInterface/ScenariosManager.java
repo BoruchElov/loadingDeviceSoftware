@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
 import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
-import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Commands;
+import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Messages;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 
@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScenariosManager {
 
@@ -42,7 +41,7 @@ public class ScenariosManager {
 
             setFutures.add(
                     sendAndExpectPhrase(addr,
-                            Commands.SET_SCENARO_1,
+                            Messages.SET_SCENARO_1,
                             modulesParameters.get(i),
                             "SET_SCENARO_1(YES)")
             );
@@ -62,7 +61,7 @@ public class ScenariosManager {
             ArrayList<CompletableFuture<Boolean>> resultFutures = new ArrayList<>();
             for (Address addr : addresses) {
                 resultFutures.add(
-                        startAndWaitScenarioResult(addr, Commands.START_SCENARO_1, "", timeout)
+                        startAndWaitScenarioResult(addr, Messages.START_SCENARO_1, "", timeout)
                 );
             }
 
@@ -91,7 +90,7 @@ public class ScenariosManager {
 
             setFutures.add(
                     sendAndExpectPhrase(addr,
-                            Commands.SET_SCENARO_2,
+                            Messages.SET_SCENARO_2,
                             modulesParameters.get(i),
                             "SET_SCENARO_2(YES)")
             );
@@ -115,7 +114,7 @@ public class ScenariosManager {
                 // В вашей текущей версии START_SCENARO_2 отправляется с modulesParameters.get(i)
                 // Я сохраняю это поведение.
                 resultFutures.add(
-                        startAndWaitScenarioResult(addr, Commands.START_SCENARO_2, modulesParameters.get(i), timeout)
+                        startAndWaitScenarioResult(addr, Messages.START_SCENARO_2, modulesParameters.get(i), timeout)
                 );
             }
 
@@ -126,7 +125,7 @@ public class ScenariosManager {
 
 
     private static CompletableFuture<Boolean> sendAndExpectPhrase(Address address,
-                                                                  Commands command,
+                                                                  Messages command,
                                                                   String args,
                                                                   String expectedPhrase) {
         return Inverters.sendCommandToInverterAsync(address, command, args)
@@ -140,7 +139,7 @@ public class ScenariosManager {
 
     private static CompletableFuture<Boolean> startAndWaitScenarioResult(
             Address address,
-            Commands startCommand,
+            Messages startCommand,
             String startArgs,
             double timeoutSeconds
     ) {
@@ -178,7 +177,7 @@ public class ScenariosManager {
                                                             buffer, ConnectionControl.ExpectedValue.NUMBER)));
 
                                             // подтверждаем приём результата сценария
-                                            Inverters.respondToInverter(address, Commands.SC_RES, "YES");
+                                            Inverters.respondToInverter(address, Messages.SC_RES, "YES");
                                             return true;
 
                                         } catch (Exception parseEx) {
@@ -202,7 +201,7 @@ public class ScenariosManager {
 
         // 4) BUTTON_UNLOCK отправляется ВСЕГДА, и итог сценария при этом сохраняется.
         return scenarioFuture.thenCompose(success ->
-                Inverters.sendCommandToInverterAsync(address, Commands.BUTTON_UNLOCK, "")
+                Inverters.sendCommandToInverterAsync(address, Messages.BUTTON_UNLOCK, "")
                         .thenApply(bytes -> {
                             String resp = ConnectionControl
                                     .analyzeResponse(bytes, ConnectionControl.ExpectedValue.PHRASE);

@@ -21,6 +21,7 @@ public class Inverters implements PacketHandler {
      * Класс-конструктор.
      * <p>
      *     TODO Реализовать возможность добавления адреса в качестве константы.
+     *
      * @param tabletAddress адрес планшета
      */
     public Inverters(cMAC tabletAddress) {
@@ -30,33 +31,35 @@ public class Inverters implements PacketHandler {
     /**
      * Метод для синхронной отправки управляющей команды на инвертор.
      * <p>
-     * @param command вид управляющей команды
+     *
+     * @param command   вид управляющей команды
      * @param arguments аргументы команды
      */
-    public static void sendCommandToInverterSync(Address inverterAddress, Commands command, String arguments) throws ExecutionException, InterruptedException {
-        saveLastResponse(inverterAddress, command, Commands.callFunction(tabletAddress, inverterAddress, command, arguments));
+    public static void sendCommandToInverterSync(Address inverterAddress, Messages command, String arguments) throws ExecutionException, InterruptedException {
+        saveLastResponse(inverterAddress, command, Messages.callFunction(tabletAddress, inverterAddress, command, arguments));
     }
 
     /**
      * Метод для асинхронной отправки управляющей команды на инвертор.
      * <p>
-     * @param command вид управляющей команды
+     *
+     * @param command   вид управляющей команды
      * @param arguments аргументы команды
      */
-    public static CompletableFuture<byte[]> sendCommandToInverterAsync(Address inverterAddress, Commands command, String arguments) {
-        return Commands.callFunctionAsync(tabletAddress, inverterAddress, command, arguments);
+    public static CompletableFuture<byte[]> sendCommandToInverterAsync(Address inverterAddress, Messages command, String arguments) {
+        return Messages.callFunctionAsync(tabletAddress, inverterAddress, command, arguments);
     }
 
-    public static void respondToInverter(Address inverterAddress, Commands command, String arguments) {
-        Commands.respondToFunction(tabletAddress, inverterAddress, command, arguments);
+    public static void respondToInverter(Address inverterAddress, Messages command, String arguments) {
+        Messages.respondToFunction(tabletAddress, inverterAddress, command, arguments);
     }
 
-    public static void saveLastResponse(Address inverterAddress, Commands command, byte[] bytes) {
-        responses.put(Commands.formCode(inverterAddress,command), bytes);
+    public static void saveLastResponse(Address inverterAddress, Messages command, byte[] bytes) {
+        responses.put(Messages.formCode(inverterAddress, command), bytes);
     }
 
-    public static byte[] getLastResponse(Address inverterAddress, Commands command) {
-        return responses.get(Commands.formCode(inverterAddress,command));
+    public static byte[] getLastResponse(Address inverterAddress, Messages command) {
+        return responses.get(Messages.formCode(inverterAddress, command));
     }
 
     public static void removeResponse(String code) {
@@ -70,30 +73,24 @@ public class Inverters implements PacketHandler {
     @Override
     public void handlePacket(Address AddressSource, byte[] Buff) {
         String command = new String(Buff, StandardCharsets.UTF_8);
-
-        String cmdName = "<?>";
-
-        try {
-            cmdName = command.substring(1, command.indexOf('('));
-        } catch (Exception ex) {
-            System.err.println("[Inverters][RX][PARSE_ERROR] from=" + AddressSource.toStringInHexFormat()
-                    + " raw=" + command + " err=" + ex);
-            ex.printStackTrace();
-        }
-
+        String cmdName = command.substring(1, command.indexOf('('));
         String code = AddressSource.toStringInHexFormat() + "|" + cmdName;
         CompletableFuture<byte[]> future = pendingResponses.remove(code);
-
-        System.out.println("[Inverters][RX] from=" + AddressSource.toStringInHexFormat()
-                + " cmd=" + cmdName
-                + " pendingResponsesHit=" + (future != null)
-                + " thread=" + Thread.currentThread().getName());
-
         if (future != null) {
             future.complete(Buff);
         }
-
         EventWaiter.getInstance().incoming(AddressSource, Buff);
+    }
+
+    /**
+     * Карточка для регистрации ответа
+     * @param address
+     * @param command
+     */
+    public record responseCard(
+            Address address,
+            Messages command) {
+
     }
 
 }
