@@ -109,13 +109,13 @@ public enum Messages {
     static byte[] waitForAnswer(Address address, Messages command) throws ExecutionException, InterruptedException {
         CompletableFuture<byte[]> future = new CompletableFuture<>();
         String code = formCode(address, command);
-        Inverters.addResponse(code, future);
+        Inverters.addResponse(address, command, future);
         System.out.println("Отправлено сообщение с кодом: " + code);
         scheduler.schedule(() -> {
             if (!future.isDone()) {
                 System.out.println("(Inverters) Ответ не получен за 1с от устройства: " + address.toStringInHexFormat());
                 future.completeExceptionally(new TimeoutException("Ответ от устройства не получен за 1с"));
-                Inverters.removeResponse(code);
+                Inverters.removeResponse(address, command);
             }
         }, delayTime, TimeUnit.SECONDS);
         return future.get();
@@ -156,17 +156,17 @@ public enum Messages {
 
                 int currentAttempt = attempt.get();
 
-                Inverters.addResponse(formCode(address, command), future);
+                Inverters.addResponse(address, command, future);
 
                 try {
                     MAC.sendPacket(address, commandForInverter);
                 } catch (Exception e) {
                     System.out.println("Ошибка отправки (попытка "
                             + currentAttempt + "/" + maxAttempts + "): " + e.getMessage());
-                    Inverters.removeResponse(formCode(address, command));
+                    Inverters.removeResponse(address, command);
 
                     if (attempt.incrementAndGet() <= maxAttempts) {
-                        scheduler.schedule(this, 100, TimeUnit.MILLISECONDS);
+                        scheduler.schedule(this, 300, TimeUnit.MILLISECONDS);
                     } else {
                         future.completeExceptionally(e);
                     }
@@ -181,7 +181,7 @@ public enum Messages {
                             + address.toStringInHexFormat()
                             + " (попытка " + currentAttempt + "/" + maxAttempts + ")");
 
-                    Inverters.removeResponse(formCode(address, command));
+                    Inverters.removeResponse(address, command);
 
                     if (attempt.incrementAndGet() <= maxAttempts) {
                         scheduler.execute(this);

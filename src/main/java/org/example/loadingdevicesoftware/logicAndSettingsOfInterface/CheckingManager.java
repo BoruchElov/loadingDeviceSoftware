@@ -195,10 +195,10 @@ public class CheckingManager {
         for (String module : addressesStorage.keySet()) {
             try {
                 address = addressesStorage.get(module);
-                Commands command = Commands.MODBUS;
+                Commands message = Commands.MODBUS;
                 String arguments = "03,0000,0002";
-                Inverters.sendCommandToInverterSync(address, command, arguments);
-                String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, command),
+                Inverters.sendCommandToInverterSync(address, message, arguments);
+                String voltage = ConnectionControl.analyzeResponse(Inverters.getLastResponse(address, message),
                         ConnectionControl.ExpectedValue.NUMBER);
                 System.out.println("Модуль " + module + ", Адрес " + address.toStringInHexFormat() +
                         ", Напряжение " + voltage + "В, диапазон: [" + Math.round(lowerReference) + ";" + Math.round(upperReference) + "]");
