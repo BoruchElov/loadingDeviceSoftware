@@ -6,15 +6,13 @@ import com.fazecast.jSerialComm.SerialPortEvent;
 import org.example.loadingdevicesoftware.communicationWithInverters.serial.ComPortEventHandler;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
+public class cMAC implements AutoCloseable, SerialPortDataListener {
 
     //TODO поменять 07 на 09 (изначальный адрес 0x0712ABE1)
     public static final int myMACInt = 0x0712ABE1;
@@ -22,8 +20,10 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
     private SerialPort SP;
     private final Map<Integer, PacketHandler> upperLayerHandlers = new ConcurrentHashMap<>();
     private final BlockingQueue<byte[]> sendQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<byte[]> receiveQueue = new LinkedBlockingQueue<>();
     private volatile boolean running = true;
-    private Thread workerThread;
+    private Thread writerThread;
+    private Thread readerThread;
 
     public cMAC(String COMport_name, int baudRate, int dataBits) {
 
@@ -43,8 +43,43 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
             SP.flushIOBuffers();
             SP.addDataListener(this);
             SP.setFlowControl(SerialPort.FLOW_CONTROL_RTS_ENABLED | SerialPort.FLOW_CONTROL_CTS_ENABLED);
-            workerThread = new Thread(this);
-            workerThread.start();
+
+            writerThread = new Thread(() -> {
+                System.out.println("(MAC) Поток отправки сообщений MAC запущен");
+                while (running) {
+                    try {
+                        byte[] packet = sendQueue.take(); // ждет, если очередь пуста
+                        int written = SP.writeBytes(packet, packet.length);
+                        if (written != packet.length) {
+                            System.err.println("(MAC) Ошибка при отправке пакета");
+                            // Можно добавить повторную попытку
+                        } else {
+                            System.out.println("(MAC) Пакет отправлен: " + bytesToHex(packet));
+                            //System.out.println("Отправлено: " + written + " из " + packet.length);
+                        }
+
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            });
+            writerThread.setName("Thread for sending requests");
+            writerThread.start();
+
+            readerThread = new Thread(() -> {
+                while (running) {
+                    try {
+                        byte[] packet = receiveQueue.take();
+                        handlePacket(packet);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            });
+            readerThread.setName("Thread for reading requests");
+            readerThread.start();
 
         } catch (Exception e) {
             SP.closePort();
@@ -64,7 +99,7 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
     public void sendPacket(Address addrDes, byte[] packet) {
         ByteBuffer Packet = ByteBuffer.allocate(packet.length + 8);
         Packet.putInt(addrDes.getValue());                            // Адрес получателя
-        Packet.putInt(this.getMAC().getValue());                    // Адрес отправителя
+        Packet.putInt(myMAC.getValue());                    // Адрес отправителя
         Packet.put(packet);                                            // PayLoad
         //System.out.println("Запрос на отправку " + Packet.array().length + " байт.");
         //System.out.println("Запрос на отправку: " + Arrays.toString(packet) );
@@ -83,31 +118,11 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
     public void stop() {
         EventWaiter.shutdown();
         running = false;
-        if (workerThread != null) {
-            workerThread.interrupt();
+        if (writerThread != null) {
+            writerThread.interrupt();
         }
-    }
-    //TODO добавить небольшую задержку при отправке сообщений
-    @Override
-    public void run() {
-        System.out.println("(MAC) Поток отправки сообщений MAC запущен");
-
-        while (running) {
-            try {
-                byte[] packet = sendQueue.take(); // ждет, если очередь пуста
-                int written = SP.writeBytes(packet, packet.length);
-                if (written != packet.length) {
-                    System.err.println("(MAC) Ошибка при отправке пакета");
-                    // Можно добавить повторную попытку
-                } else {
-                    System.out.println("(MAC) Пакет отправлен: " + bytesToHex(packet));
-                    //System.out.println("Отправлено: " + written + " из " + packet.length);
-                }
-
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
-            }
+        if (readerThread != null) {
+            readerThread.interrupt();
         }
     }
 
@@ -153,9 +168,16 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
     @Override
     public void close() {
         stop();
-        if (workerThread != null) {
+        if (writerThread != null) {
             try {
-                workerThread.join();
+                writerThread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        if (readerThread != null) {
+            try {
+                readerThread.join();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -187,7 +209,10 @@ public class cMAC implements AutoCloseable, Runnable, SerialPortDataListener {
                 System.out.println(new String(Arrays.copyOfRange(buffer,9,buffer.length), StandardCharsets.UTF_8));
                 System.out.println("Адрес отправителя: " + getAddress(Arrays.copyOfRange(buffer,4,8)) +
                         ", Адрес получателя: " + getAddress(Arrays.copyOfRange(buffer,0,4)));*/
-                handlePacket(buffer);
+                boolean result = receiveQueue.offer(buffer);
+                if (!result) {
+                    System.out.println("Ошибка при сохранении сообщения!");
+                }
             }
         }
     }
