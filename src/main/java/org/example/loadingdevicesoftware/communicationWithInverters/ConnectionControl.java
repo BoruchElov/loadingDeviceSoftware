@@ -27,8 +27,7 @@ public class ConnectionControl {
     private static final CopyOnWriteArrayList<Address> invertersAddresses = new CopyOnWriteArrayList<>();
 
 
-    private ConnectionControl() {
-    }
+    private ConnectionControl() {}
 
     public static void openConnection() {
         MAC = new cMAC(COM, BAUDE_RATE, NUM_BITS);
@@ -60,7 +59,7 @@ public class ConnectionControl {
 
     public static List<String> getSavedAddresses() {
         List<String> addresses = new ArrayList<>();
-        for (Address invertersAddress : invertersAddresses) {
+        for (Address invertersAddress : ARP.getAvailableAddresses()) {
             addresses.add(invertersAddress.toStringInHexFormat());
         }
         return addresses;
@@ -70,15 +69,6 @@ public class ConnectionControl {
         hexString = hexString.replace(":", "");
         return Integer.parseInt(hexString, 16);
     }
-
-
-    public static void addAddress(Address address) {
-        for (Address invertersAddress : invertersAddresses) {
-            if (invertersAddress.equals(address)) return;
-        }
-        invertersAddresses.add(address);
-    }
-
 
     public enum ExpectedValue {
         NUMBER, PHRASE

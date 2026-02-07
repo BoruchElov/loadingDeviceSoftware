@@ -68,10 +68,10 @@ public class cMAC implements AutoCloseable, SerialPortDataListener {
             writerThread.start();
 
             readerThread = new Thread(() -> {
+                System.out.println("(MAC) Поток чтения сообщений запущен");
                 while (running) {
                     try {
-                        byte[] packet = receiveQueue.take();
-                        handlePacket(packet);
+                        handlePacket(receiveQueue.take());
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                         break;
@@ -142,24 +142,24 @@ public class cMAC implements AutoCloseable, SerialPortDataListener {
     //TODO скорректировать работу фильтра приёма сообщений
     private void handlePacket(byte[] Buff) {
         Integer PacketType = Byte.toUnsignedInt(Buff[8]);
-        System.out.println(PacketType);
-        Address adrcv = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
-        Address adrsrc = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
-        if (adrsrc.toStringInHexFormat().equals("09:12:AB:E1") ||
-                adrsrc.toStringInHexFormat().equals("00:80:E1:FF") ||
-                adrsrc.toStringInHexFormat().equals("06:80:E1:FF") ||
-                adrsrc.toStringInHexFormat().equals("07:12:AB:E1") ||
-                adrsrc.toStringInHexFormat().equals("25:12:AB:E1")) {
+        //System.out.println(PacketType);
+        Address receiverAddress = new Address(ByteBuffer.wrap(Buff, 0, 4).getInt());
+        Address senderAddress = new Address(ByteBuffer.wrap(Buff, 4, 4).getInt());
+        if (senderAddress.toStringInHexFormat().equals("09:12:AB:E1") ||
+                senderAddress.toStringInHexFormat().equals("00:80:E1:FF") ||
+                senderAddress.toStringInHexFormat().equals("06:80:E1:FF") ||
+                senderAddress.toStringInHexFormat().equals("07:12:AB:E1") ||
+                senderAddress.toStringInHexFormat().equals("25:12:AB:E1")) {
             return;
         }
-        if (!adrcv.equals(myMAC) && !adrcv.toStringInHexFormat().equals("00:00:00:00")) {
+        if (!receiverAddress.equals(myMAC) && !receiverAddress.toStringInHexFormat().equals("00:00:00:00")) {
             return;
         }
         byte[] payload = Arrays.copyOfRange(Buff, 8, Buff.length);
-        System.out.println(bytesToHex(Buff));
+        //System.out.println("(-> cMAC.handlePacket()) Полезная нагрузка полученного сообщения: " + bytesToHex(Buff));
         try {
             PacketHandler handler = upperLayerHandlers.get(PacketType);
-            handler.handlePacket(adrsrc, payload);
+            handler.handlePacket(senderAddress, payload);
         } catch (Exception e) {
             System.out.println("(MAC) Нет обработчика для типа: " + PacketType);
         }
