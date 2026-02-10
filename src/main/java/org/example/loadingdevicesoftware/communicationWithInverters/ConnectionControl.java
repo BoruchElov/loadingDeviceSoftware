@@ -44,6 +44,8 @@ public class ConnectionControl {
         }
         Messages.closeScheduler();
         StatusService.getInstance().stop();
+        arp.stop();
+        invs.stop();
     }
 
     public static byte[] extractBytes(ByteBuffer buffer) {

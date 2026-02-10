@@ -11,24 +11,38 @@ public class ARP implements PacketHandler {
 
     private cMAC MAC;
 
+    private static boolean running = true;
+
     private static final BlockingQueue<ModulePing> pingQueue = new LinkedBlockingQueue<>();
     private static final CopyOnWriteArrayList<Address> availableAddresses = new CopyOnWriteArrayList<>();
 
     public record ModulePing(Address moduleAddress, long lastSeenTime) {}
 
+    private static Thread pingThread;
+
+    public void stop() {
+        running = false;
+        if (pingThread != null) {
+            pingThread.interrupt();
+        }
+    }
+
     public ARP(cMAC mac) {
         this.MAC = mac;
-        Thread pingThread = new Thread(() -> {
-            System.out.println("(ARP) Поток хранения ping запущен");
-            try {
-                ModulePing card = pingQueue.take();
-                Address moduleAddress = card.moduleAddress;
-                StatusService.getInstance().onStatusMessage(moduleAddress.toStringInHexFormat());
-                MAC.sendPacket(moduleAddress, new byte[]{1, 2});
-                System.out.println("(ARP) Отправлен ответ устройству: " + moduleAddress.toStringInHexFormat());
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        pingThread = new Thread(() -> {
+            System.out.println("(ARP) Поток хранения ping запущен");
+            while (running) {
+                try {
+                    ModulePing card = pingQueue.take();
+                    Address moduleAddress = card.moduleAddress;
+                    StatusService.getInstance().onStatusMessage(moduleAddress.toStringInHexFormat());
+                    MAC.sendPacket(moduleAddress, new byte[]{1, 2});
+                    System.out.println("(ARP) Отправлен ответ устройству: " + moduleAddress.toStringInHexFormat());
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         pingThread.setName("Thread for pings");
@@ -57,7 +71,7 @@ public class ARP implements PacketHandler {
             System.out.println("(ARP) Запрос на PING от: " + AddressSource.toStringInHexFormat());
             boolean result = pingQueue.offer(new ModulePing(AddressSource, System.currentTimeMillis()));
             if (!result) {
-                System.out.println("Ошибка при сохранении информации о пинге!");
+                System.out.println("(ARP) Ошибка при сохранении информации о пинге!");
             }
             break;
     	default:

@@ -1,5 +1,6 @@
 package org.example.loadingdevicesoftware.communicationWithInverters.Inverters;
 
+import org.apache.commons.math3.analysis.function.Add;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.cMAC;
 
@@ -36,7 +37,7 @@ public enum Messages {
     BUTTON_UNLOCK,
     START_SYNK;
 
-    private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
     /**
      * Константа для задания времени ожидания (в секундах) ответа от модулей
@@ -122,6 +123,11 @@ public enum Messages {
         return future.get();
     }
 
+    static CompletableFuture<byte[]> waitForEvent(Address address, Messages command) throws ExecutionException, InterruptedException {
+        CompletableFuture<byte[]> future = new CompletableFuture<>();
+        Inverters.addResponse(address, command, future);
+    }
+
     /**
      * Метод для отправки выбранной команды. Формирует пакет для отправки.
      *
@@ -143,7 +149,7 @@ public enum Messages {
 
         CompletableFuture<byte[]> future = new CompletableFuture<>();
 
-        final int maxAttempts = 3;
+        final int maxAttempts = numberOfRetries;
         final AtomicInteger attempt = new AtomicInteger(1);
 
         Runnable sendTask = new Runnable() {

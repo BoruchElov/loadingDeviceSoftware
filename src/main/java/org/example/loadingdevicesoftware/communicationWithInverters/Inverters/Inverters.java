@@ -4,9 +4,7 @@ import org.example.loadingdevicesoftware.communicationWithInverters.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.*;
 
 /**
  * Класс, реализующий логику работы с инверторами.
@@ -15,8 +13,11 @@ public class Inverters implements PacketHandler {
 
     private static cMAC tabletAddress;
     private static final ConcurrentHashMap<ResponseCard, CompletableFuture<byte[]>> pendingResponses = new ConcurrentHashMap<>();
-
+    private final BlockingQueue<RawCard> inputQueue = new LinkedBlockingQueue<>();
     private static final ConcurrentHashMap<ResponseCard, byte[]> responses = new ConcurrentHashMap<>();
+
+    private static Thread analyzerThread;
+    private static boolean running = true;
 
     /**
      * Класс-конструктор.
@@ -27,6 +28,40 @@ public class Inverters implements PacketHandler {
      */
     public Inverters(cMAC tabletAddress) {
         Inverters.tabletAddress = tabletAddress;
+
+        analyzerThread = new Thread(() -> {
+            while (running) {
+                try {
+                    RawCard card = inputQueue.take();
+                    Address address = card.address;
+                    byte[] payload = card.message;
+                    String command = new String(payload, StandardCharsets.UTF_8);
+                    command = command.substring(1, command.indexOf('('));
+                    Messages message = null;
+                    for (Messages m : Messages.values()) {
+                        if (command.equals(m.name())) {
+                            message = m;
+                            break;
+                        }
+                    }
+                    CompletableFuture<byte[]> future = pendingResponses.remove(new ResponseCard(address, message));
+                    if (future != null) {
+                        future.complete(payload);
+                    }
+                    EventWaiter.getInstance().incoming(address, payload);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        analyzerThread.setName("Thread for analysis of inverters responses");
+        analyzerThread.setDaemon(true);
+        analyzerThread.start();
+    }
+
+    public void stop() {
+        running = false;
+        analyzerThread.interrupt();
     }
 
     /**
@@ -71,8 +106,7 @@ public class Inverters implements PacketHandler {
 
     public static void removeResponse(Address sender, Messages expectedResponse) {
         ResponseCard responseCard = new ResponseCard(sender, expectedResponse);
-        if (!pendingResponses.containsKey(responseCard))
-            pendingResponses.remove(responseCard);
+        if (!pendingResponses.containsKey(responseCard)) pendingResponses.remove(responseCard);
     }
 
     public static void addResponse(Address sender, Messages expectedResponse, CompletableFuture<byte[]> response) {
@@ -83,20 +117,19 @@ public class Inverters implements PacketHandler {
 
     @Override
     public void handlePacket(Address AddressSource, byte[] Buff) {
-        String command = new String(Buff, StandardCharsets.UTF_8);
-        command = command.substring(1, command.indexOf('('));
-        Messages message = null;
-        for (Messages m : Messages.values()) {
-            if (command.equals(m.name())) {
-                message = m;
-                break;
-            }
+        boolean result = inputQueue.offer(new RawCard(AddressSource, Buff));
+        if (!result) {
+            System.out.println("(Inverters) Ошибка при чтении входящего сообщения!");
         }
-        CompletableFuture<byte[]> future = pendingResponses.remove(new ResponseCard(AddressSource, message));
-        if (future != null) {
-            future.complete(Buff);
-        }
-        EventWaiter.getInstance().incoming(AddressSource, Buff);
+    }
+
+    /**
+     * Карточка для хранения сообщения в очереди
+     *
+     * @param address
+     * @param message
+     */
+    private record RawCard(Address address, byte[] message) {
     }
 
     /**
@@ -105,14 +138,13 @@ public class Inverters implements PacketHandler {
      * @param address
      * @param message
      */
-    public record ResponseCard(
-            Address address,
-            Messages message) {
+    public record ResponseCard(Address address, Messages message) {
 
     }
 
     /**
      * Метод для поиска всех карточек с заданным адресом
+     *
      * @param address адрес для поиска
      * @return список адресов
      */
@@ -128,6 +160,7 @@ public class Inverters implements PacketHandler {
 
     /**
      * Метод для поиска карточки по заданному адресу и сообщению
+     *
      * @param address адрес для поиска
      * @param message сообщение для поиска
      * @return карточку, соответствующую условиям поиска
