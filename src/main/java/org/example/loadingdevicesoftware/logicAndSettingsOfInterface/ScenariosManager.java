@@ -32,6 +32,8 @@ public class ScenariosManager {
         responses.clear();
         ArrayList<Address> addresses = CheckingManager.getAvailableAddresses();
 
+        PollingManager.setupPolling();
+
         // 1) SET_SCENARO_1 всем адресам (async) + барьер
         ArrayList<CompletableFuture<Boolean>> setFutures = new ArrayList<>();
         for (int i = 0; i < addresses.size(); i++) {
@@ -64,7 +66,11 @@ public class ScenariosManager {
             }
 
             return CompletableFuture.allOf(resultFutures.toArray(new CompletableFuture[0]))
-                    .thenApply(v -> resultFutures.stream().allMatch(CompletableFuture::join));
+                    .thenApply(v ->
+                    {
+                        PollingManager.stop();
+                        return resultFutures.stream().allMatch(CompletableFuture::join);
+                    });
         });
     }
 
@@ -80,6 +86,8 @@ public class ScenariosManager {
 
         responses.clear();
         ArrayList<Address> addresses = CheckingManager.getAvailableAddresses();
+
+        PollingManager.setupPolling();
 
         // 1) SET_SCENARO_2
         ArrayList<CompletableFuture<Boolean>> setFutures = new ArrayList<>();
@@ -117,7 +125,11 @@ public class ScenariosManager {
             }
 
             return CompletableFuture.allOf(resultFutures.toArray(new CompletableFuture[0]))
-                    .thenApply(v -> resultFutures.stream().allMatch(CompletableFuture::join));
+                    .thenApply(v ->
+                    {
+                        PollingManager.stop();
+                        return resultFutures.stream().allMatch(CompletableFuture::join);
+                    });
         });
     }
 
@@ -156,7 +168,7 @@ public class ScenariosManager {
                             }
 
                             // 2) START подтверждён: запускаем polling и ждём SC_RES
-                            PollingManager.start(address, (long) (timeoutSeconds * 1000L));
+                            PollingManager.startPolling(address, (long) (timeoutSeconds * 1000L));
 
                             return Inverters.waitForMessage(address, Messages.SC_RES)
                                     .handle((buffer, err) -> {
@@ -182,7 +194,7 @@ public class ScenariosManager {
                                         }
                                     })
                                     // 3) ВАЖНО: polling остановить в любом случае после ожидания SC_RES
-                                    .whenComplete((r, e) -> PollingManager.stop(address));
+                                    .whenComplete((r, e) -> PollingManager.stopPolling(address));
                         })
                         // Если что-то пошло не так на верхнем уровне — считаем сценарий проваленным,
                         // но unlock всё равно будет сделан ниже.
@@ -190,7 +202,7 @@ public class ScenariosManager {
                             System.err.println("Ошибка выполнения сценария на модуле " + address.toStringInHexFormat()
                                     + ": " + ex.getMessage());
                             // stop на всякий случай (если ошибка случилась до whenComplete)
-                            PollingManager.stop(address);
+                            PollingManager.stopPolling(address);
                             return false;
                         });
 
