@@ -123,9 +123,28 @@ public enum Messages {
         return future.get();
     }
 
-    static CompletableFuture<byte[]> waitForEvent(Address address, Messages command) throws ExecutionException, InterruptedException {
+    /**
+     * Метод для регистрации ожидания сообщения
+     * @param address адрес получателя
+     * @param command ожидаемая команда
+     * @return CompletableFuture<byte[]> - пакет сообщений
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    static CompletableFuture<byte[]> waitForEvent(Address address, Messages command) {
         CompletableFuture<byte[]> future = new CompletableFuture<>();
         Inverters.addResponse(address, command, future);
+        scheduler.schedule(() ->
+        {
+            if (!future.isDone()) {
+                Inverters.removeResponse(address, command);
+                future.completeExceptionally(
+                        new TimeoutException("(Inverters) Не получено сообщение " + command + "за "
+                                + delayTime + " с от устройства: "
+                                + address.toStringInHexFormat()));
+            }
+        }, delayTime, TimeUnit.SECONDS);
+        return future;
     }
 
     /**

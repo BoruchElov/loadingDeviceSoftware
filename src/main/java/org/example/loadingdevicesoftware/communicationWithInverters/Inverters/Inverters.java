@@ -48,7 +48,6 @@ public class Inverters implements PacketHandler {
                     if (future != null) {
                         future.complete(payload);
                     }
-                    EventWaiter.getInstance().incoming(address, payload);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -88,6 +87,10 @@ public class Inverters implements PacketHandler {
 
     public static void respondToInverter(Address inverterAddress, Messages command, String arguments) {
         Messages.respondToFunction(tabletAddress, inverterAddress, command, arguments);
+    }
+
+    public static CompletableFuture<byte[]> waitForMessage(Address inverterAddress, Messages command) {
+        return Messages.waitForEvent(inverterAddress, command);
     }
 
     public static void saveLastResponse(Address inverterAddress, Messages command, byte[] bytes) {

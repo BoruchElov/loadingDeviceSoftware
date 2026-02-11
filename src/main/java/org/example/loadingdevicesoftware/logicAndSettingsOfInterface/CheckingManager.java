@@ -4,13 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
-import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Messages;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.pagesControllers.StatusService;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -407,8 +405,7 @@ public class CheckingManager {
                                     }
 
                                     // ждём SC_RES
-                                    return EventWaiter.getInstance()
-                                            .waitForEvent(address, EventWaiter.PossibleResponses.SC_RES, Duration.ofSeconds(120))
+                                    return Inverters.waitForMessage(address, Messages.SC_RES)
                                             .thenApply(scResBytes -> {
                                                 String raw = ConnectionControl.analyzeResponse(scResBytes,
                                                         ConnectionControl.ExpectedValue.PHRASE);

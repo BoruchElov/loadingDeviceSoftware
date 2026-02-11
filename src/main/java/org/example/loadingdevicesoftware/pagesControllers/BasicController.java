@@ -148,11 +148,4 @@ class BasicController {
         }
     }
 
-    @FXML
-    private void onClose() {
-        // при закрытии окна можно отписаться
-        StatusService.getInstance().removeListener(this::updateIndicators);
-    }
-
-
 }

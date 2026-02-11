@@ -3,12 +3,10 @@ package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 import lombok.Getter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Address;
 import org.example.loadingdevicesoftware.communicationWithInverters.ConnectionControl;
-import org.example.loadingdevicesoftware.communicationWithInverters.EventWaiter;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Messages;
 import org.example.loadingdevicesoftware.communicationWithInverters.Inverters.Inverters;
 import org.example.loadingdevicesoftware.communicationWithInverters.PollingManager;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -160,10 +158,7 @@ public class ScenariosManager {
                             // 2) START подтверждён: запускаем polling и ждём SC_RES
                             PollingManager.start(address, (long) (timeoutSeconds * 1000L));
 
-                            return EventWaiter.getInstance()
-                                    .waitForEvent(address,
-                                            EventWaiter.PossibleResponses.SC_RES,
-                                            Duration.ofMillis(timeoutMs))
+                            return Inverters.waitForMessage(address, Messages.SC_RES)
                                     .handle((buffer, err) -> {
                                         if (err != null || buffer == null) {
                                             System.err.println("Модуль " + address.toStringInHexFormat()

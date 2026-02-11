@@ -116,7 +116,6 @@ public class cMAC implements AutoCloseable, SerialPortDataListener {
 
     // Остановка потока
     public void stop() {
-        EventWaiter.shutdown();
         running = false;
         if (writerThread != null) {
             writerThread.interrupt();
