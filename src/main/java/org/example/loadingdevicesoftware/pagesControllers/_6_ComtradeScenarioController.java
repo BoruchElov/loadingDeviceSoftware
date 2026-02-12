@@ -21,11 +21,15 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         for (Node node : anchorPane.getChildren()) {
             switch (node) {
                 case SimpleButton button when button == comtradeButton:
-                    button.setup(new String[]{"comtrade-button"}, new String[]{"COMTRADE"}, FontManager.getFont(FontManager.FontWeight.MEDIUM,
+                    button.setup(new String[]{"comtrade-button"}, new String[]{"Выберите файл COMTRADE"}, FontManager.getFont(FontManager.FontWeight.MEDIUM,
                             FontManager.FontSize.LARGE));
                     AnchorPane.setTopAnchor(button, 365.0);
-                    AnchorPane.setLeftAnchor(button, 500.0);
+                    AnchorPane.setLeftAnchor(button, 400.0);
                     button.setOnAction(_ -> {InterfaceElementsLogic.openFileManager();});
+                    break;
+                case SimpleTextField text when text == objectTextField || text == nameTextField:
+                    text.setVisible(false);
+                    text.setManaged(false);
                     break;
                 default:
                     break;

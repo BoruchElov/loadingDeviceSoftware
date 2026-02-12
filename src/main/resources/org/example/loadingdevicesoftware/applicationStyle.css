@@ -238,15 +238,15 @@
 }
 .comtrade-button {
     -fx-border-color: #000000;
-    -fx-pref-width: 300px; /* Желаемая ширина */
+    -fx-pref-width: 450px; /* Желаемая ширина */
     -fx-pref-height: 70px; /* Желаемая высота */
     -fx-min-width: 300px; /* Минимальная ширина */
     -fx-min-height: 70px; /* Минимальная высота */
-    -fx-max-width: 300px;
+    -fx-max-width: 1000px;
     -fx-max-height: 70px;
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #000000;
-    -fx-border-width: 1;
+    -fx-border-width: 1.5;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
     -fx-background-insets: 0;
