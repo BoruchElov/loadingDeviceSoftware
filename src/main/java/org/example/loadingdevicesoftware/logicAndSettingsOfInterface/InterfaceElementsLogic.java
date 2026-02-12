@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +31,7 @@ public class InterfaceElementsLogic {
      * Конструктор класса InterfaceElementsLogic. Данный класс содержит методы, используемые для настройки различных
      * функций интерфейса: переход со страницы на страницу.
      */
-    public InterfaceElementsLogic() {}
+    private InterfaceElementsLogic() {}
 
     /**
      * Метод для перехода с одного экрана на другой.
@@ -115,6 +116,30 @@ public class InterfaceElementsLogic {
         // Открываем окно выбора директории
         directoryChooser.showDialog(new Stage());
     }
+
+    public static File openFileChooser(Stage ownerStage,
+                                String description,
+                                String... extensions) {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выберите файл");
+
+        // Начальная директория
+        File initialDirectory = new File(System.getProperty("user.home"));
+        if (initialDirectory.exists()) {
+            fileChooser.setInitialDirectory(initialDirectory);
+        }
+
+        // Фильтр по типам
+        FileChooser.ExtensionFilter filter =
+                new FileChooser.ExtensionFilter(description, extensions);
+
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setSelectedExtensionFilter(filter);
+
+        return fileChooser.showOpenDialog(ownerStage);
+    }
+
 
     //тестовые функции для перехода
     /**

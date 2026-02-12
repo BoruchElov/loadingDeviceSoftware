@@ -5,7 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
+
+import java.io.File;
 
 
 public class _6_ComtradeScenarioController extends ScreensController implements Configurable {
@@ -25,7 +28,10 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                             FontManager.FontSize.LARGE));
                     AnchorPane.setTopAnchor(button, 365.0);
                     AnchorPane.setLeftAnchor(button, 400.0);
-                    button.setOnAction(_ -> {InterfaceElementsLogic.openFileManager();});
+                    button.setOnAction(_ -> {
+                        testFile();
+                        //InterfaceElementsLogic.openFileManager();
+                    });
                     break;
                 case SimpleTextField text when text == objectTextField || text == nameTextField:
                     text.setVisible(false);
@@ -36,6 +42,12 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
             }
         }
 
+    }
+
+    public void testFile() {
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        File newFile = InterfaceElementsLogic.openFileChooser(stage, "Pdf files .pdf", "*.pdf");
+        System.out.println(newFile.getName() + " | " + newFile.getAbsolutePath());
     }
 
 
