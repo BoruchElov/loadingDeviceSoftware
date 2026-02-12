@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class _6_ComtradeScenarioController extends ScreensController implements Configurable {
@@ -46,7 +47,13 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
 
     public void testFile() {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
-        File newFile = InterfaceElementsLogic.openFileChooser(stage, "Pdf files .pdf", "*.pdf");
+        File newFile = InterfaceElementsLogic.openFileChooser(stage, "Comtrade files .cff", "*.cff");
+        try {
+            ComtradeParser.parseCFF(newFile);
+        } catch (IOException e) {
+            System.err.println("Ошибка при парсинге файла!\n" + e.getMessage());
+            e.printStackTrace();
+        }
         System.out.println(newFile.getName() + " | " + newFile.getAbsolutePath());
     }
 

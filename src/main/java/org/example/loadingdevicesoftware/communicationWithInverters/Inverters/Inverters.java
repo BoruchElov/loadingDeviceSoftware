@@ -49,7 +49,7 @@ public class Inverters implements PacketHandler {
                         future.complete(payload);
                     }
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Поток " + analyzerThread.getName() + " остановлен.");
                 }
             }
         });

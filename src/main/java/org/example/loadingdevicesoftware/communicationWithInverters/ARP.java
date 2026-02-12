@@ -41,7 +41,7 @@ public class ARP implements PacketHandler {
                     System.out.println("(ARP) Отправлен ответ устройству: " + moduleAddress.toStringInHexFormat());
 
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Поток " + pingThread.getName() + " остановлен.");
                 }
             }
         });
