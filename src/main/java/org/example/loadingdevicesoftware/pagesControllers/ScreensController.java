@@ -282,7 +282,7 @@ class ScreensController extends BasicController {
      */
     private void shutdownScenario() {
         for (Address address : CheckingManager.getAvailableAddresses()) {
-            PollingManager.stop(address);
+            PollingManager.stopPolling(address);
         }
     }
 
