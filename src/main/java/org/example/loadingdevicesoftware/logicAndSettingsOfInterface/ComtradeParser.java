@@ -1,7 +1,10 @@
 package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -16,6 +19,18 @@ public class ComtradeParser {
 
     private ComtradeParser() {}
 
+    private static int analogueChannels;
+    private static int digitalChannels;
+    private static int totalAmountOfChannels;
+    private static final ArrayList<AnalogueValue> analogueValues = new ArrayList<AnalogueValue>();
+    private static int samplingFrequency;
+    private static int numberOfSamples;
+    private static String dateStamp;
+    private static String dataType;
+
+    record AnalogueValue(String name, double theValueOfA, double theValueOfB) {}
+
+
     public static void parseCFF(File cffFile) throws IOException {
 
         //Разделение .cff на составные части
@@ -25,22 +40,10 @@ public class ComtradeParser {
         File hdrFile = filesArray[2];
         File datFile = filesArray[3];
 
-        //Получение параметров для анализа .dat файла
-        String[] parameters = analyzeDataConfiguration(cfgFile);
-
-        //
-
-        System.out.println();
-        Charset cp1251 = Charset.forName("windows-1251");
-
-        for (File file : filesArray) {
-            System.out.println(file.getName() + " | " + file.getAbsolutePath());
-            System.out.println(new String(Files.readAllBytes(file.toPath()), cp1251));
-            System.out.println();
-            System.out.println();
-            System.out.println();
-        }
+        settingsForDatFileAnalysis(cfgFile);
+        readAllAnalogCounts(datFile);
     }
+
 
     /**
      * Метод для разделения файла в расширении .cff на составные части: .cfg, .inf, .hdr, .dat
@@ -121,8 +124,125 @@ public class ComtradeParser {
         };
     }
 
-    private static String[] analyzeDataConfiguration(File datFile) {
-        return new String[] {};
+    /**
+     * Метод для задания параметров разбора .dat файла
+     * @param cfgFile конфигурационный файл в формате .cfg
+     */
+    private static void settingsForDatFileAnalysis(File cfgFile) {
+        String cfgFileAsText;
+        try {
+            Charset cp1251 = Charset.forName("windows-1251");
+            cfgFileAsText = new String(Files.readAllBytes(cfgFile.toPath()), cp1251);
+        } catch (IOException e) {
+            System.err.println("Ошибка при чтении/преобразовании файла " + cfgFile.getName() + "!\n" + e.getMessage());
+            return;
+        }
+        String[] lines = cfgFileAsText.split("\\R");
+
+        //Получение информации о количестве каналов
+        String[] channels = lines[1].split(",");
+        totalAmountOfChannels = Integer.parseInt(channels[0]);
+        analogueChannels = Integer.parseInt(channels[1].replaceAll("\\D+",""));
+        digitalChannels = Integer.parseInt(channels[2].replaceAll("\\D+",""));
+
+        //Получение списка с именами аналоговых сигналов и соответствующих им a и b
+        for (int i = 2; i < 2 + analogueChannels; i++) {
+            String[] line = lines[i].split(",");
+            analogueValues.add(new AnalogueValue(line[1], Double.parseDouble(line[5]), Double.parseDouble(line[6])));
+        }
+
+        //Получение информации о дискретизации. На данный момент реализована возможность задания только одного периода
+        String[] samplingInfo = lines[totalAmountOfChannels + 4].replaceAll("\\s+","").split(",");
+        samplingFrequency = Integer.parseInt(samplingInfo[0]);
+        numberOfSamples = Integer.parseInt(samplingInfo[1]);
+
+        //Получение информации о метке реального времени первой точки
+        dateStamp = lines[totalAmountOfChannels + 5];
+
+        //Получение информации о формате данных в файле .dat
+        dataType = lines[totalAmountOfChannels + 7];
+    }
+
+    record Sample(double relativeTime, double[] values) {}
+
+    /**
+     * Читает binary (binary16) DAT и возвращает список сэмплов:
+     * sampleNumber, timestamp, и массив аналоговых counts (int, полученный из signed short).
+     * @param datFile
+     * @throws IOException
+     */
+    public static void readAllAnalogCounts(File datFile) throws IOException {
+        byte[] data = Files.readAllBytes(datFile.toPath());
+
+        int statusWords = (digitalChannels + 15) / 16;     // ceil(Dm/16)
+        int bytesPerRow = 4 + 4 + (analogueChannels * 2) + (statusWords * 2);
+
+        if (data.length % bytesPerRow != 0) {
+            throw new IOException("Размер DAT не кратен размеру записи. bytesPerRow=" + bytesPerRow +
+                    ", fileBytes=" + data.length);
+        }
+
+        ByteBuffer bb = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+
+        int rows = data.length / bytesPerRow;
+        List<Sample> result = new ArrayList<>(rows);
+
+        for (int r = 0; r < rows; r++) {
+            long n = Integer.toUnsignedLong(bb.getInt());
+            double relTime = n * (1. / samplingFrequency);
+            long ts = Integer.toUnsignedLong(bb.getInt());
+
+            double[] a = new double[analogueChannels];
+            for (int i = 0; i < analogueChannels; i++) {
+                short raw = bb.getShort();          // binary16 => 2 bytes two’s complement
+                AnalogueValue aV = analogueValues.get(i);
+                a[i] = raw * aV.theValueOfA + aV.theValueOfB;                         // расширяем до int (сырые counts со знаком)
+            }
+
+            // статус-слова пока пропускаем
+            for (int w = 0; w < statusWords; w++) {
+                bb.getShort();
+            }
+
+            result.add(new Sample(relTime, a));
+        }
+        writeSamples(result, datFile.getParentFile().toPath(), datFile.getName() + "_binary");
+
+    }
+
+    private static void writeSamples(
+            List<Sample> samples,
+            Path directory,
+            String fileName
+    ) throws IOException {
+
+        // гарантируем расширение
+        if (!fileName.endsWith(".txt")) {
+            fileName += ".txt";
+        }
+
+        Path filePath = directory.resolve(fileName);
+
+        try (BufferedWriter writer =
+                     Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+
+            for (Sample sample : samples) {
+
+                StringBuilder line = new StringBuilder();
+
+                // время
+                line.append(sample.relativeTime());
+
+                // массив значений
+                for (double value : sample.values()) {
+                    line.append(",");
+                    line.append(value);
+                }
+
+                writer.write(line.toString());
+                writer.newLine();
+            }
+        }
     }
 
 }
