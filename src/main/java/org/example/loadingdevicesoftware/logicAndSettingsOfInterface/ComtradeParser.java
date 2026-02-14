@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,12 +37,14 @@ public class ComtradeParser {
         //Разделение .cff на составные части
         File[] filesArray = separateCFF(cffFile);
         File cfgFile = filesArray[0];
-        File infoFile = filesArray[1];
-        File hdrFile = filesArray[2];
         File datFile = filesArray[3];
 
         settingsForDatFileAnalysis(cfgFile);
         readAllAnalogCounts(datFile);
+
+        for (File file : filesArray) {
+            Files.deleteIfExists(file.toPath());
+        }
     }
 
 
@@ -171,15 +174,55 @@ public class ComtradeParser {
      * @param datFile
      * @throws IOException
      */
-    public static void readAllAnalogCounts(File datFile) throws IOException {
-        byte[] data = Files.readAllBytes(datFile.toPath());
 
-        int statusWords = (digitalChannels + 15) / 16;     // ceil(Dm/16)
-        int bytesPerRow = 4 + 4 + (analogueChannels * 2) + (statusWords * 2);
+    public static void readAllAnalogCounts(File datFile) throws IOException {
+
+        List<Sample> result;
+
+        switch (dataType.toLowerCase(Locale.ROOT)) {
+
+            case "binary": {      // BINARY16
+                byte[] data = Files.readAllBytes(datFile.toPath());
+                result = readBinary(datFile, data, 2);
+                break;
+            }
+
+            case "binary32": {    // BINARY32 (int32 на аналоговый канал)
+                byte[] data = Files.readAllBytes(datFile.toPath());
+                result = readBinary(datFile, data, 4);
+                break;
+            }
+
+            case "float32": {     // FLOAT32 (float на аналоговый канал)
+                byte[] data = Files.readAllBytes(datFile.toPath());
+                result = readFloat32(datFile, data);
+                break;
+            }
+
+            case "ascii": {       // ASCII (значения текстом через запятую)
+                result = readAscii(datFile);
+                break;
+            }
+
+            default:
+                throw new IllegalArgumentException("Неизвестный dataType: " + dataType);
+        }
+
+        writeSamples(
+                result, datFile.getParentFile().toPath(), datFile.getName()
+                        .substring(0, datFile.getName().lastIndexOf('.')) + "_" + dataType.toLowerCase()
+        );
+    }
+
+    /** Общий ридер для BINARY16 (bytesPerAnalog=2) и BINARY32 (bytesPerAnalog=4). */
+    private static List<Sample> readBinary(File datFile, byte[] data, int bytesPerAnalog) throws IOException {
+
+        int statusWords = (digitalChannels + 15) / 16; // ceil(ND/16)
+        int bytesPerRow = 4 + 4 + (analogueChannels * bytesPerAnalog) + (statusWords * 2);
 
         if (data.length % bytesPerRow != 0) {
             throw new IOException("Размер DAT не кратен размеру записи. bytesPerRow=" + bytesPerRow +
-                    ", fileBytes=" + data.length);
+                    ", fileBytes=" + data.length + ", file=" + datFile.getName());
         }
 
         ByteBuffer bb = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
@@ -188,26 +231,138 @@ public class ComtradeParser {
         List<Sample> result = new ArrayList<>(rows);
 
         for (int r = 0; r < rows; r++) {
-            long n = Integer.toUnsignedLong(bb.getInt());
-            double relTime = n * (1. / samplingFrequency);
-            long ts = Integer.toUnsignedLong(bb.getInt());
+            long sampleNo = Integer.toUnsignedLong(bb.getInt()); // как в стандарте: unsigned 32
+            long n = sampleNo - 1; // ты так делал (получаем индекс с нуля)
+            double relTime = n * (1.0 / samplingFrequency);
 
-            double[] a = new double[analogueChannels];
-            for (int i = 0; i < analogueChannels; i++) {
-                short raw = bb.getShort();          // binary16 => 2 bytes two’s complement
-                AnalogueValue aV = analogueValues.get(i);
-                a[i] = raw * aV.theValueOfA + aV.theValueOfB;                         // расширяем до int (сырые counts со знаком)
+            bb.getInt(); // timestamp пока не используем (у тебя он был ts, но дальше не применялся)
+
+            double[] values = new double[analogueChannels];
+
+            if (bytesPerAnalog == 2) {
+                for (int i = 0; i < analogueChannels; i++) {
+                    short raw = bb.getShort(); // int16
+                    AnalogueValue av = analogueValues.get(i);
+                    values[i] = raw * av.theValueOfA + av.theValueOfB;
+                }
+            } else { // bytesPerAnalog == 4
+                for (int i = 0; i < analogueChannels; i++) {
+                    int raw = bb.getInt(); // int32
+                    AnalogueValue av = analogueValues.get(i);
+                    values[i] = raw * av.theValueOfA + av.theValueOfB;
+                }
             }
 
-            // статус-слова пока пропускаем
+            // пропускаем digital status words
             for (int w = 0; w < statusWords; w++) {
                 bb.getShort();
             }
 
-            result.add(new Sample(relTime, a));
+            result.add(new Sample(relTime, values));
         }
-        writeSamples(result, datFile.getParentFile().toPath(), datFile.getName() + "_binary");
 
+        return result;
+    }
+
+    /** Ридер для FLOAT32: sample(int32), timestamp(int32), затем NA * float32, затем status words. */
+    private static List<Sample> readFloat32(File datFile, byte[] data) throws IOException {
+
+        int statusWords = (digitalChannels + 15) / 16;
+        int bytesPerRow = 4 + 4 + (analogueChannels * 4) + (statusWords * 2);
+
+        if (data.length % bytesPerRow != 0) {
+            throw new IOException("Размер DAT не кратен размеру записи. bytesPerRow=" + bytesPerRow +
+                    ", fileBytes=" + data.length + ", file=" + datFile.getName());
+        }
+
+        ByteBuffer bb = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+
+        int rows = data.length / bytesPerRow;
+        List<Sample> result = new ArrayList<>(rows);
+
+        for (int r = 0; r < rows; r++) {
+            long sampleNo = Integer.toUnsignedLong(bb.getInt());
+            long n = sampleNo - 1;
+            double relTime = n * (1.0 / samplingFrequency);
+
+            bb.getInt(); // timestamp пока не используем
+
+            double[] values = new double[analogueChannels];
+            for (int i = 0; i < analogueChannels; i++) {
+                float raw = bb.getFloat(); // float32
+                AnalogueValue av = analogueValues.get(i);
+
+                // ВАЖНО: часто FLOAT32 уже в физических единицах.
+                // Но чтобы сохранить твою текущую схему, оставляю умножение на A и +B:
+                values[i] = raw * av.theValueOfA + av.theValueOfB;
+            }
+
+            for (int w = 0; w < statusWords; w++) {
+                bb.getShort();
+            }
+
+            result.add(new Sample(relTime, values));
+        }
+
+        return result;
+    }
+
+    /** Ридер ASCII: строки "n,timestamp,A1..Ak,D1..Dm" через запятую. */
+    private static List<Sample> readAscii(File datFile) throws IOException {
+
+        // Для РФ COMTRADE часто cp1251, но если у тебя ASCII строго — можно US_ASCII.
+        // Оставлю cp1251 как более практичный вариант.
+        Charset cs = Charset.forName("windows-1251");
+        List<String> lines = Files.readAllLines(datFile.toPath(), cs);
+
+        List<Sample> result = new ArrayList<>(Math.max(16, lines.size()));
+
+        for (String line : lines) {
+            if (line == null) continue;
+            line = line.trim();
+            if (line.isEmpty()) continue;
+
+            // COMTRADE ASCII: разделитель обычно запятая
+            String[] parts = line.split(",", -1); // -1 чтобы не терять пустые поля
+
+            // Минимум: n, timestamp, + NA аналогов
+            int min = 2 + analogueChannels;
+            if (parts.length < min) {
+                // можно либо пропускать, либо падать — я падаю, чтобы сразу увидеть проблему данных
+                throw new IOException("Некорректная строка DAT ASCII: ожидалось >= " + min +
+                        " полей, получено " + parts.length + " | line=" + line);
+            }
+
+            long sampleNo = parseUnsignedLongSafe(parts[0]);
+            long n = sampleNo - 1;
+            double relTime = n * (1.0 / samplingFrequency);
+
+            // timestamp пока не используем: parts[1]
+
+            double[] values = new double[analogueChannels];
+            for (int i = 0; i < analogueChannels; i++) {
+                String s = parts[2 + i].trim();
+                if (s.isEmpty()) {
+                    // missing value (две запятые подряд)
+                    values[i] = Double.NaN;
+                } else {
+                    double raw = Double.parseDouble(s);
+                    AnalogueValue av = analogueValues.get(i);
+                    values[i] = raw * av.theValueOfA + av.theValueOfB;
+                }
+            }
+
+            result.add(new Sample(relTime, values));
+        }
+
+        return result;
+    }
+
+    private static long parseUnsignedLongSafe(String s) {
+        s = s.trim();
+        // sampleNo в ASCII обычно без знака; если вдруг пришёл со знаком — Long.parseLong тоже ок
+        long v = Long.parseLong(s);
+        return v;
     }
 
     private static void writeSamples(
@@ -222,10 +377,21 @@ public class ComtradeParser {
         }
 
         Path filePath = directory.resolve(fileName);
+        char separator = ';';
 
         try (BufferedWriter writer =
                      Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
-
+            //Запись заголовка
+            StringBuilder header = new StringBuilder();
+            header.append("Relative time, s");
+            header.append(separator);
+            for (AnalogueValue value : analogueValues) {
+                header.append(value.name);
+                header.append(separator);
+            }
+            writer.write(header.toString());
+            writer.newLine();
+            //
             for (Sample sample : samples) {
 
                 StringBuilder line = new StringBuilder();
@@ -235,8 +401,8 @@ public class ComtradeParser {
 
                 // массив значений
                 for (double value : sample.values()) {
-                    line.append(",");
-                    line.append(value);
+                    line.append(separator);
+                    line.append(String.format("%.3f", value));
                 }
 
                 writer.write(line.toString());
