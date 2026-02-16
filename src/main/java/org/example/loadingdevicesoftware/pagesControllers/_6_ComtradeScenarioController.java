@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class _6_ComtradeScenarioController extends ScreensController implements Configurable {
@@ -52,6 +53,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
 
     public void testFile() {
         AtomicBoolean parsingResult = new AtomicBoolean(false);
+        AtomicInteger parsingCount = new AtomicInteger(1);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         File newFile = InterfaceElementsLogic.openFileChooser(stage, "Comtrade files .cff", "*.cff");
         if (newFile != null) {
@@ -61,15 +63,26 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                 PauseTransition pauseTransition = new PauseTransition(javafx.util.Duration.seconds(10));
                 pauseTransition.play();
                 pauseTransition.setOnFinished(event -> {
-                    alert.close();
                     if (parsingResult.get()) {
-                        InterfaceElementsLogic.showAlert("Анализ выполнен успешно!", InterfaceElementsLogic.Alert_Size.SMALL,
-                                true);
+                        alert.close();
+                        if (parsingResult.get()) {
+                            InterfaceElementsLogic.showAlert("Анализ выполнен успешно!", InterfaceElementsLogic.Alert_Size.SMALL,
+                                    true);
+                        } else {
+                            InterfaceElementsLogic.showAlert("Ошибка при анализе .cff файла!", InterfaceElementsLogic.Alert_Size.SMALL,
+                                    true);
+                        }
+                        changeFormState();
                     } else {
-                        InterfaceElementsLogic.showAlert("Ошибка при анализе .cff файла!", InterfaceElementsLogic.Alert_Size.SMALL,
-                                true);
+                        if (parsingCount.incrementAndGet() > 3) {
+                            alert.close();
+                            InterfaceElementsLogic.showAlert("Ошибка при анализе .cff файла!", InterfaceElementsLogic.Alert_Size.SMALL,
+                                    true);
+                            formState.set(false);
+                        } else {
+                            pauseTransition.play();
+                        }
                     }
-                    changeFormState();
                 });
             });
             CompletableFuture<Boolean> future = ComtradeParser.parseCFF(newFile);
