@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.loadingdevicesoftware.ApplicationFile;
@@ -63,7 +64,7 @@ public class InterfaceElementsLogic {
     }
 
     @FXML
-    public static void showAlert(String message, Alert_Size size) {
+    public static Alert showAlert(String message, Alert_Size size, boolean isButtonNecessary) {
 
         int[] sizes = switch (size) {
             case SMALL -> new int[]{500,180};
@@ -72,6 +73,8 @@ public class InterfaceElementsLogic {
         };
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.initStyle(StageStyle.UNDECORATED);
 
         alert.setTitle("");
         alert.setHeaderText(null);
@@ -97,11 +100,16 @@ public class InterfaceElementsLogic {
                 "    -fx-border-width: 2;\n" +
                 "    -fx-background-radius: 0;\n" +
                 "    -fx-border-radius: 0;");
+        if (!isButtonNecessary) {
+            okButton.setVisible(false);
+            okButton.setManaged(false);
+        }
 
         alert.getDialogPane().setContent(label);
         alert.getDialogPane().setStyle("-fx-background-color: #005286; -fx-padding: 0;" +
                 "-fx-pref-width: " + sizes[0] + "; -fx-pref-height: " + sizes[1] + ";");
-        alert.showAndWait();
+        alert.show();
+        return alert;
     }
 
     @FXML
@@ -151,50 +159,5 @@ public class InterfaceElementsLogic {
     @Getter
     @Setter
     private static boolean fromCheckingStartConditions = false;
-
-
-    /**
-     * Специализированный метод для булевых операций (блокировка/разблокировка)
-     * @param root Корневой элемент формы
-     * @param shouldDisable true - заблокировать, false - разблокировать
-     * @param action Действие с нод и булевым флагом (например, setDisable)
-     * @param exclusionConditions Условия исключения элементов
-     */
-    public static void walk(
-            Parent root,
-            boolean shouldDisable,
-            BiConsumer<Node, Boolean> action,
-            Predicate<Node>... exclusionConditions
-    ) {
-        walkRecursive(
-                root,
-                action,
-                shouldDisable,
-                // Объединяем все условия исключений
-                node -> Arrays.stream(exclusionConditions)
-                        .anyMatch(condition -> condition.test(node))
-        );
-    }
-
-    private static void walkRecursive(
-            Node node,
-            BiConsumer<Node, Boolean> action,
-            boolean shouldDisable,
-            Predicate<Node> shouldExclude
-    ) {
-        // Пропускаем элементы, соответствующие условиям исключения
-        if (shouldExclude.test(node)) {
-            return;
-        }
-
-        // Применяем действие
-        action.accept(node, shouldDisable);
-
-        // Рекурсивный обход дочерних элементов
-        if (node instanceof Parent) {
-            ((Parent) node).getChildrenUnmodifiable()
-                    .forEach(child -> walkRecursive(child, action, shouldDisable, shouldExclude));
-        }
-    }
 }
 

@@ -284,7 +284,7 @@ public class _10_CheckingController {
         Platform.runLater(() -> updateIndicator(index, result));
         if (!result) {
             Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage,
-                    InterfaceElementsLogic.Alert_Size.SMALL));
+                    InterfaceElementsLogic.Alert_Size.SMALL, true));
             finishChecks();
         }
         return result;
@@ -306,7 +306,7 @@ public class _10_CheckingController {
         } catch (Exception e) {
             Platform.runLater(() -> updateIndicator(index, false));
             Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage,
-                    InterfaceElementsLogic.Alert_Size.SMALL));
+                    InterfaceElementsLogic.Alert_Size.SMALL, true));
             finishChecks();
             return java.util.concurrent.CompletableFuture.completedFuture(false);
         }
@@ -323,7 +323,7 @@ public class _10_CheckingController {
 
             if (!ok) {
                 Platform.runLater(() -> InterfaceElementsLogic.showAlert(errorMessage,
-                        InterfaceElementsLogic.Alert_Size.SMALL));
+                        InterfaceElementsLogic.Alert_Size.SMALL, true));
                 finishChecks();
             }
         });

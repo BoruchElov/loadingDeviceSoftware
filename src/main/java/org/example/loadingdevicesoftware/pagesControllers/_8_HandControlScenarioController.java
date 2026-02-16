@@ -1032,7 +1032,7 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                 if (err != null) {
                     InterfaceElementsLogic.showAlert(
                             "Сценарий завершился с исключением: " + err.getMessage(),
-                            InterfaceElementsLogic.Alert_Size.SMALL
+                            InterfaceElementsLogic.Alert_Size.SMALL, true
                     );
                     setPageState(PageState.ALLOWED_TO_START);
                     return;
@@ -1067,10 +1067,10 @@ public class _8_HandControlScenarioController extends ScreensController implemen
                     }
                     String timeResponse = timeOne + " | " + timeTwo;
                     timeOutput.setText(timeResponse);
-                    InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM);
+                    InterfaceElementsLogic.showAlert(sb.toString(), InterfaceElementsLogic.Alert_Size.MEDIUM, true);
                     setPageState(PageState.WAITING_FOR_CHOICE);
                 } else {
-                    InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL);
+                    InterfaceElementsLogic.showAlert("Ошибка при выполнении сценария!", InterfaceElementsLogic.Alert_Size.SMALL, true);
                     setPageState(PageState.ALLOWED_TO_START);
                 }
             });

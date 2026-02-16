@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ComtradeParser {
 
-    private ComtradeParser() {}
+    private ComtradeParser() {
+    }
 
     private static int analogueChannels;
     private static int digitalChannels;
@@ -29,27 +31,50 @@ public class ComtradeParser {
     private static String dateStamp;
     private static String dataType;
 
-    record AnalogueValue(String name, double theValueOfA, double theValueOfB) {}
+    record AnalogueValue(String name, double theValueOfA, double theValueOfB) {
+    }
 
 
-    public static void parseCFF(File cffFile) throws IOException {
-
+    public static CompletableFuture<Boolean> parseCFF(File cffFile) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        File cfgFile = null;
+        File datFile = null;
+        File[] filesArray = null;
         //Разделение .cff на составные части
-        File[] filesArray = separateCFF(cffFile);
-        File cfgFile = filesArray[0];
-        File datFile = filesArray[3];
-
-        settingsForDatFileAnalysis(cfgFile);
-        readAllAnalogCounts(datFile);
-
-        for (File file : filesArray) {
-            Files.deleteIfExists(file.toPath());
+        try {
+            filesArray = separateCFF(cffFile);
+            cfgFile = filesArray[0];
+            datFile = filesArray[3];
+        } catch (IOException e) {
+            System.err.println("Ошибка при обработке .cff файла!");
+            future.complete(false);
         }
+        //Разбор полученного .cfg файла для дальнейшего анализа .dat файла
+        settingsForDatFileAnalysis(cfgFile);
+        //Интерпретация .dat файла на основании данных из .cfg файла и запись разобранных результатов в .txt файл
+        try {
+            readAllAnalogCounts(datFile);
+        } catch (IOException e) {
+            System.err.println("Ошибка при анализе .dat файла!");
+            future.complete(false);
+        }
+        //Удаление промежуточных файлов
+        try {
+            for (File file : filesArray) {
+                Files.deleteIfExists(file.toPath());
+            }
+        } catch (IOException e) {
+            System.err.println("Ошибка при удалении промежуточных файлов!");
+            future.complete(false);
+        }
+        future.complete(true);
+        return future;
     }
 
 
     /**
      * Метод для разделения файла в расширении .cff на составные части: .cfg, .inf, .hdr, .dat
+     *
      * @param cffFile файл в формате .cff
      * @return массив файлов [.cfg, .inf, .hdr, .dat]
      * @throws IOException
@@ -65,7 +90,8 @@ public class ComtradeParser {
         byte[] cffData = Files.readAllBytes(cffFile.toPath());
         String cffString = new String(cffData, StandardCharsets.ISO_8859_1);
 
-        record SectionHeader(int headerStart, int headerEnd, String type) {}
+        record SectionHeader(int headerStart, int headerEnd, String type) {
+        }
 
         List<SectionHeader> sectionsHeaders = new ArrayList<>();
         Matcher matcher = header.matcher(cffString);
@@ -129,6 +155,7 @@ public class ComtradeParser {
 
     /**
      * Метод для задания параметров разбора .dat файла
+     *
      * @param cfgFile конфигурационный файл в формате .cfg
      */
     private static void settingsForDatFileAnalysis(File cfgFile) {
@@ -145,8 +172,8 @@ public class ComtradeParser {
         //Получение информации о количестве каналов
         String[] channels = lines[1].split(",");
         totalAmountOfChannels = Integer.parseInt(channels[0]);
-        analogueChannels = Integer.parseInt(channels[1].replaceAll("\\D+",""));
-        digitalChannels = Integer.parseInt(channels[2].replaceAll("\\D+",""));
+        analogueChannels = Integer.parseInt(channels[1].replaceAll("\\D+", ""));
+        digitalChannels = Integer.parseInt(channels[2].replaceAll("\\D+", ""));
 
         //Получение списка с именами аналоговых сигналов и соответствующих им a и b
         for (int i = 2; i < 2 + analogueChannels; i++) {
@@ -155,7 +182,7 @@ public class ComtradeParser {
         }
 
         //Получение информации о дискретизации. На данный момент реализована возможность задания только одного периода
-        String[] samplingInfo = lines[totalAmountOfChannels + 4].replaceAll("\\s+","").split(",");
+        String[] samplingInfo = lines[totalAmountOfChannels + 4].replaceAll("\\s+", "").split(",");
         samplingFrequency = Integer.parseInt(samplingInfo[0]);
         numberOfSamples = Integer.parseInt(samplingInfo[1]);
 
@@ -166,11 +193,13 @@ public class ComtradeParser {
         dataType = lines[totalAmountOfChannels + 7];
     }
 
-    record Sample(double relativeTime, double[] values) {}
+    record Sample(double relativeTime, double[] values) {
+    }
 
     /**
      * Читает binary (binary16) DAT и возвращает список сэмплов:
      * sampleNumber, timestamp, и массив аналоговых counts (int, полученный из signed short).
+     *
      * @param datFile
      * @throws IOException
      */
@@ -214,7 +243,9 @@ public class ComtradeParser {
         );
     }
 
-    /** Общий ридер для BINARY16 (bytesPerAnalog=2) и BINARY32 (bytesPerAnalog=4). */
+    /**
+     * Общий ридер для BINARY16 (bytesPerAnalog=2) и BINARY32 (bytesPerAnalog=4).
+     */
     private static List<Sample> readBinary(File datFile, byte[] data, int bytesPerAnalog) throws IOException {
 
         int statusWords = (digitalChannels + 15) / 16; // ceil(ND/16)
@@ -264,7 +295,9 @@ public class ComtradeParser {
         return result;
     }
 
-    /** Ридер для FLOAT32: sample(int32), timestamp(int32), затем NA * float32, затем status words. */
+    /**
+     * Ридер для FLOAT32: sample(int32), timestamp(int32), затем NA * float32, затем status words.
+     */
     private static List<Sample> readFloat32(File datFile, byte[] data) throws IOException {
 
         int statusWords = (digitalChannels + 15) / 16;
@@ -307,7 +340,9 @@ public class ComtradeParser {
         return result;
     }
 
-    /** Ридер ASCII: строки "n,timestamp,A1..Ak,D1..Dm" через запятую. */
+    /**
+     * Ридер ASCII: строки "n,timestamp,A1..Ak,D1..Dm" через запятую.
+     */
     private static List<Sample> readAscii(File datFile) throws IOException {
 
         // Для РФ COMTRADE часто cp1251, но если у тебя ASCII строго — можно US_ASCII.
