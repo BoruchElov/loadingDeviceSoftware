@@ -10,6 +10,7 @@
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleTextField?>
 
 <?import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.SimpleImageView?>
+<?import javafx.scene.layout.Pane?>
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loadingdevicesoftware.pagesControllers._6_ComtradeScenarioController">
    <children>
       <SimpleButton fx:id="menuButton"/>
@@ -32,6 +33,7 @@
       <Text fx:id = "inverterA2"/>
       <Text fx:id = "inverterB2"/>
       <Text fx:id = "inverterC2"/>
-
+      <Pane fx:id="leftPane"/>
+      <Pane fx:id="rightPane"/>
    </children>
 </AnchorPane>

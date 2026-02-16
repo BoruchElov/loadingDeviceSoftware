@@ -2,16 +2,20 @@ package org.example.loadingdevicesoftware.pagesControllers;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,33 +26,19 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
     private final AtomicBoolean formState = new AtomicBoolean(false);
 
     @FXML
+    Pane leftPane;
+    @FXML
+    Pane rightPane;
+
+    @FXML
     SimpleButton comtradeButton;
 
     @FXML
     public void initialize() {
         super.initialize();
         imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
-
-        for (Node node : anchorPane.getChildren()) {
-            switch (node) {
-                case SimpleButton button when button == comtradeButton:
-                    button.setup(new String[]{"comtrade-button"}, new String[]{"Выберите файл COMTRADE"}, FontManager.getFont(FontManager.FontWeight.MEDIUM,
-                            FontManager.FontSize.LARGE));
-                    AnchorPane.setTopAnchor(button, 365.0);
-                    AnchorPane.setLeftAnchor(button, 400.0);
-                    button.setOnAction(_ -> {
-                        testFile();
-                    });
-                    break;
-                case SimpleTextField text when text == objectTextField || text == nameTextField:
-                    text.setVisible(false);
-                    text.setManaged(false);
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        
+        changeConfiguration(new ActionEvent());
     }
 
     public void testFile() {
@@ -60,7 +50,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
             Platform.runLater(() -> {
                 Alert alert = InterfaceElementsLogic.showAlert("Выполняется анализ .cff файла", InterfaceElementsLogic.Alert_Size.SMALL,
                         false);
-                PauseTransition pauseTransition = new PauseTransition(javafx.util.Duration.seconds(10));
+                PauseTransition pauseTransition = new PauseTransition(javafx.util.Duration.seconds(5));
                 pauseTransition.play();
                 pauseTransition.setOnFinished(event -> {
                     if (parsingResult.get()) {
@@ -94,16 +84,63 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
     }
 
     private void changeFormState() {
-        if (formState.get()) {
-
+        if (!formState.get()) {
+            changeConfiguration(new ActionEvent());
         } else {
+            comtradeButton.setVisible(false);
+            comtradeButton.setManaged(false);
 
+            leftPane.setVisible(true);
+            leftPane.setManaged(true);
+
+            rightPane.setVisible(true);
+            rightPane.setManaged(true);
         }
     }
 
 
     @Override
     public void changeConfiguration(Event event) {
+        formState.set(false);
 
+        leftPane.setBorder(Border.stroke(Paint.valueOf("#000000")));
+        leftPane.setPrefWidth(400.);
+        leftPane.setPrefHeight(480.);
+        leftPane.backgroundProperty().set(Background.fill(Paint.valueOf("#FFFFFF")));
+        AnchorPane.setTopAnchor(leftPane, 160.);
+        AnchorPane.setLeftAnchor(leftPane, 20.);
+        leftPane.setVisible(false);
+        leftPane.setManaged(false);
+
+        rightPane.setBorder(Border.stroke(Paint.valueOf("#000000")));
+        rightPane.setPrefWidth(810.);
+        rightPane.setPrefHeight(480.);
+        rightPane.backgroundProperty().set(Background.fill(Paint.valueOf("#FFFFFF")));
+        AnchorPane.setTopAnchor(rightPane, 160.);
+        AnchorPane.setLeftAnchor(rightPane, 450.);
+        rightPane.setVisible(false);
+        rightPane.setManaged(false);
+
+        for (Node node : anchorPane.getChildren()) {
+            switch (node) {
+                case SimpleButton button when button == comtradeButton:
+                    button.setVisible(true);
+                    button.setManaged(true);
+                    button.setup(new String[]{"comtrade-button"}, new String[]{"Выберите файл COMTRADE"}, FontManager.getFont(FontManager.FontWeight.MEDIUM,
+                            FontManager.FontSize.LARGE));
+                    AnchorPane.setTopAnchor(button, 365.0);
+                    AnchorPane.setLeftAnchor(button, 400.0);
+                    button.setOnAction(_ -> {
+                        testFile();
+                    });
+                    break;
+                case SimpleTextField text when text == objectTextField || text == nameTextField:
+                    text.setVisible(false);
+                    text.setManaged(false);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
