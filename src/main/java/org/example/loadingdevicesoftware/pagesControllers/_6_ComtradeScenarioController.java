@@ -8,10 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
@@ -151,25 +153,33 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
     }
 
     public class RowItem {
-        private final BooleanProperty selected = new SimpleBooleanProperty(false);
-        private final StringProperty label = new SimpleStringProperty("");
+        private BooleanProperty selected = new SimpleBooleanProperty(false);
+        private StringProperty label = new SimpleStringProperty();
+        private StringProperty value = new SimpleStringProperty();
 
         public RowItem(String label) {
             this.label.set(label);}
 
         public BooleanProperty selectedProperty() { return selected; }
         public StringProperty labelProperty() { return label; }
+        public StringProperty valueProperty() { return value; }
     }
 
 
     private void setupLeftPane() {
         ObservableList<RowItem> rowItems = FXCollections.observableArrayList();
-        for (int i = 0; i < 5; i++) {
-            rowItems.add(new RowItem("U" + i));
+        for (int i = 0; i < 12; i++) {
+            rowItems.add(new RowItem("Тестовое свойство №" + i));
         }
 
         ListView<RowItem> listView = new ListView<>();
         listView.setItems(rowItems); // ObservableList<RowItem>
+
+        double height = 460.;
+        double width = 360.;
+        listView.setPrefSize(width, height);
+        listView.setMinSize(width, height);
+        listView.setMaxSize(width, height);
 
         listView.setCellFactory(lv -> new ListCell<>() {
             private final CheckBox cb = new CheckBox();
@@ -177,40 +187,66 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
             private final SimpleTextField tf = new SimpleTextField();
             private final HBox root = new HBox(10, cb, text, tf);
 
-            // чтобы не “тянуло” строку
+            private RowItem boundItem; // <-- ВАЖНО
+
             {
                 HBox.setHgrow(tf, Priority.ALWAYS);
-                text.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
+                root.setAlignment(Pos.CENTER);
+                cb.getStyleClass().clear();
+                cb.getStyleClass().add("check-box");
+                cb.getStyleClass().add("check-box-new");
+
+                text.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.NORMAL));
+                double labelWidth = 150.;
+                double labelHeight = 64.;
+                text.setPrefSize(labelWidth, labelHeight);
+                text.setMinSize(labelWidth, labelHeight);
+                text.setMaxSize(labelWidth, labelHeight);
+                text.setWrapText(true);
+                text.setTextAlignment(TextAlignment.CENTER);
+                text.setAlignment(Pos.CENTER);
+
                 tf.setLimits(-100000.,100000., SimpleTextField.numberOfDecimals.THREE);
                 tf.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
-                tf.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.LARGE));
+                tf.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+                tf.setAlignment(Pos.BOTTOM_CENTER);
+                double tfWidth = 95.;
+                double tfHeight = 42.;
+                tf.setPrefSize(tfWidth, tfHeight);
+                tf.setMinSize(tfWidth, tfHeight);
+                tf.setMaxSize(tfWidth, tfHeight);
             }
 
             @Override
             protected void updateItem(RowItem item, boolean empty) {
                 super.updateItem(item, empty);
 
+                // 1) отвязаться от старого item
+                if (boundItem != null) {
+                    cb.selectedProperty().unbindBidirectional(boundItem.selectedProperty());
+                    text.textProperty().unbind();
+                    tf.textProperty().unbindBidirectional(boundItem.valueProperty());
+                    boundItem = null;
+                }
+
                 if (empty || item == null) {
                     setGraphic(null);
                     return;
                 }
 
-                // важно: отвязать старые биндинги
-                cb.selectedProperty().unbindBidirectional(item.selectedProperty());
-
-                // привязки
+                // 2) привязаться к новому item
+                boundItem = item;
                 cb.selectedProperty().bindBidirectional(item.selectedProperty());
                 text.textProperty().bind(item.labelProperty());
+                tf.textProperty().bindBidirectional(item.valueProperty());
 
                 setGraphic(root);
             }
         });
-        leftPane.getChildren().setAll(listView);
-        AnchorPane.setTopAnchor(listView, 0.0);
-        AnchorPane.setBottomAnchor(listView, 0.0);
-        AnchorPane.setLeftAnchor(listView, 0.0);
-        AnchorPane.setRightAnchor(listView, 0.0);
 
+        leftPane.getChildren().setAll(listView);
+        listView.setLayoutX(20.);
+        listView.setLayoutY(10.);
 
     }
 }
