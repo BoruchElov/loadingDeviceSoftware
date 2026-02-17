@@ -176,10 +176,11 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         listView.setItems(rowItems); // ObservableList<RowItem>
 
         double height = 460.;
-        double width = 360.;
+        double width = 380.;
         listView.setPrefSize(width, height);
         listView.setMinSize(width, height);
         listView.setMaxSize(width, height);
+        listView.setSelectionModel(null);
 
         listView.setCellFactory(lv -> new ListCell<>() {
             private final CheckBox cb = new CheckBox();
@@ -245,7 +246,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         });
 
         leftPane.getChildren().setAll(listView);
-        listView.setLayoutX(20.);
+        listView.setLayoutX(10.);
         listView.setLayoutY(10.);
 
     }
