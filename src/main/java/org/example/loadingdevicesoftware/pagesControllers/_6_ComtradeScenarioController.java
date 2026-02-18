@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
@@ -152,6 +153,10 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         }
     }
 
+
+    /**
+     * Утилитарный класс для настройки ячеек в списке выбора сигналов.
+     */
     public class RowItem {
         private BooleanProperty selected = new SimpleBooleanProperty(false);
         private StringProperty label = new SimpleStringProperty();
@@ -165,8 +170,53 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         public StringProperty valueProperty() { return value; }
     }
 
-
+    /**
+     * Метод для настройки внешнего вида и функционала элементов панели выбора сигналов
+     */
     private void setupLeftPane() {
+
+        double yPosition = 425.;
+        SimpleButton applyButton = new SimpleButton();
+        applyButton.setup(new String[]{"apply-button"}, new String[]{"Применить"}, FontManager.
+                getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.SMALL));
+        leftPane.getChildren().add(applyButton);
+        applyButton.setLayoutX(30.);
+        applyButton.setLayoutY(yPosition);
+
+        Label startText = new Label("tначальный");
+        Label endText = new Label("tконечный");
+        Label[] labels = new Label[]{startText, endText};
+        for (Label label : labels) {
+            label.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.SMALL));
+            label.setAlignment(Pos.CENTER);
+            leftPane.getChildren().add(label);
+            label.setLayoutY(yPosition - 30.);
+            double xPosition = (label == startText) ? 180. : 295.;
+            label.setLayoutX(xPosition);
+        }
+
+        SimpleTextField startTF = new SimpleTextField();
+        SimpleTextField endTF = new SimpleTextField();
+        SimpleTextField[] texts = new SimpleTextField[]{startTF, endTF};
+        for (SimpleTextField tf : texts) {
+            leftPane.getChildren().add(tf);
+            tf.setLimits(0.,100000., SimpleTextField.numberOfDecimals.TWO);
+            tf.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
+            tf.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
+            tf.setAlignment(Pos.BOTTOM_CENTER);
+            double tfWidth = 95.;
+            double tfHeight = 42.;
+            tf.setPrefSize(tfWidth, tfHeight);
+            tf.setMinSize(tfWidth, tfHeight);
+            tf.setMaxSize(tfWidth, tfHeight);
+            tf.setLayoutX(0.);
+            double xPosition = (tf == startTF) ? 180. : 290.;
+            tf.setLayoutX(xPosition);
+            tf.setLayoutY(yPosition);
+        }
+
+
+
         ObservableList<RowItem> rowItems = FXCollections.observableArrayList();
         for (int i = 0; i < 12; i++) {
             rowItems.add(new RowItem("Тестовое свойство №" + i));
@@ -175,7 +225,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         ListView<RowItem> listView = new ListView<>();
         listView.setItems(rowItems); // ObservableList<RowItem>
 
-        double height = 460.;
+        double height = 320.;
         double width = 380.;
         listView.setPrefSize(width, height);
         listView.setMinSize(width, height);
@@ -245,9 +295,40 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
             }
         });
 
-        leftPane.getChildren().setAll(listView);
+        leftPane.getChildren().add(listView);
         listView.setLayoutX(10.);
-        listView.setLayoutY(10.);
+        listView.setLayoutY(50.);
+
+        Label status = new Label("Статус");
+        Label name = new Label("Сигнал");
+        Label scale = new Label("Масштаб");
+        Label[] labels1 = new Label[]{status, name, scale};
+        for (Label l : labels1) {
+            l.setFont(FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.NORMAL));
+            l.setAlignment(Pos.CENTER);
+            leftPane.getChildren().add(l);
+            l.setLayoutY(10.);
+            if (l == status) {
+                l.setLayoutX(20.);
+            } else if (l == name) {
+                l.setLayoutX(140.);
+            } else {
+                l.setLayoutX(260.);
+            }
+        }
+
+        Line lineUp = new Line();
+        Line lineDown = new Line();
+        Line[] lines = new Line[]{lineUp, lineDown};
+        for (Line l : lines) {
+            leftPane.getChildren().add(l);
+            double y = (l == lineUp) ? 50. : 383.;
+            l.setLayoutY(y);
+            l.setLayoutX(10.);
+            l.setStartX(10.);
+            l.setEndX(375.);
+            l.setStrokeWidth(3.);
+        }
 
     }
 }

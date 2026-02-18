@@ -253,6 +253,23 @@
     -fx-border-insets: 0;
     -fx-padding: 0px;
 }
+.apply-button {
+    -fx-border-color: #000000;
+    -fx-pref-width: 130px; /* Желаемая ширина */
+    -fx-pref-height: 42px; /* Желаемая высота */
+    -fx-min-width: 130px; /* Минимальная ширина */
+    -fx-min-height: 42px; /* Минимальная высота */
+    -fx-max-width: 130px;
+    -fx-max-height: 42px;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+    -fx-border-width: 1.5;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0px;
+}
 .button-group {
     -fx-border-color: #000000;
     -fx-pref-width: 50px; /* Желаемая ширина */
