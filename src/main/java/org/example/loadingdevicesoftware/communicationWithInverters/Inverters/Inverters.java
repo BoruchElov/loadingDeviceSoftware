@@ -16,6 +16,8 @@ public class Inverters implements PacketHandler {
     private final BlockingQueue<RawCard> inputQueue = new LinkedBlockingQueue<>();
     private static final ConcurrentHashMap<ResponseCard, byte[]> responses = new ConcurrentHashMap<>();
 
+    private static final ConcurrentHashMap<ResponseCard, CompletableFuture<byte[]>> inFlight = new ConcurrentHashMap<>();
+
     private static Thread analyzerThread;
     private static boolean running = true;
 
@@ -82,7 +84,15 @@ public class Inverters implements PacketHandler {
      * @param arguments аргументы команды
      */
     public static CompletableFuture<byte[]> sendCommandToInverterAsync(Address inverterAddress, Messages command, String arguments) {
-        return Messages.callFunctionAsync(tabletAddress, inverterAddress, command, arguments);
+        ResponseCard key = new ResponseCard(inverterAddress, command);
+
+        return inFlight.computeIfAbsent(key, _k -> {
+            CompletableFuture<byte[]> f = Messages.callFunctionAsync(tabletAddress, inverterAddress, command, arguments);
+
+            // как только завершилось — убрать из inFlight
+            f.whenComplete((_ok, _ex) -> inFlight.remove(key, f));
+            return f;
+        });
     }
 
     public static void respondToInverter(Address inverterAddress, Messages command, String arguments) {
@@ -108,14 +118,15 @@ public class Inverters implements PacketHandler {
     }
 
     public static void removeResponse(Address sender, Messages expectedResponse) {
-        ResponseCard responseCard = new ResponseCard(sender, expectedResponse);
-        if (!pendingResponses.containsKey(responseCard)) pendingResponses.remove(responseCard);
+        pendingResponses.remove(new ResponseCard(sender, expectedResponse));
     }
 
     public static void addResponse(Address sender, Messages expectedResponse, CompletableFuture<byte[]> response) {
         ResponseCard responseCard = new ResponseCard(sender, expectedResponse);
-        if (!pendingResponses.containsKey(responseCard))
-            pendingResponses.put(new ResponseCard(sender, expectedResponse), response);
+        if (!pendingResponses.containsKey(responseCard)) {
+            pendingResponses.put(responseCard, response);
+            response.whenComplete((_, _) -> removeResponse(sender,expectedResponse));
+        }
     }
 
     @Override

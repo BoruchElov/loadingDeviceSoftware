@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
@@ -22,6 +23,15 @@ import java.io.File;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import io.fair_acc.chartfx.XYChart;
+import io.fair_acc.chartfx.axes.AxisLabelOverlapPolicy;
+import io.fair_acc.chartfx.axes.spi.DefaultNumericAxis;
+import io.fair_acc.chartfx.plugins.DataPointTooltip;
+import io.fair_acc.chartfx.plugins.EditAxis;
+import io.fair_acc.chartfx.plugins.Zoomer;
+import io.fair_acc.dataset.spi.DefaultErrorDataSet;
+import io.fair_acc.dataset.utils.ProcessingProfiler;
 
 
 public class _6_ComtradeScenarioController extends ScreensController implements Configurable {
@@ -40,7 +50,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
     public void initialize() {
         super.initialize();
         imageView.setImage(ApplicationConstants.NEW_BASE_BACKGROUND);
-        
+
         changeConfiguration(new ActionEvent());
     }
 
@@ -105,6 +115,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                     rightPane.setManaged(true);
 
                     setupLeftPane();
+                    setupRightPane();
                 }
             });
         });
@@ -163,11 +174,20 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         private StringProperty value = new SimpleStringProperty();
 
         public RowItem(String label) {
-            this.label.set(label);}
+            this.label.set(label);
+        }
 
-        public BooleanProperty selectedProperty() { return selected; }
-        public StringProperty labelProperty() { return label; }
-        public StringProperty valueProperty() { return value; }
+        public BooleanProperty selectedProperty() {
+            return selected;
+        }
+
+        public StringProperty labelProperty() {
+            return label;
+        }
+
+        public StringProperty valueProperty() {
+            return value;
+        }
     }
 
     /**
@@ -200,7 +220,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         SimpleTextField[] texts = new SimpleTextField[]{startTF, endTF};
         for (SimpleTextField tf : texts) {
             leftPane.getChildren().add(tf);
-            tf.setLimits(0.,100000., SimpleTextField.numberOfDecimals.TWO);
+            tf.setLimits(0., 100000., SimpleTextField.numberOfDecimals.TWO);
             tf.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
             tf.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
             tf.setAlignment(Pos.BOTTOM_CENTER);
@@ -214,7 +234,6 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
             tf.setLayoutX(xPosition);
             tf.setLayoutY(yPosition);
         }
-
 
 
         ObservableList<RowItem> rowItems = FXCollections.observableArrayList();
@@ -257,7 +276,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                 text.setTextAlignment(TextAlignment.CENTER);
                 text.setAlignment(Pos.CENTER);
 
-                tf.setLimits(-100000.,100000., SimpleTextField.numberOfDecimals.THREE);
+                tf.setLimits(-100000., 100000., SimpleTextField.numberOfDecimals.THREE);
                 tf.setup("", SimpleTextField.Sizes.MEDIUM, SimpleTextField.typeOfValue.DIGIT);
                 tf.setFont(FontManager.getFont(FontManager.FontWeight.LIGHT, FontManager.FontSize.NORMAL));
                 tf.setAlignment(Pos.BOTTOM_CENTER);
@@ -297,7 +316,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
 
         leftPane.getChildren().add(listView);
         listView.setLayoutX(10.);
-        listView.setLayoutY(50.);
+        listView.setLayoutY(52.);
 
         Label status = new Label("Статус");
         Label name = new Label("Сигнал");
@@ -322,13 +341,80 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         Line[] lines = new Line[]{lineUp, lineDown};
         for (Line l : lines) {
             leftPane.getChildren().add(l);
-            double y = (l == lineUp) ? 50. : 383.;
+            double y = (l == lineUp) ? 47. : 383.;
             l.setLayoutY(y);
             l.setLayoutX(10.);
             l.setStartX(10.);
             l.setEndX(375.);
             l.setStrokeWidth(3.);
         }
+    }
 
+    /**
+     * Метод для настройки внешнего вида и функционала панели отображения графиков
+     */
+    private void setupRightPane() {
+        ProcessingProfiler.setVerboseOutputState(true);
+        ProcessingProfiler.setLoggerOutputState(true);
+        ProcessingProfiler.setDebugState(false);
+
+        final DefaultNumericAxis xAxis1 = new DefaultNumericAxis();
+        xAxis1.setOverlapPolicy(AxisLabelOverlapPolicy.SKIP_ALT);
+        final DefaultNumericAxis yAxis1 = new DefaultNumericAxis();
+
+        final XYChart chart = new XYChart(xAxis1, yAxis1);
+        chart.legendVisibleProperty().set(false);
+        chart.getPlugins().add(new Zoomer());
+        chart.getPlugins().add(new EditAxis());
+        chart.getPlugins().add(new DataPointTooltip());
+        // set them false to make the plot faster
+        chart.setAnimated(false);
+
+        xAxis1.setAutoRangeRounding(false);
+        // xAxis1.invertAxis(true); TODO: bug inverted time axis crashes when zooming
+        xAxis1.setTimeAxis(true);
+        yAxis1.setAutoRangeRounding(true);
+
+        chart.setStyle("""
+                -fx-background-color: #6e9cdf;              /* фон вокруг plot-area */
+                -chart-plot-background-color: #b5368f;      /* фон области построения */
+                -fx-font-family: "Consolas";
+                    -fx-font-size: 40px;
+                """);
+
+
+        final DefaultErrorDataSet dataSet = new DefaultErrorDataSet("TestData");
+
+        generateData(dataSet);
+
+        long startTime = ProcessingProfiler.getTimeStamp();
+        chart.getDatasets().add(dataSet);
+        ProcessingProfiler.getTimeDiff(startTime, "adding data to chart");
+
+        startTime = ProcessingProfiler.getTimeStamp();
+        rightPane.getChildren().add(chart);
+        ProcessingProfiler.getTimeDiff(startTime, "adding chart into StackPane");
+    }
+
+    private static final int N_SAMPLES = 10_000; // default: 10000
+
+    private static void generateData(final DefaultErrorDataSet dataSet) {
+        final long startTime = ProcessingProfiler.getTimeStamp();
+
+        dataSet.clearData();
+        final double now = System.currentTimeMillis() / 1000.0 + 1; // N.B. '+1'
+        // to check
+        // for
+        // resolution
+        for (int n = 0; n < N_SAMPLES; n++) {
+            double t = now + n * 10;
+            t *= +1;
+            final double y = 100 * Math.cos(Math.PI * t * 0.0005) + 0 * 0.001 * (t - now) + 0 * 1e4;
+            final double ex = 0.1;
+            final double ey = 10;
+            dataSet.add(t, y, ex, ey);
+        }
+
+        ProcessingProfiler.getTimeDiff(startTime, "adding data into DataSet");
     }
 }

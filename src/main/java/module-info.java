@@ -17,6 +17,12 @@ module org.example.loadingdevicesoftware {
     requires com.fasterxml.jackson.databind;
     requires commons.math3;
     requires javafx.graphics;
+    requires io.fair_acc.chartfx;
+    requires io.fair_acc.dataset;
+    requires org.kordamp.ikonli.fontawesome;
+    requires org.kordamp.ikonli.fontawesome5;
+
+    requires org.slf4j;
 
     opens org.example.loadingdevicesoftware to javafx.fxml;
     exports org.example.loadingdevicesoftware;
