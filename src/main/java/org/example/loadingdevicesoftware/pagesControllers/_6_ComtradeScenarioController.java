@@ -14,12 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,6 +32,8 @@ import io.fair_acc.chartfx.plugins.EditAxis;
 import io.fair_acc.chartfx.plugins.Zoomer;
 import io.fair_acc.dataset.spi.DefaultErrorDataSet;
 import io.fair_acc.dataset.utils.ProcessingProfiler;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade.ComtradeParser;
+import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade.PhasePlot;
 
 
 public class _6_ComtradeScenarioController extends ScreensController implements Configurable {
@@ -354,67 +356,20 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
      * Метод для настройки внешнего вида и функционала панели отображения графиков
      */
     private void setupRightPane() {
-        ProcessingProfiler.setVerboseOutputState(true);
-        ProcessingProfiler.setLoggerOutputState(true);
-        ProcessingProfiler.setDebugState(false);
-
-        final DefaultNumericAxis xAxis1 = new DefaultNumericAxis();
-        xAxis1.setOverlapPolicy(AxisLabelOverlapPolicy.SKIP_ALT);
-        final DefaultNumericAxis yAxis1 = new DefaultNumericAxis();
-
-        final XYChart chart = new XYChart(xAxis1, yAxis1);
-        chart.legendVisibleProperty().set(false);
-        chart.getPlugins().add(new Zoomer());
-        chart.getPlugins().add(new EditAxis());
-        chart.getPlugins().add(new DataPointTooltip());
-        // set them false to make the plot faster
-        chart.setAnimated(false);
-
-        xAxis1.setAutoRangeRounding(false);
-        // xAxis1.invertAxis(true); TODO: bug inverted time axis crashes when zooming
-        xAxis1.setTimeAxis(true);
-        yAxis1.setAutoRangeRounding(true);
-
-        chart.setStyle("""
-                -fx-background-color: #6e9cdf;              /* фон вокруг plot-area */
-                -chart-plot-background-color: #b5368f;      /* фон области построения */
-                -fx-font-family: "Consolas";
-                    -fx-font-size: 40px;
-                """);
-
-
-        final DefaultErrorDataSet dataSet = new DefaultErrorDataSet("TestData");
-
-        generateData(dataSet);
-
-        long startTime = ProcessingProfiler.getTimeStamp();
-        chart.getDatasets().add(dataSet);
-        ProcessingProfiler.getTimeDiff(startTime, "adding data to chart");
-
-        startTime = ProcessingProfiler.getTimeStamp();
-        rightPane.getChildren().add(chart);
-        ProcessingProfiler.getTimeDiff(startTime, "adding chart into StackPane");
-    }
-
-    private static final int N_SAMPLES = 10_000; // default: 10000
-
-    private static void generateData(final DefaultErrorDataSet dataSet) {
-        final long startTime = ProcessingProfiler.getTimeStamp();
-
-        dataSet.clearData();
-        final double now = System.currentTimeMillis() / 1000.0 + 1; // N.B. '+1'
-        // to check
-        // for
-        // resolution
-        for (int n = 0; n < N_SAMPLES; n++) {
-            double t = now + n * 10;
-            t *= +1;
-            final double y = 100 * Math.cos(Math.PI * t * 0.0005) + 0 * 0.001 * (t - now) + 0 * 1e4;
-            final double ex = 0.1;
-            final double ey = 10;
-            dataSet.add(t, y, ex, ey);
+        ArrayList<Double> timeArray = new ArrayList<>();/**/
+        double timeStep = 0.0001;
+        double frequency = 2. * Math.PI * 30.;
+        ArrayList<Double> valueArray = new ArrayList<>();
+        for (int i = 0; i < 20_000; i++) {
+            double time = i * timeStep;
+            timeArray.add(time);
+            valueArray.add(10. * Math.sin(frequency * time) + 7. * Math.sin(2. * frequency * time) +
+                    5. * Math.sin(4. * frequency * time) + 3.);
         }
 
-        ProcessingProfiler.getTimeDiff(startTime, "adding data into DataSet");
+        PhasePlot phasePlot = new PhasePlot("Тестовый график", timeArray, valueArray);
+        XYChart chart = phasePlot.getChart();
+
+        rightPane.getChildren().add(chart);
     }
 }

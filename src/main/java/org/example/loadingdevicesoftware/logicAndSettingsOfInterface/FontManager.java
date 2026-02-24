@@ -9,7 +9,7 @@ public class FontManager {
     }
 
     public enum FontSize {
-        SMALL, NORMAL, LARGE
+        SMALL_TWELVE, SMALL_FOURTEEN, SMALL_EIGHTEEN, SMALL, NORMAL, LARGE
     }
 
     public static final Font APP_FONT_LIGHT = Font.loadFont(FontManager.class.
@@ -26,6 +26,9 @@ public class FontManager {
         };
 
         double size = switch (fontSize) {
+            case SMALL_TWELVE -> 12;
+            case SMALL_FOURTEEN -> 14;
+            case SMALL_EIGHTEEN -> 18;
             case SMALL -> 20;
             case NORMAL -> 24;
             case LARGE -> 36;

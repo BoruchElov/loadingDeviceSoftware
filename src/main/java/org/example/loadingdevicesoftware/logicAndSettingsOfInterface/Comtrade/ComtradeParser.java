@@ -1,4 +1,4 @@
-package org.example.loadingdevicesoftware.logicAndSettingsOfInterface;
+package org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade;
 
 import java.io.BufferedWriter;
 import java.io.File;

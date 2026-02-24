@@ -30,4 +30,6 @@ module org.example.loadingdevicesoftware {
     opens org.example.loadingdevicesoftware.logicAndSettingsOfInterface to javafx.fxml;
     exports org.example.loadingdevicesoftware.pagesControllers;
     opens org.example.loadingdevicesoftware.pagesControllers to javafx.fxml;
+    exports org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade;
+    opens org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade to javafx.fxml;
 }
