@@ -367,9 +367,76 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                     5. * Math.sin(4. * frequency * time) + 3.);
         }
 
-        PhasePlot phasePlot = new PhasePlot("Тестовый график", timeArray, valueArray);
-        XYChart chart = phasePlot.getChart();
+        ObservableList<PlotRow> rows = FXCollections.observableArrayList();
 
-        rightPane.getChildren().add(chart);
+        for (int i = 0; i < 6; i++) {
+            PhasePlot plot = new PhasePlot("Plot " + (i + 1), timeArray, valueArray);
+
+            ObservableList<String> modes = FXCollections.observableArrayList("Raw", "RMS", "FFT");
+            StringProperty selected = new SimpleStringProperty("Raw");
+
+            // реакция на смену режима (пример)
+            selected.addListener((obs, o, n) -> {
+                // TODO: применить n к plot (сменить dataset / пересчитать / сменить стиль и т.п.)
+            });
+
+            rows.add(new PlotRow(plot, modes, selected));
+        }
+        ListView<PlotRow> listView = new ListView<>(rows);
+        listView.setItems(rows);
+// раз у тебя всегда 6 строк — можно фиксировать высоту
+
+        listView.setCellFactory(lv -> new ListCell<>() {
+
+            private final ComboBox<String> combo = new ComboBox<>();
+            private final HBox root = new HBox(6);
+
+            {
+                combo.getStyleClass().add("combo-box-new");
+            }
+
+            @Override
+            protected void updateItem(PlotRow item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                // 1) График (готовый из PhasePlot)
+                XYChart chart = item.plot().getChart();
+
+                // Важно: chart мог остаться в предыдущей ячейке из-за реюза ListCell.
+                // Перед добавлением гарантируем, что он "отвязан" от старого родителя.
+                if (chart.getParent() != null) {
+                    ((Pane) chart.getParent()).getChildren().remove(chart);
+                }
+
+                // 2) Комбобокс
+                combo.setItems(item.modes());
+
+                // чтобы не плодить слушатели при реюзе ячейки:
+                combo.valueProperty().unbindBidirectional(item.selectedMode());
+                combo.valueProperty().bindBidirectional(item.selectedMode());
+
+                // 3) Компоновка
+                root.getChildren().setAll(chart, combo);
+                setGraphic(root);
+            }
+        });
+        rightPane.getChildren().add(listView);
+
+        double height = 480.;
+        double width = 810.;
+        listView.setPrefSize(width, height);
+        listView.setMinSize(width, height);
+        listView.setMaxSize(width, height);
+        listView.setSelectionModel(null);
+
     }
+
+    public record PlotRow(PhasePlot plot,
+                          ObservableList<String> modes,
+                          StringProperty selectedMode) {}
 }

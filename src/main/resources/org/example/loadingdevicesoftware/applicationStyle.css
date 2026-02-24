@@ -15,6 +15,11 @@
 .combo-box:disabled {
     -fx-opacity: 1.0;
 }
+.combo-box-new {
+    -fx-pref-width: 110px; /* Желаемая ширина */
+    -fx-min-width: 110px; /* Минимальная ширина */
+    -fx-max-width: 110px;
+}
 
 .button-low-normal {
     -fx-border-color: #FFFFFF;
