@@ -240,6 +240,10 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
 
         ObservableList<RowItem> rowItems = FXCollections.observableArrayList();
         for (int i = 0; i < 12; i++) {
+            RowItem rowItem = new RowItem("Тестовое свойство №" + i);
+            rowItem.selected.addListener((obs, oldVal, newVal) -> {
+                
+            });
             rowItems.add(new RowItem("Тестовое свойство №" + i));
         }
 
@@ -352,26 +356,16 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         }
     }
 
+    final ArrayList<PhasePlot> availablePlots = new ArrayList<>();
+
     /**
      * Метод для настройки внешнего вида и функционала панели отображения графиков
      */
     private void setupRightPane() {
-        ArrayList<Double> timeArray = new ArrayList<>();/**/
-        double timeStep = 0.0001;
-        double frequency = 2. * Math.PI * 30.;
-        ArrayList<Double> valueArray = new ArrayList<>();
-        for (int i = 0; i < 20_000; i++) {
-            double time = i * timeStep;
-            timeArray.add(time);
-            valueArray.add(10. * Math.sin(frequency * time) + 7. * Math.sin(2. * frequency * time) +
-                    5. * Math.sin(4. * frequency * time) + 3.);
-        }
-
         ObservableList<PlotRow> rows = FXCollections.observableArrayList();
-
         for (int i = 0; i < 6; i++) {
-            PhasePlot plot = new PhasePlot("Plot " + (i + 1), timeArray, valueArray);
-
+            PhasePlot plot = new PhasePlot("", null, null);
+            availablePlots.add(plot);
             ObservableList<String> modes = FXCollections.observableArrayList("Raw", "RMS", "FFT");
             StringProperty selected = new SimpleStringProperty("Raw");
 
@@ -379,12 +373,11 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
             selected.addListener((obs, o, n) -> {
                 // TODO: применить n к plot (сменить dataset / пересчитать / сменить стиль и т.п.)
             });
-
             rows.add(new PlotRow(plot, modes, selected));
         }
         ListView<PlotRow> listView = new ListView<>(rows);
         listView.setItems(rows);
-// раз у тебя всегда 6 строк — можно фиксировать высоту
+        // раз у тебя всегда 6 строк — можно фиксировать высоту
 
         listView.setCellFactory(lv -> new ListCell<>() {
 
