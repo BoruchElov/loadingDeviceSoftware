@@ -238,8 +238,7 @@ public class ComtradeParser {
         }
 
         writeSamples(
-                result, datFile.getParentFile().toPath(), datFile.getName()
-                        .substring(0, datFile.getName().lastIndexOf('.')) + "_" + dataType.toLowerCase()
+                result, datFile.getParentFile().toPath()
         );
     }
 
@@ -402,47 +401,32 @@ public class ComtradeParser {
 
     private static void writeSamples(
             List<Sample> samples,
-            Path directory,
-            String fileName
+            Path directory
     ) throws IOException {
 
-        // гарантируем расширение
-        if (!fileName.endsWith(".txt")) {
-            fileName += ".txt";
-        }
-
-        Path filePath = directory.resolve(fileName);
         char separator = ';';
 
-        try (BufferedWriter writer =
-                     Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
-            //Запись заголовка
-            StringBuilder header = new StringBuilder();
-            header.append("Relative time, s");
-            header.append(separator);
-            for (AnalogueValue value : analogueValues) {
-                header.append(value.name);
-                header.append(separator);
-            }
-            writer.write(header.toString());
-            writer.newLine();
-            //
-            for (Sample sample : samples) {
-
-                StringBuilder line = new StringBuilder();
-
-                // время
-                line.append(sample.relativeTime());
-
-                // массив значений
-                for (double value : sample.values()) {
-                    line.append(separator);
-                    line.append(String.format("%.3f", value));
+        for (AnalogueValue value : analogueValues) {
+            String name = value.name().replaceAll("[<>:\"/\\\\|?*]", "_")
+                    .replaceAll("[\\p{Cntrl}]", "");
+            name += ".txt";
+            Path path = directory.resolve(name);
+            try (BufferedWriter writer =
+                         Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
+                StringBuilder builder = new StringBuilder();
+                int index = analogueValues.indexOf(value);
+                for (Sample sample : samples) {
+                    builder.append(String.format("%.3f", sample.values()[index])).append(separator);
                 }
-
-                writer.write(line.toString());
-                writer.newLine();
+                writer.write(builder.toString());
             }
+        }
+        try (BufferedWriter writer = Files.newBufferedWriter(directory.resolve("Time_s.txt"), StandardCharsets.UTF_8)) {
+            StringBuilder builder = new StringBuilder();
+            for (Sample sample : samples) {
+                builder.append(sample.relativeTime).append(separator);
+            }
+            writer.write(builder.toString());
         }
     }
 

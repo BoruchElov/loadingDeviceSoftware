@@ -18,20 +18,23 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import io.fair_acc.chartfx.XYChart;
-import io.fair_acc.chartfx.axes.AxisLabelOverlapPolicy;
-import io.fair_acc.chartfx.axes.spi.DefaultNumericAxis;
-import io.fair_acc.chartfx.plugins.DataPointTooltip;
-import io.fair_acc.chartfx.plugins.EditAxis;
-import io.fair_acc.chartfx.plugins.Zoomer;
-import io.fair_acc.dataset.spi.DefaultErrorDataSet;
-import io.fair_acc.dataset.utils.ProcessingProfiler;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade.ComtradeParser;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade.PhasePlot;
 
@@ -48,6 +51,8 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
     @FXML
     SimpleButton comtradeButton;
 
+    private static ArrayList<String> signals;
+
     @FXML
     public void initialize() {
         super.initialize();
@@ -57,10 +62,32 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
     }
 
     public void testFile() {
+        //Обращение к сервисной папке или создание новой при её отсутствии
+        Path serviceDir = Paths.get(
+                System.getProperty("user.home"),
+                ".loadingDeviceSoftware",
+                "service"
+        );
+        if (Files.notExists(serviceDir)) {
+            try {
+                Files.createDirectories(serviceDir);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         AtomicBoolean parsingResult = new AtomicBoolean(false);
         AtomicInteger parsingCount = new AtomicInteger(1);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         File newFile = InterfaceElementsLogic.openFileChooser(stage, "Comtrade files .cff", "*.cff");
+        Path pathForCopy = serviceDir.resolve("comtradeFile.cff");
+        try {
+            Files.copy(newFile.toPath(), pathForCopy, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        File copiedFile = new File(pathForCopy.toString());
+        System.out.println(copiedFile.getAbsolutePath());
         if (newFile != null) {
             Platform.runLater(() -> {
                 Alert alert = InterfaceElementsLogic.showAlert("Выполняется анализ .cff файла", InterfaceElementsLogic.Alert_Size.SMALL,
@@ -73,6 +100,20 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                         if (parsingResult.get()) {
                             InterfaceElementsLogic.showAlert("Анализ выполнен успешно!", InterfaceElementsLogic.Alert_Size.SMALL,
                                     true);
+                            copiedFile.delete();
+                            try {
+                                List<String> fileNames = new ArrayList<>(Files.list(pathForCopy.getParent().resolve("comtradeFile"))
+                                        .map(path -> path.getFileName().toString())
+                                        .toList());
+                                fileNames.removeIf(fileName -> fileName.equals("Time_s.txt"));
+                                for (String fileName : fileNames) {
+                                    int i = fileNames.indexOf(fileName);
+                                    fileNames.set(i, fileNames.get(i).replace(".txt", ""));
+                                }
+                                signals = new ArrayList<>(fileNames);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         } else {
                             InterfaceElementsLogic.showAlert("Ошибка при анализе .cff файла!", InterfaceElementsLogic.Alert_Size.SMALL,
                                     true);
@@ -90,7 +131,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
                     }
                 });
             });
-            CompletableFuture<Boolean> future = ComtradeParser.parseCFF(newFile);
+            CompletableFuture<Boolean> future = ComtradeParser.parseCFF(copiedFile);
             future.thenAccept(result -> {
                 parsingResult.set(result);
                 formState.set(result);
@@ -239,12 +280,12 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
 
 
         ObservableList<RowItem> rowItems = FXCollections.observableArrayList();
-        for (int i = 0; i < 12; i++) {
-            RowItem rowItem = new RowItem("Тестовое свойство №" + i);
+        for (String signal : signals) {
+            RowItem rowItem = new RowItem(signal);
             rowItem.selected.addListener((obs, oldVal, newVal) -> {
-                
+
             });
-            rowItems.add(new RowItem("Тестовое свойство №" + i));
+            rowItems.add(rowItem);
         }
 
         ListView<RowItem> listView = new ListView<>();

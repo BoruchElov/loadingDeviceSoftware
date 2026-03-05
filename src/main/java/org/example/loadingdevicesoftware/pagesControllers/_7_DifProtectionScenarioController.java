@@ -558,7 +558,7 @@ public class _7_DifProtectionScenarioController extends ScreensController implem
                         case SimpleButton button1 when button1 == groundButton -> {
                             button1.setOnAction(this::changeConfiguration);
                             button1.setup(new String[]{"dif-protection-button-two", "dif-protection-button-two-second"},
-                                    new String[]{"G", "G"},
+                                    new String[]{"0", "0"},
                                     FontManager.getFont(FontManager.FontWeight.MEDIUM, FontManager.FontSize.LARGE));
                             AnchorPane.setTopAnchor(button1, 565.);
                             AnchorPane.setLeftAnchor(button1, 1195.);
