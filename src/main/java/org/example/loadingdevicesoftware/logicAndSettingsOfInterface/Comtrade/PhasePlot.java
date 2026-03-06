@@ -36,6 +36,25 @@ public class PhasePlot {
 
 
     public PhasePlot(String title, ArrayList<Double> xValues, ArrayList<Double> yValues) {
+        xAxis.getAxisLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
+                FontManager.FontSize.SMALL_FOURTEEN));
+        xAxis.getTickLabelStyle().fontProperty().set(FontManager.getFont(FontManager.FontWeight.LIGHT,
+                FontManager.FontSize.SMALL_TWELVE));
+        xAxis.setAutoRanging(true);
+        //Объект оси Y и настройка подписей, масштаба построения
+        yAxis.getAxisLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
+                FontManager.FontSize.SMALL_FOURTEEN));
+        yAxis.getTickLabelStyle().fontProperty().set(FontManager.getFont(FontManager.FontWeight.LIGHT,
+                FontManager.FontSize.SMALL_TWELVE));
+        yAxis.setAutoRanging(true);
+        //
+        chart = new XYChart(xAxis, yAxis);
+        chart.legendVisibleProperty().set(false);
+        //Подпись графика
+        chart.getTitleLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
+                FontManager.FontSize.SMALL_EIGHTEEN));
+
+
         updatePlot(title, xValues, yValues);
         generateCode(title);
     }
@@ -85,58 +104,31 @@ public class PhasePlot {
                 max = y;
             }
         }
-        xMax = xValues.getLast();
+        xMax = xValues.isEmpty() ? 1. : xValues.getLast();
     }
+
+
+    DefaultNumericAxis xAxis = new DefaultNumericAxis("Время", "с");
+    DefaultNumericAxis yAxis = new DefaultNumericAxis("Значение", null);
 
     private void setupPlot(String title) {
         if (isDataSetEmpty) {
             //Объект оси X и настройка подписей
-            DefaultNumericAxis xAxis = new DefaultNumericAxis("Время", "с");
-            xAxis.getAxisLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
-                    FontManager.FontSize.SMALL_FOURTEEN));
-            xAxis.getTickLabelStyle().fontProperty().set(FontManager.getFont(FontManager.FontWeight.LIGHT,
-                    FontManager.FontSize.SMALL_TWELVE));
-            xAxis.setAutoRanging(true);
-            //Объект оси Y и настройка подписей, масштаба построения
-            DefaultNumericAxis yAxis = new DefaultNumericAxis("Значение", null);
-            yAxis.getAxisLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
-                    FontManager.FontSize.SMALL_FOURTEEN));
-            yAxis.getTickLabelStyle().fontProperty().set(FontManager.getFont(FontManager.FontWeight.LIGHT,
-                    FontManager.FontSize.SMALL_TWELVE));
-            yAxis.setAutoRanging(true);
-            //
-            chart = new XYChart(xAxis, yAxis);
             //Настройка заголовка графика
             chart.setTitle(title);
             //Настройка видимости легенды
-            chart.legendVisibleProperty().set(false);
-            //Подпись графика
-            chart.getTitleLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
-                    FontManager.FontSize.SMALL_EIGHTEEN));
+
             chart.getDatasets().clear();
         } else {
             //Объект оси X и настройка подписей
-            DefaultNumericAxis xAxis = new DefaultNumericAxis("Время", "с");
-            xAxis.getAxisLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
-                    FontManager.FontSize.SMALL_FOURTEEN));
-            xAxis.getTickLabelStyle().fontProperty().set(FontManager.getFont(FontManager.FontWeight.LIGHT,
-                    FontManager.FontSize.SMALL_TWELVE));
-            xAxis.setAutoRanging(false);
             xAxis.set(0., xMax);
             //Объект оси Y и настройка подписей, масштаба построения
-            DefaultNumericAxis yAxis = new DefaultNumericAxis("Значение", null);
-            yAxis.getAxisLabel().fontProperty().set(FontManager.getFont(FontManager.FontWeight.MEDIUM,
-                    FontManager.FontSize.SMALL_FOURTEEN));
-            yAxis.getTickLabelStyle().fontProperty().set(FontManager.getFont(FontManager.FontWeight.LIGHT,
-                    FontManager.FontSize.SMALL_TWELVE));
             double factor = 1.5;
             yAxis.setAutoRanging(false);
             yAxis.set(factor * min, factor * max);
-            chart = new XYChart(xAxis, yAxis);
             //Настройка заголовка графика
             chart.setTitle(title);
             //Настройка видимости легенды
-            chart.legendVisibleProperty().set(false);
             //Инициализация и настройка плагина для приближения графика
             Zoomer zoomer = new Zoomer();
             //Выбор оси, по которой осуществляется приближение

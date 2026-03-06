@@ -21,6 +21,7 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,6 +43,8 @@ import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.Comtrade.Ph
 public class _6_ComtradeScenarioController extends ScreensController implements Configurable {
 
     private final AtomicBoolean formState = new AtomicBoolean(false);
+
+    private Path pathToData;
 
     @FXML
     Pane leftPane;
@@ -81,6 +84,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         File newFile = InterfaceElementsLogic.openFileChooser(stage, "Comtrade files .cff", "*.cff");
         Path pathForCopy = serviceDir.resolve("comtradeFile.cff");
+        pathToData = pathForCopy.getParent().resolve("comtradeFile");
         try {
             Files.copy(newFile.toPath(), pathForCopy, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
@@ -207,6 +211,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         }
     }
 
+    private final ObservableList<PlotRow> plotRows = FXCollections.observableArrayList();
 
     /**
      * Утилитарный класс для настройки ячеек в списке выбора сигналов.
@@ -215,6 +220,7 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         private BooleanProperty selected = new SimpleBooleanProperty(false);
         private StringProperty label = new SimpleStringProperty();
         private StringProperty value = new SimpleStringProperty();
+        private ObjectProperty<PlotRow> assignedPlot = new SimpleObjectProperty<>(null);
 
         public RowItem(String label) {
             this.label.set(label);
@@ -231,6 +237,9 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         public StringProperty valueProperty() {
             return value;
         }
+
+        public ObjectProperty<PlotRow> assignedPlotProperty() { return assignedPlot; }
+
     }
 
     /**
@@ -283,7 +292,37 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         for (String signal : signals) {
             RowItem rowItem = new RowItem(signal);
             rowItem.selected.addListener((obs, oldVal, newVal) -> {
+                if (newVal) {
+                    if (rowItem.assignedPlotProperty().get() != null) {
+                        return;
+                    }
 
+                    PlotRow freeRow = findFreePlotRow();
+                    if (freeRow == null) {
+                        Platform.runLater(() -> rowItem.selectedProperty().set(false));
+                        return;
+                    }
+
+                    updatePlotRow(freeRow, rowItem.label.get() + ".txt");
+                    freeRow.signalName().set(rowItem.label.get());
+                    freeRow.occupied().set(true);
+                    rowItem.assignedPlotProperty().set(freeRow);
+
+                } else {
+                    PlotRow assigned = rowItem.assignedPlotProperty().get();
+                    if (assigned != null) {
+                        assigned.plot().updatePlot("", new ArrayList<>(), new ArrayList<>());
+                        assigned.signalName().set("");
+                        assigned.occupied().set(false);
+                        rowItem.assignedPlotProperty().set(null);
+
+                        Platform.runLater(() -> {
+                            assigned.plot().getChart().requestLayout();
+                            assigned.plot().getChart().autosize();
+                            assigned.plot().getChart().layout();
+                        });
+                    }
+                }
             });
             rowItems.add(rowItem);
         }
@@ -397,80 +436,114 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         }
     }
 
-    final ArrayList<PhasePlot> availablePlots = new ArrayList<>();
-
     /**
      * Метод для настройки внешнего вида и функционала панели отображения графиков
      */
     private void setupRightPane() {
-        ObservableList<PlotRow> rows = FXCollections.observableArrayList();
+        plotRows.clear();
+        rightPane.getChildren().clear();
+
+        VBox plotsContainer = new VBox(8.0);
+        plotsContainer.setFillWidth(true);
+        plotsContainer.setPrefWidth(790.0);
+
         for (int i = 0; i < 6; i++) {
             PhasePlot plot = new PhasePlot("", null, null);
-            availablePlots.add(plot);
             ObservableList<String> modes = FXCollections.observableArrayList("Raw", "RMS", "FFT");
             StringProperty selected = new SimpleStringProperty("Raw");
 
-            // реакция на смену режима (пример)
-            selected.addListener((obs, o, n) -> {
-                // TODO: применить n к plot (сменить dataset / пересчитать / сменить стиль и т.п.)
-            });
-            rows.add(new PlotRow(plot, modes, selected));
+            PlotRow row = new PlotRow(
+                    plot,
+                    modes,
+                    selected,
+                    new SimpleStringProperty(""),
+                    new SimpleBooleanProperty(false)
+            );
+
+            plotRows.add(row);
+
+            ComboBox<String> combo = new ComboBox<>();
+            combo.setItems(row.modes());
+            combo.valueProperty().bindBidirectional(row.selectedMode());
+            combo.getStyleClass().add("combo-box-new");
+
+            XYChart chart = row.plot().getChart();
+            chart.setMinHeight(180.0);
+            chart.setPrefHeight(180.0);
+            chart.setMaxHeight(180.0);
+
+            chart.setMinWidth(680.0);
+            chart.setPrefWidth(680.0);
+
+            HBox line = new HBox(8.0, chart, combo);
+            line.setAlignment(Pos.CENTER_LEFT);
+            line.setPrefWidth(790.0);
+            line.setMinWidth(790.0);
+            HBox.setHgrow(chart, Priority.NEVER);
+
+            plotsContainer.getChildren().add(line);
         }
-        ListView<PlotRow> listView = new ListView<>(rows);
-        listView.setItems(rows);
-        // раз у тебя всегда 6 строк — можно фиксировать высоту
 
-        listView.setCellFactory(lv -> new ListCell<>() {
+        ScrollPane scrollPane = new ScrollPane(plotsContainer);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPannable(true);
 
-            private final ComboBox<String> combo = new ComboBox<>();
-            private final HBox root = new HBox(6);
+        scrollPane.setPrefSize(810.0, 480.0);
+        scrollPane.setMinSize(810.0, 480.0);
+        scrollPane.setMaxSize(810.0, 480.0);
 
-            {
-                combo.getStyleClass().add("combo-box-new");
-            }
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-            @Override
-            protected void updateItem(PlotRow item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setGraphic(null);
-                    return;
-                }
-
-                // 1) График (готовый из PhasePlot)
-                XYChart chart = item.plot().getChart();
-
-                // Важно: chart мог остаться в предыдущей ячейке из-за реюза ListCell.
-                // Перед добавлением гарантируем, что он "отвязан" от старого родителя.
-                if (chart.getParent() != null) {
-                    ((Pane) chart.getParent()).getChildren().remove(chart);
-                }
-
-                // 2) Комбобокс
-                combo.setItems(item.modes());
-
-                // чтобы не плодить слушатели при реюзе ячейки:
-                combo.valueProperty().unbindBidirectional(item.selectedMode());
-                combo.valueProperty().bindBidirectional(item.selectedMode());
-
-                // 3) Компоновка
-                root.getChildren().setAll(chart, combo);
-                setGraphic(root);
-            }
-        });
-        rightPane.getChildren().add(listView);
-
-        double height = 480.;
-        double width = 810.;
-        listView.setPrefSize(width, height);
-        listView.setMinSize(width, height);
-        listView.setMaxSize(width, height);
-        listView.setSelectionModel(null);
-
+        rightPane.getChildren().add(scrollPane);
     }
 
-    public record PlotRow(PhasePlot plot,
-                          ObservableList<String> modes,
-                          StringProperty selectedMode) {}
+    public record PlotRow(
+            PhasePlot plot,
+            ObservableList<String> modes,
+            StringProperty selectedMode,
+            StringProperty signalName,
+            BooleanProperty occupied
+    ) {}
+
+    private PlotRow findFreePlotRow() {
+        for (PlotRow row : plotRows) {
+            if (!row.occupied().get()) {
+                return row;
+            }
+        }
+        return null;
+    }
+
+    private void updatePlotRow(PlotRow row, String filename) {
+        ArrayList<Double> timeValues = new ArrayList<>();
+        ArrayList<Double> signalValues = new ArrayList<>();
+        Charset cs = Charset.forName("windows-1251");
+
+        try {
+            String[] timeLines = Files.readString(pathToData.resolve("Time_s.txt"), cs).split(";");
+            for (String s : timeLines) {
+                if (!s.isBlank()) {
+                    timeValues.add(Double.parseDouble(s.replace(',', '.')));
+                }
+            }
+
+            String[] signalLines = Files.readString(pathToData.resolve(filename), cs).split(";");
+            for (String s : signalLines) {
+                if (!s.isBlank()) {
+                    signalValues.add(Double.parseDouble(s.replace(',', '.')));
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        row.plot().updatePlot(filename.replace(".txt", ""), timeValues, signalValues);
+
+        Platform.runLater(() -> {
+            row.plot().getChart().requestLayout();
+            row.plot().getChart().autosize();
+            row.plot().getChart().layout();
+        });
+    }
 }
