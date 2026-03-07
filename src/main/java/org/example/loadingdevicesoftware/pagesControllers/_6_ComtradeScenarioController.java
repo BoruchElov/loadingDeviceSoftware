@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import org.example.loadingdevicesoftware.ApplicationFile;
 import org.example.loadingdevicesoftware.logicAndSettingsOfInterface.*;
 
 import java.io.BufferedWriter;
@@ -443,9 +445,15 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
         plotRows.clear();
         rightPane.getChildren().clear();
 
+        double width = 795.;
+        double height = 460.;
+
         VBox plotsContainer = new VBox(8.0);
+        plotsContainer.setPadding(Insets.EMPTY);
         plotsContainer.setFillWidth(true);
-        plotsContainer.setPrefWidth(790.0);
+        plotsContainer.setPrefWidth(width);
+        plotsContainer.setMinWidth(width);
+        plotsContainer.setMaxWidth(width);
 
         for (int i = 0; i < 6; i++) {
             PhasePlot plot = new PhasePlot("", null, null);
@@ -477,25 +485,38 @@ public class _6_ComtradeScenarioController extends ScreensController implements 
 
             HBox line = new HBox(8.0, chart, combo);
             line.setAlignment(Pos.CENTER_LEFT);
-            line.setPrefWidth(790.0);
-            line.setMinWidth(790.0);
+            line.setPrefWidth(width);
+            line.setMinWidth(width);
+            line.setMaxWidth(width);
+            line.setPadding(Insets.EMPTY);
             HBox.setHgrow(chart, Priority.NEVER);
 
             plotsContainer.getChildren().add(line);
         }
 
         ScrollPane scrollPane = new ScrollPane(plotsContainer);
-        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToWidth(false);
         scrollPane.setPannable(true);
 
-        scrollPane.setPrefSize(810.0, 480.0);
-        scrollPane.setMinSize(810.0, 480.0);
-        scrollPane.setMaxSize(810.0, 480.0);
+        scrollPane.setPrefSize(width, height);
+        scrollPane.setMinSize(width, height);
+        scrollPane.setMaxSize(width, height);
+
+        rightPane.getChildren().add(scrollPane);
+        scrollPane.setLayoutX(10.);
+        scrollPane.setLayoutY(10.);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPannable(false);   // ключевая строка
 
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-        rightPane.getChildren().add(scrollPane);
+
+        scrollPane.hvalueProperty().addListener((obs, oldVal, newVal) -> {
+            scrollPane.setHvalue(0);
+        });
+
+        scrollPane.getStyleClass().add("plots-scroll-pane");
     }
 
     public record PlotRow(

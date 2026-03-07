@@ -476,7 +476,48 @@
     -fx-stroke: #000000;
     -fx-grid-lines-visible: true;
 }
+.plots-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
 
+.plots-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
 
+.plots-scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+.plots-scroll-pane .scroll-bar .increment-button,
+.plots-scroll-pane .scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-shape: "";
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+    -fx-max-height: 0;
+    -fx-max-width: 0;
+}
 
+.plots-scroll-pane .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-pref-width: 18px;
+    -fx-transition: opacity 0.6s ease-in-out;
+}
+
+.plots-scroll-pane:hover .scroll-bar:vertical {
+    -fx-opacity: 1;
+}
+
+.plots-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #CBCCCB;
+    -fx-background-radius: 0px;
+}
+.plots-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #929292;
+    -fx-background-radius: 0px;
+}
+
+.plots-scroll-pane .scroll-bar {
+    -fx-background-color: transparent;
+}
 
